@@ -1,13 +1,13 @@
 import React from 'react'
 import Logo from '@components/shared/Logo'
 import { Stack } from '@mui/material'
-import { MainContiner, Wrapper, Link } from './styles'
+import { Container, Wrapper, Link } from './styles'
 import { ROUTES } from '@constants/routes'
 import { Route } from '@types'
 
 const Header = () => {
   return (
-    <MainContiner>
+    <Container>
       <Wrapper>
         <Logo />
         <Stack spacing={'40px'} direction={'row'}>
@@ -18,7 +18,7 @@ const Header = () => {
           ))}
         </Stack>
       </Wrapper>
-    </MainContiner>
+    </Container>
   )
 }
 

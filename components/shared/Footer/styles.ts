@@ -7,7 +7,7 @@ interface StyledTypographyProps {
   fontColor: string
 }
 
-const MainContiner = styled(Box)({
+const Container = styled(Box)({
   background: colors.neutral900,
   width: '100%',
 })
@@ -31,4 +31,4 @@ const StyledTypography = styled(Typography)((props: StyledTypographyProps) => ({
   },
 }))
 
-export { MainContiner, Wrapper, StyledTypography }
+export { Container, Wrapper, StyledTypography }

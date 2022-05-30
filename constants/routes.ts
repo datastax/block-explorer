@@ -1,4 +1,4 @@
-export const ROUTES = [
+const ROUTES = [
   {
     name: 'Blocks',
     link: '',
@@ -8,3 +8,5 @@ export const ROUTES = [
     link: '',
   },
 ]
+
+export { ROUTES }

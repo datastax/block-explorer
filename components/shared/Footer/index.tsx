@@ -1,10 +1,10 @@
 import { Stack } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
-import { Wrapper, MainContiner, StyledTypography } from './styles'
+import { Wrapper, Container, StyledTypography } from './styles'
 
 const Footer = () => {
   return (
-    <MainContiner>
+    <Container>
       <Wrapper>
         <Stack spacing={'24px'} direction={'row'}>
           <StyledTypography fontColor={colors.neutral100}>
@@ -15,7 +15,7 @@ const Footer = () => {
           </StyledTypography>
         </Stack>
       </Wrapper>
-    </MainContiner>
+    </Container>
   )
 }
 

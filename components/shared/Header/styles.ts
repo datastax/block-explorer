@@ -2,7 +2,7 @@ import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
 import { Box, Link as MuiLink } from '@mui/material'
 
-const MainContiner = styled(Box)({
+const Container = styled(Box)({
   background: colors.neutral900,
   width: '100%',
 })
@@ -25,4 +25,4 @@ const Link = styled(MuiLink)({
   lineHeight: '14px',
 })
 
-export { MainContiner, Wrapper, Link }
+export { Container, Wrapper, Link }
