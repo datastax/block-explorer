@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
-import Footer from '@/components/shared/Footer'
-import Header from '@/components/shared/Header'
+import Footer from '@components/shared/Footer'
+import Header from '@components/shared/Header'
 
 interface LayoutProps {
   children: React.ReactNode
