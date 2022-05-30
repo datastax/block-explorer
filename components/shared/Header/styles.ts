@@ -1,6 +1,6 @@
 import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
-import { Box, Link as MuiLink } from '@mui/material'
+import { Box } from '@mui/material'
 
 const Container = styled(Box)({
   background: colors.neutral900,
@@ -17,7 +17,7 @@ const Wrapper = styled(Box)({
   padding: '0px 44px',
 })
 
-const Link = styled(MuiLink)({
+const StyledLink = styled('a')({
   textDecoration: 'None',
   color: colors.neutral100,
   fontWeight: 500,
@@ -25,4 +25,4 @@ const Link = styled(MuiLink)({
   lineHeight: '14px',
 })
 
-export { Container, Wrapper, Link }
+export { Container, Wrapper, StyledLink }

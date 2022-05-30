@@ -1,11 +1,11 @@
 const ROUTES = [
   {
     name: 'Blocks',
-    link: '',
+    link: '/blocks',
   },
   {
     name: 'Transactions',
-    link: '',
+    link: '/transactions',
   },
 ]
 
