@@ -27,7 +27,7 @@ const StyledTypography = styled(Typography)((props: StyledTypographyProps) => ({
   fontSize: '11px',
   lineHeight: '16px',
   span: {
-    color: colors.violet,
+    color: colors.actionTertiary,
   },
 }))
 

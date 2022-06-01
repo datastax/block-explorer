@@ -1,7 +1,13 @@
-import React from 'react'
-
-const blocks = () => {
-  return <div>blocks</div>
+import type { NextPage } from 'next'
+import BlocksTable from '@components/Blocks/Table'
+import Hero from '@components/Blocks/Hero'
+const Blocks: NextPage = () => {
+  return (
+    <>
+      <Hero />
+      <BlocksTable />
+    </>
+  )
 }
 
-export default blocks
+export default Blocks
