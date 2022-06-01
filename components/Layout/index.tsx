@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 import Footer from '@components/shared/Footer'
 import Header from '@components/shared/Header'
-
+import { MainContainer, Wrapper } from './styles'
 interface LayoutProps {
   children: React.ReactNode
 }
@@ -20,10 +20,11 @@ const Layout = ({ children }: LayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      {children}
+      <MainContainer>
+        <Wrapper>{children}</Wrapper>
+      </MainContainer>
       <Footer />
     </>
   )
 }
-
 export default Layout
