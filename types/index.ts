@@ -1,15 +1,15 @@
+import React from 'react'
+
 type Route = {
   name: string
   link: string
 }
-
 interface ChipProps {
   bgColor: string
-  borderColor: string
+  border: string
   titleColor: string
-  label: string
+  label: string | React.ReactNode
 }
-
 interface BlockProps {
   Block: string
   Age: string
@@ -22,12 +22,10 @@ interface BlockProps {
   Reward: string
   BurntFees: string
 }
-
 interface CustomTableProps {
   color: string
   border?: string
   fontWeight?: string
   lineHeight?: string
 }
-
 export type { Route, CustomTableProps, BlockProps, ChipProps }

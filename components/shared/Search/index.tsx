@@ -1,6 +1,5 @@
 import * as React from 'react'
 import SearchIcon from '@mui/icons-material/Search'
-import colors from '@styles/ThemeProvider/colors'
 import { SearchButton, SearchInput, Wrapper, CustomFilter } from './styles'
 import { Box, FormControl, MenuItem, SelectChangeEvent } from '@mui/material'
 
@@ -35,7 +34,7 @@ const Search = () => {
 
       <SearchInput placeholder="Search by Address / Txn Hash/ Block / Token / Ens" />
       <SearchButton>
-        <SearchIcon sx={{ color: colors.neutral100 }} />
+        <SearchIcon />
       </SearchButton>
     </Wrapper>
   )
