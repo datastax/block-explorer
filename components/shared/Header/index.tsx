@@ -24,7 +24,7 @@ const Header = () => {
   console.log('pathname', pathname)
   return (
     <Container>
-      <Wrapper padding={pathname !== '/' ? '26px 44px 0px' : ''}>
+      <Wrapper height="72px" padding={pathname !== '/' ? '26px 44px 0px' : ''}>
         <Link passHref href="/">
           <a>
             <Logo />
