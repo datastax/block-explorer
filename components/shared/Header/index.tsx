@@ -21,7 +21,6 @@ const ChipLabel = () => {
 
 const Header = () => {
   const { pathname } = useRouter()
-  console.log('pathname', pathname)
   return (
     <Container>
       <Wrapper height="72px" padding={pathname !== '/' ? '26px 44px 0px' : ''}>
