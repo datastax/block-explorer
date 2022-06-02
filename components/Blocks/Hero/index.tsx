@@ -12,13 +12,13 @@ const BlocksHero = () => {
         <Chip
           label="Network Utilization: 50.1%"
           bgColor={colors.blackberry}
-          borderColor={`1px solid ${colors.actionTertiary}`}
+          border={`1px solid ${colors.actionTertiary}`}
           titleColor={colors.neutral100}
         />
         <Chip
           label="🔥 Burnt Fees: 2,366,401.24 ETH"
           bgColor={colors.neutral700}
-          borderColor={`1px solid ${colors.neutral300}`}
+          border={`1px solid ${colors.neutral300}`}
           titleColor={colors.neutral100}
         />
       </Stack>

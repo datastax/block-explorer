@@ -1,7 +1,7 @@
-import { Box, Chip, TableContainer } from '@mui/material'
+import { Box, TableContainer } from '@mui/material'
 import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
-import { ChipProps, CustomTableProps } from '@types'
+import { CustomTableProps } from '@types'
 import { TableCell } from '@mui/material'
 const links = ['Block', 'Txn', 'Miner']
 
@@ -32,11 +32,6 @@ const BlockTableContainer = styled(Box)({
   marginBottom: '30px',
   background: colors.surfaceCard,
 })
-const CustomChip = styled(Chip)((props: ChipProps) => ({
-  backgroundColor: props.bgColor,
-  border: props.borderColor,
-  color: props.titleColor,
-}))
 
 const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
   color: links.includes(props.color)
@@ -68,7 +63,6 @@ export {
   MainContainer,
   Container,
   MainHeading,
-  CustomChip,
   BlockTableContainer,
   CustomTableCell,
   Records,
