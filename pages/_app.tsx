@@ -6,6 +6,7 @@ import theme from '@styles/ThemeProvider/theme'
 import Layout from '@components/Layout'
 import { ApolloProvider } from '@apollo/client'
 import { Client } from '@lib/graphql'
+import '@styles/globals.css'
 
 const App = (props: AppProps) => {
   const { Component, pageProps } = props
