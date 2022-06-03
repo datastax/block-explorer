@@ -4,7 +4,7 @@ import Hero from '@components/Blocks/Hero'
 const Blocks: NextPage = () => {
   return (
     <>
-      <Hero />
+      <Hero title="Blocks" showChips={true} />
       <BlocksTable />
     </>
   )
