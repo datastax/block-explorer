@@ -22,5 +22,9 @@ const Container = styled(Card)({
   background: colors.surfaceCard,
   border: `1px solid ${colors.nightRider}`,
   borderRadius: '6px',
+  '@media (max-width: 1360px)': {
+    width: '50%',
+    margin: '0 auto 0 auto',
+  },
 })
 export { StyledTypograph, Container }

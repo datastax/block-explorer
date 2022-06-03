@@ -1,33 +1,46 @@
-import { Box, Grid } from '@mui/material'
+import { Box } from '@mui/material'
 import Graph from '@components/Home/Graph'
 import SummaryBlock from '@components/Home/SummaryBlock'
-import { Container } from './styles'
-import { summaryBlocksData } from '@constants/seeds'
+import { CardsBox, Container, PriceStack, TransactionStack } from './styles'
+import {
+  summaryBlocksDataPrice,
+  summaryBlocksDataTransactions,
+} from '@constants/seeds'
 
 const SummaryBlocks = () => {
   return (
     <Container>
-      <Box>
-        <Grid container rowSpacing={2.5} columnSpacing={2.5}>
-          {summaryBlocksData.map((element, index) => (
-            <Grid item key={index}>
-              <SummaryBlock
-                width={element.width}
-                icon={element.icon}
-                title={element.title}
-                value={element.value}
-                stat={element.stat}
-                supportingStat={element.supportingStat}
-                secondaryTitle={element.secondaryTitle}
-                secondaryValue={element.secondaryValue}
-                fontSizeOfValue={element.fontSizeOfValue}
-                secondayStat={element.secondaryStat}
-              />
-            </Grid>
+      <CardsBox>
+        <PriceStack>
+          {summaryBlocksDataPrice.map((item, index) => (
+            <SummaryBlock
+              key={index}
+              icon={item.icon}
+              title={item.title}
+              value={item.value}
+              stat={item.stat}
+              supportingStat={item.supportingStat}
+              fontSizeOfValue={item.fontSizeOfValue}
+            />
           ))}
-        </Grid>
-      </Box>
-      <Box>
+        </PriceStack>
+        <TransactionStack>
+          {summaryBlocksDataTransactions.map((item, index) => (
+            <SummaryBlock
+              key={index}
+              icon={item.icon}
+              title={item.title}
+              value={item.value}
+              stat={item.stat}
+              secondaryTitle={item.secondaryTitle}
+              secondaryValue={item.secondaryValue}
+              fontSizeOfValue={item.fontSizeOfValue}
+              secondayStat={item.secondaryStat}
+            />
+          ))}
+        </TransactionStack>
+      </CardsBox>
+      <Box sx={{ width: '100%' }}>
         <Graph />
       </Box>
     </Container>

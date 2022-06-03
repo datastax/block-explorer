@@ -116,16 +116,26 @@ const graphData = [
   },
 ]
 
-const summaryBlocksData = [
+const summaryBlocksDataPrice = [
   {
     icon: () => <Ether />,
     title: 'Ether Price',
     value: '$1,883.89',
     stat: '@0.06795 BTC',
-    supportingStat: "-3.50%",
+    supportingStat: '-3.50%',
     fontSizeOfValue: '28px',
     width: '320px',
   },
+  {
+    icon: () => <MarketCap />,
+    title: 'Market Cap',
+    value: '$224,483,537,186.00',
+    fontSizeOfValue: '24px',
+    width: '320px',
+  },
+]
+
+const summaryBlocksDataTransactions = [
   {
     icon: () => <TransactionLogo />,
     title: 'Transactions',
@@ -138,13 +148,6 @@ const summaryBlocksData = [
     width: '434px',
   },
   {
-    icon: () => <MarketCap />,
-    title: 'Market Cap',
-    value: '$224,483,537,186.00',
-    fontSizeOfValue: '24px',
-    width: '320px',
-  },
-  {
     icon: () => <Difficuilty />,
     title: 'Difficuilty',
     value: '14,254.26 TH',
@@ -154,4 +157,11 @@ const summaryBlocksData = [
     width: '434px',
   },
 ]
-export { blocksData, transactionsData, graphData, summaryBlocksData }
+
+export {
+  blocksData,
+  transactionsData,
+  graphData,
+  summaryBlocksDataTransactions,
+  summaryBlocksDataPrice,
+}

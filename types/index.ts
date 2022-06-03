@@ -15,7 +15,6 @@ interface SummaryBlocksProps {
   secondaryValue?: string
   fontSizeOfValue?: string
   secondayStat?: string
-  width: string
 }
 
 interface ChipProps {
