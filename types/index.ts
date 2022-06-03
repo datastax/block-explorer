@@ -30,4 +30,10 @@ interface CustomTableProps {
   lineHeight?: string
 }
 
-export type { Route, CustomTableProps, BlockProps, ChipProps }
+interface HeroProps {
+  title: string
+  showChips?: boolean
+  blockNumber: string
+}
+
+export type { Route, CustomTableProps, BlockProps, ChipProps, HeroProps }
