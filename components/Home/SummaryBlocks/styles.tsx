@@ -4,7 +4,9 @@ import { Box, Stack } from '@mui/material'
 const Container = styled(Box)({
   display: 'flex',
   padding: '56px 0px',
-  '@media (max-width: 1360px)': {
+  justifyContent: 'space-between',
+  maxWidth: '100%',
+  '@media (max-width: 1200px)': {
     display: 'flex',
     flexDirection: 'column',
     margin: '0px',
@@ -12,15 +14,15 @@ const Container = styled(Box)({
 })
 
 const PriceStack = styled(Stack)({
-  width: '42%',
+  width: '320px',
   '@media (max-width: 1360px)': {
-    width: '50%',
+    width: '30%',
   },
 })
 const TransactionStack = styled(Stack)({
-  width: '58%',
-  '@media (max-width: 1360px)': {
-    width: '50%',
+  width: '434px',
+  '@media (max-width: 1200px)': {
+    width: '70%',
   },
 })
 
