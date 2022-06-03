@@ -1,13 +1,8 @@
+import React from 'react'
+
 type Route = {
   name: string
   link: string
-}
-
-interface ChipProps {
-  bgColor: string
-  borderColor: string
-  titleColor: string
-  label: string
 }
 
 interface SummaryBlocksProps {
@@ -23,6 +18,24 @@ interface SummaryBlocksProps {
   width: string
 }
 
+interface ChipProps {
+  bgColor: string
+  border: string
+  titleColor: string
+  label: string | React.ReactNode
+}
+interface BlockProps {
+  Block: string
+  Age: string
+  Txn: string
+  Uncles: string
+  Miner: string
+  GasUsed: string
+  GasLimit: string
+  BaseFee: string
+  Reward: string
+  BurntFees: string
+}
 interface CustomTableProps {
   color: string
   border?: string
@@ -37,4 +50,11 @@ type BlocksDataHome = {
   reward: string
   Miner: string
 }
-export type { Route, ChipProps, BlocksDataHome, SummaryBlocksProps, CustomTableProps }
+export type {
+  Route,
+  ChipProps,
+  BlockProps,
+  BlocksDataHome,
+  SummaryBlocksProps,
+  CustomTableProps,
+}
