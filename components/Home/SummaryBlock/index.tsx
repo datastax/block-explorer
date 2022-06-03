@@ -1,5 +1,5 @@
 import colors from '@styles/ThemeProvider/colors'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useMediaQuery } from '@mui/material'
 import { StyledCard, StyledTypograph } from './styles'
 import { SummaryBlocksProps } from 'types'
 
@@ -13,10 +13,10 @@ const SummaryBlock = ({
   secondaryValue,
   fontSizeOfValue,
   secondayStat,
-  width,
 }: SummaryBlocksProps) => {
+  const matches = useMediaQuery('(max-width:1360px)')
   return (
-    <StyledCard width={width}>
+    <StyledCard>
       <Box padding="4px 1px">{icon()}</Box>
       <Box marginLeft="8px">
         <Typography
@@ -29,7 +29,7 @@ const SummaryBlock = ({
         </Typography>
         <Typography
           color={colors.neutral100}
-          fontSize={fontSizeOfValue}
+          fontSize={matches ? '18px' : fontSizeOfValue}
           fontWeight={700}
           lineHeight="36px"
         >
@@ -54,7 +54,7 @@ const SummaryBlock = ({
           </Typography>
           <Typography
             color={colors.neutral100}
-            fontSize={fontSizeOfValue}
+            fontSize={matches ? '18px' : fontSizeOfValue}
             fontWeight={700}
             lineHeight="36px"
           >
