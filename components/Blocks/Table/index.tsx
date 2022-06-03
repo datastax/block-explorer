@@ -8,50 +8,101 @@ import {
   BlockTableContainer,
   CustomTableCell,
   CustomTableContainer,
+  CustomTableCellHeder,
+  HeaderBox,
+  CustomTableCellBox,
 } from './styles'
-import { BlocksData, BlocksTitle } from '@constants/blocksData'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
+import { BlockProps, TransactionDataType } from 'types'
+import { Exchange, Eye } from '@components/shared/Icons'
+import Chip from '@components/shared/Chip'
 
-const BlocksTable = () => {
+interface BlocksTableProps {
+  titles: string[]
+  TransactionDataToMap?: TransactionDataType[]
+  BlocksDataToMap?: BlockProps[]
+}
+
+const BlocksTable = ({
+  titles,
+  TransactionDataToMap,
+  BlocksDataToMap,
+}: BlocksTableProps) => {
+  const dataToMap = BlocksDataToMap || TransactionDataToMap
   return (
     <BlockTableContainer>
       <CustomTableContainer>
-        <UpperPagination />
+        <UpperPagination transaction={TransactionDataToMap ? true : false} />
         <Table>
           <TableHead>
             <TableRow>
-              {BlocksTitle.map((title, index) => (
-                <CustomTableCell
+              {titles.map((title, index) => (
+                <CustomTableCellHeder
                   key={index}
                   align="center"
-                  color={colors.neutral300}
+                  color={title}
                   border={`1px solid ${colors.neutral300}`}
                   fontWeight="500"
                   lineHeight="157%"
                 >
-                  {title}
-                </CustomTableCell>
+                  <HeaderBox
+                    sx={{
+                      marginLeft:
+                        TransactionDataToMap && index === 0 ? '21%' : '0px',
+                    }}
+                  >
+                    {title}
+                  </HeaderBox>
+                </CustomTableCellHeder>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {BlocksData.map((Data, index) => (
+            {dataToMap?.map((Data, index) => (
               <TableRow
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 key={index}
               >
                 {[...Array(Object.keys(Data).length)].map((_, index) => (
-                  <CustomTableCell
-                    key={index}
-                    align="center"
-                    color={Object.keys(Data)[index]}
-                    border={`1px solid ${colors.neutral300}`}
-                    fontWeight="400"
-                    lineHeight="143%"
-                  >
-                    {Object.values(Data)[index]}
-                  </CustomTableCell>
+                  <>
+                    <>
+                      {TransactionDataToMap && index == 5 && (
+                        <CustomTableCell
+                          color={''}
+                          border={`1px solid ${colors.neutral300}`}
+                        >
+                          <Exchange />
+                        </CustomTableCell>
+                      )}
+                    </>
+                    <CustomTableCell
+                      key={index}
+                      align="center"
+                      color={Object.keys(Data)[index]}
+                      border={`1px solid ${colors.neutral300}`}
+                      fontWeight="400"
+                      lineHeight="143%"
+                    >
+                      <CustomTableCellBox>
+                        {TransactionDataToMap && index == 0 && (
+                          <div style={{ paddingRight: '20px' }}>
+                            <Eye />
+                          </div>
+                        )}
+                        {Object.keys(Data)[index] !== 'Method' ? (
+                          Object.values(Data)[index]
+                        ) : (
+                          <Chip
+                            label={Object.values(Data)[index]}
+                            bgColor={colors.nordic}
+                            borderColor={`1px solid ${colors.actionPrimary}`}
+                            titleColor={colors.neutral100}
+                          />
+                        )}
+                      </CustomTableCellBox>
+                    </CustomTableCell>
+                  </>
                 ))}
               </TableRow>
             ))}
