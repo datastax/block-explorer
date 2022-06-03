@@ -1,21 +1,27 @@
 import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
-import { Box } from '@mui/material'
+import { Box, Theme } from '@mui/material'
 
 const Container = styled(Box)({
   background: colors.neutral900,
   width: '100%',
 })
 
-const Wrapper = styled(Box)({
-  height: '72px',
+interface WrapperProps {
+  theme?: Theme
+  height?: string
+  padding?: string
+}
+
+const Wrapper = styled(Box)(({ height, padding }: WrapperProps) => ({
+  height: height,
   maxWidth: '1440px',
   display: 'flex',
   alignItems: 'center',
   margin: 'auto',
   justifyContent: 'space-between',
-  padding: '0px 44px',
-})
+  padding: padding ? padding : '0px 44px',
+}))
 
 const StyledLink = styled('a')({
   textDecoration: 'None',
@@ -25,4 +31,13 @@ const StyledLink = styled('a')({
   lineHeight: '14px',
 })
 
-export { Container, Wrapper, StyledLink }
+const StyledLabel = styled('div')({
+  span: {
+    color: colors.semanticRed,
+  },
+  'span:last-child': {
+    color: colors.neutral300,
+  },
+})
+
+export { Container, Wrapper, StyledLink, StyledLabel }

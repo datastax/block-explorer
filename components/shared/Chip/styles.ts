@@ -3,7 +3,7 @@ import { ChipProps } from 'types'
 
 const CustomChip = styled(Chip)((props: ChipProps) => ({
   backgroundColor: props.bgColor,
-  border: props.borderColor,
+  border: props.border,
   color: props.titleColor,
 }))
 

@@ -4,6 +4,8 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import theme from '@styles/ThemeProvider/theme'
 import Layout from '@components/Layout'
+import { ApolloProvider } from '@apollo/client'
+import { Client } from '@lib/graphql'
 
 const App = (props: AppProps) => {
   const { Component, pageProps } = props
@@ -11,7 +13,9 @@ const App = (props: AppProps) => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Layout>
-        <Component {...pageProps} />
+        <ApolloProvider client={Client}>
+          <Component {...pageProps} />
+        </ApolloProvider>
       </Layout>
     </ThemeProvider>
   )
