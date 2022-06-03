@@ -40,7 +40,7 @@ const SummaryBlocks = () => {
           ))}
         </TransactionStack>
       </CardsBox>
-      <Box sx={{ width: '100%' }}>
+      <Box>
         <Graph />
       </Box>
     </Container>
