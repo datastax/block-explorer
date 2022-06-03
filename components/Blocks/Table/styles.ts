@@ -3,7 +3,7 @@ import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
 import { ChipProps, CustomTableProps } from '@types'
 import { TableCell } from '@mui/material'
-const links = ['Block', 'Txn', 'Miner']
+import { colorColumnNames, colorColumnHeaderNames } from '@constants/seeds'
 
 const MainContainer = styled(Box)({
   width: '100%',
@@ -39,9 +39,19 @@ const CustomChip = styled(Chip)((props: ChipProps) => ({
 }))
 
 const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
-  color: links.includes(props.color)
+  color: colorColumnNames.includes(props.color)
     ? colors.actionSecondary
     : colors.neutral100,
+  borderBottom: props.border,
+  fontWeight: props.fontWeight,
+  fontSize: '14px',
+  lineHeight: props.lineHeight,
+}))
+
+const CustomTableCellHeder = styled(TableCell)((props: CustomTableProps) => ({
+  color: colorColumnHeaderNames.includes(props.color)
+    ? colors.actionSecondary
+    : colors.neutral300,
   borderBottom: props.border,
   fontWeight: props.fontWeight,
   fontSize: '14px',
@@ -64,6 +74,19 @@ const FontStyling = styled(Box)({
   fontSize: '14px',
   lineHeight: '24px',
 })
+
+const HeaderBox = styled('div')({
+  display: 'flex',
+  justifyContent: 'flex-start',
+  width: '100%',
+})
+
+const CustomTableCellBox = styled('div')({
+  width: '105%',
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'flex-start',
+})
 export {
   MainContainer,
   Container,
@@ -74,4 +97,7 @@ export {
   Records,
   CustomTableContainer,
   FontStyling,
+  CustomTableCellHeder,
+  HeaderBox,
+  CustomTableCellBox,
 }
