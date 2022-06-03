@@ -1,7 +1,6 @@
 import { styled } from '@mui/system'
-import colors from 'styles/ThemeProvider/colors'
+import colors from '@styles/ThemeProvider/colors'
 import { Box } from '@mui/material'
-
 const MainContainer = styled(Box)({
   background: colors.surfaceCard,
   width: '100%',
