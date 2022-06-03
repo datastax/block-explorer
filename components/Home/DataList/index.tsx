@@ -9,6 +9,7 @@ import {
   ChipWrapper,
 } from './styles'
 import { BlocksDataHome } from 'types'
+import { useRouter } from 'next/router'
 
 interface transactionBlockProps {
   title: string
@@ -17,6 +18,14 @@ interface transactionBlockProps {
 }
 
 const DataList = (props: transactionBlockProps) => {
+  const router = useRouter()
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement | undefined>,
+    route: string
+  ) => {
+    e.preventDefault()
+    router.push(route)
+  }
   return (
     <StyledCard>
       <Typography
@@ -74,7 +83,7 @@ const DataList = (props: transactionBlockProps) => {
                 <ChipWrapper>
                   <Chip
                     bgColor={colors.nordic}
-                    borderColor={`1px solid ${colors.actionPrimary}`}
+                    border={`1px solid ${colors.actionPrimary}`}
                     titleColor={colors.neutral100}
                     label={BlocksData.reward}
                   />
@@ -84,7 +93,9 @@ const DataList = (props: transactionBlockProps) => {
           ))}
         </TableBody>
       </Table>
-      <StyledButton>
+      <StyledButton
+        onClick={(e) => handleClick(e, props.miner ? '/blocks' : '/transactions')}
+      >
         VIEW All {props.miner ? 'BLOCKS' : 'TRANSACTIONS'}
       </StyledButton>
     </StyledCard>
