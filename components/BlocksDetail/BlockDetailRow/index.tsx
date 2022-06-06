@@ -23,7 +23,6 @@ interface BlockDetailRowProps {
 }
 const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
   const getKeyName = () => {
-    console.log({ objectKey })
     switch (objectKey) {
       case 'BlockHeight':
         return 'Block Height:'
@@ -88,7 +87,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
             <Chip
               label="49 transactions"
               bgColor={colors.nordic}
-              borderColor={`1px solid ${colors.actionPrimary}`}
+              border={`1px solid ${colors.actionPrimary}`}
               titleColor={colors.neutral100}
             />
             <TransactionStyle>
@@ -98,7 +97,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
             <Chip
               label="33 contract internal transactions"
               bgColor={colors.nordic}
-              borderColor={`1px solid ${colors.actionPrimary}`}
+              border={`1px solid ${colors.actionPrimary}`}
               titleColor={colors.neutral100}
             />
             <TransactionStyle>
