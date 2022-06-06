@@ -40,6 +40,7 @@ interface CustomTableProps {
   border?: string
   fontWeight?: string
   lineHeight?: string
+  display?: string
 }
 
 type BlocksDataHome = {
@@ -49,11 +50,24 @@ type BlocksDataHome = {
   reward: string
   Miner: string
 }
+
+interface TransactionDataType {
+  TxnHash: string
+  Method: string
+  Block: string
+  Age: string
+  From: string
+  TO: string
+  Value: string
+  TxnFee: string
+}
+
 export type {
   Route,
-  ChipProps,
+  CustomTableProps,
   BlockProps,
+  ChipProps,
+  TransactionDataType,
   BlocksDataHome,
   SummaryBlocksProps,
-  CustomTableProps,
 }
