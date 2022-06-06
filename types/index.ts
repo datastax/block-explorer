@@ -62,6 +62,12 @@ interface TransactionDataType {
   TxnFee: string
 }
 
+interface HeroProps {
+  title: string
+  showChips?: boolean
+  blockNumber?: string
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -70,4 +76,5 @@ export type {
   TransactionDataType,
   BlocksDataHome,
   SummaryBlocksProps,
+  HeroProps,
 }

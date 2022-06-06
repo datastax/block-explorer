@@ -16,5 +16,6 @@ const colors = {
   neutral700: '#1E1F23',
   borderPrimary: '#2E2E2E',
   darkTextSecondary: '#FFFFFFB2',
+  neutral500: '#6D6F71',
 }
 export default colors
