@@ -3,12 +3,18 @@ import React from 'react'
 import { FontStyling } from '@components/shared/Pagination/UpperPagination/styles'
 import PaginationButton from '../../PaginationButton'
 
-const UpperPagination = () => {
+interface UpperPaginationProps {
+  transaction: boolean
+}
+
+const UpperPagination = (props: UpperPaginationProps) => {
   return (
     <FontStyling>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Stack direction="row" alignItems="center" spacing={2}>
-          Block #14849876 to #14849876 (Total of 14,849,877 blocks)
+          {props.transaction
+            ? 'More than > 1,586,808,272 transactions found (Showing the last 500k records)'
+            : 'Block #14849876 to #14849876 (Total of 14,849,877 blocks)'}
         </Stack>
         <Stack
           direction="row"
