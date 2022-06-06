@@ -12,5 +12,6 @@ const colors = {
   nordic: '#182B2C',
   borderPrimary: '#2E2E2E',
   darkTextSecondary: '#FFFFFFB2',
+  violet: "#000000" // TODO: Fix me
 }
 export default colors
