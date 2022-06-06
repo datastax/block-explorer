@@ -1,4 +1,4 @@
-import Hero from '@components/Blocks/Hero'
+import Hero from '@components/shared/Hero'
 import BlocksTable from '@components/Blocks/Table'
 import { transactionTitles, transactionData } from '@constants/seeds'
 const transactions = () => {
