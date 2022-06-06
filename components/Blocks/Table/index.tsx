@@ -96,7 +96,7 @@ const BlocksTable = ({
                           <Chip
                             label={Object.values(Data)[index]}
                             bgColor={colors.nordic}
-                            borderColor={`1px solid ${colors.actionPrimary}`}
+                            border={`1px solid ${colors.actionPrimary}`}
                             titleColor={colors.neutral100}
                           />
                         )}
