@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import Hero from '@components/Blocks/Hero'
+import Hero from '@components/shared/Hero'
 import BlocksDetail from '@components/BlocksDetail'
 const Block: NextPage = () => {
   return (
