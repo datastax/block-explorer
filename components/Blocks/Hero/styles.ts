@@ -7,6 +7,12 @@ const MainHeading = styled(Box)({
   lineHeight: '38px',
   color: colors.neutral100,
 })
+const SubHeading = styled('span')({
+  fontWeight: '600',
+  fontSize: '28px',
+  lineHeight: '38px',
+  color: colors.neutral300,
+})
 const Container = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
@@ -14,4 +20,4 @@ const Container = styled(Box)({
   padding: '40px 0px 25px',
 })
 
-export { MainHeading, Container }
+export { MainHeading, Container, SubHeading }

@@ -2,16 +2,16 @@ import { Stack } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import React from 'react'
 import Chip from '@components/shared/Chip'
-import { MainHeading, Container } from './styles'
+import { MainHeading, Container, SubHeading } from './styles'
+import { HeroProps } from 'types'
 
-interface BlocksHeaderProps {
-  title: string
-}
-const BlocksHero = ({title}: BlocksHeaderProps) => {
+const Hero = ({ title, showChips, blockNumber }: HeroProps) => {
   return (
     <Container>
-      <MainHeading>{title}</MainHeading>
-      {title == 'Blocks' && (
+      <MainHeading>
+        {title} <SubHeading> {blockNumber} </SubHeading>{' '}
+      </MainHeading>
+      {showChips && (
         <Stack direction="row" spacing={1}>
           <Chip
             label="Network Utilization: 50.1%"
@@ -31,4 +31,4 @@ const BlocksHero = ({title}: BlocksHeaderProps) => {
   )
 }
 
-export default BlocksHero
+export default Hero
