@@ -109,18 +109,6 @@ export const BlocksData: BlockProps[] = [
     Reward: '2.1807 Ether',
     BurntFees: '1.776540 (90.77%)',
   },
-  {
-    Block: 'Block',
-    Age: 'Age',
-    Txn: 'Txn',
-    Uncles: 'Uncles',
-    Miner: 'Miner',
-    GasUsed: 'GasUsed',
-    GasLimit: 'GasLimit',
-    BaseFee: 'BaseFee',
-    Reward: 'Reward',
-    BurntFees: 'BurntFees',
-  },
 ]
 
 export const BlocksTitle = [
@@ -129,9 +117,9 @@ export const BlocksTitle = [
   'Txn',
   'Uncles',
   'Miner',
-  'GasUsed',
-  'GasLimit',
-  'BaseFee',
+  'Gas Used',
+  'Gas Limit',
+  'Base Fee',
   'Reward',
-  'BurntFees',
+  'Burnt Fees (ETH)',
 ]
