@@ -16,7 +16,7 @@ const StyledCard = styled(Card)({
   width: '50%',
   [theme.breakpoints.down('lg')]: {
     padding: '15px',
-
+    
   },
 })
 
@@ -55,6 +55,9 @@ const StyledButton = styled(Button)({
   fontWeight: 500,
   fontSize: '14px',
   lineHeight: '24px',
+  '&:hover': {
+    backgroundColor: colors.actionSecondaryHover,
+  },
 })
 
 const ChipWrapper = styled('div')({

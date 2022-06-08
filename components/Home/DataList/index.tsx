@@ -46,7 +46,7 @@ const DataList = (props: transactionBlockProps) => {
             >
               <CustomTableCell
                 color={colors.actionSecondary}
-                border={`1px solid ${colors.neutral300}`}
+                border={`1px solid ${colors.neutral500}`}
                 fontWeight="400"
                 lineheight="24px"
               >
@@ -57,7 +57,7 @@ const DataList = (props: transactionBlockProps) => {
               </CustomTableCell>
               <CustomTableCell
                 color={colors.actionSecondary}
-                border={`1px solid ${colors.neutral300}`}
+                border={`1px solid ${colors.neutral500}`}
                 fontWeight="400"
                 lineheight="24px"
               >
@@ -78,7 +78,7 @@ const DataList = (props: transactionBlockProps) => {
               </CustomTableCell>
               <CustomTableCell
                 color={''}
-                border={`1px solid ${colors.neutral300}`}
+                border={`1px solid ${colors.neutral500}`}
               >
                 <ChipWrapper>
                   <Chip

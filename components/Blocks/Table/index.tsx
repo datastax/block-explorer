@@ -42,7 +42,7 @@ const BlocksTable = ({
                   key={index}
                   align="center"
                   color={title}
-                  border={`1px solid ${colors.neutral300}`}
+                  border={`1px solid ${colors.neutral500}`}
                   fontWeight="500"
                   lineheight="157%"
                   
@@ -71,7 +71,7 @@ const BlocksTable = ({
                       {TransactionDataToMap && index == 5 && (
                         <CustomTableCell
                           color={''}
-                          border={`1px solid ${colors.neutral300}`}
+                          border={`1px solid ${colors.neutral500}`}
                         >
                           <Exchange />
                         </CustomTableCell>
@@ -81,7 +81,7 @@ const BlocksTable = ({
                       key={index}
                       align="center"
                       color={Object.keys(Data)[index]}
-                      border={`1px solid ${colors.neutral300}`}
+                      border={`1px solid ${colors.neutral500}`}
                       fontWeight="400"
                       lineheight="143%"
                     >
