@@ -91,7 +91,6 @@ const BlocksTable = ({
                         style={{
                           display: 'flex',
                           alignItems: 'center',
-                          paddingRight: '20px',
                         }}
                       >
                         {TransactionDataToMap && index == 0 && (
