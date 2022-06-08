@@ -41,6 +41,7 @@ interface CustomTableProps {
   fontWeight?: string
   lineHeight?: string
   display?: string
+  isTransaction?: boolean
 }
 
 type BlocksDataHome = {
