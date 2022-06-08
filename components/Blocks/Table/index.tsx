@@ -46,7 +46,7 @@ const BlocksTable = ({
                   color={title}
                   border={`1px solid ${colors.neutral500}`}
                   fontWeight="500"
-                  lineHeight="157%"
+                  lineheight="157%"
                   isTransaction={isTransaction}
                 >
                   <HeaderBox
