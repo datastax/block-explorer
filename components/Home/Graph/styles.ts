@@ -12,7 +12,7 @@ const StyledTypograph = styled(Typography)({
     marginLeft: '8px',
     fontSize: '16px',
     lineHeight: '18.75px',
-    marginRight: '84px',
+    marginRight: '82px',
   },
 })
 
@@ -21,5 +21,8 @@ const Container = styled(Card)({
   background: colors.surfaceCard,
   border: `1px solid ${colors.nightRider}`,
   borderRadius: '6px',
+  '@media (max-width: 1360px)': {
+    padding: '32px 10px',
+  },
 })
 export { StyledTypograph, Container }

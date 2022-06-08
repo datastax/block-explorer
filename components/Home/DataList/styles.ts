@@ -25,7 +25,7 @@ const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
   borderBottom: props.border,
   fontWeight: props.fontWeight,
   fontSize: '16px',
-  lineHeight: props.lineHeight,
+  lineHeight: props.lineheight,
   text: {
     color: colors.neutral100,
     fontSize: '12px',

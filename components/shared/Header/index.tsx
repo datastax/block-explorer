@@ -45,9 +45,9 @@ const Header = () => {
         <Wrapper height="auto" padding="0px 44px 26px">
           <Chip
             label={<ChipLabel />}
-            bgColor={colors.neutral700}
+            bgcolor={colors.neutral700}
             border={`1px solid ${colors.neutral300}`}
-            titleColor={colors.neutral100}
+            titlecolor={colors.neutral100}
           />
           <Stack spacing={'40px'} direction={'row'}>
             {ROUTES.map(({ name, link }: Route, index) => (

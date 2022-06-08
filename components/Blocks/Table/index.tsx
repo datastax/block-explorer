@@ -44,7 +44,8 @@ const BlocksTable = ({
                   color={title}
                   border={`1px solid ${colors.neutral300}`}
                   fontWeight="500"
-                  lineHeight="157%"
+                  lineheight="157%"
+                  
                 >
                   <HeaderBox
                     sx={{
@@ -82,7 +83,7 @@ const BlocksTable = ({
                       color={Object.keys(Data)[index]}
                       border={`1px solid ${colors.neutral300}`}
                       fontWeight="400"
-                      lineHeight="143%"
+                      lineheight="143%"
                     >
                       <CustomTableCellBox>
                         {TransactionDataToMap && index == 0 && (
@@ -95,9 +96,9 @@ const BlocksTable = ({
                         ) : (
                           <Chip
                             label={Object.values(Data)[index]}
-                            bgColor={colors.nordic}
+                            bgcolor={colors.nordic}
                             border={`1px solid ${colors.actionPrimary}`}
-                            titleColor={colors.neutral100}
+                            titlecolor={colors.neutral100}
                           />
                         )}
                       </CustomTableCellBox>

@@ -2,9 +2,9 @@ import { Chip, styled } from '@mui/material'
 import { ChipProps } from 'types'
 
 const CustomChip = styled(Chip)((props: ChipProps) => ({
-  backgroundColor: props.bgColor,
+  backgroundColor: props.bgcolor,
   border: props.border,
-  color: props.titleColor,
+  color: props.titlecolor,
 }))
 
 export { CustomChip }

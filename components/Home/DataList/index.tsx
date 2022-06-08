@@ -48,7 +48,7 @@ const DataList = (props: transactionBlockProps) => {
                 color={colors.actionSecondary}
                 border={`1px solid ${colors.neutral300}`}
                 fontWeight="400"
-                lineHeight="24px"
+                lineheight="24px"
               >
                 <ColumnBox flexValue="flex-start">
                   {BlocksData.Block}
@@ -59,7 +59,7 @@ const DataList = (props: transactionBlockProps) => {
                 color={colors.actionSecondary}
                 border={`1px solid ${colors.neutral300}`}
                 fontWeight="400"
-                lineHeight="24px"
+                lineheight="24px"
               >
                 <ColumnBox flexValue="flex-start">
                   <div>
@@ -82,9 +82,9 @@ const DataList = (props: transactionBlockProps) => {
               >
                 <ChipWrapper>
                   <Chip
-                    bgColor={colors.nordic}
+                    bgcolor={colors.nordic}
                     border={`1px solid ${colors.actionPrimary}`}
-                    titleColor={colors.neutral100}
+                    titlecolor={colors.neutral100}
                     label={BlocksData.reward}
                   />
                 </ChipWrapper>
@@ -94,7 +94,9 @@ const DataList = (props: transactionBlockProps) => {
         </TableBody>
       </Table>
       <StyledButton
-        onClick={(e) => handleClick(e, props.miner ? '/blocks' : '/transactions')}
+        onClick={(e) =>
+          handleClick(e, props.miner ? '/blocks' : '/transactions')
+        }
       >
         VIEW All {props.miner ? 'BLOCKS' : 'TRANSACTIONS'}
       </StyledButton>
