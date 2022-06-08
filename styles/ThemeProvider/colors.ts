@@ -17,5 +17,6 @@ const colors = {
   borderPrimary: '#2E2E2E',
   darkTextSecondary: '#FFFFFFB2',
   neutral500: '#6D6F71',
+  actionSecondaryHover: '#D1C4FF',
 }
 export default colors
