@@ -47,10 +47,7 @@ const CustomFilter = styled(Select)({
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
   },
-  '& .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon': {
-    color: colors.darkTextSecondary,
-  },
-  '& .css-bpeome-MuiSvgIcon-root-MuiSelect-icon': {
+  '& .MuiSvgIcon-root': {
     color: colors.darkTextSecondary,
   },
 })
