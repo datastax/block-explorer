@@ -22,12 +22,14 @@ interface BlocksTableProps {
   titles: string[]
   TransactionDataToMap?: TransactionDataType[]
   BlocksDataToMap?: BlockProps[]
+  isTransaction?: boolean
 }
 
 const BlocksTable = ({
   titles,
   TransactionDataToMap,
   BlocksDataToMap,
+  isTransaction,
 }: BlocksTableProps) => {
   const dataToMap = BlocksDataToMap || TransactionDataToMap
   return (
@@ -44,8 +46,8 @@ const BlocksTable = ({
                   color={title}
                   border={`1px solid ${colors.neutral500}`}
                   fontWeight="500"
-                  lineheight="157%"
-                  
+                  lineHeight="157%"
+                  isTransaction={isTransaction}
                 >
                   <HeaderBox
                     sx={{
@@ -85,9 +87,21 @@ const BlocksTable = ({
                       fontWeight="400"
                       lineheight="143%"
                     >
-                      <CustomTableCellBox>
+                      <CustomTableCellBox
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          paddingRight: '20px',
+                        }}
+                      >
                         {TransactionDataToMap && index == 0 && (
-                          <div style={{ paddingRight: '20px' }}>
+                          <div
+                            style={{
+                              paddingRight: '20px',
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                          >
                             <Eye />
                           </div>
                         )}

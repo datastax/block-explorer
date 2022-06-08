@@ -148,8 +148,8 @@ const Watch = () => {
 const Eye = () => {
   return (
     <svg
-      width="30"
-      height="20"
+      width="24"
+      height="24"
       viewBox="0 0 30 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
