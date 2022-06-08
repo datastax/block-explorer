@@ -86,9 +86,9 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
             {' '}
             <Chip
               label="49 transactions"
-              bgColor={colors.nordic}
+              bgcolor={colors.nordic}
               border={`1px solid ${colors.actionPrimary}`}
-              titleColor={colors.neutral100}
+              titlecolor={colors.neutral100}
             />
             <TransactionStyle>
               {' '}
@@ -96,9 +96,9 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
             </TransactionStyle>
             <Chip
               label="33 contract internal transactions"
-              bgColor={colors.nordic}
+              bgcolor={colors.nordic}
               border={`1px solid ${colors.actionPrimary}`}
-              titleColor={colors.neutral100}
+              titlecolor={colors.neutral100}
             />
             <TransactionStyle>
               <ListItemText primary={data[objectKey]} />
