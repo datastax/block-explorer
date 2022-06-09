@@ -46,7 +46,7 @@ const TransactionsList = ({ title, transactions }: transactionBlockProps) => {
                 >
                   <ColumnBox flexValue="flex-start">
                     {formatAddress(transaction.hash)}
-                    <text>{transaction.block_timestamp}</text>
+                    <strong>{transaction.block_timestamp}</strong>
                   </ColumnBox>
                 </CustomTableCell>
                 <CustomTableCell

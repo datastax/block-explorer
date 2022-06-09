@@ -16,7 +16,6 @@ const StyledCard = styled(Card)({
   width: '50%',
   [theme.breakpoints.down('lg')]: {
     padding: '15px',
-
   },
 })
 
@@ -26,10 +25,11 @@ const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
   fontWeight: props.fontWeight,
   fontSize: '16px',
   lineHeight: props.lineheight,
-  text: {
+  strong: {
     color: colors.neutral100,
     fontSize: '12px',
     lineHeight: '14.4px',
+    fontWeight: 400,
   },
   span: {
     color: colors.neutral100,
@@ -43,6 +43,9 @@ const ColumnBox = styled(Box)((props: columnBoxProps) => ({
   minWidth: '33%',
   [theme.breakpoints.down('lg')]: {
     minWidth: 'auto',
+  },
+  div: {
+    fontSize: '14px',
   },
 }))
 

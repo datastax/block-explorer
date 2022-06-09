@@ -45,7 +45,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
               >
                 <ColumnBox flexValue="flex-start">
                   {Block.number}
-                  <text>{Block.timestamp}</text>
+                  <strong>{Block.timestamp}</strong>
                 </ColumnBox>
               </CustomTableCell>
               <CustomTableCell
@@ -61,7 +61,9 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                   </div>
                   <div>
                     <span>
-                      {Block.transaction_count} txns in {Block.timestamp}
+                      <strong>
+                        {Block.transaction_count} txns in {Block.timestamp}
+                      </strong>
                     </span>
                   </div>
                 </ColumnBox>
