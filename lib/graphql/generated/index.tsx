@@ -243,7 +243,7 @@ export type GetBlocksQueryVariables = Exact<{
 }>;
 
 
-export type GetBlocksQuery = { __typename?: 'Query', getBlocks: { __typename?: 'BlockPaginationOutput', totalPages: number, block: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number }> } };
+export type GetBlocksQuery = { __typename?: 'Query', getBlocks: { __typename?: 'BlockPaginationOutput', totalPages: number, block: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number, hash: string }> } };
 
 export type GetTransactionsQueryVariables = Exact<{
   transactionsdata: TransactionsPagesInput;
@@ -262,6 +262,7 @@ export const GetBlocksDocument = gql`
       timestamp
       miner
       transaction_count
+      hash
     }
   }
 }
