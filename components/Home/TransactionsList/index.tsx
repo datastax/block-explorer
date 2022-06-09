@@ -14,19 +14,11 @@ import { formatAddress } from '@utils'
 
 interface transactionBlockProps {
   title: string
-  data: GetTransactionsQuery | undefined
-  isBlocks?: boolean
+  transactions: GetTransactionsQuery | undefined
 }
 
-const DataList = ({ title, data, isBlocks }: transactionBlockProps) => {
+const TransactionsList = ({ title, transactions }: transactionBlockProps) => {
   const router = useRouter()
-  const handleClick = (
-    e: React.MouseEvent<HTMLButtonElement | undefined>,
-    route: string
-  ) => {
-    e.preventDefault()
-    router.push(route)
-  }
   return (
     <StyledCard>
       <Typography
@@ -40,67 +32,63 @@ const DataList = ({ title, data, isBlocks }: transactionBlockProps) => {
 
       <Table sx={{ width: '100%' }}>
         <TableBody>
-          {data?.transactions.transactions?.map((transaction, index) => (
-            <TableRow
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              key={index}
-            >
-              <CustomTableCell
-                color={colors.actionSecondary}
-                border={`1px solid ${colors.neutral500}`}
-                fontWeight="400"
-                lineheight="24px"
+          {transactions?.transactions.transactions?.map(
+            (transaction, index) => (
+              <TableRow
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                key={index}
               >
-                <ColumnBox flexValue="flex-start">
-                  {transaction.hash}
-                  <text>{transaction.block_timestamp}</text>
-                </ColumnBox>
-              </CustomTableCell>
-              <CustomTableCell
-                color={colors.actionSecondary}
-                border={`1px solid ${colors.neutral500}`}
-                fontWeight="400"
-                lineheight="24px"
-              >
-                <ColumnBox flexValue="flex-start">
-                  <div>
-                    <span>{isBlocks ? 'Miner' : 'From'} </span>
-                    {formatAddress(transaction.from_address)}
-                  </div>
-                  <div>
-                    <span>{isBlocks ? 'To ' : ''}</span>
-                    {!isBlocks ? (
-                      formatAddress(transaction.to_address)
-                    ) : (
-                      <text>{transaction.block_timestamp}</text>
-                    )}
-                  </div>
-                </ColumnBox>
-              </CustomTableCell>
-              <CustomTableCell
-                color={''}
-                border={`1px solid ${colors.neutral500}`}
-              >
-                <ChipWrapper>
-                  <Chip
-                    bgcolor={colors.nordic}
-                    border={`1px solid ${colors.actionPrimary}`}
-                    titlecolor={colors.neutral100}
-                    label={'2.1807 Ether'}
-                  />
-                </ChipWrapper>
-              </CustomTableCell>
-            </TableRow>
-          ))}
+                <CustomTableCell
+                  color={colors.actionSecondary}
+                  border={`1px solid ${colors.neutral300}`}
+                  fontWeight="400"
+                  lineheight="24px"
+                >
+                  <ColumnBox flexValue="flex-start">
+                    {formatAddress(transaction.hash)}
+                    <text>{transaction.block_timestamp}</text>
+                  </ColumnBox>
+                </CustomTableCell>
+                <CustomTableCell
+                  color={colors.actionSecondary}
+                  border={`1px solid ${colors.neutral300}`}
+                  fontWeight="400"
+                  lineheight="24px"
+                >
+                  <ColumnBox flexValue="flex-start">
+                    <div>
+                      <span>From </span>
+                      {formatAddress(transaction.from_address)}
+                    </div>
+                    <div>
+                      <span>To </span>
+                      {formatAddress(transaction.to_address)}
+                    </div>
+                  </ColumnBox>
+                </CustomTableCell>
+                <CustomTableCell
+                  color={''}
+                  border={`1px solid ${colors.neutral300}`}
+                >
+                  <ChipWrapper>
+                    <Chip
+                      bgcolor={colors.nordic}
+                      border={`1px solid ${colors.actionPrimary}`}
+                      titlecolor={colors.neutral100}
+                      label={'2.1807 Ether'}
+                    />
+                  </ChipWrapper>
+                </CustomTableCell>
+              </TableRow>
+            )
+          )}
         </TableBody>
       </Table>
-      <StyledButton
-        onClick={(e) => handleClick(e, isBlocks ? '/blocks' : '/transactions')}
-      >
-        VIEW All {isBlocks ? 'BLOCKS' : 'TRANSACTIONS'}
+      <StyledButton onClick={() => router.push('/transactions')}>
+        VIEW All TRANSACTIONS
       </StyledButton>
     </StyledCard>
   )
 }
 
-export default DataList
+export default TransactionsList
