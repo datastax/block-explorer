@@ -30,7 +30,7 @@ const CustomListItem = styled(ListItem)({
   paddingTop: '15px',
 })
 const CustomDivider = styled(Divider)({
-  background: colors.neutral300,
+  background: colors.neutral500,
   width: '100%',
 })
 const CustomListItemText = styled(ListItemText)({
