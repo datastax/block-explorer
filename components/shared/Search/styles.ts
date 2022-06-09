@@ -47,6 +47,9 @@ const CustomFilter = styled(Select)({
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
   },
+  '& .MuiSvgIcon-root': {
+    color: colors.darkTextSecondary,
+  },
 })
 
 export { Wrapper, SearchInput, SearchButton, CustomFilter }

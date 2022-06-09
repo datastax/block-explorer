@@ -8,7 +8,7 @@ const transactions = () => {
       <BlocksTable
         titles={transactionTitles}
         TransactionDataToMap={transactionData}
-
+        isTransaction={true}
       />
     </>
   )

@@ -4,31 +4,30 @@ import { Box, Stack } from '@mui/material'
 const Container = styled(Box)({
   display: 'flex',
   padding: '56px 0px',
+  width: '100%',
   justifyContent: 'space-between',
-  maxWidth: '100%',
-  '@media (max-width: 1200px)': {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '0px',
-  },
+  
 })
 
 const PriceStack = styled(Stack)({
-  width: '320px',
-  '@media (max-width: 1360px)': {
-    width: '30%',
-  },
+  minWidth: '320px',
+  margin: 0,
+  padding: 0,
+  
 })
 const TransactionStack = styled(Stack)({
-  width: '434px',
-  '@media (max-width: 1200px)': {
-    width: '70%',
-  },
+  minWidth: '434px',
+  // marginLeft: '25px',
+  // '@media (max-width: 1400px)': {
+  //   width: '',
+  // },
 })
 
 const CardsBox = styled(Box)({
+  width: '57.55%',
   display: 'flex',
   flexDirection: 'row',
+  justifyContent: 'space-between',
 })
 
 export { Container, PriceStack, TransactionStack, CardsBox }
