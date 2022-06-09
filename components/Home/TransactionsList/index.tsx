@@ -10,7 +10,7 @@ import {
 } from './styles'
 import { useRouter } from 'next/router'
 import { GetTransactionsQuery } from 'lib/graphql/generated'
-import { formatAddress } from '@utils'
+import { formatAddress, getDifference } from '@utils'
 
 interface transactionBlockProps {
   title: string
@@ -46,7 +46,9 @@ const TransactionsList = ({ title, transactions }: transactionBlockProps) => {
                 >
                   <ColumnBox flexValue="flex-start">
                     {formatAddress(transaction.hash)}
-                    <strong>{transaction.block_timestamp}</strong>
+                    <strong>
+                      {getDifference(parseInt(transaction.block_timestamp))} ago
+                    </strong>
                   </ColumnBox>
                 </CustomTableCell>
                 <CustomTableCell

@@ -10,7 +10,7 @@ import {
 } from './styles'
 import { useRouter } from 'next/router'
 import { GetBlocksQuery } from 'lib/graphql/generated'
-import { formatAddress } from '@utils'
+import { formatAddress, getDifference } from '@utils'
 
 interface BlockListProps {
   title: string
@@ -45,7 +45,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
               >
                 <ColumnBox flexValue="flex-start">
                   {Block.number}
-                  <strong>{Block.timestamp}</strong>
+                  <strong>{getDifference(parseInt(Block.timestamp))} ago</strong>
                 </ColumnBox>
               </CustomTableCell>
               <CustomTableCell
@@ -62,7 +62,8 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                   <div>
                     <span>
                       <strong>
-                        {Block.transaction_count} txns in {Block.timestamp}
+                        {Block.transaction_count} txns in{' '}
+                        {getDifference(parseInt(Block.timestamp))}
                       </strong>
                     </span>
                   </div>
