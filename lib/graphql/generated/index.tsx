@@ -252,6 +252,13 @@ export type GetTransactionsQueryVariables = Exact<{
 
 export type GetTransactionsQuery = { __typename?: 'Query', transactions: { __typename?: 'TransactionsPaginationOutput', totalPages: number, transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, block_timestamp: string, from_address?: string | null, to_address?: string | null }> } };
 
+export type GetPaginatedBlocksQueryVariables = Exact<{
+  data: PagesInput;
+}>;
+
+
+export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: { __typename?: 'BlockPaginationOutput', totalPages: number, block: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, sha3_uncles?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null }> } };
+
 
 export const GetBlocksDocument = gql`
     query getBlocks($data: PagesInput!) {
@@ -336,3 +343,48 @@ export function useGetTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetTransactionsQueryHookResult = ReturnType<typeof useGetTransactionsQuery>;
 export type GetTransactionsLazyQueryHookResult = ReturnType<typeof useGetTransactionsLazyQuery>;
 export type GetTransactionsQueryResult = Apollo.QueryResult<GetTransactionsQuery, GetTransactionsQueryVariables>;
+export const GetPaginatedBlocksDocument = gql`
+    query getPaginatedBlocks($data: PagesInput!) {
+  getBlocks(data: $data) {
+    totalPages
+    block {
+      number
+      timestamp
+      transaction_count
+      sha3_uncles
+      miner
+      gas_used
+      gas_limit
+      base_fee_per_gas
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPaginatedBlocksQuery__
+ *
+ * To run a query within a React component, call `useGetPaginatedBlocksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPaginatedBlocksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPaginatedBlocksQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useGetPaginatedBlocksQuery(baseOptions: Apollo.QueryHookOptions<GetPaginatedBlocksQuery, GetPaginatedBlocksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPaginatedBlocksQuery, GetPaginatedBlocksQueryVariables>(GetPaginatedBlocksDocument, options);
+      }
+export function useGetPaginatedBlocksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPaginatedBlocksQuery, GetPaginatedBlocksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPaginatedBlocksQuery, GetPaginatedBlocksQueryVariables>(GetPaginatedBlocksDocument, options);
+        }
+export type GetPaginatedBlocksQueryHookResult = ReturnType<typeof useGetPaginatedBlocksQuery>;
+export type GetPaginatedBlocksLazyQueryHookResult = ReturnType<typeof useGetPaginatedBlocksLazyQuery>;
+export type GetPaginatedBlocksQueryResult = Apollo.QueryResult<GetPaginatedBlocksQuery, GetPaginatedBlocksQueryVariables>;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableHead from '@mui/material/TableHead'
@@ -14,28 +14,39 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { BlockProps, TransactionDataType } from 'types'
+import { TransactionDataType } from 'types'
 import { Exchange, Eye } from '@components/shared/Icons'
 import Chip from '@components/shared/Chip'
+import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
+import { formatAddress } from 'utils'
 
 interface BlocksTableProps {
+  pageSize: number
+  setPageSize: Dispatch<SetStateAction<number>>
   titles: string[]
   TransactionDataToMap?: TransactionDataType[]
-  BlocksDataToMap?: BlockProps[]
+  Data?: GetPaginatedBlocksQuery | undefined
   isTransaction?: boolean
 }
 
 const BlocksTable = ({
+  pageSize,
+  setPageSize,
   titles,
   TransactionDataToMap,
-  BlocksDataToMap,
+  Data,
   isTransaction,
 }: BlocksTableProps) => {
-  const dataToMap = BlocksDataToMap || TransactionDataToMap
+  const [currentPage, setCurrentPage] = useState(1)
   return (
     <BlockTableContainer>
       <CustomTableContainer>
-        <UpperPagination transaction={TransactionDataToMap ? true : false} />
+        <UpperPagination
+          blocksData={Data}
+          transaction={TransactionDataToMap ? true : false}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
         <Table>
           <TableHead>
             <TableRow>
@@ -62,12 +73,12 @@ const BlocksTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataToMap?.map((Data, index) => (
+            {Data?.getBlocks.block.map((block, index) => (
               <TableRow
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 key={index}
               >
-                {[...Array(Object.keys(Data).length)].map((_, index) => (
+                {[...Array(Object.keys(block).length)].map((_, index) => (
                   <>
                     <>
                       {TransactionDataToMap && index == 5 && (
@@ -82,7 +93,7 @@ const BlocksTable = ({
                     <CustomTableCell
                       key={index}
                       align="center"
-                      color={Object.keys(Data)[index]}
+                      color={Object.keys(block)[index]}
                       border={`1px solid ${colors.neutral500}`}
                       fontWeight="400"
                       lineheight="143%"
@@ -104,11 +115,15 @@ const BlocksTable = ({
                             <Eye />
                           </div>
                         )}
-                        {Object.keys(Data)[index] !== 'Method' ? (
-                          Object.values(Data)[index]
+                        {Object.keys(block)[index] !== 'Method' ? (
+                          <>
+                            {formatAddress(
+                              Object.values(block)[index]?.toString()
+                            )}
+                          </>
                         ) : (
                           <Chip
-                            label={Object.values(Data)[index]}
+                            label={Object.values(block)[index]}
                             bgcolor={colors.nordic}
                             border={`1px solid ${colors.actionPrimary}`}
                             titlecolor={colors.neutral100}
@@ -122,7 +137,13 @@ const BlocksTable = ({
             ))}
           </TableBody>
         </Table>
-        <BottomPagination />
+        <BottomPagination
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          blocksData={Data}
+        />
       </CustomTableContainer>
     </BlockTableContainer>
   )

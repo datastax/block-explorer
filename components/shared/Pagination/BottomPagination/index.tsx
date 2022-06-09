@@ -3,11 +3,27 @@ import {
   FontStyling,
 } from '@components/shared/Pagination/BottomPagination/styles'
 import { Stack } from '@mui/material'
-import React from 'react'
+import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
+import React, { Dispatch, SetStateAction } from 'react'
 import PaginationButton from '../../PaginationButton'
 import SplitButton from '../../SplitButton'
 
-const BottomPagination = () => {
+interface BottomPaginationProps {
+  pageSize: number
+  setPageSize: Dispatch<SetStateAction<number>>
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  blocksData?: GetPaginatedBlocksQuery | undefined
+}
+
+const BottomPagination = ({
+  pageSize,
+  setPageSize,
+  currentPage,
+  setCurrentPage,
+  blocksData,
+}: BottomPaginationProps) => {
+  const totalPages = blocksData?.getBlocks.totalPages
   return (
     <Records>
       <Stack
@@ -19,7 +35,7 @@ const BottomPagination = () => {
           <FontStyling>
             <span>SHOW</span>
           </FontStyling>
-          <SplitButton />
+          <SplitButton pageSize={pageSize} setPageSize={setPageSize} />
           <FontStyling>
             <span>RECORDS</span>
           </FontStyling>
@@ -31,11 +47,18 @@ const BottomPagination = () => {
           alignItems="center"
           spacing={2}
         >
-          <PaginationButton rtl="true" />
-          <FontStyling>
-            <span>Page 1 of 593996</span>
-          </FontStyling>
-          <PaginationButton />
+          <PaginationButton
+            rtl="true"
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <PaginationButton
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
         </Stack>
       </Stack>
     </Records>

@@ -1,6 +1,4 @@
 import * as React from 'react'
-import Button from '@mui/material/Button'
-import colors from '@styles/ThemeProvider/colors'
 import { CustomArrowButton } from '../SplitButton/styles'
 import { FontStyling } from '../../Blocks/Table/styles'
 import {
@@ -11,40 +9,45 @@ import {
 } from './styles'
 export interface paginationProps {
   rtl?: string
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  currentPage: number
 }
 
-export default function PaginationButton({ rtl }: paginationProps) {
-  const anchorRef = React.useRef<HTMLDivElement>(null)
-
+export default function PaginationButton({
+  rtl,
+  setCurrentPage,
+  currentPage,
+}: paginationProps) {
   return (
     <>
       {rtl ? (
-        <CustomButtonGroup disabled variant="outlined" ref={anchorRef}>
-          <CustomButton>
+        <CustomButtonGroup variant="outlined">
+          <CustomButton disabled={currentPage === 1}>
             <FontStyling> FIRST </FontStyling>{' '}
           </CustomButton>
           <CustomArrowButton
             size="small"
             aria-label="select merge strategy"
             aria-haspopup="menu"
-            disabled
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
           >
-            <ArrowBackStyle />
+            <ArrowBackStyle disabled={currentPage === 1} />
           </CustomArrowButton>
         </CustomButtonGroup>
       ) : (
-        <CustomButtonGroup variant="outlined" ref={anchorRef}>
+        <CustomButtonGroup variant="outlined" disabled={currentPage === 7}>
           <CustomArrowButton
             size="small"
             aria-label="select merge strategy"
             aria-haspopup="menu"
+            onClick={() => setCurrentPage(currentPage + 1)}
           >
             <ArrowForwardStyle />
           </CustomArrowButton>
-          <Button sx={{ color: colors.neutral100 }}>
-            {' '}
+          <CustomButton>
             <FontStyling> LAST </FontStyling>{' '}
-          </Button>
+          </CustomButton>
         </CustomButtonGroup>
       )}
     </>

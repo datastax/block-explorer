@@ -6,6 +6,7 @@ const formatAddress = (
   if (!address) {
     return ''
   }
+  if (address.length < 15) return address
   return address.slice(0, start) + '....' + address.slice(address.length - end)
 }
 

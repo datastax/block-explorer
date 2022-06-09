@@ -22,3 +22,19 @@ query getTransactions($transactionsdata: TransactionsPagesInput!) {
     }
   }
 }
+
+query getPaginatedBlocks($data: PagesInput!) {
+  getBlocks(data: $data) {
+    totalPages
+    block {
+      number
+      timestamp
+      transaction_count
+      sha3_uncles
+      miner
+      gas_used
+      gas_limit
+      base_fee_per_gas
+    }
+  }
+}
