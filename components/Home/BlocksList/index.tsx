@@ -41,7 +41,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                 color={colors.actionSecondary}
                 border={`1px solid ${colors.neutral300}`}
                 fontWeight="400"
-                lineHeight="24px"
+                lineheight="24px"
               >
                 <ColumnBox flexValue="flex-start">
                   {Block.number}
@@ -52,16 +52,16 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                 color={colors.actionSecondary}
                 border={`1px solid ${colors.neutral300}`}
                 fontWeight="400"
-                lineHeight="24px"
+                lineheight="24px"
               >
                 <ColumnBox flexValue="flex-start">
                   <div>
-                    Miner{" "}
+                    <span>Miner </span>
                     {formatAddress(Block.miner)}
                   </div>
                   <div>
                     <span>
-                      {Block.transaction_count} in {Block.timestamp}
+                      {Block.transaction_count} txns in {Block.timestamp}
                     </span>
                   </div>
                 </ColumnBox>
@@ -72,9 +72,9 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
               >
                 <ChipWrapper>
                   <Chip
-                    bgColor={colors.nordic}
+                    bgcolor={colors.nordic}
                     border={`1px solid ${colors.actionPrimary}`}
-                    titleColor={colors.neutral100}
+                    titlecolor={colors.neutral100}
                     label={'2.1807 Ether'}
                   />
                 </ChipWrapper>

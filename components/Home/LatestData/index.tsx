@@ -1,6 +1,5 @@
 import BlocksList from '@components/Home/BlocksList'
-// import TransactionsList from '@components/Home/TransactionsList'
-
+import TransactionsList from '@components/Home/TransactionsList'
 import { Stack } from '@mui/material'
 import {
   useGetBlocksQuery,
@@ -8,7 +7,10 @@ import {
 } from '@lib/graphql/generated'
 
 const LatestData = () => {
-  const { data: latestBlocks, error } = useGetBlocksQuery({
+  const blockHash =
+    '0xfc156ad14fd527532255a33008792957e0c6ebdc05db17b8ff8149fd663284d5' // TODO: SHOULD BE DYNAMIC
+
+  const { data: latestBlocks, error: blocksError } = useGetBlocksQuery({
     variables: {
       data: {
         pageSize: 6,
@@ -19,8 +21,7 @@ const LatestData = () => {
     useGetTransactionsQuery({
       variables: {
         transactionsdata: {
-          blockHash:
-            '0xfc156ad14fd527532255a33008792957e0c6ebdc05db17b8ff8149fd663284d5',
+          blockHash,
           pagesInput: {
             pageSize: 6,
           },
@@ -28,23 +29,21 @@ const LatestData = () => {
       },
     })
 
-  if (error) {
-    console.error(error)
+  if (blocksError) {
+    console.error(blocksError)
   }
 
   if (transactionError) {
     console.error(transactionError)
   }
-  
-  console.log('latestTransactions', latestTransactions)
 
   return (
     <Stack spacing={'24px'} direction={'row'}>
       <BlocksList title={'Latest Blocks'} blocks={latestBlocks} />
-      {/* <TransactionsList
+      <TransactionsList
         title={'Latest Transactions'}
-        data={latestTransactions}
-      /> */}
+        transactions={latestTransactions}
+      />
     </Stack>
   )
 }
