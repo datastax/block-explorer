@@ -3,7 +3,7 @@ import TransactionsList from '@components/Home/TransactionsList'
 import { Stack } from '@mui/material'
 import {
   useGetBlocksQuery,
-  useGetTransactionsQuery,
+  useGetTransactionsLazyQuery,
 } from '@lib/graphql/generated'
 import { useEffect, useState } from 'react'
 
@@ -17,29 +17,36 @@ const LatestData = () => {
       },
     },
   })
-  const { data: latestTransactions, error: transactionError } =
-    useGetTransactionsQuery({
-      variables: {
-        transactionsdata: {
-          blockHash,
-          pagesInput: {
-            pageSize: 6,
-          },
-        },
-      },
-    })
+
+  const [
+    getTransactions,
+    { data: latestTransactions, error: transactionError },
+  ] = useGetTransactionsLazyQuery()
+  if (transactionError) {
+    console.error(transactionError)
+  }
 
   if (blocksError) {
     console.error(blocksError)
   }
 
-  if (transactionError) {
-    console.error(transactionError)
-  }
-
   useEffect(() => {
     if (latestBlocks) setBlockHash(latestBlocks.getBlocks.block[0].hash)
   }, [latestBlocks])
+
+  useEffect(() => {
+    if (blockHash)
+      getTransactions({
+        variables: {
+          transactionsdata: {
+            blockHash,
+            pagesInput: {
+              pageSize: 6,
+            },
+          },
+        },
+      })
+  }, [blockHash, getTransactions])
 
   return (
     <Stack spacing={'24px'} direction={'row'}>
