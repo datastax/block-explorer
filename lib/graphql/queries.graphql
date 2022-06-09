@@ -6,6 +6,7 @@ query getBlocks($data: PagesInput!) {
       timestamp
       miner
       transaction_count
+      hash
     }
   }
 }

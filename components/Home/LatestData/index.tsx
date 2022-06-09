@@ -5,10 +5,10 @@ import {
   useGetBlocksQuery,
   useGetTransactionsQuery,
 } from '@lib/graphql/generated'
+import { useEffect, useState } from 'react'
 
 const LatestData = () => {
-  const blockHash =
-    '0xfc156ad14fd527532255a33008792957e0c6ebdc05db17b8ff8149fd663284d5' // TODO: SHOULD BE DYNAMIC
+  const [blockHash, setBlockHash] = useState('')
 
   const { data: latestBlocks, error: blocksError } = useGetBlocksQuery({
     variables: {
@@ -36,6 +36,10 @@ const LatestData = () => {
   if (transactionError) {
     console.error(transactionError)
   }
+
+  useEffect(() => {
+    if (latestBlocks) setBlockHash(latestBlocks.getBlocks.block[0].hash)
+  }, [latestBlocks])
 
   return (
     <Stack spacing={'24px'} direction={'row'}>
