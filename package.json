@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "yarn generate && next dev",
+    "build": "yarn generate && next build",
+    "start": "yarn generate && next start",
+    "lint": "next lint",
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",
@@ -14,6 +15,11 @@
     "@emotion/react": "^11.9.0",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/introspection": "^2.1.1",
+    "@graphql-codegen/typescript": "^2.5.0",
+    "@graphql-codegen/typescript-operations": "^2.4.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.15",
     "@mui/icons-material": "^5.8.0",
     "@mui/material": "^5.8.1",
     "graphql": "^16.5.0",

@@ -1,0 +1,23 @@
+query getBlocks($data: PagesInput!) {
+  getBlocks(data: $data) {
+    totalPages
+    block {
+      number
+      timestamp
+      miner
+      transaction_count
+    }
+  }
+}
+
+query getTransactions($transactionsdata: TransactionsPagesInput!) {
+  transactions(data: $transactionsdata) {
+    totalPages
+    transactions {
+      hash
+      block_timestamp
+      from_address
+      to_address
+    }
+  }
+}
