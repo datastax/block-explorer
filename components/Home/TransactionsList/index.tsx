@@ -8,16 +8,17 @@ import {
   StyledButton,
   ChipWrapper,
 } from './styles'
-import { BlocksDataHome } from 'types'
 import { useRouter } from 'next/router'
+import { GetTransactionsQuery } from 'lib/graphql/generated'
+import { formatAddress } from '@utils'
 
 interface transactionBlockProps {
   title: string
-  blocksData: BlocksDataHome[]
-  miner?: boolean
+  data: GetTransactionsQuery | undefined
+  isBlocks?: boolean
 }
 
-const DataList = (props: transactionBlockProps) => {
+const DataList = ({ title, data, isBlocks }: transactionBlockProps) => {
   const router = useRouter()
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement | undefined>,
@@ -34,12 +35,12 @@ const DataList = (props: transactionBlockProps) => {
         lineHeight={'28px'}
         color={colors.neutral100}
       >
-        {props.title}
+        {title}
       </Typography>
 
       <Table sx={{ width: '100%' }}>
         <TableBody>
-          {props.blocksData.map((BlocksData, index) => (
+          {data?.transactions.transactions?.map((transaction, index) => (
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               key={index}
@@ -51,8 +52,8 @@ const DataList = (props: transactionBlockProps) => {
                 lineHeight="24px"
               >
                 <ColumnBox flexValue="flex-start">
-                  {BlocksData.Block}
-                  <text>{BlocksData.Age}</text>
+                  {transaction.hash}
+                  <text>{transaction.block_timestamp}</text>
                 </ColumnBox>
               </CustomTableCell>
               <CustomTableCell
@@ -63,15 +64,15 @@ const DataList = (props: transactionBlockProps) => {
               >
                 <ColumnBox flexValue="flex-start">
                   <div>
-                    <span>{props.miner ? 'Miner' : 'From'} </span>
-                    {BlocksData.Miner}
+                    <span>{isBlocks ? 'Miner' : 'From'} </span>
+                    {formatAddress(transaction.from_address)}
                   </div>
                   <div>
-                    <span>{!props.miner ? 'To ' : ''}</span>
-                    {!props.miner ? (
-                      BlocksData.Txn
+                    <span>{isBlocks ? 'To ' : ''}</span>
+                    {!isBlocks ? (
+                      formatAddress(transaction.to_address)
                     ) : (
-                      <text>{BlocksData.Txn}</text>
+                      <text>{transaction.block_timestamp}</text>
                     )}
                   </div>
                 </ColumnBox>
@@ -85,7 +86,7 @@ const DataList = (props: transactionBlockProps) => {
                     bgColor={colors.nordic}
                     border={`1px solid ${colors.actionPrimary}`}
                     titleColor={colors.neutral100}
-                    label={BlocksData.reward}
+                    label={'2.1807 Ether'}
                   />
                 </ChipWrapper>
               </CustomTableCell>
@@ -94,9 +95,9 @@ const DataList = (props: transactionBlockProps) => {
         </TableBody>
       </Table>
       <StyledButton
-        onClick={(e) => handleClick(e, props.miner ? '/blocks' : '/transactions')}
+        onClick={(e) => handleClick(e, isBlocks ? '/blocks' : '/transactions')}
       >
-        VIEW All {props.miner ? 'BLOCKS' : 'TRANSACTIONS'}
+        VIEW All {isBlocks ? 'BLOCKS' : 'TRANSACTIONS'}
       </StyledButton>
     </StyledCard>
   )
