@@ -22,12 +22,14 @@ interface BlocksTableProps {
   titles: string[]
   TransactionDataToMap?: TransactionDataType[]
   BlocksDataToMap?: BlockProps[]
+  isTransaction?: boolean
 }
 
 const BlocksTable = ({
   titles,
   TransactionDataToMap,
   BlocksDataToMap,
+  isTransaction,
 }: BlocksTableProps) => {
   const dataToMap = BlocksDataToMap || TransactionDataToMap
   return (
@@ -42,9 +44,10 @@ const BlocksTable = ({
                   key={index}
                   align="center"
                   color={title}
-                  border={`1px solid ${colors.neutral300}`}
+                  border={`1px solid ${colors.neutral500}`}
                   fontWeight="500"
-                  lineHeight="157%"
+                  lineheight="157%"
+                  isTransaction={isTransaction}
                 >
                   <HeaderBox
                     sx={{
@@ -70,7 +73,7 @@ const BlocksTable = ({
                       {TransactionDataToMap && index == 5 && (
                         <CustomTableCell
                           color={''}
-                          border={`1px solid ${colors.neutral300}`}
+                          border={`1px solid ${colors.neutral500}`}
                         >
                           <Exchange />
                         </CustomTableCell>
@@ -80,13 +83,24 @@ const BlocksTable = ({
                       key={index}
                       align="center"
                       color={Object.keys(Data)[index]}
-                      border={`1px solid ${colors.neutral300}`}
+                      border={`1px solid ${colors.neutral500}`}
                       fontWeight="400"
-                      lineHeight="143%"
+                      lineheight="143%"
                     >
-                      <CustomTableCellBox>
+                      <CustomTableCellBox
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
                         {TransactionDataToMap && index == 0 && (
-                          <div style={{ paddingRight: '20px' }}>
+                          <div
+                            style={{
+                              paddingRight: '20px',
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                          >
                             <Eye />
                           </div>
                         )}
@@ -95,9 +109,9 @@ const BlocksTable = ({
                         ) : (
                           <Chip
                             label={Object.values(Data)[index]}
-                            bgColor={colors.nordic}
+                            bgcolor={colors.nordic}
                             border={`1px solid ${colors.actionPrimary}`}
-                            titleColor={colors.neutral100}
+                            titlecolor={colors.neutral100}
                           />
                         )}
                       </CustomTableCellBox>

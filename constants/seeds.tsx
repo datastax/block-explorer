@@ -293,7 +293,7 @@ const transactionData: TransactionDataType[] = [
 ]
 
 const transactionTitles = [
-  'TxnHash',
+  'Txn Hash',
   'Method',
   'Block',
   'Age',

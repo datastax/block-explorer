@@ -47,9 +47,9 @@ const DataList = ({ title, data, isBlocks }: transactionBlockProps) => {
             >
               <CustomTableCell
                 color={colors.actionSecondary}
-                border={`1px solid ${colors.neutral300}`}
+                border={`1px solid ${colors.neutral500}`}
                 fontWeight="400"
-                lineHeight="24px"
+                lineheight="24px"
               >
                 <ColumnBox flexValue="flex-start">
                   {transaction.hash}
@@ -58,9 +58,9 @@ const DataList = ({ title, data, isBlocks }: transactionBlockProps) => {
               </CustomTableCell>
               <CustomTableCell
                 color={colors.actionSecondary}
-                border={`1px solid ${colors.neutral300}`}
+                border={`1px solid ${colors.neutral500}`}
                 fontWeight="400"
-                lineHeight="24px"
+                lineheight="24px"
               >
                 <ColumnBox flexValue="flex-start">
                   <div>
@@ -79,13 +79,13 @@ const DataList = ({ title, data, isBlocks }: transactionBlockProps) => {
               </CustomTableCell>
               <CustomTableCell
                 color={''}
-                border={`1px solid ${colors.neutral300}`}
+                border={`1px solid ${colors.neutral500}`}
               >
                 <ChipWrapper>
                   <Chip
-                    bgColor={colors.nordic}
+                    bgcolor={colors.nordic}
                     border={`1px solid ${colors.actionPrimary}`}
-                    titleColor={colors.neutral100}
+                    titlecolor={colors.neutral100}
                     label={'2.1807 Ether'}
                   />
                 </ChipWrapper>

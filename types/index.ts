@@ -18,9 +18,9 @@ interface SummaryBlocksProps {
 }
 
 interface ChipProps {
-  bgColor: string
+  bgcolor: string
   border: string
-  titleColor: string
+  titlecolor: string
   label: string | React.ReactNode
 }
 interface BlockProps {
@@ -39,8 +39,9 @@ interface CustomTableProps {
   color: string
   border?: string
   fontWeight?: string
-  lineHeight?: string
+  lineheight?: string
   display?: string
+  isTransaction?: boolean
 }
 
 type BlocksDataHome = {
