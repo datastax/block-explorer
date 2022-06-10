@@ -1,13 +1,16 @@
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
+
 type Route = {
   name: string
   link: string
 }
 
 interface ChipProps {
-  bgColor: string
+  bgColor?: string
   borderColor: string
   titleColor: string
   label: string
+  icon?: ReactJSXElement
 }
 
 interface BlockProps {
@@ -33,7 +36,28 @@ interface CustomTableProps {
 interface HeroProps {
   title: string
   showChips?: boolean
-  blockNumber: string
+  blockNumber?: string
+  showPagination?: boolean
+  showDropdown?:boolean
 }
-
-export type { Route, CustomTableProps, BlockProps, ChipProps, HeroProps }
+interface DropButtonProps {
+  title: string
+}
+interface PagingProps {
+  rtl?: boolean
+}
+interface TransactionDetailRowProps {
+  objectKey: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
+}
+export type {
+  Route,
+  CustomTableProps,
+  BlockProps,
+  ChipProps,
+  HeroProps,
+  DropButtonProps,
+  PagingProps,
+  TransactionDetailRowProps
+}
