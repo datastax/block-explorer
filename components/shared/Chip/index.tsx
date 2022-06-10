@@ -2,7 +2,7 @@ import React from 'react'
 import { ChipProps } from 'types'
 import { CustomChip } from './styles'
 
-const Chip = ({ label, bgColor, borderColor, titleColor }: ChipProps) => {
+const Chip = ({ label, bgColor, borderColor, titleColor, icon }: ChipProps) => {
   return (
     <CustomChip
       label={label}
@@ -10,6 +10,7 @@ const Chip = ({ label, bgColor, borderColor, titleColor }: ChipProps) => {
       bgColor={bgColor}
       borderColor={borderColor}
       titleColor={titleColor}
+      icon={icon}
     />
   )
 }

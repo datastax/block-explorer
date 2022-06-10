@@ -19,5 +19,8 @@ const Container = styled(Box)({
   justifyContent: 'space-between',
   padding: '40px 0px 25px',
 })
+const PaginationContainer = styled('span')({
+  marginLeft: '15px',
+})
 
-export { MainHeading, Container, SubHeading }
+export { MainHeading, Container, SubHeading, PaginationContainer }

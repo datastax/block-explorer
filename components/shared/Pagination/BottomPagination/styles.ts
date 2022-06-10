@@ -8,7 +8,8 @@ const FontStyling = styled(Box)({
 
 const Records = styled(Box)({
   padding: '20px',
-  paddingLeft: '20px',
+  paddingLeft: '0px',
+  paddingRight: '0px',
 })
 
 export { FontStyling, Records }
