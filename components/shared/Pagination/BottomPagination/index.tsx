@@ -53,6 +53,12 @@ const BottomPagination = ({
     }
   }
 
+  const setValuesToDefault = () => {
+    setNext(undefined)
+    setPrevious(undefined)
+    setCurrentPage(1)
+  }
+
   return (
     <Records>
       <Stack
@@ -64,7 +70,11 @@ const BottomPagination = ({
           <FontStyling>
             <span>SHOW</span>
           </FontStyling>
-          <SplitButton pageSize={pageSize} setPageSize={setPageSize} />
+          <SplitButton
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            setValueToDefault={setValuesToDefault}
+          />
           <FontStyling>
             <span>RECORDS</span>
           </FontStyling>

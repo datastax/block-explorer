@@ -10,6 +10,8 @@ const transactions = () => {
         TransactionDataToMap={transactionData}
         isTransaction={true}
       /> */}
+
+      <h1>COMING SOON :)</h1>
     </>
   )
 }

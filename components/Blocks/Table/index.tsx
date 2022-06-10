@@ -85,7 +85,7 @@ const BlocksTable = ({
                 key={index}
               >
                 {[...Array(Object.keys(block).length)].map((_, index) => (
-                  <>
+                  <React.Fragment key={index}>
                     <>
                       {TransactionDataToMap && index == 5 && (
                         <CustomTableCell
@@ -137,7 +137,7 @@ const BlocksTable = ({
                         )}
                       </CustomTableCellBox>
                     </CustomTableCell>
-                  </>
+                  </React.Fragment>
                 ))}
               </TableRow>
             ))}

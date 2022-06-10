@@ -14,11 +14,13 @@ const options = [10, 25, 50, 100]
 interface SplitButtonProps {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
+  setValueToDefault: () => void
 }
 
 export default function SplitButton({
   pageSize,
   setPageSize,
+  setValueToDefault,
 }: SplitButtonProps) {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLDivElement>(null)
@@ -34,6 +36,7 @@ export default function SplitButton({
   ) => {
     setSelectedIndex(index)
     setPageSize(options[index])
+    setValueToDefault()
     setOpen(false)
   }
 
