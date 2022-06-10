@@ -94,8 +94,8 @@ const TransactionDetailRow = ({
             {' '}
             <Chip
               label="Success"
-              borderColor={`1px solid ${colors.actionPrimary}`}
-              titleColor={colors.actionPrimary}
+              border={`1px solid ${colors.actionPrimary}`}
+              titlecolor={colors.actionPrimary}
               icon={<TickInButton />}
             />
           </>
@@ -108,9 +108,9 @@ const TransactionDetailRow = ({
             </RightSpacing>
             <Chip
               label="480 Block Confirmations"
-              bgColor={colors.neutral700}
-              borderColor={`1px solid ${colors.neutral300}`}
-              titleColor={colors.neutral100}
+              bgcolor={colors.neutral700}
+              border={`1px solid ${colors.neutral300}`}
+              titlecolor={colors.neutral100}
             />
           </Wrapper>
         )
@@ -153,9 +153,9 @@ const TransactionDetailRow = ({
             <RightSpacing>
               <Chip
                 label="0 Ether"
-                bgColor={colors.neutral700}
-                borderColor={`1px solid ${colors.neutral300}`}
-                titleColor={colors.neutral100}
+                bgcolor={colors.neutral700}
+                border={`1px solid ${colors.neutral300}`}
+                titlecolor={colors.neutral100}
               />
             </RightSpacing>
             <ListItemText>{data[objectKey]}</ListItemText>
