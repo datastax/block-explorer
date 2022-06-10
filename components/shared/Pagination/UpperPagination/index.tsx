@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material'
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import {
   BlockStyle,
   FontStyling,
@@ -12,6 +12,8 @@ interface UpperPaginationProps {
   blocksData?: GetPaginatedBlocksQuery | undefined
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setNext: Dispatch<SetStateAction<number | undefined>>
+  setPrevious: Dispatch<SetStateAction<number | undefined>>
 }
 
 const UpperPagination = ({
@@ -19,6 +21,8 @@ const UpperPagination = ({
   blocksData,
   currentPage,
   setCurrentPage,
+  setNext,
+  setPrevious,
 }: UpperPaginationProps) => {
   const lengthOfEachPage = blocksData?.getBlocks?.block?.length
   const totalPages = blocksData?.getBlocks.totalPages
@@ -28,6 +32,25 @@ const UpperPagination = ({
     : null
   const totalBlocks =
     totalPages && lengthOfEachPage ? totalPages * lengthOfEachPage : null
+
+  const setNextState = (endPage = false, toNull = false) => {
+    console.log('setNext State Clicked', endPage)
+    if (!endPage) {
+      if (toNull) setNext(undefined)
+      else setNext(endingBlock || undefined)
+    }
+  }
+
+  const setPreviousState = (firstPage = false, toNull = false) => {
+    console.log('setPrevious State Clicked', firstPage)
+    if (!firstPage) {
+      if (toNull) setPrevious(undefined)
+      else setPrevious(startingBlock || undefined)
+    } else {
+      setNext(undefined)
+      setPrevious(undefined)
+    }
+  }
 
   return (
     <FontStyling>
@@ -55,6 +78,9 @@ const UpperPagination = ({
             rtl="true"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
+            totalPages={totalPages}
+            setNext={setNextState}
+            setPrevious={setPreviousState}
           />
           <span>
             Page {currentPage} of {totalPages}
@@ -62,6 +88,9 @@ const UpperPagination = ({
           <PaginationButton
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
+            totalPages={totalPages}
+            setNext={setNextState}
+            setPrevious={setPreviousState}
           />
         </Stack>
       </Stack>

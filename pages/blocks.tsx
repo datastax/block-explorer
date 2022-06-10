@@ -6,12 +6,15 @@ import { useGetPaginatedBlocksQuery } from 'lib/graphql/generated'
 import { useState } from 'react'
 const Blocks: NextPage = () => {
   const [pageSize, setPageSize] = useState(10)
-
+  const [next, setNext] = useState<number>()
+  const [previous, setPrevious] = useState<number>()
   const { data: latestBlocks, error: blocksError } = useGetPaginatedBlocksQuery(
     {
       variables: {
         data: {
           pageSize: pageSize,
+          next: next,
+          previous: previous,
         },
       },
     }
@@ -29,6 +32,8 @@ const Blocks: NextPage = () => {
         setPageSize={setPageSize}
         Data={latestBlocks || undefined}
         titles={BlocksTitle}
+        setNext={setNext}
+        setPrevious={setPrevious}
       />
     </>
   )

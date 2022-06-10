@@ -26,7 +26,9 @@ interface BlocksTableProps {
   titles: string[]
   TransactionDataToMap?: TransactionDataType[]
   Data?: GetPaginatedBlocksQuery | undefined
-  isTransaction?: boolean
+  istransaction?: boolean
+  setNext: Dispatch<SetStateAction<number | undefined>>
+  setPrevious: Dispatch<SetStateAction<number | undefined>>
 }
 
 const BlocksTable = ({
@@ -35,7 +37,9 @@ const BlocksTable = ({
   titles,
   TransactionDataToMap,
   Data,
-  isTransaction,
+  istransaction,
+  setNext,
+  setPrevious,
 }: BlocksTableProps) => {
   const [currentPage, setCurrentPage] = useState(1)
   return (
@@ -46,6 +50,8 @@ const BlocksTable = ({
           transaction={TransactionDataToMap ? true : false}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
+          setNext={setNext}
+          setPrevious={setPrevious}
         />
         <Table>
           <TableHead>
@@ -58,7 +64,7 @@ const BlocksTable = ({
                   border={`1px solid ${colors.neutral500}`}
                   fontWeight="500"
                   lineheight="157%"
-                  isTransaction={isTransaction}
+                  istransaction={istransaction}
                 >
                   <HeaderBox
                     sx={{
@@ -143,6 +149,8 @@ const BlocksTable = ({
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           blocksData={Data}
+          setNext={setNext}
+          setPrevious={setPrevious}
         />
       </CustomTableContainer>
     </BlockTableContainer>

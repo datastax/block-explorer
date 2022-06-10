@@ -25,9 +25,11 @@ const ArrowBackStyle = styled(ArrowBackIosNewIcon)(
     height: '10px',
   })
 )
-const ArrowForwardStyle = styled(ArrowForwardIosIcon)({
-  color: colors.neutral100,
-  height: '10px',
-})
+const ArrowForwardStyle = styled(ArrowForwardIosIcon)(
+  ({ disabled }: WrapperProps) => ({
+    color: disabled ? colors.neutral300 : colors.neutral100,
+    height: '10px',
+  })
+)
 
 export { CustomButtonGroup, ArrowBackStyle, ArrowForwardStyle, CustomButton }
