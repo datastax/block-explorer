@@ -69,6 +69,30 @@ interface HeroProps {
   blockNumber?: string
 }
 
+interface BlockDetails {
+  BlockHeight: string
+  Timestamp: {
+    time: string
+    Date: string
+  }
+  Transactions: string
+  MinedBy: {
+    address: string
+    miner: string
+    time: string
+  }
+  BlockReward: string
+  UnclesReward: string
+  Difficulty: string
+  TotalDifficulty: string
+  Size: string
+  GasUsed: string
+  GasLimit: string
+  BaseFeePerGas: string
+  BurntFees: string
+  ExtraData: string
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -78,4 +102,5 @@ export type {
   BlocksDataHome,
   SummaryBlocksProps,
   HeroProps,
+  BlockDetails,
 }

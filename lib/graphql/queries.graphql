@@ -38,3 +38,20 @@ query getPaginatedBlocks($data: PagesInput!) {
     }
   }
 }
+
+query getBlockByNumber($data: Float!) {
+  getBlockByNumber(data: $data) {
+    number
+    timestamp
+    transaction_count
+    miner
+    difficulty
+    total_difficulty
+    size
+    gas_used
+    gas_limit
+    base_fee_per_gas
+
+    extra_data
+  }
+}

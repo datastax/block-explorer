@@ -1,4 +1,7 @@
-export const DetailsData = {
+import { BlockDetails } from "types";
+
+
+export const DetailsData: BlockDetails = {
   BlockHeight: '14850076',
   Timestamp: { time: '1 min ago', Date: '(May-26-2022 08:40:42 PM +UTC)' },
   Transactions: 'in this block',

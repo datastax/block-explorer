@@ -19,6 +19,7 @@ import { Exchange, Eye } from '@components/shared/Icons'
 import Chip from '@components/shared/Chip'
 import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
 import { formatAddress } from 'utils'
+import router from 'next/router'
 
 interface BlocksTableProps {
   pageSize: number
@@ -122,11 +123,25 @@ const BlocksTable = ({
                           </div>
                         )}
                         {Object.keys(block)[index] !== 'Method' ? (
-                          <>
+                          <div
+                            onClick={() => {
+                              if (index == 0)
+                                router.push(
+                                  `/block/${Object.values(block)[index]}`
+                                )
+                              else if (index == 2) router.push(``)
+                            }}
+                            style={{
+                              cursor:
+                                index == 0 || index == 2
+                                  ? 'pointer'
+                                  : 'default',
+                            }}
+                          >
                             {formatAddress(
                               Object.values(block)[index]?.toString()
                             )}
-                          </>
+                          </div>
                         ) : (
                           <Chip
                             label={Object.values(block)[index]}
