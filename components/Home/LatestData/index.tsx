@@ -1,16 +1,21 @@
 import BlocksList from '@components/Home/BlocksList'
 import TransactionsList from '@components/Home/TransactionsList'
-import { Stack } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 import {
   useGetBlocksQuery,
   useGetTransactionsLazyQuery,
 } from '@lib/graphql/generated'
 import { useEffect, useState } from 'react'
+import CustomSkeleton from '@components/shared/CustomSkeleton'
 
 const LatestData = () => {
   const [blockHash, setBlockHash] = useState('')
 
-  const { data: latestBlocks, error: blocksError } = useGetBlocksQuery({
+  const {
+    data: latestBlocks,
+    error: blocksError,
+    loading: loadingBlocks,
+  } = useGetBlocksQuery({
     variables: {
       data: {
         pageSize: 6,
@@ -20,7 +25,11 @@ const LatestData = () => {
 
   const [
     getTransactions,
-    { data: latestTransactions, error: transactionError },
+    {
+      data: latestTransactions,
+      error: transactionError,
+      loading: loadingTransactions,
+    },
   ] = useGetTransactionsLazyQuery()
   if (transactionError) {
     console.error(transactionError)
@@ -50,11 +59,23 @@ const LatestData = () => {
 
   return (
     <Stack spacing={'24px'} direction={'row'}>
-      <BlocksList title={'Latest Blocks'} blocks={latestBlocks} />
-      <TransactionsList
-        title={'Latest Transactions'}
-        transactions={latestTransactions}
-      />
+      {!loadingBlocks ? (
+        <BlocksList title={'Latest Blocks'} blocks={latestBlocks} />
+      ) : (
+        <Box sx={{ width: '50%' }}>
+          <CustomSkeleton rows={6} />
+        </Box>
+      )}
+      {!loadingTransactions ? (
+        <TransactionsList
+          title={'Latest Transactions'}
+          transactions={latestTransactions}
+        />
+      ) : (
+        <Box sx={{ width: '50%' }}>
+          <CustomSkeleton rows={6} />
+        </Box>
+      )}
     </Stack>
   )
 }

@@ -48,11 +48,10 @@ const getDifference = (timestamp: number) => {
     .replaceAll('  ', ' ')
 
   if (templateString.split(', ').length > 2) {
-    templateString = templateString.split(', ').splice(2, 2).join(', ')
+    templateString = templateString.split(', ').splice(0, 2).join(', ')
   }
   return templateString
 }
-
 
 export { formatAddress, getDifference, numberWithCommas }
 export { default as createEmotionCache } from './createEmotionCache'

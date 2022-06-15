@@ -1,4 +1,6 @@
-export const TransactionData = {
+import { TransactionDetails } from 'types'
+
+export const TransactionData: TransactionDetails = {
   TransactionHash:
     '0x30af3e16bf1ec8771faa4e95495921127340b82d87be7d6030b45102e70c110e',
   Status: '',

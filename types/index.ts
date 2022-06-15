@@ -70,7 +70,7 @@ interface HeroProps {
   showChips?: boolean
   blockNumber?: string
   showPagination?: boolean
-  showDropdown?:boolean
+  showDropdown?: boolean
 }
 interface DropButtonProps {
   title: string
@@ -80,8 +80,7 @@ interface PagingProps {
 }
 interface TransactionDetailRowProps {
   objectKey: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any
+  data: TransactionDetails
 }
 
 interface BlockDetails {
@@ -108,6 +107,29 @@ interface BlockDetails {
   ExtraData: string
 }
 
+interface TransactionDetails {
+  TransactionHash: string
+  Status: string
+  Block: string
+  Timestamp: {
+    time: string
+    Date: string
+  }
+  TransactionAction: {
+    approved: string
+    kuno: string
+    trade: string
+    router: string
+    checkIn: string
+    token: string
+  }
+  From: string
+  To: string
+  Value: string
+  TransactionFee: string
+  GasPrice: string
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -121,4 +143,5 @@ export type {
   BlocksDataHome,
   SummaryBlocksProps,
   BlockDetails,
+  TransactionDetails,
 }

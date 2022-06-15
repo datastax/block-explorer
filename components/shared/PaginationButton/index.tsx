@@ -66,7 +66,7 @@ export default function PaginationButton({
           >
             <ArrowForwardStyle disabled={currentPage === totalPages} />
           </CustomArrowButton>
-          <CustomButton onClick={() => setCurrentPage(totalPages || 0)}>
+          <CustomButton>
             <FontStyling> LAST </FontStyling>{' '}
           </CustomButton>
         </CustomButtonGroup>

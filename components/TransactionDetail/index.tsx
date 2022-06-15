@@ -1,7 +1,7 @@
 import { Question } from '@components/shared/Icons'
-import { TransactionData } from '@constants/transactionDetailData'
 import { Collapse, ListItemText, ListItemButton } from '@mui/material'
 import React from 'react'
+import { TransactionDetails } from 'types'
 import {
   DetailsTableContainer,
   CustomTableContainer,
@@ -13,7 +13,12 @@ import {
   LoggedIn,
 } from './styles'
 import TransactionDetailRow from './TransactionDetailRow'
-const TransactionDetail = () => {
+
+interface TransactionDetailProps {
+  TransactionData: TransactionDetails
+}
+
+const TransactionDetail = ({ TransactionData }: TransactionDetailProps) => {
   const [open, setOpen] = React.useState(false)
 
   const handleClick = () => {
