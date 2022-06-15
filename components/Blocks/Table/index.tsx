@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableHead from '@mui/material/TableHead'
@@ -14,28 +14,46 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { BlockProps, TransactionDataType } from 'types'
+import { TransactionDataType } from 'types'
 import { Exchange, Eye } from '@components/shared/Icons'
 import Chip from '@components/shared/Chip'
+import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
+import { formatAddress } from 'utils'
+import router from 'next/router'
 
 interface BlocksTableProps {
+  pageSize: number
+  setPageSize: Dispatch<SetStateAction<number>>
   titles: string[]
   TransactionDataToMap?: TransactionDataType[]
-  BlocksDataToMap?: BlockProps[]
-  isTransaction?: boolean
+  Data?: GetPaginatedBlocksQuery | undefined
+  istransaction?: boolean
+  setNext: Dispatch<SetStateAction<number | undefined>>
+  setPrevious: Dispatch<SetStateAction<number | undefined>>
 }
 
 const BlocksTable = ({
+  pageSize,
+  setPageSize,
   titles,
   TransactionDataToMap,
-  BlocksDataToMap,
-  isTransaction,
+  Data,
+  istransaction,
+  setNext,
+  setPrevious,
 }: BlocksTableProps) => {
-  const dataToMap = BlocksDataToMap || TransactionDataToMap
+  const [currentPage, setCurrentPage] = useState(1)
   return (
     <BlockTableContainer>
       <CustomTableContainer>
-        <UpperPagination transaction={TransactionDataToMap ? true : false} />
+        <UpperPagination
+          blocksData={Data}
+          transaction={TransactionDataToMap ? true : false}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setNext={setNext}
+          setPrevious={setPrevious}
+        />
         <Table>
           <TableHead>
             <TableRow>
@@ -47,7 +65,7 @@ const BlocksTable = ({
                   border={`1px solid ${colors.neutral500}`}
                   fontWeight="500"
                   lineheight="157%"
-                  isTransaction={isTransaction}
+                  istransaction={istransaction}
                 >
                   <HeaderBox
                     sx={{
@@ -62,13 +80,13 @@ const BlocksTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {dataToMap?.map((Data, index) => (
+            {Data?.getBlocks.block.map((block, index) => (
               <TableRow
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 key={index}
               >
-                {[...Array(Object.keys(Data).length)].map((_, index) => (
-                  <>
+                {[...Array(Object.keys(block).length)].map((_, index) => (
+                  <React.Fragment key={index}>
                     <>
                       {TransactionDataToMap && index == 5 && (
                         <CustomTableCell
@@ -82,7 +100,7 @@ const BlocksTable = ({
                     <CustomTableCell
                       key={index}
                       align="center"
-                      color={Object.keys(Data)[index]}
+                      color={Object.keys(block)[index]}
                       border={`1px solid ${colors.neutral500}`}
                       fontWeight="400"
                       lineheight="143%"
@@ -104,11 +122,29 @@ const BlocksTable = ({
                             <Eye />
                           </div>
                         )}
-                        {Object.keys(Data)[index] !== 'Method' ? (
-                          Object.values(Data)[index]
+                        {Object.keys(block)[index] !== 'Method' ? (
+                          <div
+                            onClick={() => {
+                              if (index == 0)
+                                router.push(
+                                  `/block/${Object.values(block)[index]}`
+                                )
+                              else if (index == 2) router.push(``)
+                            }}
+                            style={{
+                              cursor:
+                                index == 0 || index == 2
+                                  ? 'pointer'
+                                  : 'default',
+                            }}
+                          >
+                            {formatAddress(
+                              Object.values(block)[index]?.toString()
+                            )}
+                          </div>
                         ) : (
                           <Chip
-                            label={Object.values(Data)[index]}
+                            label={Object.values(block)[index]}
                             bgcolor={colors.nordic}
                             border={`1px solid ${colors.actionPrimary}`}
                             titlecolor={colors.neutral100}
@@ -116,13 +152,21 @@ const BlocksTable = ({
                         )}
                       </CustomTableCellBox>
                     </CustomTableCell>
-                  </>
+                  </React.Fragment>
                 ))}
               </TableRow>
             ))}
           </TableBody>
         </Table>
-        <BottomPagination />
+        <BottomPagination
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          blocksData={Data}
+          setNext={setNext}
+          setPrevious={setPrevious}
+        />
       </CustomTableContainer>
     </BlockTableContainer>
   )

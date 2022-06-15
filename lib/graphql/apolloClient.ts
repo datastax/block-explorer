@@ -3,7 +3,9 @@ const GRAPHQL_ENDPOINT = process.env.GRAPHQL_ENDPOINT || 'https://krypton-etl-st
 
 const client = new ApolloClient({
   uri: GRAPHQL_ENDPOINT,
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    addTypename: false,
+  }),
 })
 
 export default client

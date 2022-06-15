@@ -8,12 +8,17 @@ import {
   CustomLink,
   CustomList,
 } from '@components/BlocksDetail/styles'
-import { DetailsData } from '@constants/blocksDetailData'
 import { ListItemText, Collapse, ListItemButton } from '@mui/material'
 import React from 'react'
 import { Question } from '@components/shared/Icons/index'
 import BlockDetailRow from './BlockDetailRow'
-const BlocksDetail = () => {
+import { BlockDetails } from '@types'
+
+interface BlocksDetailProps {
+  BlocksDetailsData: BlockDetails
+}
+
+const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
   const [open, setOpen] = React.useState(false)
 
   const handleClick = () => {
@@ -24,8 +29,12 @@ const BlocksDetail = () => {
       <DetailsTableContainer>
         <CustomTableContainer>
           <CustomList>
-            {Object.keys(DetailsData).map((key) => (
-              <BlockDetailRow key={key} objectKey={key} data={DetailsData} />
+            {Object.keys(BlocksDetailsData).map((key) => (
+              <BlockDetailRow
+                key={key}
+                objectKey={key}
+                data={BlocksDetailsData}
+              />
             ))}
           </CustomList>
           <Collapse in={open} timeout="auto" unmountOnExit>
@@ -34,7 +43,7 @@ const BlocksDetail = () => {
                 <Question />
               </CustomListIcon>
               <CustomListItemText primary="ExtraData:" />
-              <ListItemText primary={DetailsData.ExtraData} />
+              <ListItemText primary={BlocksDetailsData.ExtraData} />
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>
@@ -42,7 +51,7 @@ const BlocksDetail = () => {
                 <Question />
               </CustomListIcon>
               <CustomListItemText primary="ExtraData:" />
-              <ListItemText primary={DetailsData.ExtraData} />
+              <ListItemText primary={BlocksDetailsData.ExtraData} />
             </CustomListItem>
             <CustomDivider />
           </Collapse>

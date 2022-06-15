@@ -43,7 +43,7 @@ interface CustomTableProps {
   fontWeight?: string
   lineheight?: string
   display?: string
-  isTransaction?: boolean
+  istransaction?: boolean
 }
 
 type BlocksDataHome = {
@@ -83,6 +83,31 @@ interface TransactionDetailRowProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any
 }
+
+interface BlockDetails {
+  BlockHeight: string
+  Timestamp: {
+    time: string
+    Date: string
+  }
+  Transactions: string
+  MinedBy: {
+    address: string
+    miner: string
+    time: string
+  }
+  BlockReward: string
+  UnclesReward: string
+  Difficulty: string
+  TotalDifficulty: string
+  Size: string
+  GasUsed: string
+  GasLimit: string
+  BaseFeePerGas: string
+  BurntFees: string
+  ExtraData: string
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -95,4 +120,5 @@ export type {
   TransactionDataType,
   BlocksDataHome,
   SummaryBlocksProps,
+  BlockDetails,
 }

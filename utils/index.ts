@@ -6,7 +6,12 @@ const formatAddress = (
   if (!address) {
     return ''
   }
+  if (address.length < 15) return address
   return address.slice(0, start) + '....' + address.slice(address.length - end)
+}
+
+function numberWithCommas(x: number) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
 const getDifference = (timestamp: number) => {
@@ -48,5 +53,6 @@ const getDifference = (timestamp: number) => {
   return templateString
 }
 
-export { formatAddress, getDifference }
+
+export { formatAddress, getDifference, numberWithCommas }
 export { default as createEmotionCache } from './createEmotionCache'
