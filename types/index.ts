@@ -43,7 +43,7 @@ interface CustomTableProps {
   fontWeight?: string
   lineheight?: string
   display?: string
-  isTransaction?: boolean
+  istransaction?: boolean
 }
 
 type BlocksDataHome = {
@@ -70,7 +70,7 @@ interface HeroProps {
   showChips?: boolean
   blockNumber?: string
   showPagination?: boolean
-  showDropdown?:boolean
+  showDropdown?: boolean
 }
 interface DropButtonProps {
   title: string
@@ -80,9 +80,56 @@ interface PagingProps {
 }
 interface TransactionDetailRowProps {
   objectKey: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any
+  data: TransactionDetails
 }
+
+interface BlockDetails {
+  BlockHeight: string
+  Timestamp: {
+    time: string
+    Date: string
+  }
+  Transactions: string
+  MinedBy: {
+    address: string
+    miner: string
+    time: string
+  }
+  BlockReward: string
+  UnclesReward: string
+  Difficulty: string
+  TotalDifficulty: string
+  Size: string
+  GasUsed: string
+  GasLimit: string
+  BaseFeePerGas: string
+  BurntFees: string
+  ExtraData: string
+}
+
+interface TransactionDetails {
+  TransactionHash: string
+  Status: string
+  Block: string
+  Timestamp: {
+    time: string
+    Date: string
+  }
+  TransactionAction: {
+    approved: string
+    kuno: string
+    trade: string
+    router: string
+    checkIn: string
+    token: string
+  }
+  From: string
+  To: string
+  Value: string
+  TransactionFee: string
+  GasPrice: string
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -95,4 +142,6 @@ export type {
   TransactionDataType,
   BlocksDataHome,
   SummaryBlocksProps,
+  BlockDetails,
+  TransactionDetails,
 }

@@ -22,3 +22,59 @@ query getTransactions($transactionsdata: TransactionsPagesInput!) {
     }
   }
 }
+
+query getPaginatedBlocks($data: PagesInput!) {
+  getBlocks(data: $data) {
+    totalPages
+    block {
+      number
+      timestamp
+      transaction_count
+      sha3_uncles
+      miner
+      gas_used
+      gas_limit
+      base_fee_per_gas
+    }
+  }
+}
+
+query getBlockByNumber($data: Float!) {
+  getBlockByNumber(data: $data) {
+    number
+    timestamp
+    transaction_count
+    miner
+    difficulty
+    total_difficulty
+    size
+    gas_used
+    gas_limit
+    base_fee_per_gas
+
+    extra_data
+  }
+}
+
+query getTransactionByHash($data: String!) {
+  getTransactionByHash(data: $data) {
+    hash
+    block_hash
+    block_number
+    block_timestamp
+    from_address
+    gas
+    gas_price
+    input
+    nonce
+    parent_hash
+    receipt_contract_address
+    receipt_cumulative_gas_used
+    receipt_gas_used
+    receipt_root
+    receipt_status
+    to_address
+    transaction_index
+    value
+  }
+}
