@@ -9,9 +9,19 @@ import Popper from '@mui/material/Popper'
 import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
 import { CustomArrowButton } from './styles'
-const options = [5, 10, 20]
+const options = [10, 25, 50, 100]
 
-export default function SplitButton() {
+interface SplitButtonProps {
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setValueToDefault: () => void
+}
+
+export default function SplitButton({
+  pageSize,
+  setPageSize,
+  setValueToDefault,
+}: SplitButtonProps) {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef<HTMLDivElement>(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -25,6 +35,8 @@ export default function SplitButton() {
     index: number
   ) => {
     setSelectedIndex(index)
+    setPageSize(options[index])
+    setValueToDefault()
     setOpen(false)
   }
 
@@ -47,7 +59,7 @@ export default function SplitButton() {
     <React.Fragment>
       <ButtonGroup variant="outlined" ref={anchorRef} aria-label="split button">
         <Button onClick={handleClick} sx={{ color: 'white' }}>
-          {options[selectedIndex]}{' '}
+          {pageSize}
         </Button>
         <CustomArrowButton
           size="small"
@@ -81,7 +93,6 @@ export default function SplitButton() {
                   {options.map((option, index) => (
                     <MenuItem
                       key={option}
-                      disabled={index === 0}
                       selected={index === selectedIndex}
                       onClick={(event) => handleMenuItemClick(event, index)}
                     >

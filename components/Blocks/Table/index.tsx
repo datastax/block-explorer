@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableHead from '@mui/material/TableHead'
@@ -14,115 +14,134 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { BlockProps, TransactionDataType } from 'types'
-import { Exchange, Eye } from '@components/shared/Icons'
+
 import Chip from '@components/shared/Chip'
+import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
+import { formatAddress } from 'utils'
+import router from 'next/router'
+import CustomSkeleton from '@components/shared/CustomSkeleton'
+import { Box } from '@mui/material'
 
 interface BlocksTableProps {
+  pageSize: number
+  setPageSize: Dispatch<SetStateAction<number>>
   titles: string[]
-  TransactionDataToMap?: TransactionDataType[]
-  BlocksDataToMap?: BlockProps[]
-  isTransaction?: boolean
+  Data?: GetPaginatedBlocksQuery | undefined
+  istransaction?: boolean
+  setNext: Dispatch<SetStateAction<number | undefined>>
+  setPrevious: Dispatch<SetStateAction<number | undefined>>
+  loading: boolean
 }
 
 const BlocksTable = ({
+  pageSize,
+  setPageSize,
   titles,
-  TransactionDataToMap,
-  BlocksDataToMap,
-  isTransaction,
+  Data,
+  istransaction,
+  setNext,
+  setPrevious,
+  loading,
 }: BlocksTableProps) => {
-  const dataToMap = BlocksDataToMap || TransactionDataToMap
+  const [currentPage, setCurrentPage] = useState(1)
   return (
     <BlockTableContainer>
       <CustomTableContainer>
-        <UpperPagination transaction={TransactionDataToMap ? true : false} />
-        <Table>
-          <TableHead>
-            <TableRow>
-              {titles.map((title, index) => (
-                <CustomTableCellHeder
-                  key={index}
-                  align="center"
-                  color={title}
-                  border={`1px solid ${colors.neutral500}`}
-                  fontWeight="500"
-                  lineheight="157%"
-                  isTransaction={isTransaction}
-                >
-                  <HeaderBox
-                    sx={{
-                      marginLeft:
-                        TransactionDataToMap && index === 0 ? '21%' : '0px',
-                    }}
+        <UpperPagination
+          blocksData={Data}
+          transaction={false}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setNext={setNext}
+          setPrevious={setPrevious}
+        />
+        {!loading ? (
+          <Table>
+            <TableHead>
+              <TableRow>
+                {titles.map((title, index) => (
+                  <CustomTableCellHeder
+                    key={index}
+                    align="center"
+                    color={title}
+                    border={`1px solid ${colors.neutral500}`}
+                    fontWeight="500"
+                    lineheight="157%"
+                    istransaction={istransaction}
                   >
-                    {title}
-                  </HeaderBox>
-                </CustomTableCellHeder>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {dataToMap?.map((Data, index) => (
-              <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                key={index}
-              >
-                {[...Array(Object.keys(Data).length)].map((_, index) => (
-                  <>
-                    <>
-                      {TransactionDataToMap && index == 5 && (
-                        <CustomTableCell
-                          color={''}
-                          border={`1px solid ${colors.neutral500}`}
-                        >
-                          <Exchange />
-                        </CustomTableCell>
-                      )}
-                    </>
-                    <CustomTableCell
-                      key={index}
-                      align="center"
-                      color={Object.keys(Data)[index]}
-                      border={`1px solid ${colors.neutral500}`}
-                      fontWeight="400"
-                      lineheight="143%"
-                    >
-                      <CustomTableCellBox
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        {TransactionDataToMap && index == 0 && (
-                          <div
-                            style={{
-                              paddingRight: '20px',
-                              display: 'flex',
-                              alignItems: 'center',
-                            }}
-                          >
-                            <Eye />
-                          </div>
-                        )}
-                        {Object.keys(Data)[index] !== 'Method' ? (
-                          Object.values(Data)[index]
-                        ) : (
-                          <Chip
-                            label={Object.values(Data)[index]}
-                            bgcolor={colors.nordic}
-                            border={`1px solid ${colors.actionPrimary}`}
-                            titlecolor={colors.neutral100}
-                          />
-                        )}
-                      </CustomTableCellBox>
-                    </CustomTableCell>
-                  </>
+                    <HeaderBox>{title}</HeaderBox>
+                  </CustomTableCellHeder>
                 ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <BottomPagination />
+            </TableHead>
+            <TableBody>
+              {Data?.getBlocks.block.map((block, index) => (
+                <TableRow
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  key={index}
+                >
+                  {[...Array(Object.keys(block).length)].map((_, index) => (
+                    <React.Fragment key={index}>
+                      <CustomTableCell
+                        key={index}
+                        align="center"
+                        color={Object.keys(block)[index]}
+                        border={`1px solid ${colors.neutral500}`}
+                        fontWeight="400"
+                        lineheight="143%"
+                      >
+                        <CustomTableCellBox
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {Object.keys(block)[index] !== 'Method' ? (
+                            <div
+                              onClick={() => {
+                                if (index == 0)
+                                  router.push(
+                                    `/block/${Object.values(block)[index]}`
+                                  )
+                              }}
+                              style={{
+                                cursor: index == 0 ? 'pointer' : 'default',
+                              }}
+                            >
+                              {formatAddress(
+                                Object.values(block)[index]?.toString()
+                              )}
+                            </div>
+                          ) : (
+                            <Chip
+                              label={Object.values(block)[index]}
+                              bgcolor={colors.nordic}
+                              border={`1px solid ${colors.actionPrimary}`}
+                              titlecolor={colors.neutral100}
+                            />
+                          )}
+                        </CustomTableCellBox>
+                      </CustomTableCell>
+                    </React.Fragment>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <Box sx={{ width: '100%' }}>
+            <CustomSkeleton rows={10} />
+          </Box>
+        )}
+        <BottomPagination
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          blocksData={Data}
+          setNext={setNext}
+          setPrevious={setPrevious}
+        />
       </CustomTableContainer>
     </BlockTableContainer>
   )

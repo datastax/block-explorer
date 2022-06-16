@@ -43,9 +43,19 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                 fontWeight="400"
                 lineheight="24px"
               >
-                <ColumnBox flexValue="flex-start">
+                <ColumnBox
+                  flexValue="flex-start"
+                  onClick={() => {
+                    router.push(`/block/${Block.number}`)
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                >
                   {Block.number}
-                  <strong>{getDifference(parseInt(Block.timestamp))} ago</strong>
+                  <strong>
+                    {getDifference(parseInt(Block.timestamp))} ago
+                  </strong>
                 </ColumnBox>
               </CustomTableCell>
               <CustomTableCell

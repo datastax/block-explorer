@@ -3,6 +3,7 @@ import { Question, Watch } from '@components/shared/Icons'
 import { ListItemText } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import React from 'react'
+import { BlockDetails } from 'types'
 import {
   CustomListItem,
   CustomListIcon,
@@ -18,8 +19,7 @@ import {
 
 interface BlockDetailRowProps {
   objectKey: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any
+  data: BlockDetails
 }
 const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
   const getKeyName = () => {
@@ -85,7 +85,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
           <>
             {' '}
             <Chip
-              label="49 transactions"
+              label={`${data[objectKey]} transactions`}
               bgcolor={colors.nordic}
               border={`1px solid ${colors.actionPrimary}`}
               titlecolor={colors.neutral100}
@@ -101,7 +101,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
               titlecolor={colors.neutral100}
             />
             <TransactionStyle>
-              <ListItemText primary={data[objectKey]} />
+              <ListItemText primary={'in this block'} />
             </TransactionStyle>
           </>
         )
