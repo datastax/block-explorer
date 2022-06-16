@@ -6,102 +6,6 @@ import {
 } from '@components/shared/Icons'
 import { TransactionDataType } from 'types'
 
-const blocksData = {
-  title: 'Latest Blocks',
-  data: [
-    {
-      Block: '14849876',
-      Age: '23s ago',
-      Txn: '112 txns in 18s',
-      reward: '2.03538 ETH',
-      Miner: 'Hiveon Pool',
-    },
-    {
-      Block: '14849876',
-      Age: '23s ago',
-      Txn: '112 txns in 18s',
-      reward: '2.03538 ETH',
-      Miner: 'Hiveon Pool',
-    },
-    {
-      Block: '14849876',
-      Age: '23s ago',
-      Txn: '112 txns in 18s',
-      reward: '2.03538 ETH',
-      Miner: 'Hiveon Pool',
-    },
-    {
-      Block: '14849876',
-      Age: '23s ago',
-      Txn: '112 txns in 18s',
-      reward: '2.03538 ETH',
-      Miner: 'Hiveon Pool',
-    },
-    {
-      Block: '14849876',
-      Age: '23s ago',
-      Txn: '112 txns in 18s',
-      reward: '2.03538 ETH',
-      Miner: 'Hiveon Pool',
-    },
-    {
-      Block: '14849876',
-      Age: '23s ago',
-      Txn: '112 txns in 18s',
-      reward: '2.03538 ETH',
-      Miner: 'Hiveon Pool',
-    },
-  ],
-}
-
-const transactionsData = {
-  title: 'Latest Transactions',
-  data: [
-    {
-      Block: '0xb03c0b4468...',
-      Age: '23s ago',
-      Txn: '0x3a675fcd82198fc4cfda...',
-      reward: '2.03538 ETH',
-      Miner: '0x3a675fcd82198fc4cfda...',
-    },
-    {
-      Block: '0xb03c0b4468...',
-      Age: '23s ago',
-      Txn: '0x3a675fcd82198fc4cfda...',
-      reward: '2.03538 ETH',
-      Miner: '0x3a675fcd82198fc4cfda...',
-    },
-    {
-      Block: '0xb03c0b4468...',
-      Age: '23s ago',
-      Txn: '0x3a675fcd82198fc4cfda...',
-      reward: '2.03538 ETH',
-      Miner: '0x3a675fcd82198fc4cfda...',
-    },
-    {
-      Block: '0xb03c0b4468...',
-      Age: '23s ago',
-      Txn: '0x3a675fcd82198fc4cfda...',
-      reward: '2.03538 ETH',
-      Miner: '0x3a675fcd82198fc4cfda...',
-    },
-    {
-      Block: '0xb03c0b4468...',
-      Age: '23s ago',
-      Txn: '0x3a675fcd82198fc4cfda...',
-      reward: '2.03538 ETH',
-      Miner: '0x3a675fcd82198fc4cfda...',
-    },
-    {
-      Block: '0xb03c0b4468...',
-      Age: '23s ago',
-      Txn: '0x3a675fcd82198fc4cfda...',
-      reward: '2.03538 ETH',
-      Miner: '0x3a675fcd82198fc4cfda...',
-    },
-  ],
-}
-
 const graphData = [
   {
     label: 'May 1',
@@ -320,9 +224,7 @@ export {
   transactionTitles,
   colorColumnNames,
   colorColumnHeaderNames,
-  blocksData,
   graphData,
   summaryBlocksDataTransactions,
   summaryBlocksDataPrice,
-  transactionsData,
 }
