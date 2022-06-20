@@ -54,7 +54,7 @@ type BlocksDataHome = {
   Miner: string
 }
 
-interface TransactionDataType {
+interface TransactionData {
   TxnHash: string
   Method: string
   Block: string
@@ -139,7 +139,7 @@ export type {
   DropButtonProps,
   PagingProps,
   TransactionDetailRowProps,
-  TransactionDataType,
+  TransactionData,
   BlocksDataHome,
   SummaryBlocksProps,
   BlockDetails,
