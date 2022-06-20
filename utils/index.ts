@@ -10,6 +10,10 @@ const formatAddress = (
   return address.slice(0, start) + '....' + address.slice(address.length - end)
 }
 
+function numberWithCommas(x: number) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
 const getDifference = (timestamp: number) => {
   const currentDate = new Date().getTime()
   const time = new Date(timestamp * 1000).getTime()
@@ -49,5 +53,5 @@ const getDifference = (timestamp: number) => {
   return templateString
 }
 
-export { formatAddress, getDifference }
+export { formatAddress, getDifference, numberWithCommas }
 export { default as createEmotionCache } from './createEmotionCache'
