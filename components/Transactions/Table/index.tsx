@@ -14,16 +14,17 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { TransactionDataType } from 'types'
+import { TransactionData } from 'types'
 import { Exchange, Eye } from '@components/shared/Icons'
 import Chip from '@components/shared/Chip'
 import { formatAddress } from 'utils'
+import router from 'next/router'
 
 interface TransactionsTableProps {
   pageSize: number
   setPageSize: Dispatch<SetStateAction<number>>
   titles: string[]
-  Data: TransactionDataType[]
+  Data: TransactionData[]
   setNext: Dispatch<SetStateAction<number | undefined>>
   setPrevious: Dispatch<SetStateAction<number | undefined>>
 }
@@ -77,57 +78,75 @@ const TransactionsTable = ({
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 key={index}
               >
-                {[...Array(Object.keys(block).length)].map((_, index) => (
-                  <React.Fragment key={index}>
-                    <>
-                      {Data && index == 5 && (
-                        <CustomTableCell
-                          color={''}
-                          border={`1px solid ${colors.neutral500}`}
-                        >
-                          <Exchange />
-                        </CustomTableCell>
-                      )}
-                    </>
-                    <CustomTableCell
-                      key={index}
-                      align="center"
-                      color={Object.keys(block)[index]}
-                      border={`1px solid ${colors.neutral500}`}
-                      fontWeight="400"
-                      lineheight="143%"
-                    >
-                      <CustomTableCellBox
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}
-                      >
-                        {Data && index == 0 && (
-                          <div
-                            style={{
-                              paddingRight: '20px',
-                              display: 'flex',
-                              alignItems: 'center',
-                            }}
+                <>
+                  {[...Array(Object.keys(block).length)].map((_, index) => (
+                    <React.Fragment key={index}>
+                      <>
+                        {Data && index == 5 && (
+                          <CustomTableCell
+                            color={''}
+                            border={`1px solid ${colors.neutral500}`}
                           >
-                            <Eye />
-                          </div>
+                            <Exchange />
+                          </CustomTableCell>
                         )}
-                        {Object.keys(block)[index] !== 'Method' ? (
-                          formatAddress(Object.values(block)[index]?.toString())
-                        ) : (
-                          <Chip
-                            label={Object.values(block)[index]}
-                            bgcolor={colors.nordic}
-                            border={`1px solid ${colors.actionPrimary}`}
-                            titlecolor={colors.neutral100}
-                          />
-                        )}
-                      </CustomTableCellBox>
-                    </CustomTableCell>
-                  </React.Fragment>
-                ))}
+                      </>
+                      <CustomTableCell
+                        key={index}
+                        align="center"
+                        color={Object.keys(block)[index]}
+                        border={`1px solid ${colors.neutral500}`}
+                        fontWeight="400"
+                        lineheight="143%"
+                      >
+                        <CustomTableCellBox
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {Data && index == 0 && (
+                            <div
+                              style={{
+                                paddingRight: '20px',
+                                display: 'flex',
+                                alignItems: 'center',
+                              }}
+                            >
+                              <Eye />
+                            </div>
+                          )}
+                          {Object.keys(block)[index] !== 'Method' ? (
+                            <div
+                              onClick={() => {
+                                if (index == 0)
+                                  router.push(
+                                    `/transaction/${
+                                      Object.values(block)[index]
+                                    }`
+                                  )
+                              }}
+                              style={{
+                                cursor: index == 0 ? 'pointer' : 'default',
+                              }}
+                            >
+                              {formatAddress(
+                                Object.values(block)[index]?.toString()
+                              )}
+                            </div>
+                          ) : (
+                            <Chip
+                              label={Object.values(block)[index]}
+                              bgcolor={colors.nordic}
+                              border={`1px solid ${colors.actionPrimary}`}
+                              titlecolor={colors.neutral100}
+                            />
+                          )}
+                        </CustomTableCellBox>
+                      </CustomTableCell>
+                    </React.Fragment>
+                  ))}
+                </>
               </TableRow>
             ))}
           </TableBody>
