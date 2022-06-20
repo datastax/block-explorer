@@ -9,9 +9,6 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
-import LinearProgress, {
-  linearProgressClasses,
-} from '@mui/material/LinearProgress'
 const DetailsTableContainer = styled(Box)({
   color: 'white',
   maxWidth: '1352px',
@@ -34,33 +31,17 @@ const CustomDivider = styled(Divider)({
   width: '100%',
 })
 const CustomListItemText = styled(ListItemText)({
-  maxWidth: '158px',
+  maxWidth: '12%',
   marginRight: '150px',
 })
 const CustomListIcon = styled(ListItemIcon)({
   minWidth: 'fit-content',
   marginRight: '6.67px',
 })
-const GasLimitStyle = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  maxWidth: '50%',
-})
-const TransactionStyle = styled('div')({
-  marginLeft: '10px',
-  marginRight: '10px',
-})
-const ProgressDetail = styled('span')({
-  color: colors.semanticRed,
-})
-const AddressColor = styled('span')({
+const TextStyle = styled('div')({
   color: colors.actionSecondary,
 })
-const TimeColor = styled('span')({
-  color: colors.neutral300,
-  marginLeft: '3px',
-})
+
 const CustomLink = styled(ListItemText)({
   color: colors.actionPrimary,
   textDecoration: 'underline',
@@ -71,31 +52,43 @@ const CustomList = styled(List)({
   display: 'flex',
   flexDirection: 'column',
 })
-const BorderLinearProgress = styled(LinearProgress)({
-  height: 10,
-  borderRadius: 5,
-  width: '40%',
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor: colors.neutral500,
-  },
-  [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
-    backgroundColor: colors.semanticRed,
-  },
+const Wrapper = styled('div')({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+})
+const RightSpacing = styled('div')({
+  marginRight: '10px',
+})
+const RightLogoSpacing = styled('div')({
+  marginRight: '4px',
+})
+const TransactionMainBox = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+})
+const TransactionInnerBox = styled('div')({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+})
+const LoggedIn = styled('span')({
+  color: colors.actionSecondary,
 })
 export {
+  CustomListItem,
+  CustomListIcon,
+  CustomListItemText,
+  CustomDivider,
+  TextStyle,
+  Wrapper,
+  RightSpacing,
   DetailsTableContainer,
   CustomTableContainer,
-  BorderLinearProgress,
-  CustomListItem,
-  CustomDivider,
-  CustomListItemText,
-  CustomListIcon,
-  GasLimitStyle,
-  ProgressDetail,
-  TransactionStyle,
-  AddressColor,
-  TimeColor,
-  CustomLink,
   CustomList,
+  CustomLink,
+  LoggedIn,
+  RightLogoSpacing,
+  TransactionMainBox as TransactionMainBox,
+  TransactionInnerBox as TransactionInnerBox,
 }

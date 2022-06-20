@@ -1,4 +1,5 @@
 import React from 'react'
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
 
 type Route = {
   name: string
@@ -18,10 +19,11 @@ interface SummaryBlocksProps {
 }
 
 interface ChipProps {
-  bgcolor: string
+  bgcolor?: string
   border: string
   titlecolor: string
   label: string | React.ReactNode
+  icon?: ReactJSXElement
 }
 interface BlockProps {
   Block: string
@@ -67,6 +69,19 @@ interface HeroProps {
   title: string
   showChips?: boolean
   blockNumber?: string
+  showPagination?: boolean
+  showDropdown?:boolean
+}
+interface DropButtonProps {
+  title: string
+}
+interface PagingProps {
+  rtl?: boolean
+}
+interface TransactionDetailRowProps {
+  objectKey: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
 }
 
 interface BlockDetails {
@@ -98,9 +113,12 @@ export type {
   CustomTableProps,
   BlockProps,
   ChipProps,
+  HeroProps,
+  DropButtonProps,
+  PagingProps,
+  TransactionDetailRowProps,
   TransactionDataType,
   BlocksDataHome,
   SummaryBlocksProps,
-  HeroProps,
   BlockDetails,
 }
