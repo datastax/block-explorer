@@ -44,7 +44,15 @@ const TransactionsList = ({ title, transactions }: transactionBlockProps) => {
                   fontWeight="400"
                   lineheight="24px"
                 >
-                  <ColumnBox flexValue="flex-start">
+                  <ColumnBox
+                    flexValue="flex-start"
+                    onClick={() => {
+                      router.push(`/transaction/${transaction.hash}`)
+                    }}
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                  >
                     {formatAddress(transaction.hash)}
                     <strong>
                       {getDifference(parseInt(transaction.block_timestamp))} ago
