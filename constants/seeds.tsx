@@ -4,7 +4,7 @@ import {
   MarketCap,
   Difficuilty,
 } from '@components/shared/Icons'
-import { TransactionDataType } from 'types'
+import { TransactionData } from 'types'
 
 const graphData = [
   {
@@ -63,7 +63,7 @@ const summaryBlocksDataTransactions = [
   },
 ]
 
-const transactionData: TransactionDataType[] = [
+const transactionData: TransactionData[] = [
   {
     TxnHash:
       '0x83e6d3b67c97495c6546acb4e41b5d37c622130f31a5f3accdc5b692f819d72e',
