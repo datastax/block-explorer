@@ -47,6 +47,7 @@ const TransactionsTable = ({
           setCurrentPage={setCurrentPage}
           setNext={setNext}
           setPrevious={setPrevious}
+          pageSize={0}
         />
         <Table>
           <TableHead>

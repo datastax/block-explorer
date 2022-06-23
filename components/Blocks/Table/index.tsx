@@ -43,105 +43,110 @@ const BlocksTable = ({
   setPrevious,
   loading,
 }: BlocksTableProps) => {
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState<number>(1)
   return (
     <BlockTableContainer>
       <CustomTableContainer>
-        <UpperPagination
-          blocksData={Data}
-          transaction={false}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          setNext={setNext}
-          setPrevious={setPrevious}
-        />
         {!loading ? (
-          <Table>
-            <TableHead>
-              <TableRow>
-                {titles.map((title, index) => (
-                  <CustomTableCellHeder
-                    key={index}
-                    align="center"
-                    color={title}
-                    border={`1px solid ${colors.neutral500}`}
-                    fontWeight="500"
-                    lineheight="157%"
-                    istransaction={istransaction}
-                  >
-                    <HeaderBox>{title}</HeaderBox>
-                  </CustomTableCellHeder>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Data?.getBlocks.block.map((block, index) => (
-                <TableRow
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  key={index}
-                >
-                  {[...Array(Object.keys(block).length)].map((_, index) => (
-                    <React.Fragment key={index}>
-                      <CustomTableCell
-                        key={index}
-                        align="center"
-                        color={Object.keys(block)[index]}
-                        border={`1px solid ${colors.neutral500}`}
-                        fontWeight="400"
-                        lineheight="143%"
-                      >
-                        <CustomTableCellBox
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                          }}
-                        >
-                          {Object.keys(block)[index] !== 'Method' ? (
-                            <div
-                              onClick={() => {
-                                if (index == 0)
-                                  router.push(
-                                    `/block/${Object.values(block)[index]}`
-                                  )
-                              }}
-                              style={{
-                                cursor: index == 0 ? 'pointer' : 'default',
-                              }}
-                            >
-                              {formatAddress(
-                                Object.values(block)[index]?.toString()
-                              )}
-                            </div>
-                          ) : (
-                            <Chip
-                              label={Object.values(block)[index]}
-                              bgcolor={colors.nordic}
-                              border={`1px solid ${colors.actionPrimary}`}
-                              titlecolor={colors.neutral100}
-                            />
-                          )}
-                        </CustomTableCellBox>
-                      </CustomTableCell>
-                    </React.Fragment>
+          <>
+            <UpperPagination
+              pageSize={pageSize}
+              blocksData={Data}
+              transaction={false}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              setNext={setNext}
+              setPrevious={setPrevious}
+            />
+
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {titles.map((title, index) => (
+                    <CustomTableCellHeder
+                      key={index}
+                      align="center"
+                      color={title}
+                      border={`1px solid ${colors.neutral500}`}
+                      fontWeight="500"
+                      lineheight="157%"
+                      istransaction={istransaction}
+                    >
+                      <HeaderBox>{title}</HeaderBox>
+                    </CustomTableCellHeder>
                   ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {Data?.getBlocks.map((block, index) => (
+                  <TableRow
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    key={index}
+                  >
+                    {[...Array(Object.keys(block).length)].map((_, index) => (
+                      <React.Fragment key={index}>
+                        <CustomTableCell
+                          key={index}
+                          align="center"
+                          color={Object.keys(block)[index]}
+                          border={`1px solid ${colors.neutral500}`}
+                          fontWeight="400"
+                          lineheight="143%"
+                        >
+                          <CustomTableCellBox
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                            }}
+                          >
+                            {Object.keys(block)[index] !== 'Method' ? (
+                              <div
+                                onClick={() => {
+                                  if (index == 0)
+                                    router.push(
+                                      `/block/${Object.values(block)[index]}`
+                                    )
+                                }}
+                                style={{
+                                  cursor: index == 0 ? 'pointer' : 'default',
+                                }}
+                              >
+                                {formatAddress(
+                                  Object.values(block)[index]?.toString()
+                                )}
+                              </div>
+                            ) : (
+                              <Chip
+                                label={Object.values(block)[index]}
+                                bgcolor={colors.nordic}
+                                border={`1px solid ${colors.actionPrimary}`}
+                                titlecolor={colors.neutral100}
+                              />
+                            )}
+                          </CustomTableCellBox>
+                        </CustomTableCell>
+                      </React.Fragment>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+
+            <BottomPagination
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              blocksData={Data}
+              setNext={setNext}
+              setPrevious={setPrevious}
+            />
+          </>
         ) : (
           <Box sx={{ width: '100%' }}>
             <CustomSkeleton rows={10} />
           </Box>
         )}
-        <BottomPagination
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          blocksData={Data}
-          setNext={setNext}
-          setPrevious={setPrevious}
-        />
       </CustomTableContainer>
     </BlockTableContainer>
   )
