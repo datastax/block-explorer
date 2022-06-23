@@ -21,6 +21,10 @@ const Blocks: NextPage = () => {
         previous: previous,
       },
     },
+    onError: () => {
+      setNext(undefined)
+      setPrevious(undefined)
+    },
   })
 
   if (blocksError) {

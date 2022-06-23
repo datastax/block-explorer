@@ -27,30 +27,20 @@ const BottomPagination = ({
   setNext,
   setPrevious,
 }: BottomPaginationProps) => {
-  const totalPages = blocksData?.getBlocks.totalPages
-  const lengthOfEachPage = blocksData?.getBlocks?.block?.length
-  const startingBlock = blocksData?.getBlocks.block[0].number
+  const lengthOfEachPage = blocksData?.getBlocks.length
+  const startingBlock = blocksData?.getBlocks[0].number
   const endingBlock = lengthOfEachPage
-    ? blocksData?.getBlocks.block[lengthOfEachPage - 1].number
+    ? blocksData?.getBlocks[lengthOfEachPage - 1].number
     : null
 
-  const setNextState = (endPage = false, toNull = false) => {
-    console.log('setNext State Clicked', endPage)
-    if (!endPage) {
-      if (toNull) setNext(undefined)
-      else setNext(endingBlock || undefined)
-    }
+  const setNextState = () => {
+    setNext(endingBlock || undefined)
+    setPrevious(undefined)
   }
 
-  const setPreviousState = (firstPage = false, toNull = false) => {
-    console.log('setPrevious State Clicked', firstPage)
-    if (!firstPage) {
-      if (toNull) setPrevious(undefined)
-      else setPrevious(startingBlock || undefined)
-    } else {
-      setNext(undefined)
-      setPrevious(undefined)
-    }
+  const setPreviousState = () => {
+    setPrevious(startingBlock || undefined)
+    setNext(undefined)
   }
 
   const setValuesToDefault = () => {
@@ -87,20 +77,20 @@ const BottomPagination = ({
           spacing={2}
         >
           <PaginationButton
+            lengthOfEachPage={lengthOfEachPage || 0}
+            pageSize={pageSize}
             rtl="true"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            totalPages={totalPages}
             setNext={setNextState}
             setPrevious={setPreviousState}
           />
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
+          <span>{`Page ${currentPage}`}</span>
           <PaginationButton
+            lengthOfEachPage={lengthOfEachPage || 0}
+            pageSize={pageSize}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            totalPages={totalPages}
             setNext={setNextState}
             setPrevious={setPreviousState}
           />
