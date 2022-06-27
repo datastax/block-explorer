@@ -45,9 +45,16 @@ const TransactionsTable = ({
           transaction={true}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          setNext={setNext}
-          setPrevious={setPrevious}
           pageSize={0}
+          lengthOfEachPage={0}
+          startingBlock={0}
+          endingBlock={0}
+          setNextState={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+          setPreviousState={function (): void {
+            throw new Error('Function not implemented.')
+          }}
         />
         <Table>
           <TableHead>
@@ -159,6 +166,13 @@ const TransactionsTable = ({
           setCurrentPage={setCurrentPage}
           setNext={setNext}
           setPrevious={setPrevious}
+          lengthOfEachPage={0}
+          setNextState={function (): void {
+            throw new Error('Function not implemented.')
+          }}
+          setPreviousState={function (): void {
+            throw new Error('Function not implemented.')
+          }}
         />
       </CustomTableContainer>
     </BlockTableContainer>

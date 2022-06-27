@@ -3,7 +3,7 @@ import {
   FontStyling,
 } from '@components/shared/Pagination/BottomPagination/styles'
 import { Stack } from '@mui/material'
-import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
+
 import React, { Dispatch, SetStateAction } from 'react'
 import PaginationButton from '../../PaginationButton'
 import SplitButton from '../../SplitButton'
@@ -13,9 +13,11 @@ interface BottomPaginationProps {
   setPageSize: Dispatch<SetStateAction<number>>
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  blocksData?: GetPaginatedBlocksQuery | undefined
   setNext: Dispatch<SetStateAction<number | undefined>>
   setPrevious: Dispatch<SetStateAction<number | undefined>>
+  lengthOfEachPage: number
+  setNextState: () => void
+  setPreviousState: () => void
 }
 
 const BottomPagination = ({
@@ -23,26 +25,12 @@ const BottomPagination = ({
   setPageSize,
   currentPage,
   setCurrentPage,
-  blocksData,
   setNext,
   setPrevious,
+  lengthOfEachPage,
+  setNextState,
+  setPreviousState,
 }: BottomPaginationProps) => {
-  const lengthOfEachPage = blocksData?.getBlocks.length
-  const startingBlock = blocksData?.getBlocks[0].number
-  const endingBlock = lengthOfEachPage
-    ? blocksData?.getBlocks[lengthOfEachPage - 1].number
-    : null
-
-  const setNextState = () => {
-    setNext(endingBlock || undefined)
-    setPrevious(undefined)
-  }
-
-  const setPreviousState = () => {
-    setPrevious(startingBlock || undefined)
-    setNext(undefined)
-  }
-
   const setValuesToDefault = () => {
     setNext(undefined)
     setPrevious(undefined)

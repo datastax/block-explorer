@@ -1,46 +1,34 @@
 import { Stack } from '@mui/material'
-import React, { Dispatch, SetStateAction } from 'react'
+import React from 'react'
 import {
   BlockStyle,
   FontStyling,
 } from '@components/shared/Pagination/UpperPagination/styles'
 import PaginationButton from '../../PaginationButton'
-import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
 
 interface UpperPaginationProps {
   transaction: boolean
-  blocksData?: GetPaginatedBlocksQuery | undefined
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  setNext: Dispatch<SetStateAction<number | undefined>>
-  setPrevious: Dispatch<SetStateAction<number | undefined>>
   pageSize: number
+  lengthOfEachPage: number
+  startingBlock: number
+  endingBlock: number
+  setNextState: () => void
+  setPreviousState: () => void
 }
 
 const UpperPagination = ({
   pageSize,
   transaction,
-  blocksData,
   currentPage,
   setCurrentPage,
-  setNext,
-  setPrevious,
+  lengthOfEachPage,
+  startingBlock,
+  endingBlock,
+  setNextState,
+  setPreviousState,
 }: UpperPaginationProps) => {
-  const lengthOfEachPage = blocksData?.getBlocks?.length
-  const startingBlock = blocksData?.getBlocks[0]?.number
-  const endingBlock = lengthOfEachPage
-    ? blocksData?.getBlocks[lengthOfEachPage - 1]?.number
-    : null
-  const setNextState = () => {
-    setNext(endingBlock || undefined)
-    setPrevious(undefined)
-  }
-
-  const setPreviousState = () => {
-    setPrevious(startingBlock || undefined)
-    setNext(undefined)
-  }
-
   return (
     <FontStyling>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
