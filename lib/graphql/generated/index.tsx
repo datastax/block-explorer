@@ -44,12 +44,6 @@ export type BlockOutput = {
   transactions_root?: Maybe<Scalars['String']>;
 };
 
-export type BlockPaginationOutput = {
-  __typename?: 'BlockPaginationOutput';
-  block: Array<BlockOutput>;
-  totalPages: Scalars['Float'];
-};
-
 export type ContractOutput = {
   __typename?: 'ContractOutput';
   address: Scalars['String'];
@@ -126,7 +120,7 @@ export type Query = {
   __typename?: 'Query';
   getBlockByHash: Array<BlockOutput>;
   getBlockByNumber: BlockOutput;
-  getBlocks: BlockPaginationOutput;
+  getBlocks: Array<BlockOutput>;
   getContractByAddress: ContractOutput;
   getContractsByBlockNumber: Array<ContractOutput>;
   getLogByTransactionHash: Array<LogOutput>;
@@ -243,7 +237,7 @@ export type GetBlocksQueryVariables = Exact<{
 }>;
 
 
-export type GetBlocksQuery = { __typename?: 'Query', getBlocks: { __typename?: 'BlockPaginationOutput', totalPages: number, block: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number, hash: string }> } };
+export type GetBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number, hash: string }> };
 
 export type GetTransactionsQueryVariables = Exact<{
   transactionsdata: TransactionsPagesInput;
@@ -257,7 +251,7 @@ export type GetPaginatedBlocksQueryVariables = Exact<{
 }>;
 
 
-export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: { __typename?: 'BlockPaginationOutput', totalPages: number, block: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, sha3_uncles?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null }> } };
+export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, sha3_uncles?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null }> };
 
 export type GetBlockByNumberQueryVariables = Exact<{
   data: Scalars['Float'];
@@ -277,14 +271,11 @@ export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionBy
 export const GetBlocksDocument = gql`
     query getBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    totalPages
-    block {
-      number
-      timestamp
-      miner
-      transaction_count
-      hash
-    }
+    number
+    timestamp
+    miner
+    transaction_count
+    hash
   }
 }
     `;
@@ -360,17 +351,14 @@ export type GetTransactionsQueryResult = Apollo.QueryResult<GetTransactionsQuery
 export const GetPaginatedBlocksDocument = gql`
     query getPaginatedBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    totalPages
-    block {
-      number
-      timestamp
-      transaction_count
-      sha3_uncles
-      miner
-      gas_used
-      gas_limit
-      base_fee_per_gas
-    }
+    number
+    timestamp
+    transaction_count
+    sha3_uncles
+    miner
+    gas_used
+    gas_limit
+    base_fee_per_gas
   }
 }
     `;
