@@ -83,6 +83,12 @@ const CustomTableCellBox = styled('div')({
   display: 'flex',
   justifyContent: 'flex-start',
 })
+
+const IconWrapper = styled('div')({
+  paddingRight: '20px',
+  display: 'flex',
+  alignItems: 'center',
+})
 export {
   MainContainer,
   Container,
@@ -95,4 +101,5 @@ export {
   CustomTableCellHeder,
   HeaderBox,
   CustomTableCellBox,
+  IconWrapper,
 }
