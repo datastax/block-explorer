@@ -28,6 +28,9 @@ const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
   strong: {
     color: colors.neutral100,
     fontSize: '12px',
+    '@media (max-width: 1160px)': {
+      fontSize: '11px',
+    },
     lineHeight: '14.4px',
     fontWeight: 400,
   },

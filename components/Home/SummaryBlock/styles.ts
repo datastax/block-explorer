@@ -13,6 +13,9 @@ const StyledCard = styled(Card)(() => ({
   '@media (max-width: 1400px)': {
     width: '95%',
   },
+  '@media (max-width: 1240px)': {
+    padding: '32px 0px 32px 10px',
+  },
 }))
 
 const StyledTypograph = styled(Typography)({
@@ -24,10 +27,9 @@ const StyledTypograph = styled(Typography)({
     color: colors.semanticRed,
     marginLeft: '8px',
   },
-  // '@media (max-width: 1360px)': {
-  //   fontSize: '14px',
-  //   lineHeight: '18px',
-  // },
+  '@media (max-width: 1240px)': {
+    fontSize: '14px',
+  },
 })
 
 export { StyledCard, StyledTypograph }

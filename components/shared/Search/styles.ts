@@ -52,4 +52,8 @@ const CustomFilter = styled(Select)({
   },
 })
 
-export { Wrapper, SearchInput, SearchButton, CustomFilter }
+const MenuTitle = styled('span')({
+  paddingRight: '15px',
+})
+
+export { Wrapper, SearchInput, SearchButton, CustomFilter  , MenuTitle}

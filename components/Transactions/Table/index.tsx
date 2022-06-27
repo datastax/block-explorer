@@ -11,6 +11,7 @@ import {
   CustomTableCellHeder,
   HeaderBox,
   CustomTableCellBox,
+  IconWrapper,
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
@@ -114,15 +115,9 @@ const TransactionsTable = ({
                           }}
                         >
                           {Data && index == 0 && (
-                            <div
-                              style={{
-                                paddingRight: '20px',
-                                display: 'flex',
-                                alignItems: 'center',
-                              }}
-                            >
+                            <IconWrapper>
                               <Eye />
-                            </div>
+                            </IconWrapper>
                           )}
                           {Object.keys(block)[index] !== 'Method' ? (
                             <div

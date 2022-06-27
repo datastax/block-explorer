@@ -1,6 +1,12 @@
 import * as React from 'react'
 import SearchIcon from '@mui/icons-material/Search'
-import { SearchButton, SearchInput, Wrapper, CustomFilter } from './styles'
+import {
+  SearchButton,
+  SearchInput,
+  Wrapper,
+  CustomFilter,
+  MenuTitle,
+} from './styles'
 import { Box, FormControl, MenuItem, SelectChangeEvent } from '@mui/material'
 
 const Search = () => {
@@ -21,7 +27,7 @@ const Search = () => {
             variant="outlined"
           >
             <MenuItem value="">
-              <span style={{ paddingRight: '15px' }}>All Filters</span>
+              <MenuTitle>All Filters</MenuTitle>
             </MenuItem>
             <MenuItem value={10}>Address</MenuItem>
             <MenuItem value={20}>Txn Hash</MenuItem>
