@@ -40,7 +40,7 @@ const LatestData = () => {
   }
 
   useEffect(() => {
-    if (latestBlocks) setBlockHash(latestBlocks.getBlocks.block[0].hash)
+    if (latestBlocks) setBlockHash(latestBlocks.getBlocks[0].hash)
   }, [latestBlocks])
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const LatestData = () => {
           },
         },
       })
-  }, [blockHash, getTransactions])
+  }, [blockHash , getTransactions])
 
   return (
     <Stack spacing={'24px'} direction={'row'}>

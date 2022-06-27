@@ -32,7 +32,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
 
       <Table sx={{ width: '100%' }}>
         <TableBody>
-          {blocks?.getBlocks.block?.map((Block, index) => (
+          {blocks?.getBlocks.map((Block, index) => (
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               key={index}
