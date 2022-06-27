@@ -44,6 +44,21 @@ const BlocksTable = ({
   loading,
 }: BlocksTableProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1)
+
+  const lengthOfEachPage = Data?.getBlocks?.length || 0
+  const startingBlock = Data?.getBlocks[0]?.number || 0
+  const endingBlock =
+    lengthOfEachPage && Data ? Data?.getBlocks[lengthOfEachPage - 1]?.number : 0
+  const setNextState = () => {
+    setNext(endingBlock || undefined)
+    setPrevious(undefined)
+  }
+
+  const setPreviousState = () => {
+    setPrevious(startingBlock || undefined)
+    setNext(undefined)
+  }
+
   return (
     <BlockTableContainer>
       <CustomTableContainer>
@@ -51,12 +66,14 @@ const BlocksTable = ({
           <>
             <UpperPagination
               pageSize={pageSize}
-              blocksData={Data}
               transaction={false}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
-              setNext={setNext}
-              setPrevious={setPrevious}
+              lengthOfEachPage={lengthOfEachPage}
+              startingBlock={startingBlock}
+              endingBlock={endingBlock}
+              setNextState={setNextState}
+              setPreviousState={setPreviousState}
             />
 
             <Table>
@@ -137,9 +154,11 @@ const BlocksTable = ({
               setPageSize={setPageSize}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
-              blocksData={Data}
               setNext={setNext}
               setPrevious={setPrevious}
+              lengthOfEachPage={lengthOfEachPage}
+              setNextState={setNextState}
+              setPreviousState={setPreviousState}
             />
           </>
         ) : (
