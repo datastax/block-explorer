@@ -4,6 +4,7 @@ import colors from '@styles/ThemeProvider/colors'
 import { CustomTableProps } from '@types'
 import { TableCell } from '@mui/material'
 import { colorColumnNames, colorColumnHeaderNames } from '@constants/seeds'
+import theme from '@styles/ThemeProvider/theme'
 
 const MainContainer = styled(Box)({
   width: '100%',
@@ -40,6 +41,12 @@ const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
   borderBottom: props.border,
   fontWeight: props.fontWeight,
   fontSize: '14px',
+  [theme.breakpoints.down('mdB')]: {
+    padding: '15px',
+  },
+  [theme.breakpoints.down('mdA')]: {
+    fontSize: '11px',
+  },
   lineHeight: props.lineheight,
 }))
 
@@ -51,6 +58,12 @@ const CustomTableCellHeder = styled(TableCell)((props: CustomTableProps) => ({
   borderBottom: props.border,
   fontWeight: props.fontWeight,
   fontSize: '14px',
+  [theme.breakpoints.down('mdB')]: {
+    fontSize: '12px',
+  },
+  [theme.breakpoints.down('mdA')]: {
+    fontSize: '11px',
+  },
   lineHeight: props.lineheight,
 }))
 

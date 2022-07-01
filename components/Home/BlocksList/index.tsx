@@ -30,7 +30,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
         {title}
       </Typography>
 
-      <Table sx={{ width: '100%' }}>
+      <Table>
         <TableBody>
           {blocks?.getBlocks.map((Block, index) => (
             <TableRow

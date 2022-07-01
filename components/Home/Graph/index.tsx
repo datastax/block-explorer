@@ -7,7 +7,9 @@ const Graph = () => {
   return (
     <Container>
       <StyledTypograph>
-        Ethereum Transaction History <span>14 days</span>
+        <div>
+          Ethereum Transaction History <span>14 days</span>
+        </div>
         <Options />
       </StyledTypograph>
       <Chart data={graphData} hideZero />
