@@ -1,13 +1,10 @@
 query getBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    totalPages
-    block {
-      number
-      timestamp
-      miner
-      transaction_count
-      hash
-    }
+    number
+    timestamp
+    miner
+    transaction_count
+    hash
   }
 }
 
@@ -25,8 +22,6 @@ query getTransactions($transactionsdata: TransactionsPagesInput!) {
 
 query getPaginatedBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    totalPages
-    block {
       number
       timestamp
       transaction_count
@@ -35,7 +30,6 @@ query getPaginatedBlocks($data: PagesInput!) {
       gas_used
       gas_limit
       base_fee_per_gas
-    }
   }
 }
 
