@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import colors from 'styles/ThemeProvider/colors'
 import {
   CartesianGrid,
@@ -6,6 +7,7 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
+  Tooltip,
 } from 'recharts'
 import { Container } from './styles'
 export type ChartType = {
@@ -17,12 +19,26 @@ type ChartProps = {
   className?: string
   data: ChartType[]
   domain?: Array<number>
-  tooltip?: () => void
+  tooltip?: (payload: any) => JSX.Element
   hideZero?: boolean
   hideGradient?: boolean
 }
 
-const Chart = ({ data, domain, hideZero, hideGradient }: ChartProps) => {
+const Chart = ({
+  data,
+  domain,
+  hideZero,
+  hideGradient,
+  tooltip,
+}: ChartProps) => {
+
+  const CustomTooltip = (props: any) => {
+    const { active, payload } = props
+    return active && payload && payload.length && tooltip ? (
+      <div>{tooltip(payload[0].payload)}</div>
+    ) : null
+  }
+
   const formatterYAxis = (value: number) => {
     if (hideZero && value === 0) {
       return ''
@@ -75,6 +91,13 @@ const Chart = ({ data, domain, hideZero, hideGradient }: ChartProps) => {
             strokeDasharray="none"
             stroke={colors.nightRider}
             vertical={false}
+          />
+          <Tooltip
+            content={<CustomTooltip />}
+            cursor={{
+              stroke: 'rgba(79, 146, 255, .2)',
+              strokeWidth: 2,
+            }}
           />
           <Area
             type="linear"

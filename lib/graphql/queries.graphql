@@ -71,3 +71,16 @@ query getTransactionByHash($data: String!) {
     value
   }
 }
+
+query getDashboardAnalytics {
+  dashboardAnalytics {
+    etherPriceUSD
+    etherPriceBTC
+    marketCapUSD
+    difficulty
+    hashrate
+    tps
+    chartData
+  }
+}
+
