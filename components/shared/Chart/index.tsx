@@ -32,7 +32,7 @@ const Chart = ({ data, domain, hideZero, hideGradient }: ChartProps) => {
 
   return (
     <Container>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="99%" height="100%">
         <AreaChart data={data}>
           <defs>
             <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">

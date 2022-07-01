@@ -9,11 +9,15 @@ interface columnBoxProps {
 }
 
 const StyledCard = styled(Card)({
+  overflowX: 'scroll',
   padding: '32px',
   background: colors.surfaceCard,
   border: `1px solid ${colors.nightRider}`,
   borderRadius: '6px',
   width: '50%',
+  [theme.breakpoints.down('xmd')]: {
+    width: '100%',
+  },
   [theme.breakpoints.down('lg')]: {
     padding: '15px',
   },

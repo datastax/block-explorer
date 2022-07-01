@@ -57,6 +57,17 @@ export type ContractOutput = {
   is_erc1155?: Maybe<Scalars['Boolean']>;
 };
 
+export type DashboardAnalyticsOutput = {
+  __typename?: 'DashboardAnalyticsOutput';
+  chartData: Array<Array<Scalars['Float']>>;
+  difficulty?: Maybe<Scalars['String']>;
+  etherPriceBTC?: Maybe<Scalars['String']>;
+  etherPriceUSD?: Maybe<Scalars['String']>;
+  hashrate?: Maybe<Scalars['String']>;
+  marketCapUSD?: Maybe<Scalars['String']>;
+  tps?: Maybe<Scalars['String']>;
+};
+
 export type LogOutput = {
   __typename?: 'LogOutput';
   address: Scalars['String'];
@@ -118,6 +129,7 @@ export type PaginationInput = {
 
 export type Query = {
   __typename?: 'Query';
+  dashboardAnalytics: DashboardAnalyticsOutput;
   getBlockByHash: Array<BlockOutput>;
   getBlockByNumber: BlockOutput;
   getBlocks: Array<BlockOutput>;
