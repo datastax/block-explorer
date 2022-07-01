@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { Card } from '@mui/material'
+import { Box, Card } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import theme from '@styles/ThemeProvider/theme'
 
@@ -33,4 +33,27 @@ const Container = styled(Card)({
     padding: '32px 10px',
   },
 })
-export { StyledTypograph, Container }
+
+const ToolTip = styled(Box)({
+  padding: '15px',
+  backgroundColor: colors.neutral700,
+  borderRadius: '6px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  p: {
+    color: colors.actionPrimary,
+    margin: 0,
+    padding: 0,
+  },
+  span: {
+    color: colors.actionTertiary,
+  },
+  h6: {
+    color: colors.darkTextSecondary,
+    margin: 0,
+    padding: 0,
+  },
+})
+export { StyledTypograph, Container, ToolTip }

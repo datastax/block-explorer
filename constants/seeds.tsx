@@ -4,9 +4,14 @@ import {
   MarketCap,
   Difficuilty,
 } from '@components/shared/Icons'
-import { TransactionData } from 'types'
+import {
+  GraphData,
+  SummaryBlocksDataPrice,
+  SummaryBlocksDataTransactions,
+  TransactionData,
+} from 'types'
 
-const graphData = [
+const graphData: GraphData[] = [
   {
     label: 'May 1',
     value: 1100,
@@ -21,7 +26,7 @@ const graphData = [
   },
 ]
 
-const summaryBlocksDataPrice = [
+const summaryBlocksDataPrice: SummaryBlocksDataPrice[] = [
   {
     icon: () => <Ether />,
     title: 'Ether Price',
@@ -29,18 +34,16 @@ const summaryBlocksDataPrice = [
     stat: '@0.06795 BTC',
     supportingStat: '-3.50%',
     fontSizeOfValue: '28px',
-    width: '320px',
   },
   {
     icon: () => <MarketCap />,
     title: 'Market Cap',
     value: '$224,483,537,186.00',
     fontSizeOfValue: '24px',
-    width: '320px',
   },
 ]
 
-const summaryBlocksDataTransactions = [
+const summaryBlocksDataTransactions: SummaryBlocksDataTransactions[] = [
   {
     icon: () => <TransactionLogo />,
     title: 'Transactions',
@@ -50,7 +53,6 @@ const summaryBlocksDataTransactions = [
     secondaryValue: '47 Gwei',
     fontSizeOfValue: '24px',
     secondaryStat: '$1.84',
-    width: '434px',
   },
   {
     icon: () => <Difficuilty />,
@@ -59,7 +61,6 @@ const summaryBlocksDataTransactions = [
     secondaryTitle: 'Hash Rate',
     secondaryValue: '1,052,318.84 GH/s',
     fontSizeOfValue: '20px',
-    width: '434px',
   },
 ]
 
