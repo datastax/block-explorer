@@ -1,35 +1,75 @@
 import { styled } from '@mui/system'
 import { Box, Stack } from '@mui/material'
+import theme from '@styles/ThemeProvider/theme'
 
 const Container = styled(Box)({
-  display: 'flex',  
+  display: 'flex',
+  [theme.breakpoints.down('xmd')]: {
+    flexDirection: 'column',
+  },
   padding: '56px 0px',
   width: '100%',
   justifyContent: 'space-between',
 })
 
 const PriceStack = styled(Stack)({
-  minWidth: '320px',
+  width: '320px',
   margin: 0,
   padding: 0,
 
-  '@media (max-width: 1330px)': {
-    minWidth: '280px',
+  [theme.breakpoints.down('xxmdB')]: {
+    width: '300px',
   },
-  '@media (max-width: 1190px)': {
-    minWidth: '205px',
+  [theme.breakpoints.down('xmdB')]: {
+    width: '275px',
+  },
+  [theme.breakpoints.down('xmdA')]: {
+    width: '250px',
+  },
+  [theme.breakpoints.down('mdA')]: {
+    width: '235px',
+  },
+  [theme.breakpoints.down('xmd')]: {
+    width: '48.5%',
+  },
+  [theme.breakpoints.down('smA')]: {
+    width: '45.5%',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '40%',
+  },
+  [theme.breakpoints.down('xsB')]: {
+    width: '100%',
   },
 })
 const TransactionStack = styled(Stack)({
-  minWidth: '434px',
-  '@media (max-width: 1330px)': {
-    minWidth: '400px',
+  width: '434px',
+  [theme.breakpoints.down('xxmdB')]: {
+    width: '425px',
   },
-  '@media (max-width: 1240px)': {
-    minWidth: '350px',
+  [theme.breakpoints.down('xmdB')]: {
+    width: '400px',
   },
-  '@media (max-width: 1190px)': {
-    minWidth: '325px',
+  [theme.breakpoints.down('mdB')]: {
+    width: '360px',
+  },
+  [theme.breakpoints.down('xmdA')]: {
+    width: '350px',
+  },
+  [theme.breakpoints.down('mdA')]: {
+    width: '330px',
+  },
+  [theme.breakpoints.down('xmd')]: {
+    width: '310px',
+  },
+  [theme.breakpoints.down('xmd')]: {
+    width: '48.5%',
+  },
+  [theme.breakpoints.down('smA')]: {
+    width: '310px',
+  },
+  [theme.breakpoints.down('xsB')]: {
+    width: '100%',
   },
 })
 
@@ -37,7 +77,20 @@ const CardsBox = styled(Box)({
   width: '57.55%',
   display: 'flex',
   flexDirection: 'row',
+  [theme.breakpoints.down('xmd')]: {
+    width: '100%',
+  },
+  [theme.breakpoints.down('xsB')]: {
+    flexDirection: 'column',
+  },
   justifyContent: 'space-between',
 })
 
-export { Container, PriceStack, TransactionStack, CardsBox }
+const GraphBox = styled(Box)({
+  margin: 0,
+  width: '40.6%',
+  [theme.breakpoints.down('xmd')]: {
+    width: '100%',
+  },
+})
+export { Container, PriceStack, TransactionStack, CardsBox, GraphBox }

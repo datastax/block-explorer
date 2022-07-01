@@ -30,7 +30,7 @@ const TransactionsList = ({ title, transactions }: transactionBlockProps) => {
         {title}
       </Typography>
 
-      <Table sx={{ width: '100%' }}>
+      <Table>
         <TableBody>
           {transactions?.transactions.transactions?.map(
             (transaction, index) => (
