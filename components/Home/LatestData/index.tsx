@@ -1,12 +1,13 @@
 import BlocksList from '@components/Home/BlocksList'
 import TransactionsList from '@components/Home/TransactionsList'
-import { Box, Stack } from '@mui/material'
+import {  Stack, useMediaQuery } from '@mui/material'
 import {
   useGetBlocksQuery,
   useGetTransactionsLazyQuery,
 } from '@lib/graphql/generated'
 import { useEffect, useState } from 'react'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
+import { Container } from './styles'
 
 const LatestData = () => {
   const [blockHash, setBlockHash] = useState('')
@@ -55,16 +56,16 @@ const LatestData = () => {
           },
         },
       })
-  }, [blockHash , getTransactions])
-
+  }, [blockHash, getTransactions])
+  const tabScreen = useMediaQuery('(max-width:1000px)')
   return (
-    <Stack spacing={'24px'} direction={'row'}>
+    <Stack spacing={'24px'} direction={tabScreen ? 'column' : 'row'}>
       {!loadingBlocks ? (
         <BlocksList title={'Latest Blocks'} blocks={latestBlocks} />
       ) : (
-        <Box sx={{ width: '50%' }}>
+        <Container>
           <CustomSkeleton rows={6} />
-        </Box>
+        </Container>
       )}
       {!loadingTransactions ? (
         <TransactionsList
@@ -72,9 +73,9 @@ const LatestData = () => {
           transactions={latestTransactions}
         />
       ) : (
-        <Box sx={{ width: '50%' }}>
+        <Container>
           <CustomSkeleton rows={6} />
-        </Box>
+        </Container>
       )}
     </Stack>
   )

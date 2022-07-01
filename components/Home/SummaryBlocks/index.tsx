@@ -1,7 +1,12 @@
-import { Box } from '@mui/material'
 import Graph from '@components/Home/Graph'
 import SummaryBlock from '@components/Home/SummaryBlock'
-import { CardsBox, Container, PriceStack, TransactionStack } from './styles'
+import {
+  CardsBox,
+  Container,
+  GraphBox,
+  PriceStack,
+  TransactionStack,
+} from './styles'
 import {
   summaryBlocksDataPrice,
   summaryBlocksDataTransactions,
@@ -40,9 +45,9 @@ const SummaryBlocks = () => {
           ))}
         </TransactionStack>
       </CardsBox>
-      <Box>
+      <GraphBox>
         <Graph />
-      </Box>
+      </GraphBox>
     </Container>
   )
 }

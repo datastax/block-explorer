@@ -9,11 +9,15 @@ interface columnBoxProps {
 }
 
 const StyledCard = styled(Card)({
+  overflowX: 'scroll',
   padding: '32px',
   background: colors.surfaceCard,
   border: `1px solid ${colors.nightRider}`,
   borderRadius: '6px',
   width: '50%',
+  [theme.breakpoints.down('xmd')]: {
+    width: '100%',
+  },
   [theme.breakpoints.down('lg')]: {
     padding: '15px',
   },
@@ -28,7 +32,7 @@ const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
   strong: {
     color: colors.neutral100,
     fontSize: '12px',
-    '@media (max-width: 1160px)': {
+    [theme.breakpoints.down('xmdA')]: {
       fontSize: '11px',
     },
     lineHeight: '14.4px',
