@@ -31,7 +31,12 @@ const UpperPagination = ({
 }: UpperPaginationProps) => {
   return (
     <FontStyling>
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack
+        direction="row"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Stack direction="row" alignItems="center" spacing={2}>
           {transaction ? (
             <>
