@@ -11,10 +11,11 @@ interface WrapperProps {
   padding?: string
   theme: Theme
   flexDirection?: string
+  isHome?: boolean
 }
 
 const Wrapper = styled(Box)(
-  ({ height, padding, theme, flexDirection }: WrapperProps) => ({
+  ({ height, theme, flexDirection, isHome }: WrapperProps) => ({
     height: height,
     maxWidth: '1440px',
     display: 'flex',
@@ -22,7 +23,7 @@ const Wrapper = styled(Box)(
     alignItems: 'center',
     margin: 'auto',
     justifyContent: 'space-between',
-    padding: padding ? padding : '0px 44px',
+    padding: !isHome ? '26px 44px 0px' : '0px 44px',
     [theme.breakpoints.down('md')]: {
       display: 'flex',
       flexDirection: flexDirection,
