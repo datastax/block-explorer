@@ -28,13 +28,14 @@ const ChipLabel = () => {
 
 const Header = () => {
   const { pathname } = useRouter()
+  const isHome = pathname === '/'
   return (
     <Container>
       <Wrapper
         flexDirection="column"
         theme={theme}
         height="72px"
-        padding={pathname !== '/' ? '26px 44px 0px' : ''}
+        isHome={isHome}
       >
         <LogoBox>
           <Link passHref href="/">
