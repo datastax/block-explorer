@@ -24,17 +24,22 @@ export type Attribute = {
 export type BlockOutput = {
   __typename?: 'BlockOutput';
   base_fee_per_gas?: Maybe<Scalars['String']>;
+  burnt_fee?: Maybe<Scalars['String']>;
   difficulty?: Maybe<Scalars['Float']>;
   extra_data?: Maybe<Scalars['String']>;
   gas_limit: Scalars['Float'];
+  gas_target_percentage?: Maybe<Scalars['String']>;
   gas_used: Scalars['Float'];
+  gas_used_percentage?: Maybe<Scalars['String']>;
   hash: Scalars['String'];
   logs_bloom?: Maybe<Scalars['String']>;
+  mine_time?: Maybe<Scalars['Float']>;
   miner: Scalars['String'];
   nonce?: Maybe<Scalars['Float']>;
   number: Scalars['Float'];
   parent_hash?: Maybe<Scalars['String']>;
   receipts_root?: Maybe<Scalars['String']>;
+  reward?: Maybe<Scalars['String']>;
   sha3_uncles?: Maybe<Scalars['String']>;
   size?: Maybe<Scalars['Float']>;
   state_root?: Maybe<Scalars['String']>;
@@ -42,6 +47,9 @@ export type BlockOutput = {
   total_difficulty?: Maybe<Scalars['Float']>;
   transaction_count: Scalars['Float'];
   transactions_root?: Maybe<Scalars['String']>;
+  txn_fees?: Maybe<Scalars['String']>;
+  uncle_reward?: Maybe<Scalars['String']>;
+  uncles_count?: Maybe<Scalars['String']>;
 };
 
 export type ContractOutput = {
@@ -59,12 +67,15 @@ export type ContractOutput = {
 
 export type DashboardAnalyticsOutput = {
   __typename?: 'DashboardAnalyticsOutput';
+  blockNumber?: Maybe<Scalars['Float']>;
   chartData: Array<Array<Scalars['Float']>>;
   difficulty?: Maybe<Scalars['String']>;
   etherPriceBTC?: Maybe<Scalars['String']>;
   etherPriceUSD?: Maybe<Scalars['String']>;
   hashrate?: Maybe<Scalars['String']>;
   marketCapUSD?: Maybe<Scalars['String']>;
+  medGasPrice?: Maybe<Scalars['String']>;
+  totalTransactions?: Maybe<Scalars['String']>;
   tps?: Maybe<Scalars['String']>;
 };
 
@@ -229,6 +240,7 @@ export type TransactionsOutput = {
   receipt_root?: Maybe<Scalars['String']>;
   receipt_status?: Maybe<Scalars['Float']>;
   to_address?: Maybe<Scalars['String']>;
+  transaction_fees?: Maybe<Scalars['String']>;
   transaction_index?: Maybe<Scalars['Float']>;
   value?: Maybe<Scalars['Float']>;
 };
