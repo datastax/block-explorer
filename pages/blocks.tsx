@@ -37,7 +37,7 @@ const Blocks: NextPage = () => {
       <BlocksTable
         pageSize={pageSize}
         setPageSize={setPageSize}
-        Data={latestBlocks || undefined}
+        Data={latestBlocks}
         titles={BlocksTitle}
         setNext={setNext}
         setPrevious={setPrevious}

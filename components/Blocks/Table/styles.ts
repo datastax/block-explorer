@@ -96,6 +96,11 @@ const CustomTableCellBox = styled('div')({
   display: 'flex',
   justifyContent: 'flex-start',
 })
+
+const PercentageValue = styled('div')({
+  fontSize: '12px',
+  color: colors.neutral300,
+})
 export {
   MainContainer,
   Container,
@@ -108,4 +113,5 @@ export {
   CustomTableCellHeder,
   HeaderBox,
   CustomTableCellBox,
+  PercentageValue,
 }

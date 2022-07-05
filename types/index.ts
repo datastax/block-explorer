@@ -101,10 +101,13 @@ interface BlockDetails {
   TotalDifficulty: string
   Size: string
   GasUsed: string
+  GasUsedPercetge: number
+  GasTargetPercentage: number
   GasLimit: string
   BaseFeePerGas: string
   BurntFees: string
   ExtraData: string
+  internalTransaction: number
 }
 
 interface TransactionDetails {

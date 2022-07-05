@@ -53,5 +53,31 @@ const getDifference = (timestamp: number) => {
   return templateString
 }
 
-export { formatAddress, getDifference, numberWithCommas }
+const etherToGwei = (num: number) => {
+  if (num) return num * 1000000000
+  return 0
+}
+
+const calculateStaticBlockReward = (block: string) => {
+  const blockNumber = parseInt(block)
+  if (0 < blockNumber && blockNumber < 4369999) {
+    return 5
+  } else if (4369999 < blockNumber && blockNumber < 7279999) {
+    return 3
+  } else if (7279999 < blockNumber) {
+    return 2
+  }
+}
+
+const convertToMillion = (num: number) => {
+  return `${num / 10e6} M`
+}
+export {
+  formatAddress,
+  getDifference,
+  numberWithCommas,
+  etherToGwei,
+  calculateStaticBlockReward,
+  convertToMillion,
+}
 export { default as createEmotionCache } from './createEmotionCache'

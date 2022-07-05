@@ -6,6 +6,7 @@ import {
   GraphBox,
   PriceStack,
   TransactionStack,
+  SkeletonWrapper,
 } from './styles'
 import {
   summaryBlocksDataPrice,
@@ -18,7 +19,8 @@ import {
   SummaryBlocksDataPrice,
   SummaryBlocksDataTransactions,
 } from 'types'
-import { numberWithCommas } from 'utils'
+import { convertToMillion, numberWithCommas } from 'utils'
+import CustomSkeleton from '@components/shared/CustomSkeleton'
 
 const SummaryBlocks = () => {
   const [summaryBlocksDataPriceList, setSummaryBlocksDataPriceList] =
@@ -58,7 +60,11 @@ const SummaryBlocks = () => {
                   ).toFixed(5)} BTC`
                 : undefined,
             supportingStat:
-              block.title === 'Ether Price' ? block.supportingStat : undefined,
+              block.title === 'Ether Price'
+                ? `${parseFloat(
+                    data.dashboardAnalytics.pricePercentageChange || ''
+                  ).toFixed(2)}%`
+                : undefined,
             fontSizeOfValue: block.fontSizeOfValue,
           }
         }
@@ -76,7 +82,9 @@ const SummaryBlocks = () => {
                       10e12
                     ).toFixed(2)
                   )} TH`
-                : block.value,
+                : `${convertToMillion(
+                    parseInt(data.dashboardAnalytics.totalTransactions || '')
+                  )}`,
             stat:
               block.title === 'Transactions'
                 ? `${parseFloat(data.dashboardAnalytics.tps || '').toFixed(
@@ -91,7 +99,9 @@ const SummaryBlocks = () => {
                       parseFloat(data.dashboardAnalytics.hashrate || '') / 10e9
                     ).toFixed(2)
                   )} GH/s`
-                : block.secondaryValue,
+                : `${parseFloat(
+                    data.dashboardAnalytics.medGasPrice || ''
+                  ).toFixed(2)} Gwei`,
             fontSizeOfValue: block.fontSizeOfValue,
             secondaryStat: block.secondaryStat,
           }
@@ -117,7 +127,7 @@ const SummaryBlocks = () => {
     <Container>
       <CardsBox>
         <PriceStack>
-          {summaryBlocksDataPriceList &&
+          {summaryBlocksDataPriceList ? (
             summaryBlocksDataPriceList.map((item, index) => (
               <SummaryBlock
                 key={index}
@@ -128,10 +138,15 @@ const SummaryBlocks = () => {
                 supportingStat={item.supportingStat}
                 fontSizeOfValue={item.fontSizeOfValue}
               />
-            ))}
+            ))
+          ) : (
+            <SkeletonWrapper>
+              <CustomSkeleton rows={5} />
+            </SkeletonWrapper>
+          )}
         </PriceStack>
         <TransactionStack>
-          {summaryBlocksDataTransactionsList &&
+          {summaryBlocksDataTransactionsList ? (
             summaryBlocksDataTransactionsList.map((item, index) => (
               <SummaryBlock
                 key={index}
@@ -144,11 +159,22 @@ const SummaryBlocks = () => {
                 fontSizeOfValue={item.fontSizeOfValue}
                 secondayStat={item.secondaryStat}
               />
-            ))}
+            ))
+          ) : (
+            <SkeletonWrapper>
+              <CustomSkeleton rows={5} />
+            </SkeletonWrapper>
+          )}
         </TransactionStack>
       </CardsBox>
       <GraphBox>
-        <Graph graph={graph} />
+        {graph ? (
+          <Graph graph={graph} />
+        ) : (
+          <SkeletonWrapper>
+            <CustomSkeleton rows={5} />
+          </SkeletonWrapper>
+        )}
       </GraphBox>
     </Container>
   )
