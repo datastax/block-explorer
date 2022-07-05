@@ -10,13 +10,10 @@ query getBlocks($data: PagesInput!) {
 
 query getTransactions($transactionsdata: TransactionsPagesInput!) {
   transactions(data: $transactionsdata) {
-    totalPages
-    transactions {
-      hash
-      block_timestamp
-      from_address
-      to_address
-    }
+    hash
+    block_timestamp
+    from_address
+    to_address
   }
 }
 
@@ -30,6 +27,9 @@ query getPaginatedBlocks($data: PagesInput!) {
     gas_used
     gas_limit
     base_fee_per_gas
+    reward
+    burnt_fee
+    txn_fees
   }
 }
 
@@ -46,6 +46,11 @@ query getBlockByNumber($data: Float!) {
     gas_limit
     base_fee_per_gas
     extra_data
+    reward
+    uncle_reward
+    txn_fees
+    gas_target_percentage
+    gas_used_percentage
   }
 }
 
@@ -80,7 +85,10 @@ query getDashboardAnalytics {
     difficulty
     hashrate
     tps
+    medGasPrice
+    totalTransactions
+    blockNumber
+    pricePercentageChange
     chartData
   }
 }
-

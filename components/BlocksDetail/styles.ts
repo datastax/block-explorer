@@ -45,7 +45,7 @@ const GasLimitStyle = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  maxWidth: '50%',
+  maxWidth: '55%',
 })
 const TransactionStyle = styled('div')({
   marginLeft: '10px',

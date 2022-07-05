@@ -93,4 +93,15 @@ const GraphBox = styled(Box)({
     width: '100%',
   },
 })
-export { Container, PriceStack, TransactionStack, CardsBox, GraphBox }
+
+const SkeletonWrapper = styled(Box)({
+  width: '100%',
+})
+export {
+  Container,
+  PriceStack,
+  TransactionStack,
+  CardsBox,
+  GraphBox,
+  SkeletonWrapper,
+}
