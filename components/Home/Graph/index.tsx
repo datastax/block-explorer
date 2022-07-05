@@ -1,9 +1,20 @@
 import Chart from '@components/shared/Chart'
 import { Options } from '@components/shared/Icons'
-import { graphData } from '@constants/seeds'
-import { StyledTypograph, Container } from './styles'
+import { GraphData } from 'types'
+import { StyledTypograph, Container, ToolTip } from './styles'
 
-const Graph = () => {
+interface GraphProps {
+  graph: GraphData[] | undefined
+}
+const Graph = ({ graph }: GraphProps) => {
+  const renderTooltip = ({label, value}: GraphData) => (
+    <ToolTip>
+      <h6>ETH Stats</h6>
+      <p>Date : {label}</p>
+      <span>Price : {value}</span>
+    </ToolTip>
+  )
+
   return (
     <Container>
       <StyledTypograph>
@@ -12,7 +23,7 @@ const Graph = () => {
         </div>
         <Options />
       </StyledTypograph>
-      <Chart data={graphData} hideZero />
+      <Chart data={graph || []} hideZero tooltip={renderTooltip} />
     </Container>
   )
 }

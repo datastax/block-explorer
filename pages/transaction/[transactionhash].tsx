@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useGetTransactionByHashQuery } from 'lib/graphql/generated'
 import { useEffect, useState } from 'react'
 import { TransactionDetails } from 'types'
-import { getDifference, numberWithCommas } from 'utils'
+import { etherToGwei, getDifference, numberWithCommas } from 'utils'
 import { Box } from '@mui/material'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 
@@ -61,9 +61,9 @@ const Transaction: NextPage = () => {
         TransactionFee: ' Ether ($)',
         GasPrice: `${
           transactionDetails?.getTransactionByHash.gas_price
-        } Ether (${
-          (transactionDetails?.getTransactionByHash.gas_price || 0) * 1000000000
-        } Gwei)`,
+        } Ether (${etherToGwei(
+          transactionDetails?.getTransactionByHash.gas_price
+        )} Gwei)`,
       })
     }
   }, [transactionDetails])

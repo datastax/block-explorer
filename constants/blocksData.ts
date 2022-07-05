@@ -122,4 +122,5 @@ export const BlocksTitle = [
   'Base Fee',
   'Reward',
   'Burnt Fees (ETH)',
+  'Transaction  Fee (ETH)',
 ]

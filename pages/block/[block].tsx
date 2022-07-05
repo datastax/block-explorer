@@ -5,7 +5,13 @@ import { useRouter } from 'next/router'
 import { BlockDetails } from '@types'
 import { useGetBlockByNumberQuery } from 'lib/graphql/generated'
 import { useEffect, useState } from 'react'
-import { getDifference, formatAddress, numberWithCommas } from 'utils'
+import {
+  getDifference,
+  formatAddress,
+  numberWithCommas,
+  etherToGwei,
+  calculateStaticBlockReward,
+} from 'utils'
 import { Box } from '@mui/material'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 
@@ -28,6 +34,7 @@ const Block: NextPage = () => {
   useEffect(() => {
     if (blockDetails) {
       setBlockDetailsData({
+        internalTransaction: 0,
         BlockHeight: blockDetails?.getBlockByNumber.number.toString() || '',
         Timestamp: {
           time: `${getDifference(
@@ -40,11 +47,17 @@ const Block: NextPage = () => {
         Transactions: `${blockDetails?.getBlockByNumber.transaction_count}`,
         MinedBy: {
           address: blockDetails?.getBlockByNumber.miner || '',
-          miner: `(${formatAddress(blockDetails?.getBlockByNumber.miner)})`,
-          time: '',
+          miner: `(Miner: ${formatAddress(
+            blockDetails?.getBlockByNumber.miner
+          )})`,
+          time: 'in 0 secs',
         },
-        BlockReward: '',
-        UnclesReward: '',
+        BlockReward: `${
+          blockDetails?.getBlockByNumber.reward
+        } Ether (${calculateStaticBlockReward(block as string)} + ${
+          blockDetails.getBlockByNumber.txn_fees
+        } - ${blockDetails?.getBlockByNumber.base_fee_per_gas})`,
+        UnclesReward: blockDetails?.getBlockByNumber.uncle_reward || '',
         Difficulty:
           numberWithCommas(blockDetails?.getBlockByNumber.difficulty || 0) ||
           '',
@@ -55,20 +68,25 @@ const Block: NextPage = () => {
         Size:
           numberWithCommas(blockDetails?.getBlockByNumber.size || 0) + ' bytes',
         GasUsed: numberWithCommas(blockDetails?.getBlockByNumber.gas_used || 0),
+        GasUsedPercetge: parseFloat(
+          blockDetails?.getBlockByNumber.gas_used_percentage || ''
+        ),
+        GasTargetPercentage: parseFloat(
+          blockDetails?.getBlockByNumber.gas_target_percentage || ''
+        ),
         GasLimit: numberWithCommas(
           blockDetails?.getBlockByNumber.gas_limit || 0
         ),
         BaseFeePerGas: `${
           blockDetails?.getBlockByNumber.base_fee_per_gas
-        } Ether (${
-          parseFloat(blockDetails?.getBlockByNumber.base_fee_per_gas || '') *
-          1000000000
-        } Gwei)`,
+        } Ether (${etherToGwei(
+          parseFloat(blockDetails?.getBlockByNumber.base_fee_per_gas || '')
+        )} Gwei)`,
         BurntFees: `🔥 ${blockDetails?.getBlockByNumber.base_fee_per_gas} Ether`,
         ExtraData: `speth03�0\`' (Hex:${blockDetails?.getBlockByNumber.extra_data})`,
       })
     }
-  }, [blockDetails])
+  }, [block, blockDetails])
 
   return (
     <>

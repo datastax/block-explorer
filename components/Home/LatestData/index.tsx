@@ -1,17 +1,15 @@
 import BlocksList from '@components/Home/BlocksList'
 import TransactionsList from '@components/Home/TransactionsList'
-import {  Stack, useMediaQuery } from '@mui/material'
+import { Stack, useMediaQuery } from '@mui/material'
 import {
   useGetBlocksQuery,
   useGetTransactionsLazyQuery,
 } from '@lib/graphql/generated'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Container } from './styles'
 
 const LatestData = () => {
-  const [blockHash, setBlockHash] = useState('')
-
   const {
     data: latestBlocks,
     error: blocksError,
@@ -26,11 +24,7 @@ const LatestData = () => {
 
   const [
     getTransactions,
-    {
-      data: latestTransactions,
-      error: transactionError,
-      loading: loadingTransactions,
-    },
+    { data: latestTransactions, error: transactionError },
   ] = useGetTransactionsLazyQuery()
   if (transactionError) {
     console.error(transactionError)
@@ -41,22 +35,16 @@ const LatestData = () => {
   }
 
   useEffect(() => {
-    if (latestBlocks) setBlockHash(latestBlocks.getBlocks[0].hash)
-  }, [latestBlocks])
-
-  useEffect(() => {
-    if (blockHash)
-      getTransactions({
-        variables: {
-          transactionsdata: {
-            blockHash,
-            pagesInput: {
-              pageSize: 6,
-            },
+    getTransactions({
+      variables: {
+        transactionsdata: {
+          pagesInput: {
+            pageSize: 6,
           },
         },
-      })
-  }, [blockHash, getTransactions])
+      },
+    })
+  }, [getTransactions])
   const tabScreen = useMediaQuery('(max-width:1000px)')
   return (
     <Stack spacing={'24px'} direction={tabScreen ? 'column' : 'row'}>
@@ -67,7 +55,7 @@ const LatestData = () => {
           <CustomSkeleton rows={6} />
         </Container>
       )}
-      {!loadingTransactions ? (
+      {!loadingBlocks && latestTransactions ? (
         <TransactionsList
           title={'Latest Transactions'}
           transactions={latestTransactions}
