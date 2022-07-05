@@ -101,10 +101,13 @@ interface BlockDetails {
   TotalDifficulty: string
   Size: string
   GasUsed: string
+  GasUsedPercetge: number
+  GasTargetPercentage: number
   GasLimit: string
   BaseFeePerGas: string
   BurntFees: string
   ExtraData: string
+  internalTransaction: number
 }
 
 interface TransactionDetails {
@@ -129,6 +132,30 @@ interface TransactionDetails {
   TransactionFee: string
   GasPrice: string
 }
+type SummaryBlocksDataPrice = {
+  icon: () => JSX.Element
+  title: string
+  value: string
+  stat?: string
+  supportingStat?: string
+  fontSizeOfValue: string
+}
+
+type SummaryBlocksDataTransactions = {
+  icon: () => JSX.Element
+  title: string
+  value: string
+  stat?: string
+  secondaryTitle: string
+  secondaryValue: string
+  fontSizeOfValue: string
+  secondaryStat?: string
+}
+
+type GraphData = {
+  label: string
+  value: number
+}
 
 export type {
   Route,
@@ -144,4 +171,7 @@ export type {
   SummaryBlocksProps,
   BlockDetails,
   TransactionDetails,
+  SummaryBlocksDataPrice,
+  SummaryBlocksDataTransactions,
+  GraphData,
 }

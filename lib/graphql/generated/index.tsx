@@ -24,24 +24,32 @@ export type Attribute = {
 export type BlockOutput = {
   __typename?: 'BlockOutput';
   base_fee_per_gas?: Maybe<Scalars['String']>;
+  burnt_fee?: Maybe<Scalars['String']>;
   difficulty?: Maybe<Scalars['Float']>;
   extra_data?: Maybe<Scalars['String']>;
   gas_limit: Scalars['Float'];
+  gas_target_percentage?: Maybe<Scalars['String']>;
   gas_used: Scalars['Float'];
+  gas_used_percentage?: Maybe<Scalars['String']>;
   hash: Scalars['String'];
   logs_bloom?: Maybe<Scalars['String']>;
+  mine_time?: Maybe<Scalars['Float']>;
   miner: Scalars['String'];
   nonce?: Maybe<Scalars['Float']>;
   number: Scalars['Float'];
   parent_hash?: Maybe<Scalars['String']>;
   receipts_root?: Maybe<Scalars['String']>;
+  reward?: Maybe<Scalars['String']>;
   sha3_uncles?: Maybe<Scalars['String']>;
   size?: Maybe<Scalars['Float']>;
   state_root?: Maybe<Scalars['String']>;
   timestamp: Scalars['String'];
-  total_difficulty?: Maybe<Scalars['Float']>;
+  total_difficulty?: Maybe<Scalars['String']>;
   transaction_count: Scalars['Float'];
   transactions_root?: Maybe<Scalars['String']>;
+  txn_fees?: Maybe<Scalars['String']>;
+  uncle_reward?: Maybe<Scalars['String']>;
+  uncles_count?: Maybe<Scalars['String']>;
 };
 
 export type ContractOutput = {
@@ -59,12 +67,16 @@ export type ContractOutput = {
 
 export type DashboardAnalyticsOutput = {
   __typename?: 'DashboardAnalyticsOutput';
+  blockNumber?: Maybe<Scalars['Float']>;
   chartData: Array<Array<Scalars['Float']>>;
   difficulty?: Maybe<Scalars['String']>;
   etherPriceBTC?: Maybe<Scalars['String']>;
   etherPriceUSD?: Maybe<Scalars['String']>;
   hashrate?: Maybe<Scalars['String']>;
   marketCapUSD?: Maybe<Scalars['String']>;
+  medGasPrice?: Maybe<Scalars['String']>;
+  pricePercentageChange?: Maybe<Scalars['String']>;
+  totalTransactions?: Maybe<Scalars['String']>;
   tps?: Maybe<Scalars['String']>;
 };
 
@@ -139,8 +151,9 @@ export type Query = {
   getNFTByContractAddress: Array<NftOutput>;
   getTokenByContractAddress: TokenOutput;
   getTransactionByHash: TransactionsOutput;
+  getTransactions: Array<TransactionsOutput>;
   nfts: Array<NftOutput>;
-  transactions: TransactionsPaginationOutput;
+  transactions: Array<TransactionsOutput>;
 };
 
 
@@ -189,6 +202,11 @@ export type QueryGetTransactionByHashArgs = {
 };
 
 
+export type QueryGetTransactionsArgs = {
+  data: TransactionsPagesInput;
+};
+
+
 export type QueryTransactionsArgs = {
   data: TransactionsPagesInput;
 };
@@ -213,7 +231,7 @@ export type TokenOutput = {
 
 export type TransactionsOutput = {
   __typename?: 'TransactionsOutput';
-  block_hash: Scalars['Float'];
+  block_hash: Scalars['String'];
   block_number: Scalars['Float'];
   block_timestamp: Scalars['String'];
   from_address?: Maybe<Scalars['String']>;
@@ -229,19 +247,15 @@ export type TransactionsOutput = {
   receipt_root?: Maybe<Scalars['String']>;
   receipt_status?: Maybe<Scalars['Float']>;
   to_address?: Maybe<Scalars['String']>;
+  transaction_fees?: Maybe<Scalars['String']>;
   transaction_index?: Maybe<Scalars['Float']>;
   value?: Maybe<Scalars['Float']>;
 };
 
 export type TransactionsPagesInput = {
   blockHash?: InputMaybe<Scalars['String']>;
+  blockNumber?: InputMaybe<Scalars['Float']>;
   pagesInput: PagesInput;
-};
-
-export type TransactionsPaginationOutput = {
-  __typename?: 'TransactionsPaginationOutput';
-  totalPages: Scalars['Float'];
-  transactions: Array<TransactionsOutput>;
 };
 
 export type GetBlocksQueryVariables = Exact<{
@@ -256,28 +270,33 @@ export type GetTransactionsQueryVariables = Exact<{
 }>;
 
 
-export type GetTransactionsQuery = { __typename?: 'Query', transactions: { __typename?: 'TransactionsPaginationOutput', totalPages: number, transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, block_timestamp: string, from_address?: string | null, to_address?: string | null }> } };
+export type GetTransactionsQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, block_timestamp: string, from_address?: string | null, to_address?: string | null }> };
 
 export type GetPaginatedBlocksQueryVariables = Exact<{
   data: PagesInput;
 }>;
 
 
-export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, sha3_uncles?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null }> };
+export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, sha3_uncles?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, reward?: string | null, burnt_fee?: string | null, txn_fees?: string | null }> };
 
 export type GetBlockByNumberQueryVariables = Exact<{
   data: Scalars['Float'];
 }>;
 
 
-export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, miner: string, difficulty?: number | null, total_difficulty?: number | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, extra_data?: string | null } };
+export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null } };
 
 export type GetTransactionByHashQueryVariables = Exact<{
   data: Scalars['String'];
 }>;
 
 
-export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: number, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: number, input?: string | null, nonce?: number | null, parent_hash?: string | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, transaction_index?: number | null, value?: number | null } };
+export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: number, input?: string | null, nonce?: number | null, parent_hash?: string | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, transaction_index?: number | null, value?: number | null } };
+
+export type GetDashboardAnalyticsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDashboardAnalyticsQuery = { __typename?: 'Query', dashboardAnalytics: { __typename?: 'DashboardAnalyticsOutput', etherPriceUSD?: string | null, etherPriceBTC?: string | null, marketCapUSD?: string | null, difficulty?: string | null, hashrate?: string | null, tps?: string | null, medGasPrice?: string | null, totalTransactions?: string | null, blockNumber?: number | null, pricePercentageChange?: string | null, chartData: Array<Array<number>> } };
 
 
 export const GetBlocksDocument = gql`
@@ -322,13 +341,10 @@ export type GetBlocksQueryResult = Apollo.QueryResult<GetBlocksQuery, GetBlocksQ
 export const GetTransactionsDocument = gql`
     query getTransactions($transactionsdata: TransactionsPagesInput!) {
   transactions(data: $transactionsdata) {
-    totalPages
-    transactions {
-      hash
-      block_timestamp
-      from_address
-      to_address
-    }
+    hash
+    block_timestamp
+    from_address
+    to_address
   }
 }
     `;
@@ -371,6 +387,9 @@ export const GetPaginatedBlocksDocument = gql`
     gas_used
     gas_limit
     base_fee_per_gas
+    reward
+    burnt_fee
+    txn_fees
   }
 }
     `;
@@ -416,6 +435,11 @@ export const GetBlockByNumberDocument = gql`
     gas_limit
     base_fee_per_gas
     extra_data
+    reward
+    uncle_reward
+    txn_fees
+    gas_target_percentage
+    gas_used_percentage
   }
 }
     `;
@@ -499,3 +523,47 @@ export function useGetTransactionByHashLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type GetTransactionByHashQueryHookResult = ReturnType<typeof useGetTransactionByHashQuery>;
 export type GetTransactionByHashLazyQueryHookResult = ReturnType<typeof useGetTransactionByHashLazyQuery>;
 export type GetTransactionByHashQueryResult = Apollo.QueryResult<GetTransactionByHashQuery, GetTransactionByHashQueryVariables>;
+export const GetDashboardAnalyticsDocument = gql`
+    query getDashboardAnalytics {
+  dashboardAnalytics {
+    etherPriceUSD
+    etherPriceBTC
+    marketCapUSD
+    difficulty
+    hashrate
+    tps
+    medGasPrice
+    totalTransactions
+    blockNumber
+    pricePercentageChange
+    chartData
+  }
+}
+    `;
+
+/**
+ * __useGetDashboardAnalyticsQuery__
+ *
+ * To run a query within a React component, call `useGetDashboardAnalyticsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDashboardAnalyticsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDashboardAnalyticsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDashboardAnalyticsQuery(baseOptions?: Apollo.QueryHookOptions<GetDashboardAnalyticsQuery, GetDashboardAnalyticsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDashboardAnalyticsQuery, GetDashboardAnalyticsQueryVariables>(GetDashboardAnalyticsDocument, options);
+      }
+export function useGetDashboardAnalyticsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDashboardAnalyticsQuery, GetDashboardAnalyticsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDashboardAnalyticsQuery, GetDashboardAnalyticsQueryVariables>(GetDashboardAnalyticsDocument, options);
+        }
+export type GetDashboardAnalyticsQueryHookResult = ReturnType<typeof useGetDashboardAnalyticsQuery>;
+export type GetDashboardAnalyticsLazyQueryHookResult = ReturnType<typeof useGetDashboardAnalyticsLazyQuery>;
+export type GetDashboardAnalyticsQueryResult = Apollo.QueryResult<GetDashboardAnalyticsQuery, GetDashboardAnalyticsQueryVariables>;

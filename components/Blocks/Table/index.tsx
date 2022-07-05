@@ -11,13 +11,14 @@ import {
   CustomTableCellHeder,
   HeaderBox,
   CustomTableCellBox,
+  PercentageValue,
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
 
 import Chip from '@components/shared/Chip'
 import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
-import { formatAddress } from 'utils'
+import { etherToGwei, formatAddress } from 'utils'
 import router from 'next/router'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Box } from '@mui/material'
@@ -59,6 +60,17 @@ const BlocksTable = ({
     setNext(undefined)
   }
 
+  const getValue = (index: number, Object: (string | number | null)[]) => {
+    if (index < 7) return formatAddress(Object[index]?.toString() || '')
+    else if (index > 7) {
+      const value = `${parseFloat(Object[index]?.toString() || '').toFixed(4)}`
+      return value
+    } else {
+      return `${etherToGwei(parseFloat(Object[index] as string)).toFixed(
+        2
+      )} Gwei`
+    }
+  }
   return (
     <BlockTableContainer>
       <CustomTableContainer>
@@ -126,11 +138,27 @@ const BlocksTable = ({
                                 }}
                                 style={{
                                   cursor: index == 0 ? 'pointer' : 'default',
+                                  display: 'flex',
                                 }}
                               >
-                                {formatAddress(
-                                  Object.values(block)[index]?.toString()
-                                )}
+                                {getValue(index, Object.values(block))}
+                                <PercentageValue>
+                                  {index === 9
+                                    ? `(${(
+                                        (parseFloat(
+                                          Object.values(block)[
+                                            index
+                                          ]?.toString() || ''
+                                        ) /
+                                          parseFloat(
+                                            Object.values(
+                                              block
+                                            )[10]?.toString() || ''
+                                          )) *
+                                        100
+                                      ).toFixed(2)}%)`
+                                    : ''}
+                                </PercentageValue>
                               </div>
                             ) : (
                               <Chip

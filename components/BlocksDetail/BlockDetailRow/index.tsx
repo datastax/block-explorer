@@ -54,7 +54,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         return 'Extra Data:'
     }
   }
-
+  
   const getValueUI = () => {
     switch (objectKey) {
       case 'BlockHeight':
@@ -95,7 +95,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
               <span>and</span>{' '}
             </TransactionStyle>
             <Chip
-              label="33 contract internal transactions"
+              label={`${data['internalTransaction']} contract internal transactions`}
               bgcolor={colors.nordic}
               border={`1px solid ${colors.actionPrimary}`}
               titlecolor={colors.neutral100}
@@ -117,9 +117,14 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         return (
           <ListItemText>
             <GasLimitStyle>
-              {data[objectKey]}
-              <BorderLinearProgress variant="determinate" value={30} />
-              <ProgressDetail>-71% Gas Target </ProgressDetail>
+              {`${data[objectKey]} (${data['GasUsedPercetge'].toFixed(2)}%)`}
+              <BorderLinearProgress
+                variant="determinate"
+                value={data['GasUsedPercetge']}
+              />
+              <ProgressDetail>
+                {`${data['GasTargetPercentage'].toFixed(2)}% Gas Target`}
+              </ProgressDetail>
             </GasLimitStyle>
           </ListItemText>
         )
@@ -127,14 +132,18 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
   }
   return (
     <>
-      <CustomListItem>
-        <CustomListIcon>
-          <Question />
-        </CustomListIcon>
-        <CustomListItemText primary={getKeyName()} />
-        {getValueUI()}
-      </CustomListItem>
-      <CustomDivider />
+      {getValueUI() && (
+        <>
+          <CustomListItem>
+            <CustomListIcon>
+              <Question />
+            </CustomListIcon>
+            <CustomListItemText primary={getKeyName()} />
+            {getValueUI()}
+          </CustomListItem>
+          <CustomDivider />
+        </>
+      )}
     </>
   )
 }
