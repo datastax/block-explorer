@@ -45,7 +45,7 @@ const Header = () => {
           </Link>
         </LogoBox>
 
-        {pathname !== '/' ? (
+        {!isHome ? (
           <SearchBox>
             <Search />
           </SearchBox>
@@ -59,8 +59,8 @@ const Header = () => {
           </Stack>
         )}
       </Wrapper>
-      {pathname !== '/' && (
-        <Wrapper theme={theme} height="auto" padding="0px 44px 26px">
+      {!isHome && (
+        <Wrapper theme={theme} height="auto" padding="0px 44px 26px !important">
           <Chip
             label={<ChipLabel />}
             bgcolor={colors.neutral700}
