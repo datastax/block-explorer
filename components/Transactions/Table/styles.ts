@@ -37,7 +37,9 @@ const BlockTableContainer = styled(Box)({
 const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
   color: colorColumnNames.includes(props.color)
     ? colors.actionSecondary
-    : colors.neutral100,
+    : props.color !== 'transaction_fees'
+    ? colors.neutral100
+    : colors.neutral300,
   borderBottom: props.border,
   fontWeight: props.fontWeight,
   fontSize: '14px',

@@ -27,7 +27,7 @@ interface BlocksTableProps {
   pageSize: number
   setPageSize: Dispatch<SetStateAction<number>>
   titles: string[]
-  Data?: GetPaginatedBlocksQuery | undefined
+  Data: GetPaginatedBlocksQuery | undefined
   istransaction?: boolean
   setNext: Dispatch<SetStateAction<number | undefined>>
   setPrevious: Dispatch<SetStateAction<number | undefined>>
