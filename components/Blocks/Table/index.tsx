@@ -27,7 +27,7 @@ interface BlocksTableProps {
   pageSize: number
   setPageSize: Dispatch<SetStateAction<number>>
   titles: string[]
-  Data?: GetPaginatedBlocksQuery | undefined
+  Data: GetPaginatedBlocksQuery | undefined
   istransaction?: boolean
   setNext: Dispatch<SetStateAction<number | undefined>>
   setPrevious: Dispatch<SetStateAction<number | undefined>>
@@ -61,6 +61,7 @@ const BlocksTable = ({
   }
 
   const getValue = (index: number, Object: (string | number | null)[]) => {
+    if (index > 9) return
     if (index < 7) return formatAddress(Object[index]?.toString() || '')
     else if (index > 7) {
       const value = `${parseFloat(Object[index]?.toString() || '').toFixed(4)}`
@@ -121,6 +122,7 @@ const BlocksTable = ({
                           border={`1px solid ${colors.neutral500}`}
                           fontWeight="400"
                           lineheight="143%"
+                          padding={index > 9 ? 'none' : 'normal'}
                         >
                           <CustomTableCellBox
                             style={{

@@ -33,6 +33,21 @@ query getPaginatedBlocks($data: PagesInput!) {
   }
 }
 
+query getPaginatedTransactions($transactionsdata: TransactionsPagesInput!) {
+  transactions(data: $transactionsdata) {
+    hash
+    nonce
+    block_number
+    block_timestamp
+    from_address
+    to_address
+    value
+    transaction_fees
+    transaction_index
+    block_hash
+  }
+}
+
 query getBlockByNumber($data: Float!) {
   getBlockByNumber(data: $data) {
     number

@@ -75,9 +75,11 @@ export type DashboardAnalyticsOutput = {
   hashrate?: Maybe<Scalars['String']>;
   marketCapUSD?: Maybe<Scalars['String']>;
   medGasPrice?: Maybe<Scalars['String']>;
+  previous24hBlockNumber?: Maybe<Scalars['Float']>;
   pricePercentageChange?: Maybe<Scalars['String']>;
   totalTransactions?: Maybe<Scalars['String']>;
   tps?: Maybe<Scalars['String']>;
+  transactionHistoryChart: Array<Scalars['Float']>;
 };
 
 export type LogOutput = {
@@ -279,6 +281,13 @@ export type GetPaginatedBlocksQueryVariables = Exact<{
 
 export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, sha3_uncles?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, reward?: string | null, burnt_fee?: string | null, txn_fees?: string | null }> };
 
+export type GetPaginatedTransactionsQueryVariables = Exact<{
+  transactionsdata: TransactionsPagesInput;
+}>;
+
+
+export type GetPaginatedTransactionsQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, nonce?: number | null, block_number: number, block_timestamp: string, from_address?: string | null, to_address?: string | null, value?: number | null, transaction_fees?: string | null, transaction_index?: number | null, block_hash: string }> };
+
 export type GetBlockByNumberQueryVariables = Exact<{
   data: Scalars['Float'];
 }>;
@@ -421,6 +430,50 @@ export function useGetPaginatedBlocksLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetPaginatedBlocksQueryHookResult = ReturnType<typeof useGetPaginatedBlocksQuery>;
 export type GetPaginatedBlocksLazyQueryHookResult = ReturnType<typeof useGetPaginatedBlocksLazyQuery>;
 export type GetPaginatedBlocksQueryResult = Apollo.QueryResult<GetPaginatedBlocksQuery, GetPaginatedBlocksQueryVariables>;
+export const GetPaginatedTransactionsDocument = gql`
+    query getPaginatedTransactions($transactionsdata: TransactionsPagesInput!) {
+  transactions(data: $transactionsdata) {
+    hash
+    nonce
+    block_number
+    block_timestamp
+    from_address
+    to_address
+    value
+    transaction_fees
+    transaction_index
+    block_hash
+  }
+}
+    `;
+
+/**
+ * __useGetPaginatedTransactionsQuery__
+ *
+ * To run a query within a React component, call `useGetPaginatedTransactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPaginatedTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPaginatedTransactionsQuery({
+ *   variables: {
+ *      transactionsdata: // value for 'transactionsdata'
+ *   },
+ * });
+ */
+export function useGetPaginatedTransactionsQuery(baseOptions: Apollo.QueryHookOptions<GetPaginatedTransactionsQuery, GetPaginatedTransactionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPaginatedTransactionsQuery, GetPaginatedTransactionsQueryVariables>(GetPaginatedTransactionsDocument, options);
+      }
+export function useGetPaginatedTransactionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPaginatedTransactionsQuery, GetPaginatedTransactionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPaginatedTransactionsQuery, GetPaginatedTransactionsQueryVariables>(GetPaginatedTransactionsDocument, options);
+        }
+export type GetPaginatedTransactionsQueryHookResult = ReturnType<typeof useGetPaginatedTransactionsQuery>;
+export type GetPaginatedTransactionsLazyQueryHookResult = ReturnType<typeof useGetPaginatedTransactionsLazyQuery>;
+export type GetPaginatedTransactionsQueryResult = Apollo.QueryResult<GetPaginatedTransactionsQuery, GetPaginatedTransactionsQueryVariables>;
 export const GetBlockByNumberDocument = gql`
     query getBlockByNumber($data: Float!) {
   getBlockByNumber(data: $data) {
