@@ -3,7 +3,7 @@ import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
 import { CustomTableProps } from '@types'
 import { TableCell } from '@mui/material'
-import { colorColumnNames, colorColumnHeaderNames } from '@constants/seeds'
+import { colorColumnNames, colorColumnHeaderNames } from '@constants/stubs'
 import theme from '@styles/ThemeProvider/theme'
 
 const MainContainer = styled(Box)({

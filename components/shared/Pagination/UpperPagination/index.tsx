@@ -35,8 +35,9 @@ const UpperPagination = ({
         <Stack direction="row" alignItems="center" spacing={2}>
           {transaction ? (
             <>
-              More than {'>'} 1,586,808,272 transactions found{' '}
-              <BlockStyle> (Showing the last 500k records) </BlockStyle>
+              {/* Showing Transactions */}
+              {/* More than {'>'} 1,586,808,272 transactions found{' '} */}
+              <BlockStyle> Showing {pageSize} records </BlockStyle>
             </>
           ) : (
             <>

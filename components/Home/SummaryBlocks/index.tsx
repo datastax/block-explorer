@@ -11,7 +11,7 @@ import {
 import {
   summaryBlocksDataPrice,
   summaryBlocksDataTransactions,
-} from '@constants/seeds'
+} from '@constants/stubs'
 import { useGetDashboardAnalyticsLazyQuery } from 'lib/graphql/generated'
 import { useEffect, useState } from 'react'
 import {

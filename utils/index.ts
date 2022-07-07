@@ -70,7 +70,11 @@ const calculateStaticBlockReward = (block: string) => {
 }
 
 const convertToMillion = (num: number) => {
-  return `${num / 10e6} M`
+  return `${num / 1e6} M`
+}
+
+const weiToEther = (num: number) => {
+  return num / 1e18
 }
 export {
   formatAddress,
@@ -79,5 +83,6 @@ export {
   etherToGwei,
   calculateStaticBlockReward,
   convertToMillion,
+  weiToEther,
 }
 export { default as createEmotionCache } from './createEmotionCache'
