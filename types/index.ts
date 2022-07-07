@@ -157,6 +157,11 @@ type GraphData = {
   value: number
 }
 
+type TransactionBlockDetail = {
+  blockHash: string
+  blockNumber: number
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -174,4 +179,5 @@ export type {
   SummaryBlocksDataPrice,
   SummaryBlocksDataTransactions,
   GraphData,
+  TransactionBlockDetail,
 }

@@ -223,12 +223,13 @@ const transactionTitles = [
 ]
 
 const colorColumnNames = [
-  'number',
+  'hash',
+  'block_number',
   'transaction_count',
   'miner',
   'TxnHash',
-  'TO',
-  'From',
+  'from_address',
+  'to_address',
 ]
 
 const colorColumnHeaderNames = ['Age', 'Txn Fee']
