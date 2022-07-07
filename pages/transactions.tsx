@@ -1,6 +1,6 @@
 import Hero from '@components/shared/Hero'
 import TransactionsTable from '@components/Transactions/Table'
-import { transactionTitles } from '@constants/seeds'
+import { transactionTitles } from '@constants/stubs'
 import { useGetPaginatedTransactionsQuery } from 'lib/graphql/generated'
 import { NextPage } from 'next'
 import { useState } from 'react'

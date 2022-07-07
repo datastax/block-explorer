@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import BlocksTable from '@components/Blocks/Table'
 import Hero from '@components/shared/Hero'
-import { BlocksTitle } from '@constants/blocksData'
+import { BlocksTitle } from '@constants/stubs'
 import { useGetPaginatedBlocksQuery } from 'lib/graphql/generated'
 import { useState } from 'react'
 
