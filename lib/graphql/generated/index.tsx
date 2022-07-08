@@ -153,6 +153,7 @@ export type Query = {
   getNFTByContractAddress: Array<NftOutput>;
   getTokenByContractAddress: TokenOutput;
   getTransactionByHash: TransactionsOutput;
+  getTransactionByIndex: TransactionsOutput;
   getTransactions: Array<TransactionsOutput>;
   nfts: Array<NftOutput>;
   transactions: Array<TransactionsOutput>;
@@ -204,6 +205,11 @@ export type QueryGetTransactionByHashArgs = {
 };
 
 
+export type QueryGetTransactionByIndexArgs = {
+  data: TransactionByIndexInput;
+};
+
+
 export type QueryGetTransactionsArgs = {
   data: TransactionsPagesInput;
 };
@@ -229,6 +235,11 @@ export type TokenOutput = {
   name: Scalars['String'];
   symbol?: Maybe<Scalars['String']>;
   total_supply: Scalars['String'];
+};
+
+export type TransactionByIndexInput = {
+  blockHash: Scalars['String'];
+  transactionIndex: Scalars['Float'];
 };
 
 export type TransactionsOutput = {
@@ -265,14 +276,14 @@ export type GetBlocksQueryVariables = Exact<{
 }>;
 
 
-export type GetBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number, hash: string }> };
+export type GetBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number, hash: string, reward?: string | null }> };
 
 export type GetTransactionsQueryVariables = Exact<{
   transactionsdata: TransactionsPagesInput;
 }>;
 
 
-export type GetTransactionsQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, block_timestamp: string, from_address?: string | null, to_address?: string | null }> };
+export type GetTransactionsQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, block_timestamp: string, from_address?: string | null, to_address?: string | null, value?: number | null }> };
 
 export type GetPaginatedBlocksQueryVariables = Exact<{
   data: PagesInput;
@@ -316,6 +327,7 @@ export const GetBlocksDocument = gql`
     miner
     transaction_count
     hash
+    reward
   }
 }
     `;
@@ -354,6 +366,7 @@ export const GetTransactionsDocument = gql`
     block_timestamp
     from_address
     to_address
+    value
   }
 }
     `;
