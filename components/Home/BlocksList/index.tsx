@@ -10,7 +10,7 @@ import {
 } from './styles'
 import { useRouter } from 'next/router'
 import { GetBlocksQuery } from 'lib/graphql/generated'
-import { formatAddress, getDifference } from '@utils'
+import { fixed, formatAddress, getDifference } from '@utils'
 
 interface BlockListProps {
   title: string
@@ -88,7 +88,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                     bgcolor={colors.nordic}
                     border={`1px solid ${colors.actionPrimary}`}
                     titlecolor={colors.neutral100}
-                    label={'2.1807 Ether'}
+                    label={`${fixed(Block?.reward, 4)} Ether`}
                   />
                 </ChipWrapper>
               </CustomTableCell>
