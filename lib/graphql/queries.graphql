@@ -5,6 +5,7 @@ query getBlocks($data: PagesInput!) {
     miner
     transaction_count
     hash
+    reward
   }
 }
 
@@ -14,6 +15,7 @@ query getTransactions($transactionsdata: TransactionsPagesInput!) {
     block_timestamp
     from_address
     to_address
+    value
   }
 }
 
