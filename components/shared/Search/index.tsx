@@ -1,16 +1,12 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search'
-import {
-  SearchButton,
-  SearchInput,
-  Wrapper,
-  CustomFilter,
-} from './styles'
+import { SearchButton, SearchInput, Wrapper, CustomFilter } from './styles'
 import { Box, FormControl, MenuItem, SelectChangeEvent } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 const Search = () => {
   const [filter, setFilter] = React.useState<string>('')
+  const [search, setSearch] = useState('')
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     setFilter(event.target.value as string)
@@ -40,7 +36,11 @@ const Search = () => {
           </FormControl>
         </Box>
       ) : null}
-      <SearchInput placeholder="Search by Address / Txn Hash/ Block / Token / Ens" />
+      <SearchInput
+        placeholder="Search by Txn Hash or Block Number"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
       <SearchButton>
         <SearchIcon />
       </SearchButton>
