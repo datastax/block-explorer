@@ -1,7 +1,14 @@
 import React from 'react'
 import Logo from '@components/shared/Logo'
 import { Stack } from '@mui/material'
-import { Container, Wrapper, StyledLink, StyledLabel } from './styles'
+import {
+  Container,
+  Wrapper,
+  StyledLink,
+  StyledLabel,
+  SearchBox,
+  LogoBox,
+} from './styles'
 import { ROUTES } from '@constants/routes'
 import { Route } from '@types'
 import Link from 'next/link'
@@ -9,7 +16,7 @@ import { useRouter } from 'next/router'
 import Search from '@components/shared/Search'
 import Chip from '@components/shared/Chip'
 import colors from '@styles/ThemeProvider/colors'
-
+import theme from '@styles/ThemeProvider/theme'
 const ChipLabel = () => {
   return (
     <StyledLabel>
@@ -21,16 +28,27 @@ const ChipLabel = () => {
 
 const Header = () => {
   const { pathname } = useRouter()
+  const isHome = pathname === '/'
   return (
     <Container>
-      <Wrapper height="72px" padding={pathname !== '/' ? '26px 44px 0px' : ''}>
-        <Link passHref href="/">
-          <a>
-            <Logo />
-          </a>
-        </Link>
-        {pathname !== '/' ? (
-          <Search />
+      <Wrapper
+        flexDirection="column"
+        theme={theme}
+        height="72px"
+        isHome={isHome}
+      >
+        <LogoBox>
+          <Link passHref href="/">
+            <a>
+              <Logo />
+            </a>
+          </Link>
+        </LogoBox>
+
+        {!isHome ? (
+          <SearchBox>
+            <Search />
+          </SearchBox>
         ) : (
           <Stack spacing={'40px'} direction={'row'}>
             {ROUTES.map(({ name, link }: Route, index) => (
@@ -41,8 +59,8 @@ const Header = () => {
           </Stack>
         )}
       </Wrapper>
-      {pathname !== '/' && (
-        <Wrapper height="auto" padding="0px 44px 26px">
+      {!isHome && (
+        <Wrapper theme={theme} height="auto" padding="0px 44px 26px !important">
           <Chip
             label={<ChipLabel />}
             bgcolor={colors.neutral700}
