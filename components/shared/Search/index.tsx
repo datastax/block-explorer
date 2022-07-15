@@ -45,7 +45,12 @@ const Search = () => {
   }, [data])
 
   return (
-    <Wrapper>
+    <Wrapper
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleClick()
+      }}
+    >
       {!isMobile ? (
         <Box>
           <FormControl sx={{ minWidth: '160px' }}>
