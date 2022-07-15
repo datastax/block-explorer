@@ -8,7 +8,7 @@ import { useSearchRawLazyQuery } from 'lib/graphql/generated'
 import router from 'next/router'
 const Search = () => {
   const theme = useTheme()
-  const showFilter = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [filter, setFilter] = useState<string>('')
   const [search, setSearch] = useState('')
 
@@ -46,7 +46,7 @@ const Search = () => {
 
   return (
     <Wrapper>
-      {!showFilter ? (
+      {!isMobile ? (
         <Box>
           <FormControl sx={{ minWidth: '160px' }}>
             <CustomFilter
