@@ -1,6 +1,6 @@
 import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
-import { Box, Theme } from '@mui/material'
+import { Box, Stack, Theme } from '@mui/material'
 const Container = styled(Box)({
   background: colors.neutral900,
   width: '100%',
@@ -10,12 +10,19 @@ interface WrapperProps {
   height?: string
   padding?: string
   theme: Theme
-  flexDirection?: string
   isHome?: boolean
+  marginTop?: string
 }
-
+interface LogoProps {
+  isHome?: boolean
+  theme: Theme
+}
+interface CustomStackProps {
+  isHome?: boolean
+  theme: Theme
+}
 const Wrapper = styled(Box)(
-  ({ height, theme, flexDirection, isHome }: WrapperProps) => ({
+  ({ height, theme, isHome, marginTop }: WrapperProps) => ({
     height: height,
     maxWidth: '1440px',
     display: 'flex',
@@ -26,8 +33,12 @@ const Wrapper = styled(Box)(
     padding: !isHome ? '26px 44px 0px' : '0px 44px',
     [theme.breakpoints.down('md')]: {
       display: 'flex',
-      flexDirection: flexDirection,
-      marginTop: '40px',
+      flexDirection: isHome ? 'row' : 'row',
+    },
+    [theme.breakpoints.down('smA')]: {
+      flexDirection: isHome ? 'row' : 'column',
+      marginTop: marginTop,
+      padding: !isHome ? '26px 15px 0px' : '0px 15px',
     },
   })
 )
@@ -50,10 +61,12 @@ const SearchBox = styled(Box)((props) => ({
     justifyContent: 'center',
   },
 }))
-const LogoBox = styled(Box)((props) => ({
+const LogoBox = styled(Box)(({ isHome, theme }: LogoProps) => ({
   width: '20%',
-  [props.theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('md')]: {
     width: '100%',
+    marginBottom: '15px',
+    marginTop: isHome && '15px',
   },
 }))
 const StyledLabel = styled('div')({
@@ -64,5 +77,20 @@ const StyledLabel = styled('div')({
     color: colors.neutral300,
   },
 })
-
-export { Container, Wrapper, StyledLink, StyledLabel, SearchBox, LogoBox }
+const CustomStack = styled(Stack)(({ isHome, theme }: CustomStackProps) => ({
+  [theme.breakpoints.down('sm')]: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: isHome && '5px',
+    width: '100%',
+  },
+}))
+export {
+  Container,
+  Wrapper,
+  StyledLink,
+  StyledLabel,
+  SearchBox,
+  LogoBox,
+  CustomStack,
+}
