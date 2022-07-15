@@ -1,18 +1,49 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search'
 import { SearchButton, SearchInput, Wrapper, CustomFilter } from './styles'
 import { Box, FormControl, MenuItem, SelectChangeEvent } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { useSearchRawLazyQuery } from 'lib/graphql/generated'
+import router from 'next/router'
 const Search = () => {
-  const [filter, setFilter] = React.useState<string>('')
+  const theme = useTheme()
+  const showFilter = useMediaQuery(theme.breakpoints.down('sm'))
+  const [filter, setFilter] = useState<string>('')
   const [search, setSearch] = useState('')
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     setFilter(event.target.value as string)
   }
-  const theme = useTheme()
-  const showFilter = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const [getSearchRaw, { data, loading, error }] = useSearchRawLazyQuery()
+
+  if (error) {
+    console.log('Error Getting Search Results :>> ', error?.message)
+  }
+
+  const handleClick = () => {
+    if (search)
+      getSearchRaw({
+        variables: {
+          data: search,
+        },
+      })
+  }
+
+  useEffect(() => {
+    if (data?.searchRaw.block?.number) {
+      router.push(`/block/${data?.searchRaw.block?.number}`)
+    } else if (data?.searchRaw.transaction?.hash) {
+      router.push(`/transaction/${data?.searchRaw.transaction?.hash}`)
+    } else if (
+      data &&
+      (!data?.searchRaw.transaction?.hash || !data?.searchRaw.block?.number)
+    ) {
+      router.push(`/404`)
+    }
+  }, [data])
+
   return (
     <Wrapper>
       {!showFilter ? (
@@ -41,7 +72,7 @@ const Search = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <SearchButton>
+      <SearchButton type="submit" disabled={loading} onClick={handleClick}>
         <SearchIcon />
       </SearchButton>
     </Wrapper>
