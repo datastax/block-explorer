@@ -1,8 +1,8 @@
 import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
-import { Box, Button, InputBase } from '@mui/material'
+import { Button, InputBase } from '@mui/material'
 import Select from '@mui/material/Select'
-const Wrapper = styled(Box)((props) => ({
+const Wrapper = styled('form')((props) => ({
   p: '2px 4px',
   display: 'flex',
   alignItems: 'center',
@@ -70,4 +70,4 @@ const MenuTitle = styled('span')({
   paddingRight: '15px',
 })
 
-export { Wrapper, SearchInput, SearchButton, CustomFilter  , MenuTitle}
+export { Wrapper, SearchInput, SearchButton, CustomFilter, MenuTitle }

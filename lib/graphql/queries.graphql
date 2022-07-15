@@ -109,3 +109,13 @@ query getDashboardAnalytics {
     chartData
   }
 }
+query searchRaw($data: String!) {
+  searchRaw(data: $data) {
+    block {
+      number
+    }
+    transaction {
+      hash
+    }
+  }
+}
