@@ -3,6 +3,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: Roboto;
+  background: linear-gradient(180deg, #121212 100%, #1d2025 100%);
 }
 
 a {

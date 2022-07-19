@@ -1,0 +1,14 @@
+overwrite: true
+schema: 'https://krypton-etl-staging.herokuapp.com/graphql'
+documents: './lib/graphql/*.graphql'
+generates:
+  lib/graphql/generated/index.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      hooksImportFrom: '@apollo/react-hooks'

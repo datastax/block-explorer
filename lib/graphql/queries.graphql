@@ -1,0 +1,121 @@
+query getBlocks($data: PagesInput!) {
+  getBlocks(data: $data) {
+    number
+    timestamp
+    miner
+    transaction_count
+    hash
+    reward
+  }
+}
+
+query getTransactions($transactionsdata: TransactionsPagesInput!) {
+  transactions(data: $transactionsdata) {
+    hash
+    block_timestamp
+    from_address
+    to_address
+    value
+  }
+}
+
+query getPaginatedBlocks($data: PagesInput!) {
+  getBlocks(data: $data) {
+    number
+    timestamp
+    transaction_count
+    sha3_uncles
+    miner
+    gas_used
+    gas_limit
+    base_fee_per_gas
+    reward
+    burnt_fee
+    txn_fees
+  }
+}
+
+query getPaginatedTransactions($transactionsdata: TransactionsPagesInput!) {
+  transactions(data: $transactionsdata) {
+    hash
+    nonce
+    block_number
+    block_timestamp
+    from_address
+    to_address
+    value
+    transaction_fees
+    transaction_index
+    block_hash
+  }
+}
+
+query getBlockByNumber($data: Float!) {
+  getBlockByNumber(data: $data) {
+    number
+    timestamp
+    transaction_count
+    miner
+    difficulty
+    total_difficulty
+    size
+    gas_used
+    gas_limit
+    base_fee_per_gas
+    extra_data
+    reward
+    uncle_reward
+    txn_fees
+    gas_target_percentage
+    gas_used_percentage
+  }
+}
+
+query getTransactionByHash($data: String!) {
+  getTransactionByHash(data: $data) {
+    hash
+    block_hash
+    block_number
+    block_timestamp
+    from_address
+    gas
+    gas_price
+    input
+    nonce
+    parent_hash
+    receipt_contract_address
+    receipt_cumulative_gas_used
+    receipt_gas_used
+    receipt_root
+    receipt_status
+    to_address
+    transaction_index
+    value
+  }
+}
+
+query getDashboardAnalytics {
+  dashboardAnalytics {
+    etherPriceUSD
+    etherPriceBTC
+    marketCapUSD
+    difficulty
+    hashrate
+    tps
+    medGasPrice
+    totalTransactions
+    blockNumber
+    pricePercentageChange
+    chartData
+  }
+}
+query searchRaw($data: String!) {
+  searchRaw(data: $data) {
+    block {
+      number
+    }
+    transaction {
+      hash
+    }
+  }
+}

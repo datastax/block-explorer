@@ -19,12 +19,13 @@
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
       "@styles/*": ["styles/*"],
-      "@utils/*": ["utils/*"],
+      "@utils": ["utils/"],
       "@hooks/*": ["hooks/*"],
       "@types": ["types/"],
-      "@constants/*": ["constants/*"]
+      "@constants/*": ["constants/*"],
+      "@lib/*": ["lib/*/"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "codegen.js"],
   "exclude": ["node_modules"]
 }
