@@ -4,7 +4,7 @@ import { Box, Theme, Typography } from '@mui/material'
 
 interface StyledTypographyProps {
   theme?: Theme
-  fontColor: string
+  fontColor?: string
 }
 
 const Container = styled(Box)({
@@ -21,14 +21,16 @@ const Wrapper = styled(Box)({
   padding: '0px 44px',
 })
 
-const StyledTypography = styled(Typography)((props: StyledTypographyProps) => ({
-  color: props.fontColor,
-  fontWeight: 500,
-  fontSize: '11px',
-  lineHeight: '16px',
-  span: {
-    color: colors.violet,
-  },
-}))
+const StyledTypography = styled(Typography)(
+  ({ fontColor }: StyledTypographyProps) => ({
+    color: fontColor,
+    fontWeight: 500,
+    fontSize: '11px',
+    lineHeight: '16px',
+    span: {
+      color: colors.actionTertiary,
+    },
+  })
+)
 
 export { Container, Wrapper, StyledTypography }
