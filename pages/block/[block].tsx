@@ -50,7 +50,7 @@ const Block: NextPage = () => {
           miner: `(Miner: ${formatAddress(
             blockDetails?.getBlockByNumber?.miner
           )})`,
-          time: 'in 0 secs',
+          time: `in ${blockDetails?.getBlockByNumber?.mine_time} secs`,
         },
         BlockReward: `${
           blockDetails?.getBlockByNumber?.reward
@@ -66,8 +66,11 @@ const Block: NextPage = () => {
             blockDetails?.getBlockByNumber?.total_difficulty || 0
           ) || '',
         Size:
-          numberWithCommas(blockDetails?.getBlockByNumber?.size || 0) + ' bytes',
-        GasUsed: numberWithCommas(blockDetails?.getBlockByNumber?.gas_used || 0),
+          numberWithCommas(blockDetails?.getBlockByNumber?.size || 0) +
+          ' bytes',
+        GasUsed: numberWithCommas(
+          blockDetails?.getBlockByNumber?.gas_used || 0
+        ),
         GasUsedPercetge: parseFloat(
           blockDetails?.getBlockByNumber?.gas_used_percentage || ''
         ),

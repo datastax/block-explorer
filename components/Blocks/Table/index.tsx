@@ -18,7 +18,12 @@ import UpperPagination from '@components/shared/Pagination/UpperPagination'
 
 import Chip from '@components/shared/Chip'
 import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
-import { etherToGwei, formatAddress } from 'utils'
+import {
+  etherToGwei,
+  formatAddress,
+  getDifference,
+  numberWithCommas,
+} from 'utils'
 import router from 'next/router'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Box } from '@mui/material'
@@ -61,10 +66,14 @@ const BlocksTable = ({
   }
 
   const getValue = (index: number, Object: (string | number | null)[]) => {
+    if (index === 1)
+      return `${getDifference(parseInt(Object[index]?.toString() || ''))} ago`
+    if (index === 5 || index === 6) return numberWithCommas(Object[index] || '')
     if (index > 9) return
     if (index < 7) return formatAddress(Object[index]?.toString() || '')
     else if (index > 7) {
-      const value = `${parseFloat(Object[index]?.toString() || '').toFixed(4)}`
+      let value = `${parseFloat(Object[index]?.toString() || '').toFixed(4)}`
+      if (index == 8) value += ' Ether'
       return value
     } else {
       return `${etherToGwei(parseFloat(Object[index] as string)).toFixed(
