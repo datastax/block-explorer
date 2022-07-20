@@ -72,8 +72,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                   <div>
                     <span>
                       <strong>
-                        {Block.transaction_count} txns in{' '}
-                        {getDifference(parseInt(Block.timestamp))}
+                        {Block.transaction_count} txns in {Block.mine_time} secs
                       </strong>
                     </span>
                   </div>
