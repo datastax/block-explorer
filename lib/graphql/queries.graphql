@@ -5,6 +5,7 @@ query getBlocks($data: PagesInput!) {
     miner
     transaction_count
     hash
+    mine_time
   }
 }
 
@@ -22,7 +23,7 @@ query getPaginatedBlocks($data: PagesInput!) {
     number
     timestamp
     transaction_count
-    sha3_uncles
+    uncles_count
     miner
     gas_used
     gas_limit
@@ -53,6 +54,7 @@ query getBlockByNumber($data: Float!) {
     number
     timestamp
     transaction_count
+    mine_time
     miner
     difficulty
     total_difficulty
@@ -89,6 +91,7 @@ query getTransactionByHash($data: String!) {
     to_address
     transaction_index
     value
+    transaction_fees
   }
 }
 

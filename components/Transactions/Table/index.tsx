@@ -137,70 +137,81 @@ const TransactionsTable = ({
                     key={index}
                   >
                     <>
-                      {[...Array(Object.keys(transaction).length)].map((_, index) => (
-                        <React.Fragment key={index}>
-                          <>
-                            {Data && index == 5 && (
-                              <CustomTableCell
-                                color={''}
-                                border={`1px solid ${colors.neutral500}`}
-                              >
-                                <Exchange />
-                              </CustomTableCell>
-                            )}
-                          </>
-                          <CustomTableCell
-                            key={index}
-                            align="center"
-                            color={Object.keys(transaction)[index]}
-                            border={`1px solid ${colors.neutral500}`}
-                            fontWeight="400"
-                            lineheight="143%"
-                            padding={index > 7 ? 'none' : 'normal'}
-                          >
-                            <CustomTableCellBox
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                              }}
-                            >
-                              {Data && index == 0 && (
-                                <IconWrapper>
-                                  <Eye />
-                                </IconWrapper>
-                              )}
-                              {Object.keys(transaction)[index] !== 'nonce' ? (
-                                <div
-                                  onClick={() => {
-                                    if (index == 0)
-                                      router.push(
-                                        `/transaction/${
-                                          Object.values(transaction)[index]
-                                        }`
-                                      )
-                                  }}
-                                  style={{
-                                    cursor: index == 0 ? 'pointer' : 'default',
-                                  }}
+                      {[...Array(Object.keys(transaction).length)].map(
+                        (_, index) => (
+                          <React.Fragment key={index}>
+                            <>
+                              {Data && index == 5 && (
+                                <CustomTableCell
+                                  color={''}
+                                  border={`1px solid ${colors.neutral500}`}
                                 >
-                                  {getUIValue(
-                                    Object.keys(transaction),
-                                    Object.values(transaction),
-                                    index
-                                  )}
-                                </div>
-                              ) : (
-                                <Chip
-                                  label="Transfer"
-                                  bgcolor={colors.nordic}
-                                  border={`1px solid ${colors.actionPrimary}`}
-                                  titlecolor={colors.neutral100}
-                                />
+                                  <Exchange />
+                                </CustomTableCell>
                               )}
-                            </CustomTableCellBox>
-                          </CustomTableCell>
-                        </React.Fragment>
-                      ))}
+                            </>
+                            <CustomTableCell
+                              key={index}
+                              align="center"
+                              color={Object.keys(transaction)[index]}
+                              border={`1px solid ${colors.neutral500}`}
+                              fontWeight="400"
+                              lineheight="143%"
+                              padding={index > 7 ? 'none' : 'normal'}
+                            >
+                              <CustomTableCellBox
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                {Data && index == 0 && (
+                                  <IconWrapper>
+                                    <Eye />
+                                  </IconWrapper>
+                                )}
+                                {Object.keys(transaction)[index] !== 'nonce' ? (
+                                  <div
+                                    onClick={() => {
+                                      if (index == 0)
+                                        router.push(
+                                          `/transaction/${
+                                            Object.values(transaction)[index]
+                                          }`
+                                        )
+                                      else if (index == 2)
+                                        router.push(
+                                          `/block/${
+                                            Object.values(transaction)[index]
+                                          }`
+                                        )
+                                    }}
+                                    style={{
+                                      cursor:
+                                        index == 0 || index == 2
+                                          ? 'pointer'
+                                          : 'default',
+                                    }}
+                                  >
+                                    {getUIValue(
+                                      Object.keys(transaction),
+                                      Object.values(transaction),
+                                      index
+                                    )}
+                                  </div>
+                                ) : (
+                                  <Chip
+                                    label="Transfer"
+                                    bgcolor={colors.nordic}
+                                    border={`1px solid ${colors.actionPrimary}`}
+                                    titlecolor={colors.neutral100}
+                                  />
+                                )}
+                              </CustomTableCellBox>
+                            </CustomTableCell>
+                          </React.Fragment>
+                        )
+                      )}
                     </>
                   </TableRow>
                 ))}

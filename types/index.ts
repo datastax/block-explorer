@@ -113,7 +113,7 @@ interface BlockDetails {
 interface TransactionDetails {
   TransactionHash: string
   Status: string
-  Block: string
+  Block: string | number
   Timestamp: {
     time: string
     Date: string
