@@ -290,13 +290,14 @@ export type GetBlocksQueryVariables = Exact<{
 
 
 export type GetBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number, hash: string, mine_time?: number | null }> };
+export type GetBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number, hash: string, reward?: string | null }> };
 
 export type GetTransactionsQueryVariables = Exact<{
   transactionsdata: TransactionsPagesInput;
 }>;
 
 
-export type GetTransactionsQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, block_timestamp: string, from_address?: string | null, to_address?: string | null }> };
+export type GetTransactionsQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, block_timestamp: string, from_address?: string | null, to_address?: string | null, value?: number | null }> };
 
 export type GetPaginatedBlocksQueryVariables = Exact<{
   data: PagesInput;
@@ -331,6 +332,13 @@ export type GetDashboardAnalyticsQueryVariables = Exact<{ [key: string]: never; 
 
 export type GetDashboardAnalyticsQuery = { __typename?: 'Query', dashboardAnalytics: { __typename?: 'DashboardAnalyticsOutput', etherPriceUSD?: string | null, etherPriceBTC?: string | null, marketCapUSD?: string | null, difficulty?: string | null, hashrate?: string | null, tps?: string | null, medGasPrice?: string | null, totalTransactions?: string | null, blockNumber?: number | null, pricePercentageChange?: string | null, chartData: Array<Array<number>> } };
 
+export type SearchRawQueryVariables = Exact<{
+  data: Scalars['String'];
+}>;
+
+
+export type SearchRawQuery = { __typename?: 'Query', searchRaw: { __typename?: 'SearchOutput', block?: { __typename?: 'BlockOutput', number: number } | null, transaction?: { __typename?: 'TransactionsOutput', hash: string } | null } };
+
 
 export const GetBlocksDocument = gql`
     query getBlocks($data: PagesInput!) {
@@ -341,6 +349,7 @@ export const GetBlocksDocument = gql`
     transaction_count
     hash
     mine_time
+    reward
   }
 }
     `;
@@ -379,6 +388,7 @@ export const GetTransactionsDocument = gql`
     block_timestamp
     from_address
     to_address
+    value
   }
 }
     `;
@@ -647,3 +657,43 @@ export function useGetDashboardAnalyticsLazyQuery(baseOptions?: Apollo.LazyQuery
 export type GetDashboardAnalyticsQueryHookResult = ReturnType<typeof useGetDashboardAnalyticsQuery>;
 export type GetDashboardAnalyticsLazyQueryHookResult = ReturnType<typeof useGetDashboardAnalyticsLazyQuery>;
 export type GetDashboardAnalyticsQueryResult = Apollo.QueryResult<GetDashboardAnalyticsQuery, GetDashboardAnalyticsQueryVariables>;
+export const SearchRawDocument = gql`
+    query searchRaw($data: String!) {
+  searchRaw(data: $data) {
+    block {
+      number
+    }
+    transaction {
+      hash
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchRawQuery__
+ *
+ * To run a query within a React component, call `useSearchRawQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchRawQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchRawQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSearchRawQuery(baseOptions: Apollo.QueryHookOptions<SearchRawQuery, SearchRawQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchRawQuery, SearchRawQueryVariables>(SearchRawDocument, options);
+      }
+export function useSearchRawLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchRawQuery, SearchRawQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchRawQuery, SearchRawQueryVariables>(SearchRawDocument, options);
+        }
+export type SearchRawQueryHookResult = ReturnType<typeof useSearchRawQuery>;
+export type SearchRawLazyQueryHookResult = ReturnType<typeof useSearchRawLazyQuery>;
+export type SearchRawQueryResult = Apollo.QueryResult<SearchRawQuery, SearchRawQueryVariables>;

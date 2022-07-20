@@ -6,6 +6,7 @@ query getBlocks($data: PagesInput!) {
     transaction_count
     hash
     mine_time
+    reward
   }
 }
 
@@ -15,6 +16,7 @@ query getTransactions($transactionsdata: TransactionsPagesInput!) {
     block_timestamp
     from_address
     to_address
+    value
   }
 }
 
@@ -108,5 +110,15 @@ query getDashboardAnalytics {
     blockNumber
     pricePercentageChange
     chartData
+  }
+}
+query searchRaw($data: String!) {
+  searchRaw(data: $data) {
+    block {
+      number
+    }
+    transaction {
+      hash
+    }
   }
 }
