@@ -13,11 +13,11 @@ const App = (props: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout>
-        <ApolloProvider client={Client}>
+      <ApolloProvider client={Client}>
+        <Layout>
           <Component {...pageProps} />
-        </ApolloProvider>
-      </Layout>
+        </Layout>
+      </ApolloProvider>
     </ThemeProvider>
   )
 }

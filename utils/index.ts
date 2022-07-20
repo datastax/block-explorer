@@ -74,13 +74,21 @@ const convertToMillion = (num: number) => {
   return `${num / 1e6} M`
 }
 
-const weiToEther = (num: number) => {
+const weiToEther = (num: number | undefined | null, fixed?: number) => {
+  if (!num) return 0
+  if (fixed) return (num / 1e18).toFixed(fixed)
   return num / 1e18
 }
 
 const copyToClipboard = (value: string) => {
   navigator.clipboard.writeText(value)
 }
+const fixed = (number: number | undefined | null | string, fixed: number) => {
+  if (!number) return 0
+  if (typeof number === 'string') return parseFloat(number).toFixed(fixed)
+  return number.toFixed(fixed)
+}
+
 export {
   formatAddress,
   getDifference,
@@ -90,5 +98,6 @@ export {
   convertToMillion,
   weiToEther,
   copyToClipboard,
+  fixed,
 }
 export { default as createEmotionCache } from './createEmotionCache'

@@ -85,7 +85,8 @@ const TransactionsTable = ({
     else if (keys[index] !== 'value')
       return formatAddress(values[index]?.toString())
     else
-      return `${weiToEther(parseFloat(values[index]?.toString() || '')).toFixed(
+      return `${weiToEther(
+        parseFloat(values[index]?.toString() || ''),
         4
       )} Ether`
   }
