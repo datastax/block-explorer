@@ -13,8 +13,10 @@ import {
 } from '@components/shared/Icons'
 import { ListItemText } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
+import router from 'next/router'
 import React from 'react'
 import { TransactionDetailRowProps } from 'types'
+import { copyToClipboard } from 'utils'
 import {
   CustomListItem,
   CustomListIcon,
@@ -27,6 +29,7 @@ import {
   TransactionMainBox,
   TransactionInnerBox,
 } from '../styles'
+import { BlockEffect } from './styles'
 
 const TransactionDetailRow = ({
   objectKey,
@@ -68,7 +71,10 @@ const TransactionDetailRow = ({
             <RightSpacing>
               <ListItemText>{data[objectKey]}</ListItemText>
             </RightSpacing>
-            <CustomListIcon>
+            <CustomListIcon
+              onClick={() => copyToClipboard(data[objectKey])}
+              style={{ cursor: 'pointer' }}
+            >
               <CopyAll />
             </CustomListIcon>
           </Wrapper>
@@ -104,7 +110,13 @@ const TransactionDetailRow = ({
         return (
           <Wrapper>
             <RightSpacing>
-              <ListItemText primary={data[objectKey]} />
+              <ListItemText
+                onClick={() => {
+                  router.push(`/block/${data[objectKey]}`)
+                }}
+              >
+                <BlockEffect>{data[objectKey]}</BlockEffect>
+              </ListItemText>
             </RightSpacing>
             <Chip
               label="480 Block Confirmations"
@@ -122,7 +134,10 @@ const TransactionDetailRow = ({
                 <TextStyle>{data[objectKey]}</TextStyle>
               </ListItemText>
             </RightSpacing>
-            <CustomListIcon>
+            <CustomListIcon
+              onClick={() => copyToClipboard(data[objectKey])}
+              style={{ cursor: 'pointer' }}
+            >
               <CopyAll />
             </CustomListIcon>
           </Wrapper>
@@ -142,7 +157,10 @@ const TransactionDetailRow = ({
             <CustomListIcon>
               <Tick />
             </CustomListIcon>
-            <CustomListIcon>
+            <CustomListIcon
+              onClick={() => copyToClipboard(data[objectKey])}
+              style={{ cursor: 'pointer' }}
+            >
               <CopyAll />
             </CustomListIcon>
           </Wrapper>

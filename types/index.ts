@@ -104,8 +104,8 @@ interface BlockDetails {
   GasUsedPercetge: number
   GasTargetPercentage: number
   GasLimit: string
-  BaseFeePerGas: string
-  BurntFees: string
+  BaseFeePerGas: string | null
+  BurntFees: string | null
   ExtraData: string
   internalTransaction: number
 }
@@ -113,7 +113,7 @@ interface BlockDetails {
 interface TransactionDetails {
   TransactionHash: string
   Status: string
-  Block: string
+  Block: string | number
   Timestamp: {
     time: string
     Date: string
