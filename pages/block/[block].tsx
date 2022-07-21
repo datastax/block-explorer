@@ -56,7 +56,7 @@ const Block: NextPage = () => {
           blockDetails?.getBlockByNumber?.reward
         } Ether (${calculateStaticBlockReward(block as string)} + ${
           blockDetails.getBlockByNumber?.txn_fees
-        } - ${blockDetails?.getBlockByNumber?.base_fee_per_gas})`,
+        } - ${blockDetails?.getBlockByNumber?.burnt_fee})`,
         UnclesReward: blockDetails?.getBlockByNumber?.uncle_reward || '',
         Difficulty:
           numberWithCommas(blockDetails?.getBlockByNumber?.difficulty || 0) ||
@@ -80,12 +80,16 @@ const Block: NextPage = () => {
         GasLimit: numberWithCommas(
           blockDetails?.getBlockByNumber?.gas_limit || 0
         ),
-        BaseFeePerGas: `${
-          blockDetails?.getBlockByNumber?.base_fee_per_gas
-        } Ether (${etherToGwei(
-          parseFloat(blockDetails?.getBlockByNumber?.base_fee_per_gas || '')
-        )} Gwei)`,
-        BurntFees: `🔥 ${blockDetails?.getBlockByNumber?.base_fee_per_gas} Ether`,
+        BaseFeePerGas: blockDetails?.getBlockByNumber?.base_fee_per_gas
+          ? `${
+              blockDetails?.getBlockByNumber?.base_fee_per_gas
+            } Ether (${etherToGwei(
+              parseFloat(blockDetails?.getBlockByNumber?.base_fee_per_gas || '')
+            )} Gwei)`
+          : null,
+        BurntFees: parseFloat(blockDetails?.getBlockByNumber?.burnt_fee || '')
+          ? `🔥 ${blockDetails?.getBlockByNumber?.burnt_fee} Ether`
+          : null,
         ExtraData: `speth03�0\`' (Hex:${blockDetails?.getBlockByNumber?.extra_data})`,
       })
     }
