@@ -14,7 +14,8 @@ function numberWithCommas(x: number | string) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
-const getDifference = (timestamp: number) => {
+const getDifference = (timestamp: number | undefined | null) => {
+  if (!timestamp) return 0
   const currentDate = new Date().getTime()
   const time = new Date(timestamp * 1000).getTime()
 
@@ -79,6 +80,9 @@ const weiToEther = (num: number | undefined | null, fixed?: number) => {
   return num / 1e18
 }
 
+const copyToClipboard = (value: string) => {
+  navigator.clipboard.writeText(value)
+}
 const fixed = (number: number | undefined | null | string, fixed: number) => {
   if (!number) return 0
   if (typeof number === 'string') return parseFloat(number).toFixed(fixed)
@@ -93,6 +97,7 @@ export {
   calculateStaticBlockReward,
   convertToMillion,
   weiToEther,
+  copyToClipboard,
   fixed,
 }
 export { default as createEmotionCache } from './createEmotionCache'

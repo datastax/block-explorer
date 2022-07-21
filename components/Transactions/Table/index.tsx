@@ -180,10 +180,18 @@ const TransactionsTable = ({
                                             Object.values(transaction)[index]
                                           }`
                                         )
+                                      else if (index == 2)
+                                        router.push(
+                                          `/block/${
+                                            Object.values(transaction)[index]
+                                          }`
+                                        )
                                     }}
                                     style={{
                                       cursor:
-                                        index == 0 ? 'pointer' : 'default',
+                                        index == 0 || index == 2
+                                          ? 'pointer'
+                                          : 'default',
                                     }}
                                   >
                                     {getUIValue(

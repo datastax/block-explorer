@@ -54,9 +54,11 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         return 'Extra Data:'
     }
   }
-  
+
   const getValueUI = () => {
     switch (objectKey) {
+      case 'BurntFees':
+      case 'BaseFeePerGas':
       case 'BlockHeight':
       case 'BlockReward':
       case 'UnclesReward':
@@ -64,10 +66,10 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
       case 'TotalDifficulty':
       case 'Size':
       case 'GasLimit':
-      case 'BurntFees':
-      case 'BaseFeePerGas':
       case 'ExtraData':
-        return <ListItemText primary={data[objectKey]} />
+        return data[objectKey] != null ? (
+          <ListItemText primary={data[objectKey]} />
+        ) : null
       case 'Timestamp':
         return (
           <>
