@@ -64,6 +64,7 @@ query getBlockByNumber($data: Float!) {
     gas_used
     gas_limit
     base_fee_per_gas
+    burnt_fee
     extra_data
     reward
     uncle_reward

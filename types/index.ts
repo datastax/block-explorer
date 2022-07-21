@@ -104,8 +104,8 @@ interface BlockDetails {
   GasUsedPercetge: number
   GasTargetPercentage: number
   GasLimit: string
-  BaseFeePerGas: string
-  BurntFees: string
+  BaseFeePerGas: string | null
+  BurntFees: string | null
   ExtraData: string
   internalTransaction: number
 }
