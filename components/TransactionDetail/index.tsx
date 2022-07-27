@@ -56,16 +56,6 @@ const TransactionDetail = ({ TransactionData }: TransactionDetailProps) => {
               <CustomLink>Click to see less</CustomLink>
             )}
           </ListItemButton>
-          <CustomListItem>
-            <CustomListIcon>
-              <Question />
-            </CustomListIcon>
-            <CustomListItemText primary="Private Note" />
-            <ListItemText>
-              To access the Private Note feature, you must be{' '}
-              <LoggedIn> Logged In </LoggedIn>
-            </ListItemText>
-          </CustomListItem>
         </CustomTableContainer>
       </DetailsTableContainer>
     </>

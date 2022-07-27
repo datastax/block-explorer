@@ -95,7 +95,10 @@ interface BlockDetails {
     miner: string
     time: string
   }
+  Hash: string
+  ParentHash: string
   BlockReward: string
+  Nonce: number | undefined | null
   UnclesReward: string
   Difficulty: string
   TotalDifficulty: string

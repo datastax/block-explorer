@@ -16,7 +16,6 @@ import {
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
 
-import Chip from '@components/shared/Chip'
 import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
 import {
   etherToGwei,
@@ -81,6 +80,21 @@ const BlocksTable = ({
       )} Gwei`
     }
   }
+
+  const getPercentageValue = (
+    index: number,
+    Object: (string | number | null)[]
+  ) => {
+    if (index === 9) {
+      if (Object[10]?.toString() == '0') return '(0%)'
+      return `(${(
+        (parseFloat(Object[index]?.toString() || '') /
+          parseFloat(Object[10]?.toString() || '')) *
+        100
+      ).toFixed(2)}%)`
+    }
+    return ''
+  }
   return (
     <BlockTableContainer>
       <CustomTableContainer>
@@ -139,46 +153,26 @@ const BlocksTable = ({
                               alignItems: 'center',
                             }}
                           >
-                            {Object.keys(block)[index] !== 'Method' ? (
-                              <div
-                                onClick={() => {
-                                  if (index == 0)
-                                    router.push(
-                                      `/block/${Object.values(block)[index]}`
-                                    )
-                                }}
-                                style={{
-                                  cursor: index == 0 ? 'pointer' : 'default',
-                                  display: 'flex',
-                                }}
-                              >
-                                {getValue(index, Object.values(block))}
-                                <PercentageValue>
-                                  {index === 9
-                                    ? `(${(
-                                        (parseFloat(
-                                          Object.values(block)[
-                                            index
-                                          ]?.toString() || ''
-                                        ) /
-                                          parseFloat(
-                                            Object.values(
-                                              block
-                                            )[10]?.toString() || ''
-                                          )) *
-                                        100
-                                      ).toFixed(2)}%)`
-                                    : ''}
-                                </PercentageValue>
-                              </div>
-                            ) : (
-                              <Chip
-                                label={Object.values(block)[index]}
-                                bgcolor={colors.nordic}
-                                border={`1px solid ${colors.actionPrimary}`}
-                                titlecolor={colors.neutral100}
-                              />
-                            )}
+                            <div
+                              onClick={() => {
+                                if (index == 0)
+                                  router.push(
+                                    `/block/${Object.values(block)[index]}`
+                                  )
+                              }}
+                              style={{
+                                cursor: index == 0 ? 'pointer' : 'default',
+                                display: 'flex',
+                              }}
+                            >
+                              {getValue(index, Object.values(block))}
+                              <PercentageValue>
+                                {getPercentageValue(
+                                  index,
+                                  Object.values(block)
+                                )}
+                              </PercentageValue>
+                            </div>
                           </CustomTableCellBox>
                         </CustomTableCell>
                       </React.Fragment>

@@ -261,7 +261,7 @@ export type TransactionsOutput = {
   block_timestamp: Scalars['String'];
   from_address?: Maybe<Scalars['String']>;
   gas: Scalars['Float'];
-  gas_price: Scalars['Float'];
+  gas_price: Scalars['String'];
   hash: Scalars['String'];
   input?: Maybe<Scalars['String']>;
   method?: Maybe<Scalars['String']>;
@@ -274,8 +274,10 @@ export type TransactionsOutput = {
   receipt_status?: Maybe<Scalars['Float']>;
   to_address?: Maybe<Scalars['String']>;
   transaction_fees?: Maybe<Scalars['String']>;
+  transaction_fees_usd?: Maybe<Scalars['String']>;
   transaction_index?: Maybe<Scalars['Float']>;
   value?: Maybe<Scalars['Float']>;
+  value_usd?: Maybe<Scalars['String']>;
 };
 
 export type TransactionsPagesInput = {
@@ -310,26 +312,26 @@ export type GetPaginatedTransactionsQueryVariables = Exact<{
 }>;
 
 
-export type GetPaginatedTransactionsQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, nonce?: number | null, block_number: number, block_timestamp: string, from_address?: string | null, to_address?: string | null, value?: number | null, transaction_fees?: string | null, transaction_index?: number | null, block_hash: string }> };
+export type GetPaginatedTransactionsQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, method?: string | null, block_number: number, block_timestamp: string, from_address?: string | null, to_address?: string | null, value?: number | null, transaction_fees?: string | null, transaction_index?: number | null, block_hash: string }> };
 
 export type GetBlockByNumberQueryVariables = Exact<{
   data: Scalars['Float'];
 }>;
 
 
-export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null } };
+export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: number | null } };
 
 export type GetTransactionByHashQueryVariables = Exact<{
   data: Scalars['String'];
 }>;
 
 
-export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: number, input?: string | null, nonce?: number | null, parent_hash?: string | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, transaction_index?: number | null, value?: number | null, transaction_fees?: string | null } };
+export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: string, input?: string | null, nonce?: number | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, method?: string | null, transaction_index?: number | null, value?: number | null, transaction_fees?: string | null } };
 
 export type GetDashboardAnalyticsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDashboardAnalyticsQuery = { __typename?: 'Query', dashboardAnalytics: { __typename?: 'DashboardAnalyticsOutput', etherPriceUSD?: string | null, etherPriceBTC?: string | null, marketCapUSD?: string | null, difficulty?: string | null, hashrate?: string | null, tps?: string | null, medGasPrice?: string | null, totalTransactions?: string | null, blockNumber?: number | null, pricePercentageChange?: string | null, chartData: Array<Array<number>> } };
+export type GetDashboardAnalyticsQuery = { __typename?: 'Query', dashboardAnalytics: { __typename?: 'DashboardAnalyticsOutput', etherPriceUSD?: string | null, etherPriceBTC?: string | null, marketCapUSD?: string | null, difficulty?: string | null, hashrate?: string | null, tps?: string | null, medGasPrice?: string | null, totalTransactions?: string | null, blockNumber?: number | null, pricePercentageChange?: string | null, chartData: Array<Array<number>>, transactionHistoryChart: Array<number> } };
 
 export type SearchRawQueryVariables = Exact<{
   data: Scalars['String'];
@@ -468,7 +470,7 @@ export const GetPaginatedTransactionsDocument = gql`
     query getPaginatedTransactions($transactionsdata: TransactionsPagesInput!) {
   transactions(data: $transactionsdata) {
     hash
-    nonce
+    method
     block_number
     block_timestamp
     from_address
@@ -529,6 +531,10 @@ export const GetBlockByNumberDocument = gql`
     txn_fees
     gas_target_percentage
     gas_used_percentage
+    hash
+    parent_hash
+    sha3_uncles
+    nonce
   }
 }
     `;
@@ -572,13 +578,13 @@ export const GetTransactionByHashDocument = gql`
     gas_price
     input
     nonce
-    parent_hash
     receipt_contract_address
     receipt_cumulative_gas_used
     receipt_gas_used
     receipt_root
     receipt_status
     to_address
+    method
     transaction_index
     value
     transaction_fees
@@ -627,6 +633,7 @@ export const GetDashboardAnalyticsDocument = gql`
     blockNumber
     pricePercentageChange
     chartData
+    transactionHistoryChart
   }
 }
     `;

@@ -39,7 +39,7 @@ query getPaginatedBlocks($data: PagesInput!) {
 query getPaginatedTransactions($transactionsdata: TransactionsPagesInput!) {
   transactions(data: $transactionsdata) {
     hash
-    nonce
+    method
     block_number
     block_timestamp
     from_address
@@ -71,6 +71,10 @@ query getBlockByNumber($data: Float!) {
     txn_fees
     gas_target_percentage
     gas_used_percentage
+    hash
+    parent_hash
+    sha3_uncles
+    nonce
   }
 }
 
@@ -85,13 +89,13 @@ query getTransactionByHash($data: String!) {
     gas_price
     input
     nonce
-    parent_hash
     receipt_contract_address
     receipt_cumulative_gas_used
     receipt_gas_used
     receipt_root
     receipt_status
     to_address
+    method
     transaction_index
     value
     transaction_fees
@@ -111,6 +115,7 @@ query getDashboardAnalytics {
     blockNumber
     pricePercentageChange
     chartData
+    transactionHistoryChart
   }
 }
 query searchRaw($data: String!) {

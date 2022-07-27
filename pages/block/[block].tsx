@@ -34,6 +34,9 @@ const Block: NextPage = () => {
   useEffect(() => {
     if (blockDetails) {
       setBlockDetailsData({
+        Hash: blockDetails?.getBlockByNumber?.hash || '',
+        ParentHash: blockDetails?.getBlockByNumber?.parent_hash || '',
+        Nonce: blockDetails?.getBlockByNumber?.nonce,
         internalTransaction: 0,
         BlockHeight: blockDetails?.getBlockByNumber?.number.toString() || '',
         Timestamp: {

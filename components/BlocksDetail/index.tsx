@@ -42,8 +42,24 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
               <CustomListIcon>
                 <Question />
               </CustomListIcon>
-              <CustomListItemText primary="ExtraData:" />
-              <ListItemText primary={BlocksDetailsData.ExtraData} />
+              <CustomListItemText primary="Hash:" />
+              <ListItemText primary={BlocksDetailsData?.Hash} />
+            </CustomListItem>
+            <CustomDivider />
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="Parent Hash:" />
+              <ListItemText primary={BlocksDetailsData?.ParentHash} />
+            </CustomListItem>
+            <CustomDivider />
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="Nonce:" />
+              <ListItemText primary={BlocksDetailsData?.Nonce} />
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>
@@ -51,7 +67,7 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
                 <Question />
               </CustomListIcon>
               <CustomListItemText primary="ExtraData:" />
-              <ListItemText primary={BlocksDetailsData.ExtraData} />
+              <ListItemText primary={BlocksDetailsData?.ExtraData} />
             </CustomListItem>
             <CustomDivider />
           </Collapse>
