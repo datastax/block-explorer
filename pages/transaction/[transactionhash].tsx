@@ -32,8 +32,7 @@ const Transaction: NextPage = () => {
       setTransactionDetailData({
         TransactionHash: transactionDetails?.getTransactionByHash.hash || '',
         Status: '',
-        Block:
-          transactionDetails?.getTransactionByHash?.block_number,
+        Block: transactionDetails?.getTransactionByHash?.block_number,
         Timestamp: {
           time: `${getDifference(
             parseInt(

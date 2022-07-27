@@ -6,7 +6,6 @@ import { NextPage } from 'next'
 import { useState } from 'react'
 import { TransactionBlockDetail } from 'types'
 
-
 const Transactions: NextPage = () => {
   const [pageSize, setPageSize] = useState(10)
   const [next, setNext] = useState<number>()
