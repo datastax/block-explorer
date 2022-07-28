@@ -31,7 +31,7 @@ const Transaction: NextPage = () => {
     if (transactionDetails) {
       setTransactionDetailData({
         TransactionHash: transactionDetails?.getTransactionByHash.hash || '',
-        Status: '',
+        Status: transactionDetails?.getTransactionByHash.receipt_status,
         Block: transactionDetails?.getTransactionByHash?.block_number,
         Timestamp: {
           time: `${getDifference(
@@ -45,6 +45,8 @@ const Transaction: NextPage = () => {
             ) * 1000
           ).toUTCString()})`,
         },
+        Gas_limit: transactionDetails.getTransactionByHash.gas,
+        Usage_Txn: transactionDetails.getTransactionByHash.receipt_gas_used,
         TransactionAction: {
           approved: 'Approved',
           kuno: 'KUNO',
@@ -55,8 +57,15 @@ const Transaction: NextPage = () => {
         },
         From: transactionDetails?.getTransactionByHash.from_address || '',
         To: transactionDetails?.getTransactionByHash.to_address || '',
-        Value: `(${transactionDetails?.getTransactionByHash.value})`,
-        TransactionFee: `${transactionDetails?.getTransactionByHash.transaction_fees} Ether ($)`,
+        Value: `${transactionDetails?.getTransactionByHash.value} Ether`,
+        Value_usd: `($${parseFloat(
+          transactionDetails?.getTransactionByHash?.value_usd || ''
+        ).toFixed(2)})`,
+        TransactionFee: `${
+          transactionDetails?.getTransactionByHash.transaction_fees
+        } Ether (${parseFloat(
+          transactionDetails?.getTransactionByHash?.transaction_fees_usd || ''
+        ).toFixed(2)}$)`,
         GasPrice: `${
           transactionDetails?.getTransactionByHash.gas_price
         } Ether (${etherToGwei(

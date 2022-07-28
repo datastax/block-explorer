@@ -2,6 +2,7 @@ import { Question } from '@components/shared/Icons'
 import { Collapse, ListItemText, ListItemButton } from '@mui/material'
 import React from 'react'
 import { TransactionDetails } from 'types'
+import { numberWithCommas } from 'utils'
 import {
   DetailsTableContainer,
   CustomTableContainer,
@@ -42,11 +43,12 @@ const TransactionDetail = ({ TransactionData }: TransactionDetailProps) => {
               <CustomListIcon>
                 <Question />
               </CustomListIcon>
-              <CustomListItemText primary="Private Note" />
-              <ListItemText>
-                To access the Private Note feature, you must be{' '}
-                <LoggedIn> Logged In </LoggedIn>
-              </ListItemText>
+              <CustomListItemText primary="Gas Limit & Usage by Txn:" />
+              <ListItemText>{`${numberWithCommas(
+                TransactionData.Gas_limit
+              )}   |   ${numberWithCommas(
+                TransactionData.Usage_Txn
+              )}`}</ListItemText>
             </CustomListItem>
           </Collapse>
           <ListItemButton onClick={handleClick}>
@@ -56,6 +58,16 @@ const TransactionDetail = ({ TransactionData }: TransactionDetailProps) => {
               <CustomLink>Click to see less</CustomLink>
             )}
           </ListItemButton>
+          <CustomListItem>
+            <CustomListIcon>
+              <Question />
+            </CustomListIcon>
+            <CustomListItemText primary="Private Note" />
+            <ListItemText>
+              To access the Private Note feature, you must be{' '}
+              <LoggedIn> Logged In </LoggedIn>
+            </ListItemText>
+          </CustomListItem>
         </CustomTableContainer>
       </DetailsTableContainer>
     </>

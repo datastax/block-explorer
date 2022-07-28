@@ -10,8 +10,8 @@ const formatAddress = (
   return address.slice(0, start) + '....' + address.slice(address.length - end)
 }
 
-function numberWithCommas(value: number | string) {
-  if (value === '') return '0'
+function numberWithCommas(value: number | string | null | undefined) {
+  if (!value) return '0'
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
