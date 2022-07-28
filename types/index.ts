@@ -115,7 +115,7 @@ interface BlockDetails {
 
 interface TransactionDetails {
   TransactionHash: string
-  Status: string
+  Status: number | null | undefined
   Block: string | number
   Timestamp: {
     time: string
@@ -129,9 +129,12 @@ interface TransactionDetails {
     checkIn: string
     token: string
   }
+  Gas_limit: number
+  Usage_Txn: number | null | undefined
   From: string
   To: string
   Value: string
+  Value_usd: string
   TransactionFee: string
   GasPrice: string
 }
@@ -165,6 +168,9 @@ type TransactionBlockDetail = {
   blockNumber: number
 }
 
+interface CopyClipboardProps {
+  data: string
+}
 export type {
   Route,
   CustomTableProps,
@@ -183,4 +189,5 @@ export type {
   SummaryBlocksDataTransactions,
   GraphData,
   TransactionBlockDetail,
+  CopyClipboardProps,
 }

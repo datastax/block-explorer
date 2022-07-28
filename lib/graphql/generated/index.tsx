@@ -75,6 +75,8 @@ export type DashboardAnalyticsOutput = {
   hashrate?: Maybe<Scalars['String']>;
   marketCapUSD?: Maybe<Scalars['String']>;
   medGasPrice?: Maybe<Scalars['String']>;
+  networkBaseFee?: Maybe<Scalars['String']>;
+  networkpriorityFee?: Maybe<Scalars['String']>;
   previous24hBlockNumber?: Maybe<Scalars['Float']>;
   pricePercentageChange?: Maybe<Scalars['String']>;
   totalTransactions?: Maybe<Scalars['String']>;
@@ -326,7 +328,7 @@ export type GetTransactionByHashQueryVariables = Exact<{
 }>;
 
 
-export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: string, input?: string | null, nonce?: number | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, method?: string | null, transaction_index?: number | null, value?: number | null, transaction_fees?: string | null } };
+export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: string, input?: string | null, nonce?: number | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, method?: string | null, transaction_fees_usd?: string | null, transaction_index?: number | null, value?: number | null, value_usd?: string | null, transaction_fees?: string | null } };
 
 export type GetDashboardAnalyticsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -585,8 +587,10 @@ export const GetTransactionByHashDocument = gql`
     receipt_status
     to_address
     method
+    transaction_fees_usd
     transaction_index
     value
+    value_usd
     transaction_fees
   }
 }

@@ -96,8 +96,10 @@ query getTransactionByHash($data: String!) {
     receipt_status
     to_address
     method
+    transaction_fees_usd
     transaction_index
     value
+    value_usd
     transaction_fees
   }
 }
