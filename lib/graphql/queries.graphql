@@ -1,12 +1,14 @@
 query getBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    number
-    timestamp
-    miner
-    transaction_count
-    hash
-    mine_time
-    reward
+    blocks {
+      number
+      timestamp
+      miner
+      transaction_count
+      hash
+      mine_time
+      reward
+    }
   }
 }
 
@@ -22,17 +24,19 @@ query getTransactions($transactionsdata: TransactionsPagesInput!) {
 
 query getPaginatedBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    number
-    timestamp
-    transaction_count
-    uncles_count
-    miner
-    gas_used
-    gas_limit
-    base_fee_per_gas
-    reward
-    burnt_fee
-    txn_fees
+    blocks {
+      number
+      timestamp
+      transaction_count
+      uncles_count
+      miner
+      gas_used
+      gas_limit
+      base_fee_per_gas
+      reward
+      burnt_fee
+      txn_fees
+    }
   }
 }
 

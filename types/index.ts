@@ -98,7 +98,7 @@ interface BlockDetails {
   Hash: string
   ParentHash: string
   BlockReward: string
-  Nonce: number | undefined | null
+  Nonce: string | undefined | null
   UnclesReward: string
   Difficulty: string
   TotalDifficulty: string
