@@ -50,8 +50,6 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         return 'Base Fee Per Gas:'
       case 'BurntFees':
         return 'Burnt Fees:'
-      case 'ExtraData':
-        return 'Extra Data:'
     }
   }
 
@@ -66,7 +64,6 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
       case 'TotalDifficulty':
       case 'Size':
       case 'GasLimit':
-      case 'ExtraData':
         return data[objectKey] != null ? (
           <ListItemText primary={data[objectKey]} />
         ) : null

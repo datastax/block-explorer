@@ -31,7 +31,7 @@ const CustomDivider = styled(Divider)({
   width: '100%',
 })
 const CustomListItemText = styled(ListItemText)({
-  maxWidth: '12%',
+  maxWidth: '15%',
   marginRight: '150px',
 })
 const CustomListIcon = styled(ListItemIcon)({

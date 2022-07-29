@@ -101,6 +101,7 @@ const PercentageValue = styled('div')({
   fontSize: '12px',
   color: colors.neutral300,
 })
+
 export {
   MainContainer,
   Container,

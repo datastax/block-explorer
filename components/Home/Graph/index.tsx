@@ -7,11 +7,11 @@ interface GraphProps {
   graph: GraphData[] | undefined
 }
 const Graph = ({ graph }: GraphProps) => {
-  const renderTooltip = ({label, value}: GraphData) => (
+  const renderTooltip = ({ label, value }: GraphData) => (
     <ToolTip>
       <h6>ETH Stats</h6>
       <p>Date : {label}</p>
-      <span>Price : {value}</span>
+      <span>Transactions : {value}</span>
     </ToolTip>
   )
 

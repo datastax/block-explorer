@@ -10,8 +10,9 @@ const formatAddress = (
   return address.slice(0, start) + '....' + address.slice(address.length - end)
 }
 
-function numberWithCommas(x: number | string) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+function numberWithCommas(value: number | string | null | undefined) {
+  if (!value) return '0'
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
 const getDifference = (timestamp: number | undefined | null) => {
@@ -54,7 +55,9 @@ const getDifference = (timestamp: number | undefined | null) => {
   return templateString
 }
 
-const etherToGwei = (num: number) => {
+const etherToGwei = (num: number | string) => {
+  if (!num) return 0
+  if (typeof num === 'string') return parseInt(num) * 1000000000
   if (num) return num * 1000000000
   return 0
 }
