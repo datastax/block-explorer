@@ -50,10 +50,12 @@ const BlocksTable = ({
 }: BlocksTableProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1)
 
-  const lengthOfEachPage = Data?.getBlocks?.length || 0
-  const startingBlock = Data?.getBlocks[0]?.number || 0
+  const lengthOfEachPage = Data?.getBlocks?.blocks?.length || 0
+  const startingBlock = Data?.getBlocks?.blocks[0]?.number || 0
   const endingBlock =
-    lengthOfEachPage && Data ? Data?.getBlocks[lengthOfEachPage - 1]?.number : 0
+    lengthOfEachPage && Data
+      ? Data?.getBlocks?.blocks[lengthOfEachPage - 1]?.number
+      : 0
   const setNextState = () => {
     setNext(endingBlock || undefined)
     setPrevious(undefined)
@@ -131,7 +133,7 @@ const BlocksTable = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Data?.getBlocks.map((block, index) => (
+                {Data?.getBlocks?.blocks.map((block, index) => (
                   <TableRow
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     key={index}

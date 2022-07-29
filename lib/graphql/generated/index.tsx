@@ -35,7 +35,7 @@ export type BlockOutput = {
   logs_bloom?: Maybe<Scalars['String']>;
   mine_time?: Maybe<Scalars['Float']>;
   miner: Scalars['String'];
-  nonce?: Maybe<Scalars['Float']>;
+  nonce?: Maybe<Scalars['String']>;
   number: Scalars['Float'];
   parent_hash?: Maybe<Scalars['String']>;
   receipts_root?: Maybe<Scalars['String']>;
@@ -50,6 +50,12 @@ export type BlockOutput = {
   txn_fees?: Maybe<Scalars['String']>;
   uncle_reward?: Maybe<Scalars['String']>;
   uncles_count?: Maybe<Scalars['String']>;
+};
+
+export type BlocksPageOutput = {
+  __typename?: 'BlocksPageOutput';
+  blocks: Array<BlockOutput>;
+  networkUtilization: Scalars['Float'];
 };
 
 export type ContractOutput = {
@@ -68,6 +74,7 @@ export type ContractOutput = {
 export type DashboardAnalyticsOutput = {
   __typename?: 'DashboardAnalyticsOutput';
   blockNumber?: Maybe<Scalars['Float']>;
+  burntFeeSum?: Maybe<Scalars['String']>;
   chartData: Array<Array<Scalars['Float']>>;
   difficulty?: Maybe<Scalars['String']>;
   etherPriceBTC?: Maybe<Scalars['String']>;
@@ -148,7 +155,7 @@ export type Query = {
   dashboardAnalytics: DashboardAnalyticsOutput;
   getBlockByHash: Array<BlockOutput>;
   getBlockByNumber: BlockOutput;
-  getBlocks: Array<BlockOutput>;
+  getBlocks: BlocksPageOutput;
   getContractByAddress: ContractOutput;
   getContractsByBlockNumber: Array<ContractOutput>;
   getLogByTransactionHash: Array<LogOutput>;
@@ -293,7 +300,7 @@ export type GetBlocksQueryVariables = Exact<{
 }>;
 
 
-export type GetBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number, hash: string, mine_time?: number | null, reward?: string | null }> };
+export type GetBlocksQuery = { __typename?: 'Query', getBlocks: { __typename?: 'BlocksPageOutput', blocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, miner: string, transaction_count: number, hash: string, mine_time?: number | null, reward?: string | null }> } };
 
 export type GetTransactionsQueryVariables = Exact<{
   transactionsdata: TransactionsPagesInput;
@@ -307,7 +314,7 @@ export type GetPaginatedBlocksQueryVariables = Exact<{
 }>;
 
 
-export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, uncles_count?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, reward?: string | null, burnt_fee?: string | null, txn_fees?: string | null }> };
+export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: { __typename?: 'BlocksPageOutput', blocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, uncles_count?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, reward?: string | null, burnt_fee?: string | null, txn_fees?: string | null }> } };
 
 export type GetPaginatedTransactionsQueryVariables = Exact<{
   transactionsdata: TransactionsPagesInput;
@@ -321,7 +328,7 @@ export type GetBlockByNumberQueryVariables = Exact<{
 }>;
 
 
-export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: number | null } };
+export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: string | null } };
 
 export type GetTransactionByHashQueryVariables = Exact<{
   data: Scalars['String'];
@@ -346,13 +353,15 @@ export type SearchRawQuery = { __typename?: 'Query', searchRaw: { __typename?: '
 export const GetBlocksDocument = gql`
     query getBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    number
-    timestamp
-    miner
-    transaction_count
-    hash
-    mine_time
-    reward
+    blocks {
+      number
+      timestamp
+      miner
+      transaction_count
+      hash
+      mine_time
+      reward
+    }
   }
 }
     `;
@@ -426,17 +435,19 @@ export type GetTransactionsQueryResult = Apollo.QueryResult<GetTransactionsQuery
 export const GetPaginatedBlocksDocument = gql`
     query getPaginatedBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    number
-    timestamp
-    transaction_count
-    uncles_count
-    miner
-    gas_used
-    gas_limit
-    base_fee_per_gas
-    reward
-    burnt_fee
-    txn_fees
+    blocks {
+      number
+      timestamp
+      transaction_count
+      uncles_count
+      miner
+      gas_used
+      gas_limit
+      base_fee_per_gas
+      reward
+      burnt_fee
+      txn_fees
+    }
   }
 }
     `;
