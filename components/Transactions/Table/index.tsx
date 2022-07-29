@@ -91,6 +91,12 @@ const TransactionsTable = ({
       )} Ether`
   }
 
+  const getTransactionMethod = (transactionMethod: string | null | number) => {
+    if (!transactionMethod) return 'transfer'
+    if (typeof transactionMethod === 'number') return transactionMethod
+    return transactionMethod.split('(')[0].substring(0, 10)
+  }
+
   return (
     <BlockTableContainer>
       <CustomTableContainer>
@@ -171,7 +177,8 @@ const TransactionsTable = ({
                                     <Eye />
                                   </IconWrapper>
                                 )}
-                                {Object.keys(transaction)[index] !== 'nonce' ? (
+                                {Object.keys(transaction)[index] !==
+                                'method' ? (
                                   <div
                                     onClick={() => {
                                       if (index == 0)
@@ -202,7 +209,9 @@ const TransactionsTable = ({
                                   </div>
                                 ) : (
                                   <Chip
-                                    label="Transfer"
+                                    label={getTransactionMethod(
+                                      Object.values(transaction)[index]
+                                    )}
                                     bgcolor={colors.nordic}
                                     border={`1px solid ${colors.actionPrimary}`}
                                     titlecolor={colors.neutral100}

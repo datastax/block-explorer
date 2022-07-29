@@ -31,7 +31,6 @@ const Chart = ({
   hideGradient,
   tooltip,
 }: ChartProps) => {
-
   const CustomTooltip = (props: any) => {
     const { active, payload } = props
     return active && payload && payload.length && tooltip ? (
@@ -43,7 +42,7 @@ const Chart = ({
     if (hideZero && value === 0) {
       return ''
     }
-    return `${value}`
+    return `${value / 1000}k`
   }
 
   return (
