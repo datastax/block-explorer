@@ -81,7 +81,7 @@ const TransactionsTable = ({
     if (keys[index] === 'transaction_fees')
       return parseFloat(values[index]?.toString() || '').toFixed(8)
     else if (keys[index] === 'block_timestamp')
-      return `${getDifference(parseFloat(values[index]?.toString() || ''))} ago`
+      return `${getDifference(Number(values[index]))} ago`
     else if (keys[index] !== 'value')
       return formatAddress(values[index]?.toString())
     else

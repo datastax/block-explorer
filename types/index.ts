@@ -71,6 +71,8 @@ interface HeroProps {
   blockNumber?: string
   showPagination?: boolean
   showDropdown?: boolean
+  networkUtilization?: number | undefined
+  burntFeeSum?: string | undefined | null
 }
 interface DropButtonProps {
   title: string
@@ -117,6 +119,7 @@ interface TransactionDetails {
   TransactionHash: string
   Status: number | null | undefined
   Block: string | number
+  BlockConfirmation: number | undefined
   Timestamp: {
     time: string
     Date: string
@@ -137,6 +140,11 @@ interface TransactionDetails {
   Value_usd: string
   TransactionFee: string
   GasPrice: string
+  BaseFee: string | null | undefined
+  MaxFee: string | null | undefined
+  MaxPriorityFee: string | null | undefined
+  TxnBurntFee: string | null | undefined
+  TxnSavingFee: string | null | undefined
 }
 type SummaryBlocksDataPrice = {
   icon: () => JSX.Element

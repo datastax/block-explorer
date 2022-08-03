@@ -24,6 +24,7 @@ query getTransactions($transactionsdata: TransactionsPagesInput!) {
 
 query getPaginatedBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
+    networkUtilization
     blocks {
       number
       timestamp
@@ -105,6 +106,11 @@ query getTransactionByHash($data: String!) {
     value
     value_usd
     transaction_fees
+    baseFee
+    maxFee
+    maxPriorityFee
+    txnBurntFee
+    txnSavingFee
   }
 }
 
@@ -124,6 +130,22 @@ query getDashboardAnalytics {
     transactionHistoryChart
   }
 }
+
+query getDashboardHeader {
+  dashboardAnalytics {
+    networkBaseFee
+    networkpriorityFee
+    pricePercentageChange
+    etherPriceUSD
+  }
+}
+
+query getDashboardBurntFeeSum {
+  dashboardAnalytics {
+    burntFeeSum
+  }
+}
+
 query searchRaw($data: String!) {
   searchRaw(data: $data) {
     block {

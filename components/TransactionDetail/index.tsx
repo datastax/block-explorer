@@ -2,7 +2,7 @@ import { Question } from '@components/shared/Icons'
 import { Collapse, ListItemText, ListItemButton } from '@mui/material'
 import React from 'react'
 import { TransactionDetails } from 'types'
-import { numberWithCommas } from 'utils'
+import { getGasFeesPercentage, numberWithCommas } from 'utils'
 import {
   DetailsTableContainer,
   CustomTableContainer,
@@ -48,7 +48,33 @@ const TransactionDetail = ({ TransactionData }: TransactionDetailProps) => {
                 TransactionData.Gas_limit
               )}   |   ${numberWithCommas(
                 TransactionData.Usage_Txn
-              )}`}</ListItemText>
+              )}  (${getGasFeesPercentage(
+                TransactionData.Usage_Txn,
+                TransactionData.Gas_limit
+              )}%) `}</ListItemText>
+            </CustomListItem>
+            {TransactionData.MaxPriorityFee && TransactionData.MaxFee && (
+              <CustomListItem>
+                <CustomListIcon>
+                  <Question />
+                </CustomListIcon>
+                <CustomListItemText primary="Gas Fees:" />
+                <ListItemText>
+                  Base: {TransactionData.BaseFee} Gwei | Max:{' '}
+                  {TransactionData.MaxFee} Gwei | Max Priority:{' '}
+                  {TransactionData.MaxPriorityFee} Gwei
+                </ListItemText>
+              </CustomListItem>
+            )}
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="Burnt & Txn Savings Fees:" />
+              <ListItemText>
+                🔥 Burnt: {TransactionData?.TxnBurntFee} Ether | 💸 Txn Savings:{' '}
+                {TransactionData?.TxnSavingFee} Ether
+              </ListItemText>
             </CustomListItem>
           </Collapse>
           <ListItemButton onClick={handleClick}>

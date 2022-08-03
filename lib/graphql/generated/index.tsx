@@ -265,6 +265,7 @@ export type TransactionByIndexInput = {
 
 export type TransactionsOutput = {
   __typename?: 'TransactionsOutput';
+  baseFee?: Maybe<Scalars['String']>;
   block_hash: Scalars['String'];
   block_number: Scalars['Float'];
   block_timestamp: Scalars['String'];
@@ -273,6 +274,8 @@ export type TransactionsOutput = {
   gas_price: Scalars['String'];
   hash: Scalars['String'];
   input?: Maybe<Scalars['String']>;
+  maxFee?: Maybe<Scalars['String']>;
+  maxPriorityFee?: Maybe<Scalars['String']>;
   method?: Maybe<Scalars['String']>;
   nonce?: Maybe<Scalars['Float']>;
   parent_hash?: Maybe<Scalars['String']>;
@@ -285,6 +288,8 @@ export type TransactionsOutput = {
   transaction_fees?: Maybe<Scalars['String']>;
   transaction_fees_usd?: Maybe<Scalars['String']>;
   transaction_index?: Maybe<Scalars['Float']>;
+  txnBurntFee?: Maybe<Scalars['String']>;
+  txnSavingFee?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Float']>;
   value_usd?: Maybe<Scalars['String']>;
 };
@@ -314,7 +319,7 @@ export type GetPaginatedBlocksQueryVariables = Exact<{
 }>;
 
 
-export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: { __typename?: 'BlocksPageOutput', blocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, uncles_count?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, reward?: string | null, burnt_fee?: string | null, txn_fees?: string | null }> } };
+export type GetPaginatedBlocksQuery = { __typename?: 'Query', getBlocks: { __typename?: 'BlocksPageOutput', networkUtilization: number, blocks: Array<{ __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, uncles_count?: string | null, miner: string, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, reward?: string | null, burnt_fee?: string | null, txn_fees?: string | null }> } };
 
 export type GetPaginatedTransactionsQueryVariables = Exact<{
   transactionsdata: TransactionsPagesInput;
@@ -335,12 +340,22 @@ export type GetTransactionByHashQueryVariables = Exact<{
 }>;
 
 
-export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: string, input?: string | null, nonce?: number | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, method?: string | null, transaction_fees_usd?: string | null, transaction_index?: number | null, value?: number | null, value_usd?: string | null, transaction_fees?: string | null } };
+export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: string, input?: string | null, nonce?: number | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, method?: string | null, transaction_fees_usd?: string | null, transaction_index?: number | null, value?: number | null, value_usd?: string | null, transaction_fees?: string | null, baseFee?: string | null, maxFee?: string | null, maxPriorityFee?: string | null, txnBurntFee?: string | null, txnSavingFee?: string | null } };
 
 export type GetDashboardAnalyticsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetDashboardAnalyticsQuery = { __typename?: 'Query', dashboardAnalytics: { __typename?: 'DashboardAnalyticsOutput', etherPriceUSD?: string | null, etherPriceBTC?: string | null, marketCapUSD?: string | null, difficulty?: string | null, hashrate?: string | null, tps?: string | null, medGasPrice?: string | null, totalTransactions?: string | null, blockNumber?: number | null, pricePercentageChange?: string | null, chartData: Array<Array<number>>, transactionHistoryChart: Array<number> } };
+
+export type GetDashboardHeaderQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDashboardHeaderQuery = { __typename?: 'Query', dashboardAnalytics: { __typename?: 'DashboardAnalyticsOutput', networkBaseFee?: string | null, networkpriorityFee?: string | null, pricePercentageChange?: string | null, etherPriceUSD?: string | null } };
+
+export type GetDashboardBurntFeeSumQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDashboardBurntFeeSumQuery = { __typename?: 'Query', dashboardAnalytics: { __typename?: 'DashboardAnalyticsOutput', burntFeeSum?: string | null } };
 
 export type SearchRawQueryVariables = Exact<{
   data: Scalars['String'];
@@ -435,6 +450,7 @@ export type GetTransactionsQueryResult = Apollo.QueryResult<GetTransactionsQuery
 export const GetPaginatedBlocksDocument = gql`
     query getPaginatedBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
+    networkUtilization
     blocks {
       number
       timestamp
@@ -603,6 +619,11 @@ export const GetTransactionByHashDocument = gql`
     value
     value_usd
     transaction_fees
+    baseFee
+    maxFee
+    maxPriorityFee
+    txnBurntFee
+    txnSavingFee
   }
 }
     `;
@@ -679,6 +700,77 @@ export function useGetDashboardAnalyticsLazyQuery(baseOptions?: Apollo.LazyQuery
 export type GetDashboardAnalyticsQueryHookResult = ReturnType<typeof useGetDashboardAnalyticsQuery>;
 export type GetDashboardAnalyticsLazyQueryHookResult = ReturnType<typeof useGetDashboardAnalyticsLazyQuery>;
 export type GetDashboardAnalyticsQueryResult = Apollo.QueryResult<GetDashboardAnalyticsQuery, GetDashboardAnalyticsQueryVariables>;
+export const GetDashboardHeaderDocument = gql`
+    query getDashboardHeader {
+  dashboardAnalytics {
+    networkBaseFee
+    networkpriorityFee
+    pricePercentageChange
+    etherPriceUSD
+  }
+}
+    `;
+
+/**
+ * __useGetDashboardHeaderQuery__
+ *
+ * To run a query within a React component, call `useGetDashboardHeaderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDashboardHeaderQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDashboardHeaderQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDashboardHeaderQuery(baseOptions?: Apollo.QueryHookOptions<GetDashboardHeaderQuery, GetDashboardHeaderQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDashboardHeaderQuery, GetDashboardHeaderQueryVariables>(GetDashboardHeaderDocument, options);
+      }
+export function useGetDashboardHeaderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDashboardHeaderQuery, GetDashboardHeaderQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDashboardHeaderQuery, GetDashboardHeaderQueryVariables>(GetDashboardHeaderDocument, options);
+        }
+export type GetDashboardHeaderQueryHookResult = ReturnType<typeof useGetDashboardHeaderQuery>;
+export type GetDashboardHeaderLazyQueryHookResult = ReturnType<typeof useGetDashboardHeaderLazyQuery>;
+export type GetDashboardHeaderQueryResult = Apollo.QueryResult<GetDashboardHeaderQuery, GetDashboardHeaderQueryVariables>;
+export const GetDashboardBurntFeeSumDocument = gql`
+    query getDashboardBurntFeeSum {
+  dashboardAnalytics {
+    burntFeeSum
+  }
+}
+    `;
+
+/**
+ * __useGetDashboardBurntFeeSumQuery__
+ *
+ * To run a query within a React component, call `useGetDashboardBurntFeeSumQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDashboardBurntFeeSumQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDashboardBurntFeeSumQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDashboardBurntFeeSumQuery(baseOptions?: Apollo.QueryHookOptions<GetDashboardBurntFeeSumQuery, GetDashboardBurntFeeSumQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDashboardBurntFeeSumQuery, GetDashboardBurntFeeSumQueryVariables>(GetDashboardBurntFeeSumDocument, options);
+      }
+export function useGetDashboardBurntFeeSumLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDashboardBurntFeeSumQuery, GetDashboardBurntFeeSumQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDashboardBurntFeeSumQuery, GetDashboardBurntFeeSumQueryVariables>(GetDashboardBurntFeeSumDocument, options);
+        }
+export type GetDashboardBurntFeeSumQueryHookResult = ReturnType<typeof useGetDashboardBurntFeeSumQuery>;
+export type GetDashboardBurntFeeSumLazyQueryHookResult = ReturnType<typeof useGetDashboardBurntFeeSumLazyQuery>;
+export type GetDashboardBurntFeeSumQueryResult = Apollo.QueryResult<GetDashboardBurntFeeSumQuery, GetDashboardBurntFeeSumQueryVariables>;
 export const SearchRawDocument = gql`
     query searchRaw($data: String!) {
   searchRaw(data: $data) {

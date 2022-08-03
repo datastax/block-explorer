@@ -130,7 +130,7 @@ const TransactionDetailRow = ({
               </ListItemText>
             </RightSpacing>
             <Chip
-              label="480 Block Confirmations"
+              label={`${data['BlockConfirmation']} Block Confirmations`}
               bgcolor={colors.neutral700}
               border={`1px solid ${colors.neutral300}`}
               titlecolor={colors.neutral100}
