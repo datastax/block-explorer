@@ -77,8 +77,14 @@ const convertToMillion = (num: number) => {
   return `${num / 1e6} M`
 }
 
-const weiToEther = (num: number | undefined | null, fixed?: number) => {
+const weiToEther = (
+  num: number | undefined | null | string,
+  fixed?: number
+) => {
   if (!num) return 0
+
+  if (typeof num === 'string') return (Number(num) / 1e18).toFixed(fixed)
+
   if (fixed) return (num / 1e18).toFixed(fixed)
   return num / 1e18
 }
@@ -92,6 +98,18 @@ const fixed = (number: number | undefined | null | string, fixed: number) => {
   return number.toFixed(fixed)
 }
 
+const getBurntFee = (burntFeeSum: string | null | undefined) => {
+  return numberWithCommas(weiToEther(burntFeeSum, 2))
+}
+
+const getGasFeesPercentage = (
+  usageTxn: number | null | undefined,
+  gasLimit: number | null | undefined
+) => {
+  if (!usageTxn || !gasLimit) return 0
+  return ((usageTxn / gasLimit) * 100).toFixed(2)
+}
+
 export {
   formatAddress,
   getDifference,
@@ -102,5 +120,7 @@ export {
   weiToEther,
   copyToClipboard,
   fixed,
+  getBurntFee,
+  getGasFeesPercentage,
 }
 export { default as createEmotionCache } from './createEmotionCache'

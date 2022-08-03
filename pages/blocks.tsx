@@ -2,7 +2,10 @@ import type { NextPage } from 'next'
 import BlocksTable from '@components/Blocks/Table'
 import Hero from '@components/shared/Hero'
 import { BlocksTitle } from '@constants/stubs'
-import { useGetPaginatedBlocksQuery } from 'lib/graphql/generated'
+import {
+  useGetDashboardBurntFeeSumQuery,
+  useGetPaginatedBlocksQuery,
+} from 'lib/graphql/generated'
 import { useState } from 'react'
 
 const Blocks: NextPage = () => {
@@ -27,13 +30,25 @@ const Blocks: NextPage = () => {
     },
   })
 
+  const { data: burntFeeSum, error: burntFeeSumError } =
+    useGetDashboardBurntFeeSumQuery()
+
   if (blocksError) {
     console.error(blocksError)
   }
 
+  if (burntFeeSumError) {
+    console.error(burntFeeSumError)
+  }
+
   return (
     <>
-      <Hero title="Blocks" showChips={true} />
+      <Hero
+        title="Blocks"
+        showChips={true}
+        networkUtilization={latestBlocks?.getBlocks?.networkUtilization}
+        burntFeeSum={burntFeeSum?.dashboardAnalytics?.burntFeeSum}
+      />
       <BlocksTable
         pageSize={pageSize}
         setPageSize={setPageSize}

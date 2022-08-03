@@ -11,7 +11,7 @@ const Graph = ({ graph }: GraphProps) => {
     <ToolTip>
       <h6>ETH Stats</h6>
       <p>Date : {label}</p>
-      <span>Transactions : {value}</span>
+      <span>Transactions : {(value / 1000).toFixed(2)}k</span>
     </ToolTip>
   )
 

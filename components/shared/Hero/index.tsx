@@ -11,6 +11,7 @@ import {
 import { HeroProps } from 'types'
 import PaginationButton from '@components/TransactionDetail/TransactionHero/PaginationButton'
 import DropdownButton from '@components/TransactionDetail/TransactionHero/DropdownButton'
+import { getBurntFee } from 'utils'
 
 const Hero = ({
   title,
@@ -18,6 +19,8 @@ const Hero = ({
   blockNumber,
   showDropdown,
   showPagination,
+  networkUtilization,
+  burntFeeSum,
 }: HeroProps) => {
   return (
     <Container>
@@ -31,16 +34,16 @@ const Hero = ({
           </PaginationContainer>
         )}
       </Stack>
-      {showChips && (
+      {showChips && networkUtilization && (
         <Stack direction="row" spacing={1}>
           <Chip
-            label="Network Utilization: 50.1%"
+            label={`Network Utilization: ${networkUtilization?.toFixed(2)}%`}
             bgcolor={colors.blackberry}
             border={`1px solid ${colors.actionTertiary}`}
             titlecolor={colors.neutral100}
           />
           <Chip
-            label="🔥 Burnt Fees: 2,366,401.24 ETH"
+            label={`🔥 Burnt Fees: ${getBurntFee(burntFeeSum)} ETH`}
             bgcolor={colors.neutral700}
             border={`1px solid ${colors.neutral300}`}
             titlecolor={colors.neutral100}
