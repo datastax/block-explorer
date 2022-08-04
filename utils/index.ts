@@ -74,7 +74,7 @@ const calculateStaticBlockReward = (block: string) => {
 }
 
 const convertToMillion = (num: number) => {
-  return `${num / 1e6} M`
+  return `${(num / 1e6).toFixed(2)} M`
 }
 
 const weiToEther = (
