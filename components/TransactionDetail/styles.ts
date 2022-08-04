@@ -75,6 +75,16 @@ const TransactionInnerBox = styled('div')({
 const LoggedIn = styled('span')({
   color: colors.actionSecondary,
 })
+
+const InputBox = styled('div')({
+  border: `1px solid ${colors.neutral500}`,
+  borderRadius: '5px',
+  padding: '10px',
+  wordBreak: 'break-word',
+  width: '40vw',
+  color: colors.neutral300,
+})
+
 export {
   CustomListItem,
   CustomListIcon,
@@ -89,6 +99,7 @@ export {
   CustomLink,
   LoggedIn,
   RightLogoSpacing,
+  InputBox,
   TransactionMainBox as TransactionMainBox,
   TransactionInnerBox as TransactionInnerBox,
 }

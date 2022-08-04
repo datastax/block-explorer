@@ -12,6 +12,7 @@ import {
   CustomListItemText,
   CustomLink,
   LoggedIn,
+  InputBox,
 } from './styles'
 import TransactionDetailRow from './TransactionDetailRow'
 
@@ -74,6 +75,15 @@ const TransactionDetail = ({ TransactionData }: TransactionDetailProps) => {
               <ListItemText>
                 🔥 Burnt: {TransactionData?.TxnBurntFee} Ether | 💸 Txn Savings:{' '}
                 {TransactionData?.TxnSavingFee} Ether
+              </ListItemText>
+            </CustomListItem>
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="Input:" />
+              <ListItemText>
+                <InputBox>{TransactionData?.input}</InputBox>
               </ListItemText>
             </CustomListItem>
           </Collapse>
