@@ -70,6 +70,22 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
               <ListItemText primary={BlocksDetailsData?.ExtraData} />
             </CustomListItem>
             <CustomDivider />
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="StateRoot:" />
+              <ListItemText primary={BlocksDetailsData?.StateRoot} />
+            </CustomListItem>
+            <CustomDivider />
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="Sha3Uncles:" />
+              <ListItemText primary={BlocksDetailsData?.Sha3Uncles} />
+            </CustomListItem>
+            <CustomDivider />
           </Collapse>
           <ListItemButton onClick={handleClick}>
             {!open ? (

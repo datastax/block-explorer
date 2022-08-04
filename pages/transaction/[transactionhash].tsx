@@ -54,6 +54,9 @@ const Transaction: NextPage = () => {
       })
       if (blockConfirmation && !blockLoading)
         setTransactionDetailData({
+          Nonce: transactionDetails?.getTransactionByHash?.nonce,
+          TransactionIndex:
+            transactionDetails?.getTransactionByHash?.transaction_index,
           TransactionHash: transactionDetails?.getTransactionByHash.hash || '',
           Status: transactionDetails?.getTransactionByHash.receipt_status,
           Block: transactionDetails?.getTransactionByHash?.block_number,

@@ -80,6 +80,7 @@ query getBlockByNumber($data: Float!) {
     parent_hash
     sha3_uncles
     nonce
+    state_root
   }
 }
 
