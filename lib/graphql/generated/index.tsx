@@ -333,7 +333,7 @@ export type GetBlockByNumberQueryVariables = Exact<{
 }>;
 
 
-export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: string | null } };
+export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: string | null, state_root?: string | null } };
 
 export type GetTransactionByHashQueryVariables = Exact<{
   data: Scalars['String'];
@@ -564,6 +564,7 @@ export const GetBlockByNumberDocument = gql`
     parent_hash
     sha3_uncles
     nonce
+    state_root
   }
 }
     `;
