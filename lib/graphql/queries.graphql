@@ -111,6 +111,7 @@ query getTransactionByHash($data: String!) {
     maxPriorityFee
     txnBurntFee
     txnSavingFee
+    input
   }
 }
 

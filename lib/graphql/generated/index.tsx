@@ -624,6 +624,7 @@ export const GetTransactionByHashDocument = gql`
     maxPriorityFee
     txnBurntFee
     txnSavingFee
+    input
   }
 }
     `;
