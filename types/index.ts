@@ -113,6 +113,8 @@ interface BlockDetails {
   BurntFees: string | null
   ExtraData: string
   internalTransaction: number
+  Sha3Uncles: string | null | undefined
+  StateRoot: string | null | undefined
 }
 
 interface TransactionDetails {
@@ -146,6 +148,8 @@ interface TransactionDetails {
   TxnBurntFee: string | null | undefined
   TxnSavingFee: string | null | undefined
   input: string | null | undefined
+  Nonce: number | null | undefined
+  TransactionIndex: number | null | undefined
 }
 type SummaryBlocksDataPrice = {
   icon: () => JSX.Element

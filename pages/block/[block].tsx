@@ -34,6 +34,8 @@ const Block: NextPage = () => {
   useEffect(() => {
     if (blockDetails) {
       setBlockDetailsData({
+        Sha3Uncles: blockDetails?.getBlockByNumber?.sha3_uncles,
+        StateRoot: blockDetails?.getBlockByNumber?.state_root,
         Hash: blockDetails?.getBlockByNumber?.hash || '',
         ParentHash: blockDetails?.getBlockByNumber?.parent_hash || '',
         Nonce: blockDetails?.getBlockByNumber?.nonce,

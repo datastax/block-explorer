@@ -81,6 +81,16 @@ const TransactionDetail = ({ TransactionData }: TransactionDetailProps) => {
               <CustomListIcon>
                 <Question />
               </CustomListIcon>
+              <CustomListItemText primary="Others: " />
+              <ListItemText>
+                [Txn Type: 2 (EIP-1559)] Nonce: {TransactionData?.Nonce} |
+                Positon: {TransactionData?.TransactionIndex}
+              </ListItemText>
+            </CustomListItem>
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
               <CustomListItemText primary="Input:" />
               <ListItemText>
                 <InputBox>{TransactionData?.input}</InputBox>
