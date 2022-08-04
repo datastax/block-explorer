@@ -57,7 +57,7 @@ const getDifference = (timestamp: number | undefined | null) => {
 
 const etherToGwei = (num: number | string) => {
   if (!num) return 0
-  if (typeof num === 'string') return parseInt(num) * 1000000000
+  if (typeof num === 'string') return (Number(num) * 1000000000).toFixed(2)
   if (num) return num * 1000000000
   return 0
 }
