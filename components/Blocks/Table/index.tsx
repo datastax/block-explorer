@@ -77,9 +77,7 @@ const BlocksTable = ({
       if (index == 8) value += ' Ether'
       return value
     } else {
-      return `${etherToGwei(parseFloat(Object[index] as string)).toFixed(
-        2
-      )} Gwei`
+      return `${etherToGwei(Object[index])} Gwei`
     }
   }
 

@@ -145,6 +145,7 @@ interface TransactionDetails {
   MaxPriorityFee: string | null | undefined
   TxnBurntFee: string | null | undefined
   TxnSavingFee: string | null | undefined
+  input: string | null | undefined
 }
 type SummaryBlocksDataPrice = {
   icon: () => JSX.Element

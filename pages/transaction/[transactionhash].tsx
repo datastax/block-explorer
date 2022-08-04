@@ -30,8 +30,10 @@ const Transaction: NextPage = () => {
     console.error(transactionError, setTransactionDetailData)
   }
 
-  const [getLatestBlocks, { data: latestBlock, error: blockError }] =
-    useGetBlocksLazyQuery()
+  const [
+    getLatestBlocks,
+    { data: latestBlock, error: blockError, loading: blockLoading },
+  ] = useGetBlocksLazyQuery()
   if (blockError) {
     console.error(blockError)
   }
@@ -50,7 +52,7 @@ const Transaction: NextPage = () => {
           },
         },
       })
-      if (blockConfirmation)
+      if (blockConfirmation && !blockLoading)
         setTransactionDetailData({
           TransactionHash: transactionDetails?.getTransactionByHash.hash || '',
           Status: transactionDetails?.getTransactionByHash.receipt_status,
@@ -88,9 +90,9 @@ const Transaction: NextPage = () => {
           ).toFixed(2)})`,
           TransactionFee: `${
             transactionDetails?.getTransactionByHash.transaction_fees
-          } Ether (${parseFloat(
+          } Ether ($${parseFloat(
             transactionDetails?.getTransactionByHash?.transaction_fees_usd || ''
-          ).toFixed(2)}$)`,
+          ).toFixed(2)})`,
           GasPrice: `${
             transactionDetails?.getTransactionByHash.gas_price
           } Ether (${etherToGwei(
@@ -102,9 +104,16 @@ const Transaction: NextPage = () => {
             transactionDetails?.getTransactionByHash?.maxPriorityFee,
           TxnBurntFee: transactionDetails?.getTransactionByHash?.txnBurntFee,
           TxnSavingFee: transactionDetails?.getTransactionByHash?.txnSavingFee,
+          input: transactionDetails?.getTransactionByHash?.input,
         })
     }
-  }, [blockConfirmation, getLatestBlocks, latestBlock, transactionDetails])
+  }, [
+    blockConfirmation,
+    blockLoading,
+    getLatestBlocks,
+    latestBlock,
+    transactionDetails,
+  ])
 
   return (
     <>
