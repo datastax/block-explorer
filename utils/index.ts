@@ -55,10 +55,10 @@ const getDifference = (timestamp: number | undefined | null) => {
   return templateString
 }
 
-const etherToGwei = (num: number | string) => {
+const etherToGwei = (num: number | string | null | undefined) => {
   if (!num) return 0
   if (typeof num === 'string') return (Number(num) * 1000000000).toFixed(2)
-  if (num) return num * 1000000000
+  if (num) return (num * 1000000000).toFixed(2)
   return 0
 }
 
