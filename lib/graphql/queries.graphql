@@ -148,6 +148,81 @@ query getDashboardBurntFeeSum {
   }
 }
 
+query getTransactionsByBlock($data: TransactionsPagesInput!) {
+  getTransactionsByBlock(data: $data) {
+    hash
+    method
+    block_number
+    block_timestamp
+    from_address
+    to_address
+    value
+    transaction_fees
+    transaction_index
+    block_hash
+  }
+}
+
+query getBlockByHash($data: String!) {
+  getBlockByHash(data: $data) {
+    number
+    timestamp
+    transaction_count
+    mine_time
+    miner
+    difficulty
+    total_difficulty
+    size
+    gas_used
+    gas_limit
+    base_fee_per_gas
+    burnt_fee
+    extra_data
+    reward
+    uncle_reward
+    txn_fees
+    gas_target_percentage
+    gas_used_percentage
+    hash
+    parent_hash
+    sha3_uncles
+    nonce
+    state_root
+  }
+}
+
+query getConsecutiveTransaction($transactionsdata: TransactionsPagesInput!) {
+  transactions(data: $transactionsdata) {
+    hash
+    block_hash
+    block_number
+    block_timestamp
+    from_address
+    gas
+    gas_price
+    input
+    nonce
+    receipt_contract_address
+    receipt_cumulative_gas_used
+    receipt_gas_used
+    receipt_root
+    receipt_status
+    to_address
+    method
+    transaction_fees_usd
+    transaction_index
+    value
+    value_usd
+    transaction_fees
+    baseFee
+    maxFee
+    maxPriorityFee
+    txnBurntFee
+    txnSavingFee
+    input
+  }
+}
+
 query searchRaw($data: String!) {
   searchRaw(data: $data) {
     block {

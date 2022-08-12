@@ -2,6 +2,7 @@ import Chip from '@components/shared/Chip'
 import { Question, Watch } from '@components/shared/Icons'
 import { ListItemText } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
+import router from 'next/router'
 import React from 'react'
 import { BlockDetails } from 'types'
 import {
@@ -83,12 +84,28 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         return (
           <>
             {' '}
-            <Chip
-              label={`${data[objectKey]} transactions`}
-              bgcolor={colors.nordic}
-              border={`1px solid ${colors.actionPrimary}`}
-              titlecolor={colors.neutral100}
-            />
+            <div
+              onClick={() => {
+                router.push(
+                  {
+                    pathname: '/transactions',
+                    query: {
+                      blockNumber: data['BlockHeight'],
+                      blockHash: data['Hash'],
+                    },
+                  },
+                  `transactions?blockNumber=${data['BlockHeight']}`
+                )
+              }}
+            >
+              <Chip
+                label={`${data[objectKey]} transactions`}
+                bgcolor={colors.nordic}
+                border={`1px solid ${colors.actionPrimary}`}
+                titlecolor={colors.neutral100}
+                cursor="pointer"
+              />
+            </div>
             <TransactionStyle>
               {' '}
               <span>and</span>{' '}
