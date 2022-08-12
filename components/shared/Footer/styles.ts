@@ -29,6 +29,7 @@ const StyledTypography = styled(Typography)(
     lineHeight: '16px',
     span: {
       color: colors.actionTertiary,
+      cursor: 'pointer',
     },
   })
 )

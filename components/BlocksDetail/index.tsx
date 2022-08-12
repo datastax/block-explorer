@@ -8,11 +8,13 @@ import {
   CustomLink,
   CustomList,
 } from '@components/BlocksDetail/styles'
+import colors from '@styles/ThemeProvider/colors'
 import { ListItemText, Collapse, ListItemButton } from '@mui/material'
 import React from 'react'
 import { Question } from '@components/shared/Icons/index'
 import BlockDetailRow from './BlockDetailRow'
 import { BlockDetails } from '@types'
+import router from 'next/router'
 
 interface BlocksDetailProps {
   BlocksDetailsData: BlockDetails
@@ -51,7 +53,13 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
                 <Question />
               </CustomListIcon>
               <CustomListItemText primary="Parent Hash:" />
-              <ListItemText primary={BlocksDetailsData?.ParentHash} />
+              <ListItemText
+                primary={BlocksDetailsData?.ParentHash}
+                sx={{ color: colors.actionSecondary, cursor: 'pointer' }}
+                onClick={() => {
+                  router.push(`/block/${BlocksDetailsData?.ParentHash}`)
+                }}
+              />
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>

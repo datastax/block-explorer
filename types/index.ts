@@ -24,6 +24,7 @@ interface ChipProps {
   titlecolor: string
   label: string | React.ReactNode
   icon?: ReactJSXElement
+  cursor?: 'pointer' | 'default'
 }
 interface BlockProps {
   Block: string
