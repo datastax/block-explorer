@@ -1,3 +1,4 @@
+import { mediumBlogUrl } from '@constants/stubs'
 import { Stack } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import { Wrapper, Container, StyledTypography } from './styles'
@@ -11,7 +12,10 @@ const Footer = () => {
             Krypton © 2022
           </StyledTypography>
           <StyledTypography color={colors.neutral100}>
-            🚀️ Powered By Astra - <span>See How It’s Done</span>
+            🚀️ Powered By Astra -{' '}
+            <span onClick={() => window.open(mediumBlogUrl, '_blank')}>
+              See How It’s Done
+            </span>
           </StyledTypography>
         </Stack>
       </Wrapper>
