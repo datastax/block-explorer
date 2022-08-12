@@ -16,10 +16,7 @@ import {
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
 
-import {
-  // GetPaginatedTransactionsQuery,
-  TransactionsOutput,
-} from 'lib/graphql/generated'
+import { TransactionsOutput } from 'lib/graphql/generated'
 import { Exchange, Eye } from '@components/shared/Icons'
 import Chip from '@components/shared/Chip'
 import { formatAddress, getDifference, weiToEther } from 'utils'
