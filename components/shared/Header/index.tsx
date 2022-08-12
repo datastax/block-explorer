@@ -34,6 +34,7 @@ const ChipLabel = ({ data }: ChiplabelProps) => {
         <StyledLabel>
           Eth: ${fixed(data?.dashboardAnalytics?.etherPriceUSD, 2)}
           <span>
+            {' '}
             ({fixed(data?.dashboardAnalytics?.pricePercentageChange, 2)}
             %){' '}
           </span>

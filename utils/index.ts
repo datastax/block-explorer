@@ -1,3 +1,8 @@
+import { BlockOutput } from 'lib/graphql/generated'
+import { BlockDetails } from 'types'
+
+const numberRegex = /^[0-9]+$/
+
 const formatAddress = (
   address: string | null | undefined,
   start = 7,
@@ -110,6 +115,57 @@ const getGasFeesPercentage = (
   return ((usageTxn / gasLimit) * 100).toFixed(2)
 }
 
+const isNumber = (value: string) => {
+  return numberRegex.test(value)
+}
+
+const mapRawDataToBlockDetails = (
+  data: BlockOutput,
+  block: string
+): BlockDetails => {
+  return {
+    Sha3Uncles: data?.sha3_uncles,
+    StateRoot: data?.state_root,
+    Hash: data?.hash || '',
+    ParentHash: data?.parent_hash || '',
+    Nonce: data?.nonce,
+    internalTransaction: 0,
+    BlockHeight: data?.number.toString() || '',
+    Timestamp: {
+      time: `${getDifference(parseInt(data?.timestamp || ''))} ago`,
+      Date: `(${new Date(
+        parseInt(data?.timestamp || '') * 1000
+      ).toUTCString()})`,
+    },
+    Transactions: `${data?.transaction_count}`,
+    MinedBy: {
+      address: data?.miner || '',
+      miner: `(Miner: ${formatAddress(data?.miner)})`,
+      time: `in ${data?.mine_time} secs`,
+    },
+    BlockReward: `${data?.reward} Ether (${calculateStaticBlockReward(
+      block as string
+    )} + ${data?.txn_fees} - ${data?.burnt_fee})`,
+    UnclesReward: data?.uncle_reward || '',
+    Difficulty: numberWithCommas(data?.difficulty || 0) || '',
+    TotalDifficulty: numberWithCommas(data?.total_difficulty || 0) || '',
+    Size: numberWithCommas(data?.size || 0) + ' bytes',
+    GasUsed: numberWithCommas(data?.gas_used || 0),
+    GasUsedPercetge: parseFloat(data?.gas_used_percentage || ''),
+    GasTargetPercentage: parseFloat(data?.gas_target_percentage || ''),
+    GasLimit: numberWithCommas(data?.gas_limit || 0),
+    BaseFeePerGas: data?.base_fee_per_gas
+      ? `${data?.base_fee_per_gas} Ether (${etherToGwei(
+          parseFloat(data?.base_fee_per_gas || '')
+        )} Gwei)`
+      : null,
+    BurntFees: parseFloat(data?.burnt_fee || '')
+      ? `🔥 ${data?.burnt_fee} Ether`
+      : null,
+    ExtraData: `speth03�0\`' (Hex:${data?.extra_data})`,
+  }
+}
+
 export {
   formatAddress,
   getDifference,
@@ -122,5 +178,7 @@ export {
   fixed,
   getBurntFee,
   getGasFeesPercentage,
+  isNumber,
+  mapRawDataToBlockDetails,
 }
 export { default as createEmotionCache } from './createEmotionCache'
