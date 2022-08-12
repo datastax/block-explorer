@@ -153,7 +153,7 @@ export type PaginationInput = {
 export type Query = {
   __typename?: 'Query';
   dashboardAnalytics: DashboardAnalyticsOutput;
-  getBlockByHash: Array<BlockOutput>;
+  getBlockByHash: BlockOutput;
   getBlockByNumber: BlockOutput;
   getBlocks: BlocksPageOutput;
   getContractByAddress: ContractOutput;
@@ -163,7 +163,7 @@ export type Query = {
   getTokenByContractAddress: TokenOutput;
   getTransactionByHash: TransactionsOutput;
   getTransactionByIndex: TransactionsOutput;
-  getTransactions: Array<TransactionsOutput>;
+  getTransactionsByBlock: Array<TransactionsOutput>;
   nfts: Array<NftOutput>;
   searchRaw: SearchOutput;
   transactions: Array<TransactionsOutput>;
@@ -220,7 +220,7 @@ export type QueryGetTransactionByIndexArgs = {
 };
 
 
-export type QueryGetTransactionsArgs = {
+export type QueryGetTransactionsByBlockArgs = {
   data: TransactionsPagesInput;
 };
 
@@ -356,6 +356,27 @@ export type GetDashboardBurntFeeSumQueryVariables = Exact<{ [key: string]: never
 
 
 export type GetDashboardBurntFeeSumQuery = { __typename?: 'Query', dashboardAnalytics: { __typename?: 'DashboardAnalyticsOutput', burntFeeSum?: string | null } };
+
+export type GetTransactionsByBlockQueryVariables = Exact<{
+  data: TransactionsPagesInput;
+}>;
+
+
+export type GetTransactionsByBlockQuery = { __typename?: 'Query', getTransactionsByBlock: Array<{ __typename?: 'TransactionsOutput', hash: string, method?: string | null, block_number: number, block_timestamp: string, from_address?: string | null, to_address?: string | null, value?: number | null, transaction_fees?: string | null, transaction_index?: number | null, block_hash: string }> };
+
+export type GetBlockByHashQueryVariables = Exact<{
+  data: Scalars['String'];
+}>;
+
+
+export type GetBlockByHashQuery = { __typename?: 'Query', getBlockByHash: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: string | null, state_root?: string | null } };
+
+export type GetConsecutiveTransactionQueryVariables = Exact<{
+  transactionsdata: TransactionsPagesInput;
+}>;
+
+
+export type GetConsecutiveTransactionQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: string, input?: string | null, nonce?: number | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, method?: string | null, transaction_fees_usd?: string | null, transaction_index?: number | null, value?: number | null, value_usd?: string | null, transaction_fees?: string | null, baseFee?: string | null, maxFee?: string | null, maxPriorityFee?: string | null, txnBurntFee?: string | null, txnSavingFee?: string | null }> };
 
 export type SearchRawQueryVariables = Exact<{
   data: Scalars['String'];
@@ -773,6 +794,168 @@ export function useGetDashboardBurntFeeSumLazyQuery(baseOptions?: Apollo.LazyQue
 export type GetDashboardBurntFeeSumQueryHookResult = ReturnType<typeof useGetDashboardBurntFeeSumQuery>;
 export type GetDashboardBurntFeeSumLazyQueryHookResult = ReturnType<typeof useGetDashboardBurntFeeSumLazyQuery>;
 export type GetDashboardBurntFeeSumQueryResult = Apollo.QueryResult<GetDashboardBurntFeeSumQuery, GetDashboardBurntFeeSumQueryVariables>;
+export const GetTransactionsByBlockDocument = gql`
+    query getTransactionsByBlock($data: TransactionsPagesInput!) {
+  getTransactionsByBlock(data: $data) {
+    hash
+    method
+    block_number
+    block_timestamp
+    from_address
+    to_address
+    value
+    transaction_fees
+    transaction_index
+    block_hash
+  }
+}
+    `;
+
+/**
+ * __useGetTransactionsByBlockQuery__
+ *
+ * To run a query within a React component, call `useGetTransactionsByBlockQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTransactionsByBlockQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTransactionsByBlockQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useGetTransactionsByBlockQuery(baseOptions: Apollo.QueryHookOptions<GetTransactionsByBlockQuery, GetTransactionsByBlockQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTransactionsByBlockQuery, GetTransactionsByBlockQueryVariables>(GetTransactionsByBlockDocument, options);
+      }
+export function useGetTransactionsByBlockLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTransactionsByBlockQuery, GetTransactionsByBlockQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTransactionsByBlockQuery, GetTransactionsByBlockQueryVariables>(GetTransactionsByBlockDocument, options);
+        }
+export type GetTransactionsByBlockQueryHookResult = ReturnType<typeof useGetTransactionsByBlockQuery>;
+export type GetTransactionsByBlockLazyQueryHookResult = ReturnType<typeof useGetTransactionsByBlockLazyQuery>;
+export type GetTransactionsByBlockQueryResult = Apollo.QueryResult<GetTransactionsByBlockQuery, GetTransactionsByBlockQueryVariables>;
+export const GetBlockByHashDocument = gql`
+    query getBlockByHash($data: String!) {
+  getBlockByHash(data: $data) {
+    number
+    timestamp
+    transaction_count
+    mine_time
+    miner
+    difficulty
+    total_difficulty
+    size
+    gas_used
+    gas_limit
+    base_fee_per_gas
+    burnt_fee
+    extra_data
+    reward
+    uncle_reward
+    txn_fees
+    gas_target_percentage
+    gas_used_percentage
+    hash
+    parent_hash
+    sha3_uncles
+    nonce
+    state_root
+  }
+}
+    `;
+
+/**
+ * __useGetBlockByHashQuery__
+ *
+ * To run a query within a React component, call `useGetBlockByHashQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBlockByHashQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBlockByHashQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useGetBlockByHashQuery(baseOptions: Apollo.QueryHookOptions<GetBlockByHashQuery, GetBlockByHashQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBlockByHashQuery, GetBlockByHashQueryVariables>(GetBlockByHashDocument, options);
+      }
+export function useGetBlockByHashLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBlockByHashQuery, GetBlockByHashQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBlockByHashQuery, GetBlockByHashQueryVariables>(GetBlockByHashDocument, options);
+        }
+export type GetBlockByHashQueryHookResult = ReturnType<typeof useGetBlockByHashQuery>;
+export type GetBlockByHashLazyQueryHookResult = ReturnType<typeof useGetBlockByHashLazyQuery>;
+export type GetBlockByHashQueryResult = Apollo.QueryResult<GetBlockByHashQuery, GetBlockByHashQueryVariables>;
+export const GetConsecutiveTransactionDocument = gql`
+    query getConsecutiveTransaction($transactionsdata: TransactionsPagesInput!) {
+  transactions(data: $transactionsdata) {
+    hash
+    block_hash
+    block_number
+    block_timestamp
+    from_address
+    gas
+    gas_price
+    input
+    nonce
+    receipt_contract_address
+    receipt_cumulative_gas_used
+    receipt_gas_used
+    receipt_root
+    receipt_status
+    to_address
+    method
+    transaction_fees_usd
+    transaction_index
+    value
+    value_usd
+    transaction_fees
+    baseFee
+    maxFee
+    maxPriorityFee
+    txnBurntFee
+    txnSavingFee
+    input
+  }
+}
+    `;
+
+/**
+ * __useGetConsecutiveTransactionQuery__
+ *
+ * To run a query within a React component, call `useGetConsecutiveTransactionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetConsecutiveTransactionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetConsecutiveTransactionQuery({
+ *   variables: {
+ *      transactionsdata: // value for 'transactionsdata'
+ *   },
+ * });
+ */
+export function useGetConsecutiveTransactionQuery(baseOptions: Apollo.QueryHookOptions<GetConsecutiveTransactionQuery, GetConsecutiveTransactionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetConsecutiveTransactionQuery, GetConsecutiveTransactionQueryVariables>(GetConsecutiveTransactionDocument, options);
+      }
+export function useGetConsecutiveTransactionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetConsecutiveTransactionQuery, GetConsecutiveTransactionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetConsecutiveTransactionQuery, GetConsecutiveTransactionQueryVariables>(GetConsecutiveTransactionDocument, options);
+        }
+export type GetConsecutiveTransactionQueryHookResult = ReturnType<typeof useGetConsecutiveTransactionQuery>;
+export type GetConsecutiveTransactionLazyQueryHookResult = ReturnType<typeof useGetConsecutiveTransactionLazyQuery>;
+export type GetConsecutiveTransactionQueryResult = Apollo.QueryResult<GetConsecutiveTransactionQuery, GetConsecutiveTransactionQueryVariables>;
 export const SearchRawDocument = gql`
     query searchRaw($data: String!) {
   searchRaw(data: $data) {

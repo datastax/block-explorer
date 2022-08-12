@@ -45,12 +45,13 @@ const Transactions: NextPage = () => {
   ] = useGetTransactionsByBlockLazyQuery()
 
   useEffect(() => {
-    setBlockDetails(undefined)
-    setNext(undefined)
-    setPrevious(undefined)
-  }, [blockNumber, blockHash])
+    // TO LOAD THE LATEST TRANSACTIONS 
+    if (!blockHash && !blockNumber && transactionsByBlock) {
+      window.location.reload()
+    }
+  }, [blockNumber, blockHash, transactionsByBlock])
+
   useEffect(() => {
-    console.log('blockNumber', blockNumber)
     if (blockNumber && blockHash) {
       setBlockDetails({
         blockHash: blockHash,
@@ -111,8 +112,7 @@ const Transactions: NextPage = () => {
       setpaginatedTransactions(
         latestTransactions?.transactions as TransactionsOutput[]
       )
-    }
-    if (transactionsByBlock) {
+    } else {
       setpaginatedTransactions(
         transactionsByBlock?.getTransactionsByBlock as TransactionsOutput[]
       )
