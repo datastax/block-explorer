@@ -74,6 +74,8 @@ interface HeroProps {
   showDropdown?: boolean
   networkUtilization?: number | undefined
   burntFeeSum?: string | undefined | null
+  setNextConsecutiveState?: () => void
+  setPreviousConsecutiveState?: () => void
 }
 interface DropButtonProps {
   title: string

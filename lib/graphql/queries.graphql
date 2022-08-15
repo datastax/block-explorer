@@ -191,35 +191,9 @@ query getBlockByHash($data: String!) {
   }
 }
 
-query getConsecutiveTransaction($transactionsdata: TransactionsPagesInput!) {
+query getConsecutiveTransactions($transactionsdata: TransactionsPagesInput!) {
   transactions(data: $transactionsdata) {
     hash
-    block_hash
-    block_number
-    block_timestamp
-    from_address
-    gas
-    gas_price
-    input
-    nonce
-    receipt_contract_address
-    receipt_cumulative_gas_used
-    receipt_gas_used
-    receipt_root
-    receipt_status
-    to_address
-    method
-    transaction_fees_usd
-    transaction_index
-    value
-    value_usd
-    transaction_fees
-    baseFee
-    maxFee
-    maxPriorityFee
-    txnBurntFee
-    txnSavingFee
-    input
   }
 }
 
