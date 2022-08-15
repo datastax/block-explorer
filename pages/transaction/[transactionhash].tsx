@@ -1,20 +1,24 @@
-import type { NextPage } from 'next'
+import type { NextPage, NextPageContext } from 'next'
 import Hero from '@components/shared/Hero'
 import TransactionDetail from '@components/TransactionDetail'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 import {
   useGetBlocksLazyQuery,
+  useGetConsecutiveTransactionsLazyQuery,
   useGetTransactionByHashQuery,
 } from 'lib/graphql/generated'
-import { useEffect, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { TransactionDetails } from 'types'
-import { etherToGwei, getDifference } from 'utils'
+import { mapRawDataToTransactionDetails } from 'utils'
 import { Box } from '@mui/material'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 
-const Transaction: NextPage = () => {
-  const router = useRouter()
-  const { transactionhash } = router.query
+interface TransactionProps {
+  transactionHash: string
+}
+
+const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
+  const { transactionHash } = props
   const [blockConfirmation, setBlockConfirmation] = useState<number>()
   const [transactionDetailData, setTransactionDetailData] =
     useState<TransactionDetails>()
@@ -22,20 +26,102 @@ const Transaction: NextPage = () => {
   const { data: transactionDetails, error: transactionError } =
     useGetTransactionByHashQuery({
       variables: {
-        data: transactionhash as string,
+        data: transactionHash as string,
       },
     })
-
-  if (transactionError) {
-    console.error(transactionError, setTransactionDetailData)
-  }
 
   const [
     getLatestBlocks,
     { data: latestBlock, error: blockError, loading: blockLoading },
   ] = useGetBlocksLazyQuery()
-  if (blockError) {
-    console.error(blockError)
+
+  const [
+    getConsecutiveTransaction,
+    { data: consecutiveTransaction, error: consecutiveTransactionError },
+  ] = useGetConsecutiveTransactionsLazyQuery()
+
+  if (blockError || transactionError || consecutiveTransactionError) {
+    console.error(
+      blockError + ' ' + transactionError + ' ' + consecutiveTransactionError
+    )
+  }
+
+  const [nextConsecutive, setNextConsecutive] = useState<number | null>()
+  const [previousConsecutive, setPreviousConsecutive] = useState<
+    number | null
+  >()
+  const [blockHash, setBlockHash] = useState<string>()
+  const [blockNumber, setBlockNumber] = useState<number>()
+
+  const setNextConsecutiveState = () => {
+    setPreviousConsecutive(undefined)
+    setNextConsecutive(transactionDetailData?.TransactionIndex)
+    setBlockHash(transactionDetails?.getTransactionByHash?.block_hash)
+    setBlockNumber(transactionDetails?.getTransactionByHash?.block_number)
+  }
+
+  const setPreviousConsecutiveState = () => {
+    setPreviousConsecutive(transactionDetailData?.TransactionIndex)
+    setNextConsecutive(undefined)
+    setBlockHash(transactionDetails?.getTransactionByHash?.block_hash)
+    setBlockNumber(transactionDetails?.getTransactionByHash?.block_number)
+  }
+
+  const resetStates = useCallback((hash: string) => {
+    setPreviousConsecutive(undefined)
+    setNextConsecutive(undefined)
+    setBlockHash(undefined)
+    setBlockNumber(undefined)
+    Router.push(hash)
+  }, [])
+
+  useEffect(() => {
+    if (nextConsecutive || previousConsecutive === 0) {
+      getConsecutiveTransaction({
+        variables: {
+          transactionsdata: {
+            blockHash: blockHash,
+            blockNumber: blockNumber,
+            pagesInput: {
+              pageSize: 1,
+              next: nextConsecutive,
+              previous: undefined,
+            },
+          },
+        },
+      })
+    }
+    if (previousConsecutive || previousConsecutive === 0) {
+      getConsecutiveTransaction({
+        variables: {
+          transactionsdata: {
+            blockHash: blockHash,
+            blockNumber: blockNumber,
+            pagesInput: {
+              pageSize: 1,
+              next: undefined,
+              previous: previousConsecutive,
+            },
+          },
+        },
+      })
+    }
+  }, [
+    blockHash,
+    blockNumber,
+    getConsecutiveTransaction,
+    nextConsecutive,
+    previousConsecutive,
+  ])
+
+  useEffect(() => {
+    if (consecutiveTransaction?.transactions[0]?.hash) {
+      resetStates(consecutiveTransaction?.transactions[0]?.hash)
+    }
+  }, [consecutiveTransaction?.transactions, resetStates])
+
+  if (transactionError || blockError) {
+    console.error(transactionError + ' ' + blockError)
   }
 
   useEffect(() => {
@@ -53,62 +139,9 @@ const Transaction: NextPage = () => {
         },
       })
       if (blockConfirmation && !blockLoading)
-        setTransactionDetailData({
-          Nonce: transactionDetails?.getTransactionByHash?.nonce,
-          TransactionIndex:
-            transactionDetails?.getTransactionByHash?.transaction_index,
-          TransactionHash: transactionDetails?.getTransactionByHash.hash || '',
-          Status: transactionDetails?.getTransactionByHash.receipt_status,
-          Block: transactionDetails?.getTransactionByHash?.block_number,
-          BlockConfirmation:
-            blockConfirmation -
-            Number(transactionDetails?.getTransactionByHash?.block_number),
-          Timestamp: {
-            time: `${getDifference(
-              parseInt(
-                transactionDetails?.getTransactionByHash.block_timestamp || ''
-              )
-            )} ago`,
-            Date: `(${new Date(
-              parseInt(
-                transactionDetails?.getTransactionByHash.block_timestamp || ''
-              ) * 1000
-            ).toUTCString()})`,
-          },
-          Gas_limit: transactionDetails.getTransactionByHash.gas,
-          Usage_Txn: transactionDetails.getTransactionByHash.receipt_gas_used,
-          TransactionAction: {
-            approved: 'Approved',
-            kuno: 'KUNO',
-            trade: 'For Trade On',
-            router: 'Uniswap V3: Router 2',
-            checkIn: 'Check in',
-            token: 'Token Approvals',
-          },
-          From: transactionDetails?.getTransactionByHash.from_address || '',
-          To: transactionDetails?.getTransactionByHash.to_address || '',
-          Value: `${transactionDetails?.getTransactionByHash.value} Ether`,
-          Value_usd: `($${parseFloat(
-            transactionDetails?.getTransactionByHash?.value_usd || ''
-          ).toFixed(2)})`,
-          TransactionFee: `${
-            transactionDetails?.getTransactionByHash.transaction_fees
-          } Ether ($${parseFloat(
-            transactionDetails?.getTransactionByHash?.transaction_fees_usd || ''
-          ).toFixed(2)})`,
-          GasPrice: `${
-            transactionDetails?.getTransactionByHash.gas_price
-          } Ether (${etherToGwei(
-            transactionDetails?.getTransactionByHash.gas_price
-          )} Gwei)`,
-          BaseFee: transactionDetails?.getTransactionByHash?.baseFee,
-          MaxFee: transactionDetails?.getTransactionByHash?.maxFee,
-          MaxPriorityFee:
-            transactionDetails?.getTransactionByHash?.maxPriorityFee,
-          TxnBurntFee: transactionDetails?.getTransactionByHash?.txnBurntFee,
-          TxnSavingFee: transactionDetails?.getTransactionByHash?.txnSavingFee,
-          input: transactionDetails?.getTransactionByHash?.input,
-        })
+        setTransactionDetailData(
+          mapRawDataToTransactionDetails(transactionDetails, blockConfirmation)
+        )
     }
   }, [
     blockConfirmation,
@@ -124,7 +157,9 @@ const Transaction: NextPage = () => {
         title="Transaction Details"
         showChips={false}
         showPagination={true}
-        showDropdown={true}
+        showDropdown={false} // FOR NOW WE ARE HIDING DROPDOWN, SETTING THIS PROP TO'false'
+        setNextConsecutiveState={setNextConsecutiveState}
+        setPreviousConsecutiveState={setPreviousConsecutiveState}
       />
       {transactionDetailData ? (
         <TransactionDetail TransactionData={transactionDetailData} />
@@ -138,3 +173,8 @@ const Transaction: NextPage = () => {
 }
 
 export default Transaction
+
+export async function getServerSideProps(context: NextPageContext) {
+  const { transactionhash } = context.query
+  return { props: { transactionHash: transactionhash as string } }
+}
