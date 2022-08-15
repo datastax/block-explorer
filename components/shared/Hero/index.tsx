@@ -21,6 +21,8 @@ const Hero = ({
   showPagination,
   networkUtilization,
   burntFeeSum,
+  setNextConsecutiveState,
+  setPreviousConsecutiveState,
 }: HeroProps) => {
   return (
     <Container>
@@ -30,7 +32,10 @@ const Hero = ({
         </MainHeading>
         {showPagination && (
           <PaginationContainer>
-            <PaginationButton />
+            <PaginationButton
+              setNextConsecutiveState={setNextConsecutiveState}
+              setPreviousConsecutiveState={setPreviousConsecutiveState}
+            />
           </PaginationContainer>
         )}
       </Stack>
