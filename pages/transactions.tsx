@@ -1,7 +1,6 @@
 import Hero from '@components/shared/Hero'
 import TransactionsTable from '@components/Transactions/Table'
 import { transactionTitles } from '@constants/stubs'
-
 import {
   TransactionsOutput,
   useGetPaginatedTransactionsLazyQuery,
@@ -15,7 +14,6 @@ import { TransactionBlockDetail } from 'types'
 
 const Transactions: NextPage = () => {
   const router = useRouter()
-
   const [pageSize, setPageSize] = useState(10)
   const [next, setNext] = useState<number>()
   const [previous, setPrevious] = useState<number>()

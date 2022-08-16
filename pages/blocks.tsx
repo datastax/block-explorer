@@ -32,7 +32,6 @@ const Blocks: NextPage = () => {
 
   const { data: burntFeeSum, error: burntFeeSumError } =
     useGetDashboardBurntFeeSumQuery()
-
   if (blocksError) {
     console.error(blocksError)
   }

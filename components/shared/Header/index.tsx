@@ -60,7 +60,6 @@ const Header = () => {
   if (error) {
     console.error(error)
   }
-
   return (
     <Container>
       <Wrapper theme={theme} height="72px" isHome={isHome}>

@@ -15,7 +15,6 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-
 import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
 import {
   etherToGwei,
@@ -181,7 +180,6 @@ const BlocksTable = ({
                 ))}
               </TableBody>
             </Table>
-
             <BottomPagination
               pageSize={pageSize}
               setPageSize={setPageSize}

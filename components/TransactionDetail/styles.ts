@@ -84,7 +84,6 @@ const InputBox = styled('div')({
   width: '40vw',
   color: colors.neutral300,
 })
-
 export {
   CustomListItem,
   CustomListIcon,
