@@ -45,7 +45,6 @@ const Transactions: NextPage = () => {
   ] = useGetTransactionsByBlockLazyQuery()
 
   useEffect(() => {
-    // TO LOAD THE LATEST TRANSACTIONS 
     if (!blockHash && !blockNumber && transactionsByBlock) {
       window.location.reload()
     }
