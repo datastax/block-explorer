@@ -10,7 +10,7 @@ import {
   Bulb,
   TickInButton,
 } from '@components/shared/Icons'
-import { ListItemText } from '@mui/material'
+import { ListItemText, Tooltip } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import router from 'next/router'
 import React from 'react'
@@ -121,13 +121,15 @@ const TransactionDetailRow = ({
         return (
           <Wrapper>
             <RightSpacing>
-              <ListItemText
-                onClick={() => {
-                  router.push(`/block/${data[objectKey]}`)
-                }}
-              >
-                <BlockEffect>{data[objectKey]}</BlockEffect>
-              </ListItemText>
+              <Tooltip title="View Block" placement="top">
+                <ListItemText
+                  onClick={() => {
+                    router.push(`/block/${data[objectKey]}`)
+                  }}
+                >
+                  <BlockEffect>{data[objectKey]}</BlockEffect>
+                </ListItemText>
+              </Tooltip>
             </RightSpacing>
             <Chip
               label={`${data['BlockConfirmation']} Block Confirmations`}

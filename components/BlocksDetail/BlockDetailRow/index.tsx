@@ -1,6 +1,6 @@
 import Chip from '@components/shared/Chip'
 import { Question, Watch } from '@components/shared/Icons'
-import { ListItemText } from '@mui/material'
+import { ListItemText, Tooltip } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import router from 'next/router'
 import React from 'react'
@@ -84,28 +84,33 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         return (
           <>
             {' '}
-            <div
-              onClick={() => {
-                router.push(
-                  {
-                    pathname: '/transactions',
-                    query: {
-                      blockNumber: data['BlockHeight'],
-                      blockHash: data['Hash'],
-                    },
-                  },
-                  `transactions?blockNumber=${data['BlockHeight']}`
-                )
-              }}
+            <Tooltip
+              title="View All Transactions of this block"
+              placement="top"
             >
-              <Chip
-                label={`${data[objectKey]} transactions`}
-                bgcolor={colors.nordic}
-                border={`1px solid ${colors.actionPrimary}`}
-                titlecolor={colors.neutral100}
-                cursor="pointer"
-              />
-            </div>
+              <div
+                onClick={() => {
+                  router.push(
+                    {
+                      pathname: '/transactions',
+                      query: {
+                        blockNumber: data['BlockHeight'],
+                        blockHash: data['Hash'],
+                      },
+                    },
+                    `transactions?blockNumber=${data['BlockHeight']}`
+                  )
+                }}
+              >
+                <Chip
+                  label={`${data[objectKey]} transactions`}
+                  bgcolor={colors.nordic}
+                  border={`1px solid ${colors.actionPrimary}`}
+                  titlecolor={colors.neutral100}
+                  cursor="pointer"
+                />
+              </div>
+            </Tooltip>
             <TransactionStyle>
               {' '}
               <span>and</span>{' '}
