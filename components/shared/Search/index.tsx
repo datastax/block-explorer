@@ -19,7 +19,7 @@ const Search = () => {
   const [getSearchRaw, { data, loading, error }] = useSearchRawLazyQuery()
 
   if (error) {
-    console.log('Error Getting Search Results :>> ', error?.message)
+    console.error('Error Getting Search Results :>> ', error?.message)
   }
 
   const handleClick = () => {

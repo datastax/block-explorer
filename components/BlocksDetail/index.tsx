@@ -8,11 +8,13 @@ import {
   CustomLink,
   CustomList,
 } from '@components/BlocksDetail/styles'
-import { ListItemText, Collapse, ListItemButton } from '@mui/material'
+import colors from '@styles/ThemeProvider/colors'
+import { ListItemText, Collapse, ListItemButton, Tooltip } from '@mui/material'
 import React from 'react'
 import { Question } from '@components/shared/Icons/index'
 import BlockDetailRow from './BlockDetailRow'
 import { BlockDetails } from '@types'
+import router from 'next/router'
 
 interface BlocksDetailProps {
   BlocksDetailsData: BlockDetails
@@ -42,8 +44,32 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
               <CustomListIcon>
                 <Question />
               </CustomListIcon>
-              <CustomListItemText primary="ExtraData:" />
-              <ListItemText primary={BlocksDetailsData.ExtraData} />
+              <CustomListItemText primary="Hash:" />
+              <ListItemText primary={BlocksDetailsData?.Hash} />
+            </CustomListItem>
+            <CustomDivider />
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="Parent Hash:" />
+              <Tooltip placement="top-start" title="View Parent Block">
+                <ListItemText
+                  primary={BlocksDetailsData?.ParentHash}
+                  sx={{ color: colors.actionSecondary, cursor: 'pointer' }}
+                  onClick={() => {
+                    router.push(`/block/${BlocksDetailsData?.ParentHash}`)
+                  }}
+                />
+              </Tooltip>
+            </CustomListItem>
+            <CustomDivider />
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="Nonce:" />
+              <ListItemText primary={BlocksDetailsData?.Nonce} />
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>
@@ -51,7 +77,23 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
                 <Question />
               </CustomListIcon>
               <CustomListItemText primary="ExtraData:" />
-              <ListItemText primary={BlocksDetailsData.ExtraData} />
+              <ListItemText primary={BlocksDetailsData?.ExtraData} />
+            </CustomListItem>
+            <CustomDivider />
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="StateRoot:" />
+              <ListItemText primary={BlocksDetailsData?.StateRoot} />
+            </CustomListItem>
+            <CustomDivider />
+            <CustomListItem>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary="Sha3Uncles:" />
+              <ListItemText primary={BlocksDetailsData?.Sha3Uncles} />
             </CustomListItem>
             <CustomDivider />
           </Collapse>

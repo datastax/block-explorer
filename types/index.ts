@@ -24,6 +24,7 @@ interface ChipProps {
   titlecolor: string
   label: string | React.ReactNode
   icon?: ReactJSXElement
+  cursor?: 'pointer' | 'default'
 }
 interface BlockProps {
   Block: string
@@ -71,6 +72,10 @@ interface HeroProps {
   blockNumber?: string
   showPagination?: boolean
   showDropdown?: boolean
+  networkUtilization?: number | undefined
+  burntFeeSum?: string | undefined | null
+  setNextConsecutiveState?: () => void
+  setPreviousConsecutiveState?: () => void
 }
 interface DropButtonProps {
   title: string
@@ -95,7 +100,10 @@ interface BlockDetails {
     miner: string
     time: string
   }
+  Hash: string
+  ParentHash: string
   BlockReward: string
+  Nonce: string | undefined | null
   UnclesReward: string
   Difficulty: string
   TotalDifficulty: string
@@ -104,16 +112,19 @@ interface BlockDetails {
   GasUsedPercetge: number
   GasTargetPercentage: number
   GasLimit: string
-  BaseFeePerGas: string
-  BurntFees: string
+  BaseFeePerGas: string | null
+  BurntFees: string | null
   ExtraData: string
   internalTransaction: number
+  Sha3Uncles: string | null | undefined
+  StateRoot: string | null | undefined
 }
 
 interface TransactionDetails {
   TransactionHash: string
-  Status: string
-  Block: string
+  Status: number | null | undefined
+  Block: string | number
+  BlockConfirmation: number | undefined
   Timestamp: {
     time: string
     Date: string
@@ -126,11 +137,22 @@ interface TransactionDetails {
     checkIn: string
     token: string
   }
+  Gas_limit: number
+  Usage_Txn: number | null | undefined
   From: string
   To: string
   Value: string
+  Value_usd: string
   TransactionFee: string
   GasPrice: string
+  BaseFee: string | null | undefined
+  MaxFee: string | null | undefined
+  MaxPriorityFee: string | null | undefined
+  TxnBurntFee: string | null | undefined
+  TxnSavingFee: string | null | undefined
+  input: string | null | undefined
+  Nonce: number | null | undefined
+  TransactionIndex: number | null | undefined
 }
 type SummaryBlocksDataPrice = {
   icon: () => JSX.Element
@@ -162,6 +184,9 @@ type TransactionBlockDetail = {
   blockNumber: number
 }
 
+interface CopyClipboardProps {
+  data: string
+}
 export type {
   Route,
   CustomTableProps,
@@ -180,4 +205,5 @@ export type {
   SummaryBlocksDataTransactions,
   GraphData,
   TransactionBlockDetail,
+  CopyClipboardProps,
 }
