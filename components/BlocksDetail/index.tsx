@@ -9,7 +9,7 @@ import {
   CustomList,
 } from '@components/BlocksDetail/styles'
 import colors from '@styles/ThemeProvider/colors'
-import { ListItemText, Collapse, ListItemButton } from '@mui/material'
+import { ListItemText, Collapse, ListItemButton, Tooltip } from '@mui/material'
 import React from 'react'
 import { Question } from '@components/shared/Icons/index'
 import BlockDetailRow from './BlockDetailRow'
@@ -53,13 +53,15 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
                 <Question />
               </CustomListIcon>
               <CustomListItemText primary="Parent Hash:" />
-              <ListItemText
-                primary={BlocksDetailsData?.ParentHash}
-                sx={{ color: colors.actionSecondary, cursor: 'pointer' }}
-                onClick={() => {
-                  router.push(`/block/${BlocksDetailsData?.ParentHash}`)
-                }}
-              />
+              <Tooltip placement="top-start" title="View Parent Block">
+                <ListItemText
+                  primary={BlocksDetailsData?.ParentHash}
+                  sx={{ color: colors.actionSecondary, cursor: 'pointer' }}
+                  onClick={() => {
+                    router.push(`/block/${BlocksDetailsData?.ParentHash}`)
+                  }}
+                />
+              </Tooltip>
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>
