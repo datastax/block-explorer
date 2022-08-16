@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '@components/shared/Logo'
-import { useMediaQuery } from '@mui/material'
+import { Box, useMediaQuery } from '@mui/material'
 import {
   Container,
   Wrapper,
@@ -18,12 +18,35 @@ import Search from '@components/shared/Search'
 import Chip from '@components/shared/Chip'
 import colors from '@styles/ThemeProvider/colors'
 import theme from '@styles/ThemeProvider/theme'
-const ChipLabel = () => {
+import {
+  GetDashboardHeaderQuery,
+  useGetDashboardHeaderQuery,
+} from 'lib/graphql/generated'
+import { fixed } from 'utils'
+
+interface ChiplabelProps {
+  data: GetDashboardHeaderQuery | undefined
+}
+const ChipLabel = ({ data }: ChiplabelProps) => {
   return (
-    <StyledLabel>
-      Eth: $1,825.88 <span>(-6.79%) </span>
-      <span>| ⛽️ 40 Gwei</span>
-    </StyledLabel>
+    <>
+      {data && (
+        <StyledLabel>
+          Eth: ${fixed(data?.dashboardAnalytics?.etherPriceUSD, 2)}
+          <span>
+            {' '}
+            ({fixed(data?.dashboardAnalytics?.pricePercentageChange, 2)}
+            %){' '}
+          </span>
+          <span>
+            | ⛽️{' '}
+            {Number(data?.dashboardAnalytics?.networkBaseFee) +
+              Number(data?.dashboardAnalytics?.networkpriorityFee)}{' '}
+            Gwei
+          </span>
+        </StyledLabel>
+      )}
+    </>
   )
 }
 
@@ -31,6 +54,12 @@ const Header = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('smA'))
   const { pathname } = useRouter()
   const isHome = pathname === '/'
+
+  const { data, error } = useGetDashboardHeaderQuery()
+
+  if (error) {
+    console.error(error)
+  }
   return (
     <Container>
       <Wrapper theme={theme} height="72px" isHome={isHome}>
@@ -66,16 +95,18 @@ const Header = () => {
         <Wrapper
           theme={theme}
           height="auto"
-          padding="0px 44px 26px !important"
+          padding="12px 44px 26px !important"
           marginTop="60px"
         >
-          {!isMobile && (
+          {!isMobile && data ? (
             <Chip
-              label={<ChipLabel />}
+              label={<ChipLabel data={data} />}
               bgcolor={colors.neutral700}
               border={`1px solid ${colors.neutral300}`}
               titlecolor={colors.neutral100}
             />
+          ) : (
+            <Box />
           )}
           <CustomStack spacing={'40px'} direction={'row'} theme={theme}>
             {ROUTES.map(({ name, link }: Route, index) => (

@@ -32,7 +32,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
 
       <Table>
         <TableBody>
-          {blocks?.getBlocks.map((Block, index) => (
+          {blocks?.getBlocks?.blocks?.map((Block, index) => (
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               key={index}
@@ -72,8 +72,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                   <div>
                     <span>
                       <strong>
-                        {Block.transaction_count} txns in{' '}
-                        {getDifference(parseInt(Block.timestamp))}
+                        {Block.transaction_count} txns in {Block.mine_time} secs
                       </strong>
                     </span>
                   </div>

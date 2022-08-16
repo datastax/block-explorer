@@ -15,10 +15,13 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-
-import Chip from '@components/shared/Chip'
 import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
-import { etherToGwei, formatAddress } from 'utils'
+import {
+  etherToGwei,
+  formatAddress,
+  getDifference,
+  numberWithCommas,
+} from 'utils'
 import router from 'next/router'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Box } from '@mui/material'
@@ -46,10 +49,12 @@ const BlocksTable = ({
 }: BlocksTableProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1)
 
-  const lengthOfEachPage = Data?.getBlocks?.length || 0
-  const startingBlock = Data?.getBlocks[0]?.number || 0
+  const lengthOfEachPage = Data?.getBlocks?.blocks?.length || 0
+  const startingBlock = Data?.getBlocks?.blocks[0]?.number || 0
   const endingBlock =
-    lengthOfEachPage && Data ? Data?.getBlocks[lengthOfEachPage - 1]?.number : 0
+    lengthOfEachPage && Data
+      ? Data?.getBlocks?.blocks[lengthOfEachPage - 1]?.number
+      : 0
   const setNextState = () => {
     setNext(endingBlock || undefined)
     setPrevious(undefined)
@@ -61,16 +66,33 @@ const BlocksTable = ({
   }
 
   const getValue = (index: number, Object: (string | number | null)[]) => {
+    if (index === 1)
+      return `${getDifference(parseInt(Object[index]?.toString() || ''))} ago`
+    if (index === 5 || index === 6) return numberWithCommas(Object[index] || '')
     if (index > 9) return
     if (index < 7) return formatAddress(Object[index]?.toString() || '')
     else if (index > 7) {
-      const value = `${parseFloat(Object[index]?.toString() || '').toFixed(4)}`
+      let value = `${parseFloat(Object[index]?.toString() || '').toFixed(4)}`
+      if (index == 8) value += ' Ether'
       return value
     } else {
-      return `${etherToGwei(parseFloat(Object[index] as string)).toFixed(
-        2
-      )} Gwei`
+      return `${etherToGwei(Object[index])} Gwei`
     }
+  }
+
+  const getPercentageValue = (
+    index: number,
+    Object: (string | number | null)[]
+  ) => {
+    if (index === 9) {
+      if (Object[10]?.toString() == '0') return '(0%)'
+      return `(${(
+        (parseFloat(Object[index]?.toString() || '') /
+          parseFloat(Object[10]?.toString() || '')) *
+        100
+      ).toFixed(2)}%)`
+    }
+    return ''
   }
   return (
     <BlockTableContainer>
@@ -108,7 +130,7 @@ const BlocksTable = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Data?.getBlocks.map((block, index) => (
+                {Data?.getBlocks?.blocks.map((block, index) => (
                   <TableRow
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     key={index}
@@ -130,46 +152,26 @@ const BlocksTable = ({
                               alignItems: 'center',
                             }}
                           >
-                            {Object.keys(block)[index] !== 'Method' ? (
-                              <div
-                                onClick={() => {
-                                  if (index == 0)
-                                    router.push(
-                                      `/block/${Object.values(block)[index]}`
-                                    )
-                                }}
-                                style={{
-                                  cursor: index == 0 ? 'pointer' : 'default',
-                                  display: 'flex',
-                                }}
-                              >
-                                {getValue(index, Object.values(block))}
-                                <PercentageValue>
-                                  {index === 9
-                                    ? `(${(
-                                        (parseFloat(
-                                          Object.values(block)[
-                                            index
-                                          ]?.toString() || ''
-                                        ) /
-                                          parseFloat(
-                                            Object.values(
-                                              block
-                                            )[10]?.toString() || ''
-                                          )) *
-                                        100
-                                      ).toFixed(2)}%)`
-                                    : ''}
-                                </PercentageValue>
-                              </div>
-                            ) : (
-                              <Chip
-                                label={Object.values(block)[index]}
-                                bgcolor={colors.nordic}
-                                border={`1px solid ${colors.actionPrimary}`}
-                                titlecolor={colors.neutral100}
-                              />
-                            )}
+                            <div
+                              onClick={() => {
+                                if (index == 0)
+                                  router.push(
+                                    `/block/${Object.values(block)[index]}`
+                                  )
+                              }}
+                              style={{
+                                cursor: index == 0 ? 'pointer' : 'default',
+                                display: 'flex',
+                              }}
+                            >
+                              {getValue(index, Object.values(block))}
+                              <PercentageValue>
+                                {getPercentageValue(
+                                  index,
+                                  Object.values(block)
+                                )}
+                              </PercentageValue>
+                            </div>
                           </CustomTableCellBox>
                         </CustomTableCell>
                       </React.Fragment>
@@ -178,7 +180,6 @@ const BlocksTable = ({
                 ))}
               </TableBody>
             </Table>
-
             <BottomPagination
               pageSize={pageSize}
               setPageSize={setPageSize}

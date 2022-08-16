@@ -1,7 +1,8 @@
 import Chip from '@components/shared/Chip'
 import { Question, Watch } from '@components/shared/Icons'
-import { ListItemText } from '@mui/material'
+import { ListItemText, Tooltip } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
+import router from 'next/router'
 import React from 'react'
 import { BlockDetails } from 'types'
 import {
@@ -50,13 +51,13 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         return 'Base Fee Per Gas:'
       case 'BurntFees':
         return 'Burnt Fees:'
-      case 'ExtraData':
-        return 'Extra Data:'
     }
   }
-  
+
   const getValueUI = () => {
     switch (objectKey) {
+      case 'BurntFees':
+      case 'BaseFeePerGas':
       case 'BlockHeight':
       case 'BlockReward':
       case 'UnclesReward':
@@ -64,10 +65,9 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
       case 'TotalDifficulty':
       case 'Size':
       case 'GasLimit':
-      case 'BurntFees':
-      case 'BaseFeePerGas':
-      case 'ExtraData':
-        return <ListItemText primary={data[objectKey]} />
+        return data[objectKey] != null ? (
+          <ListItemText primary={data[objectKey]} />
+        ) : null
       case 'Timestamp':
         return (
           <>
@@ -84,12 +84,33 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         return (
           <>
             {' '}
-            <Chip
-              label={`${data[objectKey]} transactions`}
-              bgcolor={colors.nordic}
-              border={`1px solid ${colors.actionPrimary}`}
-              titlecolor={colors.neutral100}
-            />
+            <Tooltip
+              title="View All Transactions of this block"
+              placement="top"
+            >
+              <div
+                onClick={() => {
+                  router.push(
+                    {
+                      pathname: '/transactions',
+                      query: {
+                        blockNumber: data['BlockHeight'],
+                        blockHash: data['Hash'],
+                      },
+                    },
+                    `transactions?blockNumber=${data['BlockHeight']}`
+                  )
+                }}
+              >
+                <Chip
+                  label={`${data[objectKey]} transactions`}
+                  bgcolor={colors.nordic}
+                  border={`1px solid ${colors.actionPrimary}`}
+                  titlecolor={colors.neutral100}
+                  cursor="pointer"
+                />
+              </div>
+            </Tooltip>
             <TransactionStyle>
               {' '}
               <span>and</span>{' '}

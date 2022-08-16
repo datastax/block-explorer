@@ -106,18 +106,21 @@ const SummaryBlocks = () => {
             secondaryStat: block.secondaryStat,
           }
         })
-
-      const graphData: GraphData[] = data.dashboardAnalytics.chartData.map(
-        (node) => {
-          const date = new Date(node[0])
-          const day = date.getDate()
-          const month = date.toLocaleString('en-us', { month: 'long' })
-          return {
-            label: `${month} ${day}`,
-            value: node[1],
-          }
-        }
-      )
+      let count = 1
+      const graphData: GraphData[] =
+        data.dashboardAnalytics?.transactionHistoryChart
+          .map((node) => {
+            const date = new Date()
+            date.setDate(date.getDate() - count)
+            const day = date.getDate()
+            const month = date.toLocaleString('en-us', { month: 'long' })
+            count += 1
+            return {
+              label: `${month} ${day}`,
+              value: node,
+            }
+          })
+          .reverse()
       setSummaryBlocksDataPriceList(blocksList)
       setSummaryBlocksDataTransactionsList(transactionsList)
       setGraph(graphData)

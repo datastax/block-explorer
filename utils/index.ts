@@ -1,3 +1,8 @@
+import { BlockOutput, GetTransactionByHashQuery } from 'lib/graphql/generated'
+import { BlockDetails, TransactionDetails } from 'types'
+
+const numberRegex = /^[0-9]+$/
+
 const formatAddress = (
   address: string | null | undefined,
   start = 7,
@@ -10,11 +15,13 @@ const formatAddress = (
   return address.slice(0, start) + '....' + address.slice(address.length - end)
 }
 
-function numberWithCommas(x: number | string) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+function numberWithCommas(value: number | string | null | undefined) {
+  if (!value) return '0'
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
-const getDifference = (timestamp: number) => {
+const getDifference = (timestamp: number | undefined | null) => {
+  if (!timestamp) return 0
   const currentDate = new Date().getTime()
   const time = new Date(timestamp * 1000).getTime()
 
@@ -53,8 +60,10 @@ const getDifference = (timestamp: number) => {
   return templateString
 }
 
-const etherToGwei = (num: number) => {
-  if (num) return num * 1000000000
+const etherToGwei = (num: number | string | null | undefined) => {
+  if (!num) return 0
+  if (typeof num === 'string') return (Number(num) * 1000000000).toFixed(2)
+  if (num) return (num * 1000000000).toFixed(2)
   return 0
 }
 
@@ -70,13 +79,23 @@ const calculateStaticBlockReward = (block: string) => {
 }
 
 const convertToMillion = (num: number) => {
-  return `${num / 1e6} M`
+  return `${(num / 1e6).toFixed(2)} M`
 }
 
-const weiToEther = (num: number | undefined | null, fixed?: number) => {
+const weiToEther = (
+  num: number | undefined | null | string,
+  fixed?: number
+) => {
   if (!num) return 0
+
+  if (typeof num === 'string') return (Number(num) / 1e18).toFixed(fixed)
+
   if (fixed) return (num / 1e18).toFixed(fixed)
   return num / 1e18
+}
+
+const copyToClipboard = (value: string) => {
+  navigator.clipboard.writeText(value)
 }
 
 const fixed = (number: number | undefined | null | string, fixed: number) => {
@@ -85,6 +104,127 @@ const fixed = (number: number | undefined | null | string, fixed: number) => {
   return number.toFixed(fixed)
 }
 
+const getBurntFee = (burntFeeSum: string | null | undefined) => {
+  return numberWithCommas(weiToEther(burntFeeSum, 2))
+}
+
+const getGasFeesPercentage = (
+  usageTxn: number | null | undefined,
+  gasLimit: number | null | undefined
+) => {
+  if (!usageTxn || !gasLimit) return 0
+  return ((usageTxn / gasLimit) * 100).toFixed(2)
+}
+
+const isNumber = (value: string) => {
+  return numberRegex.test(value)
+}
+
+const mapRawDataToBlockDetails = (
+  data: BlockOutput,
+  block: string
+): BlockDetails => {
+  return {
+    Sha3Uncles: data?.sha3_uncles,
+    StateRoot: data?.state_root,
+    Hash: data?.hash || '',
+    ParentHash: data?.parent_hash || '',
+    Nonce: data?.nonce,
+    internalTransaction: 0,
+    BlockHeight: data?.number.toString() || '',
+    Timestamp: {
+      time: `${getDifference(parseInt(data?.timestamp || ''))} ago`,
+      Date: `(${new Date(
+        parseInt(data?.timestamp || '') * 1000
+      ).toUTCString()})`,
+    },
+    Transactions: `${data?.transaction_count}`,
+    MinedBy: {
+      address: data?.miner || '',
+      miner: `(Miner: ${formatAddress(data?.miner)})`,
+      time: `in ${data?.mine_time} secs`,
+    },
+    BlockReward: `${data?.reward} Ether (${calculateStaticBlockReward(
+      block as string
+    )} + ${data?.txn_fees} - ${data?.burnt_fee})`,
+    UnclesReward: data?.uncle_reward || '',
+    Difficulty: numberWithCommas(data?.difficulty || 0) || '',
+    TotalDifficulty: numberWithCommas(data?.total_difficulty || 0) || '',
+    Size: numberWithCommas(data?.size || 0) + ' bytes',
+    GasUsed: numberWithCommas(data?.gas_used || 0),
+    GasUsedPercetge: parseFloat(data?.gas_used_percentage || ''),
+    GasTargetPercentage: parseFloat(data?.gas_target_percentage || ''),
+    GasLimit: numberWithCommas(data?.gas_limit || 0),
+    BaseFeePerGas: data?.base_fee_per_gas
+      ? `${data?.base_fee_per_gas} Ether (${etherToGwei(
+          parseFloat(data?.base_fee_per_gas || '')
+        )} Gwei)`
+      : null,
+    BurntFees: parseFloat(data?.burnt_fee || '')
+      ? `🔥 ${data?.burnt_fee} Ether`
+      : null,
+    ExtraData: `speth03�0\`' (Hex:${data?.extra_data})`,
+  }
+}
+
+const mapRawDataToTransactionDetails = (
+  transactionDetails: GetTransactionByHashQuery,
+  blockConfirmation: number
+): TransactionDetails => {
+  return {
+    Nonce: transactionDetails?.getTransactionByHash?.nonce,
+    TransactionIndex:
+      transactionDetails?.getTransactionByHash?.transaction_index,
+    TransactionHash: transactionDetails?.getTransactionByHash.hash || '',
+    Status: transactionDetails?.getTransactionByHash.receipt_status,
+    Block: transactionDetails?.getTransactionByHash?.block_number,
+    BlockConfirmation:
+      blockConfirmation -
+      Number(transactionDetails?.getTransactionByHash?.block_number),
+    Timestamp: {
+      time: `${getDifference(
+        parseInt(transactionDetails?.getTransactionByHash.block_timestamp || '')
+      )} ago`,
+      Date: `(${new Date(
+        parseInt(
+          transactionDetails?.getTransactionByHash.block_timestamp || ''
+        ) * 1000
+      ).toUTCString()})`,
+    },
+    Gas_limit: transactionDetails.getTransactionByHash.gas,
+    Usage_Txn: transactionDetails.getTransactionByHash.receipt_gas_used,
+    TransactionAction: {
+      approved: 'Approved',
+      kuno: 'KUNO',
+      trade: 'For Trade On',
+      router: 'Uniswap V3: Router 2',
+      checkIn: 'Check in',
+      token: 'Token Approvals',
+    },
+    From: transactionDetails?.getTransactionByHash.from_address || '',
+    To: transactionDetails?.getTransactionByHash.to_address || '',
+    Value: `${transactionDetails?.getTransactionByHash.value} Ether`,
+    Value_usd: `($${parseFloat(
+      transactionDetails?.getTransactionByHash?.value_usd || ''
+    ).toFixed(2)})`,
+    TransactionFee: `${
+      transactionDetails?.getTransactionByHash.transaction_fees
+    } Ether ($${parseFloat(
+      transactionDetails?.getTransactionByHash?.transaction_fees_usd || ''
+    ).toFixed(2)})`,
+    GasPrice: `${
+      transactionDetails?.getTransactionByHash.gas_price
+    } Ether (${etherToGwei(
+      transactionDetails?.getTransactionByHash.gas_price
+    )} Gwei)`,
+    BaseFee: transactionDetails?.getTransactionByHash?.baseFee,
+    MaxFee: transactionDetails?.getTransactionByHash?.maxFee,
+    MaxPriorityFee: transactionDetails?.getTransactionByHash?.maxPriorityFee,
+    TxnBurntFee: transactionDetails?.getTransactionByHash?.txnBurntFee,
+    TxnSavingFee: transactionDetails?.getTransactionByHash?.txnSavingFee,
+    input: transactionDetails?.getTransactionByHash?.input,
+  }
+}
 export {
   formatAddress,
   getDifference,
@@ -93,6 +233,12 @@ export {
   calculateStaticBlockReward,
   convertToMillion,
   weiToEther,
+  copyToClipboard,
   fixed,
+  getBurntFee,
+  getGasFeesPercentage,
+  isNumber,
+  mapRawDataToBlockDetails,
+  mapRawDataToTransactionDetails,
 }
 export { default as createEmotionCache } from './createEmotionCache'

@@ -1,11 +1,14 @@
 query getBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    number
-    timestamp
-    miner
-    transaction_count
-    hash
-    reward
+    blocks {
+      number
+      timestamp
+      miner
+      transaction_count
+      hash
+      mine_time
+      reward
+    }
   }
 }
 
@@ -21,24 +24,27 @@ query getTransactions($transactionsdata: TransactionsPagesInput!) {
 
 query getPaginatedBlocks($data: PagesInput!) {
   getBlocks(data: $data) {
-    number
-    timestamp
-    transaction_count
-    sha3_uncles
-    miner
-    gas_used
-    gas_limit
-    base_fee_per_gas
-    reward
-    burnt_fee
-    txn_fees
+    networkUtilization
+    blocks {
+      number
+      timestamp
+      transaction_count
+      uncles_count
+      miner
+      gas_used
+      gas_limit
+      base_fee_per_gas
+      reward
+      burnt_fee
+      txn_fees
+    }
   }
 }
 
 query getPaginatedTransactions($transactionsdata: TransactionsPagesInput!) {
   transactions(data: $transactionsdata) {
     hash
-    nonce
+    method
     block_number
     block_timestamp
     from_address
@@ -55,6 +61,7 @@ query getBlockByNumber($data: Float!) {
     number
     timestamp
     transaction_count
+    mine_time
     miner
     difficulty
     total_difficulty
@@ -62,12 +69,18 @@ query getBlockByNumber($data: Float!) {
     gas_used
     gas_limit
     base_fee_per_gas
+    burnt_fee
     extra_data
     reward
     uncle_reward
     txn_fees
     gas_target_percentage
     gas_used_percentage
+    hash
+    parent_hash
+    sha3_uncles
+    nonce
+    state_root
   }
 }
 
@@ -82,15 +95,24 @@ query getTransactionByHash($data: String!) {
     gas_price
     input
     nonce
-    parent_hash
     receipt_contract_address
     receipt_cumulative_gas_used
     receipt_gas_used
     receipt_root
     receipt_status
     to_address
+    method
+    transaction_fees_usd
     transaction_index
     value
+    value_usd
+    transaction_fees
+    baseFee
+    maxFee
+    maxPriorityFee
+    txnBurntFee
+    txnSavingFee
+    input
   }
 }
 
@@ -107,8 +129,74 @@ query getDashboardAnalytics {
     blockNumber
     pricePercentageChange
     chartData
+    transactionHistoryChart
   }
 }
+
+query getDashboardHeader {
+  dashboardAnalytics {
+    networkBaseFee
+    networkpriorityFee
+    pricePercentageChange
+    etherPriceUSD
+  }
+}
+
+query getDashboardBurntFeeSum {
+  dashboardAnalytics {
+    burntFeeSum
+  }
+}
+
+query getTransactionsByBlock($data: TransactionsPagesInput!) {
+  getTransactionsByBlock(data: $data) {
+    hash
+    method
+    block_number
+    block_timestamp
+    from_address
+    to_address
+    value
+    transaction_fees
+    transaction_index
+    block_hash
+  }
+}
+
+query getBlockByHash($data: String!) {
+  getBlockByHash(data: $data) {
+    number
+    timestamp
+    transaction_count
+    mine_time
+    miner
+    difficulty
+    total_difficulty
+    size
+    gas_used
+    gas_limit
+    base_fee_per_gas
+    burnt_fee
+    extra_data
+    reward
+    uncle_reward
+    txn_fees
+    gas_target_percentage
+    gas_used_percentage
+    hash
+    parent_hash
+    sha3_uncles
+    nonce
+    state_root
+  }
+}
+
+query getConsecutiveTransactions($transactionsdata: TransactionsPagesInput!) {
+  transactions(data: $transactionsdata) {
+    hash
+  }
+}
+
 query searchRaw($data: String!) {
   searchRaw(data: $data) {
     block {

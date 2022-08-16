@@ -81,6 +81,8 @@ const colorColumnNames = [
   'to_address',
 ]
 
+const mediumBlogUrl =
+  'https://medium.com/building-the-open-data-stack/tracking-nft-transfers-using-astra-db-and-web3-js-9232402c4417'
 const colorColumnHeaderNames = ['Age', 'Txn Fee']
 
 export {
@@ -90,4 +92,5 @@ export {
   summaryBlocksDataTransactions,
   summaryBlocksDataPrice,
   BlocksTitle,
+  mediumBlogUrl,
 }

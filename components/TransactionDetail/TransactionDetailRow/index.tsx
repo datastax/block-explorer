@@ -1,6 +1,5 @@
 import Chip from '@components/shared/Chip'
 import {
-  CopyAll,
   Diamond,
   Paper,
   Question,
@@ -11,10 +10,12 @@ import {
   Bulb,
   TickInButton,
 } from '@components/shared/Icons'
-import { ListItemText } from '@mui/material'
+import { ListItemText, Tooltip } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
+import router from 'next/router'
 import React from 'react'
 import { TransactionDetailRowProps } from 'types'
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
 import {
   CustomListItem,
   CustomListIcon,
@@ -27,6 +28,8 @@ import {
   TransactionMainBox,
   TransactionInnerBox,
 } from '../styles'
+import CopyClipboard from '../../shared/CopyClipboard/CopyClipboard'
+import { BlockEffect } from './styles'
 
 const TransactionDetailRow = ({
   objectKey,
@@ -68,9 +71,7 @@ const TransactionDetailRow = ({
             <RightSpacing>
               <ListItemText>{data[objectKey]}</ListItemText>
             </RightSpacing>
-            <CustomListIcon>
-              <CopyAll />
-            </CustomListIcon>
+            <CopyClipboard data={data[objectKey]} />
           </Wrapper>
         )
       case 'Timestamp':
@@ -91,23 +92,47 @@ const TransactionDetailRow = ({
       case 'Status':
         return (
           <>
-            {' '}
-            <Chip
-              label="Success"
-              border={`1px solid ${colors.actionPrimary}`}
-              titlecolor={colors.actionPrimary}
-              icon={<TickInButton />}
-            />
+            {data[objectKey] ? (
+              <Chip
+                label="Success"
+                border={`1px solid ${colors.actionPrimary}`}
+                titlecolor={colors.actionPrimary}
+                icon={<TickInButton />}
+              />
+            ) : (
+              <Chip
+                label="Failure"
+                border={`1px solid ${colors.semanticRed}`}
+                titlecolor={colors.semanticRed}
+                icon={
+                  <CancelRoundedIcon
+                    style={{
+                      color: colors.semanticRed,
+                      width: '25px',
+                      paddingRight: '5px',
+                    }}
+                  />
+                }
+              />
+            )}
           </>
         )
       case 'Block':
         return (
           <Wrapper>
             <RightSpacing>
-              <ListItemText primary={data[objectKey]} />
+              <Tooltip title="View Block" placement="top">
+                <ListItemText
+                  onClick={() => {
+                    router.push(`/block/${data[objectKey]}`)
+                  }}
+                >
+                  <BlockEffect>{data[objectKey]}</BlockEffect>
+                </ListItemText>
+              </Tooltip>
             </RightSpacing>
             <Chip
-              label="480 Block Confirmations"
+              label={`${data['BlockConfirmation']} Block Confirmations`}
               bgcolor={colors.neutral700}
               border={`1px solid ${colors.neutral300}`}
               titlecolor={colors.neutral100}
@@ -122,9 +147,7 @@ const TransactionDetailRow = ({
                 <TextStyle>{data[objectKey]}</TextStyle>
               </ListItemText>
             </RightSpacing>
-            <CustomListIcon>
-              <CopyAll />
-            </CustomListIcon>
+            <CopyClipboard data={data[objectKey]} />
           </Wrapper>
         )
       case 'To':
@@ -142,9 +165,7 @@ const TransactionDetailRow = ({
             <CustomListIcon>
               <Tick />
             </CustomListIcon>
-            <CustomListIcon>
-              <CopyAll />
-            </CustomListIcon>
+            <CopyClipboard data={data[objectKey]} />
           </Wrapper>
         )
       case 'Value':
@@ -152,13 +173,13 @@ const TransactionDetailRow = ({
           <Wrapper>
             <RightSpacing>
               <Chip
-                label="0 Ether"
+                label={data[objectKey]}
                 bgcolor={colors.neutral700}
                 border={`1px solid ${colors.neutral300}`}
                 titlecolor={colors.neutral100}
               />
             </RightSpacing>
-            <ListItemText>{data[objectKey]}</ListItemText>
+            <ListItemText>{data['Value_usd']}</ListItemText>
           </Wrapper>
         )
       case 'TransactionAction':
@@ -206,14 +227,18 @@ const TransactionDetailRow = ({
   }
   return (
     <>
-      <CustomListItem>
-        <CustomListIcon>
-          {objectKey === 'TransactionAction' ? <Bulb /> : <Question />}
-        </CustomListIcon>
-        <CustomListItemText primary={getKeyName()} />
-        {getValueUI()}
-      </CustomListItem>
-      <CustomDivider />
+      {getValueUI() && (
+        <>
+          <CustomListItem>
+            <CustomListIcon>
+              {objectKey === 'TransactionAction' ? <Bulb /> : <Question />}
+            </CustomListIcon>
+            <CustomListItemText primary={getKeyName()} />
+            {getValueUI()}
+          </CustomListItem>
+          <CustomDivider />
+        </>
+      )}
     </>
   )
 }
