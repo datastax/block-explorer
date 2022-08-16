@@ -97,6 +97,7 @@ const weiToEther = (
 const copyToClipboard = (value: string) => {
   navigator.clipboard.writeText(value)
 }
+
 const fixed = (number: number | undefined | null | string, fixed: number) => {
   if (!number) return 0
   if (typeof number === 'string') return parseFloat(number).toFixed(fixed)

@@ -1,7 +1,6 @@
 import React from 'react'
 import { CustomPagingButton, ArrowBackStyle, ArrowForwardStyle } from './styles'
 import { ButtonGroup } from '@mui/material'
-
 interface PaginationProps {
   setPreviousConsecutiveState?: () => void
   setNextConsecutiveState?: () => void
