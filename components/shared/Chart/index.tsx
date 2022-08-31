@@ -42,7 +42,7 @@ const Chart = ({
     if (hideZero && value === 0) {
       return ''
     }
-    return `${value / 1000}k`
+    return `${(value / 1000).toFixed(0)}k`
   }
 
   return (
@@ -83,7 +83,6 @@ const Chart = ({
             }}
             tickFormatter={formatterYAxis}
             type="number"
-            dx={-5}
             domain={domain}
           />
           <CartesianGrid
