@@ -80,6 +80,7 @@ export type DashboardAnalyticsOutput = {
   etherPriceBTC?: Maybe<Scalars['String']>;
   etherPriceUSD?: Maybe<Scalars['String']>;
   hashrate?: Maybe<Scalars['String']>;
+  latestBlockGroup?: Maybe<Scalars['Float']>;
   marketCapUSD?: Maybe<Scalars['String']>;
   medGasPrice?: Maybe<Scalars['String']>;
   networkBaseFee?: Maybe<Scalars['String']>;

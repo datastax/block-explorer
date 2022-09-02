@@ -124,7 +124,7 @@ const TransactionsTable = ({
                       border={`1px solid ${colors.neutral500}`}
                       fontWeight="500"
                       lineheight="157%"
-                      istransaction={true}
+                      $istransaction={true}
                     >
                       <HeaderBox
                         sx={{
