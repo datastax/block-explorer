@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'https://krypton-etl-staging.herokuapp.com/graphql'
+schema: 'https://krypton-etl.herokuapp.com/graphql'
 documents: './lib/graphql/*.graphql'
 generates:
   lib/graphql/generated/index.tsx:
