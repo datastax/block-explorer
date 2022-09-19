@@ -12,9 +12,9 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Head>
-        <title>Krypton</title>
+        <title>Astra Ethereum Explorer</title>
         <meta name="description" content="" />
-        <meta property="og:title" content="Krypton" />
+        <meta property="og:title" content="Astra Ethereum Explorer" />
         <meta property="og:description" content="" />
         <meta property="og:image" content="" />
         <meta name="twitter:card" content="" />
