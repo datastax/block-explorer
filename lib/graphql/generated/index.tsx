@@ -80,6 +80,7 @@ export type DashboardAnalyticsOutput = {
   etherPriceBTC?: Maybe<Scalars['String']>;
   etherPriceUSD?: Maybe<Scalars['String']>;
   hashrate?: Maybe<Scalars['String']>;
+  latestBlockGroup?: Maybe<Scalars['Float']>;
   marketCapUSD?: Maybe<Scalars['String']>;
   medGasPrice?: Maybe<Scalars['String']>;
   networkBaseFee?: Maybe<Scalars['String']>;
@@ -98,6 +99,7 @@ export type LogOutput = {
   block_number: Scalars['Float'];
   block_timestamp: Scalars['String'];
   data?: Maybe<Scalars['String']>;
+  decoded_data?: Maybe<Scalars['String']>;
   log_index: Scalars['Float'];
   topic0?: Maybe<Scalars['String']>;
   topic1?: Maybe<Scalars['String']>;
