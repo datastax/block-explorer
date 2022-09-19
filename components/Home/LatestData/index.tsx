@@ -2,7 +2,7 @@ import BlocksList from '@components/Home/BlocksList'
 import TransactionsList from '@components/Home/TransactionsList'
 import { Stack, useMediaQuery } from '@mui/material'
 import {
-  useGetBlocksQuery,
+  useGetBlocksLazyQuery,
   useGetTransactionsLazyQuery,
 } from '@lib/graphql/generated'
 import { useEffect } from 'react'
@@ -10,17 +10,12 @@ import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Container } from './styles'
 
 const LatestData = () => {
-  const {
-    data: latestBlocks,
-    error: blocksError,
-    loading: loadingBlocks,
-  } = useGetBlocksQuery({
-    variables: {
-      data: {
-        pageSize: 6,
-      },
-    },
-  })
+
+
+  const [
+    getBlocks,
+    { data: latestBlocks, error: blocksError },
+  ] = useGetBlocksLazyQuery()
 
   const [
     getTransactions,
@@ -36,6 +31,7 @@ const LatestData = () => {
 
   useEffect(() => {
     getTransactions({
+      pollInterval: 1000,
       variables: {
         transactionsdata: {
           pagesInput: {
@@ -45,17 +41,31 @@ const LatestData = () => {
       },
     })
   }, [getTransactions])
+
+  useEffect(() => {
+    getBlocks({
+      pollInterval: 1000,
+      variables: {
+        data: {
+          pageSize: 6,
+        },
+      },
+    })
+  }, [getBlocks])
+
+
+
   const tabScreen = useMediaQuery('(max-width:1000px)')
   return (
     <Stack spacing={'24px'} direction={tabScreen ? 'column' : 'row'}>
-      {!loadingBlocks ? (
+      {latestBlocks ? (
         <BlocksList title={'Latest Blocks'} blocks={latestBlocks} />
       ) : (
         <Container>
           <CustomSkeleton rows={6} />
         </Container>
       )}
-      {!loadingBlocks && latestTransactions ? (
+      {latestTransactions ? (
         <TransactionsList
           title={'Latest Transactions'}
           transactions={latestTransactions}
