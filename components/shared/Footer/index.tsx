@@ -9,7 +9,7 @@ const Footer = () => {
       <Wrapper>
         <Stack spacing={'24px'} direction={'row'}>
           <StyledTypography color={colors.neutral100}>
-            Krypton © 2022
+            DataStax © 2022
           </StyledTypography>
           <StyledTypography color={colors.neutral100}>
             🚀️ Powered By Astra -{' '}
