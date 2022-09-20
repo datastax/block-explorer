@@ -6,14 +6,15 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useSearchRawLazyQuery } from 'lib/graphql/generated'
 import router from 'next/router'
+import { searchPlaceHolders } from '@constants/stubs'
 const Search = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const [filter, setFilter] = useState<string>('')
+  const [filter, setFilter] = useState<unknown>(0)
   const [search, setSearch] = useState('')
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    setFilter(event.target.value as string)
+    setFilter(event.target.value)
   }
 
   const [getSearchRaw, { data, loading, error }] = useSearchRawLazyQuery()
@@ -56,24 +57,26 @@ const Search = () => {
           <FormControl sx={{ minWidth: '160px' }}>
             <CustomFilter
               value={filter}
-              onChange={(event) => handleChange(event)}
+              onChange={(event: SelectChangeEvent<unknown>) =>
+                handleChange(event)
+              }
               displayEmpty
               variant="outlined"
             >
-              <MenuItem value="">
+              <MenuItem value={0}>
                 <span style={{ paddingRight: '15px' }}>All Filters</span>
               </MenuItem>
-              <MenuItem value={10}>Address</MenuItem>
-              <MenuItem value={20}>Txn Hash</MenuItem>
-              <MenuItem value={30}>Block</MenuItem>
-              <MenuItem value={40}>Token</MenuItem>
-              <MenuItem value={50}>Ens</MenuItem>
+              <MenuItem value={1}>Txn Hash</MenuItem>
+              <MenuItem value={2}>Block</MenuItem>
+              <MenuItem value={3}>Address</MenuItem>
+              <MenuItem value={4}>Token</MenuItem>
+              <MenuItem value={5}>Ens</MenuItem>
             </CustomFilter>
           </FormControl>
         </Box>
       ) : null}
       <SearchInput
-        placeholder="Search by Txn Hash or Block Number"
+        placeholder={searchPlaceHolders[filter as number]}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
