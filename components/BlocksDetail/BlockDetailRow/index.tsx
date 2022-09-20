@@ -142,9 +142,10 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
               <BorderLinearProgress
                 variant="determinate"
                 value={data['GasUsedPercetge']}
+                positive={data['GasTargetPercentage'] > 0}
               />
-              <ProgressDetail>
-                {`${data['GasTargetPercentage'].toFixed(2)}% Gas Target`}
+              <ProgressDetail positive={data['GasTargetPercentage'] > 0}>
+                {`${Math.round(data['GasTargetPercentage'])}% Gas Target`}
               </ProgressDetail>
             </GasLimitStyle>
           </ListItemText>
