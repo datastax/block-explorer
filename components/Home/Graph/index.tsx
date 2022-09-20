@@ -1,5 +1,4 @@
 import Chart from '@components/shared/Chart'
-import { Options } from '@components/shared/Icons'
 import { useEffect, useState } from 'react'
 import { GraphData } from 'types'
 import { StyledTypograph, Container, ToolTip } from './styles'
@@ -38,7 +37,8 @@ const Graph = ({ graph }: GraphProps) => {
         <div>
           Ethereum Transaction History <span>14 days</span>
         </div>
-        <Options />
+        {/* HIDE OPTIONS FOR NOW */}
+        {/* <Options /> */}
       </StyledTypograph>
 
       <Chart
