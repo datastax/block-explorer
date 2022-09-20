@@ -12,6 +12,7 @@ import colors from '@styles/ThemeProvider/colors'
 import LinearProgress, {
   linearProgressClasses,
 } from '@mui/material/LinearProgress'
+import { GasProgressProps } from 'types'
 const DetailsTableContainer = styled(Box)({
   color: 'white',
   maxWidth: '1352px',
@@ -51,9 +52,9 @@ const TransactionStyle = styled('div')({
   marginLeft: '10px',
   marginRight: '10px',
 })
-const ProgressDetail = styled('span')({
-  color: colors.semanticRed,
-})
+const ProgressDetail = styled('span')(({ positive }: GasProgressProps) => ({
+  color: positive ? colors.actionPrimary : colors.semanticRed,
+}))
 const AddressColor = styled('span')({
   color: colors.actionSecondary,
 })
@@ -71,18 +72,20 @@ const CustomList = styled(List)({
   display: 'flex',
   flexDirection: 'column',
 })
-const BorderLinearProgress = styled(LinearProgress)({
-  height: 10,
-  borderRadius: 5,
-  width: '40%',
-  [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor: colors.neutral500,
-  },
-  [`& .${linearProgressClasses.bar}`]: {
+const BorderLinearProgress = styled(LinearProgress)(
+  ({ positive }: GasProgressProps) => ({
+    height: 10,
     borderRadius: 5,
-    backgroundColor: colors.semanticRed,
-  },
-})
+    width: '40%',
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+      backgroundColor: colors.neutral500,
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+      borderRadius: 5,
+      backgroundColor: positive ? colors.actionPrimary : colors.semanticRed,
+    },
+  })
+)
 export {
   DetailsTableContainer,
   CustomTableContainer,
