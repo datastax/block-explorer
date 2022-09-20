@@ -187,6 +187,10 @@ type TransactionBlockDetail = {
 interface CopyClipboardProps {
   data: string
 }
+interface GasProgressProps {
+  positive: boolean
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -206,4 +210,5 @@ export type {
   GraphData,
   TransactionBlockDetail,
   CopyClipboardProps,
+  GasProgressProps,
 }

@@ -81,6 +81,15 @@ const colorColumnNames = [
   'to_address',
 ]
 
+const searchPlaceHolders = [
+  'Search by Txn Hash or Block Number',
+  'Search by Transaction Hash',
+  'Search by Block Number',
+  'Search by Contract Hash',
+  'Search by Token Address',
+  'Search by ENS Domain',
+]
+
 const mediumBlogUrl =
   'https://medium.com/building-the-open-data-stack/tracking-nft-transfers-using-astra-db-and-web3-js-9232402c4417'
 const colorColumnHeaderNames = ['Age', 'Txn Fee']
@@ -93,4 +102,5 @@ export {
   summaryBlocksDataPrice,
   BlocksTitle,
   mediumBlogUrl,
+  searchPlaceHolders,
 }
