@@ -194,7 +194,7 @@ const TransactionDetailRow = ({
                   <Diamond />
                 </RightLogoSpacing>
                 <ListItemText sx={{ color: colors.actionSecondary }}>
-                  {data[objectKey].kuno}
+                  <RightSpacing>{data[objectKey].kuno}</RightSpacing>
                 </ListItemText>
                 <RightSpacing>
                   <ListItemText primary={data[objectKey].trade} />
