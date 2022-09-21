@@ -197,6 +197,11 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
     },
   ]
 
+  useEffect(() => {
+    const locationHash = window.location.hash
+    if (locationHash === '#eventlog') setTabIndex(1)
+  }, [])
+
   return (
     <>
       <Hero
