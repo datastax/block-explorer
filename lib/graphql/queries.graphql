@@ -207,3 +207,14 @@ query searchRaw($data: String!) {
     }
   }
 }
+
+query getLogByTransaction($data: LogsInput!) {
+  getLogByTransaction(data: $data) {
+    name
+    address
+    topics
+    data
+    decoded_data
+    log_index
+  }
+}

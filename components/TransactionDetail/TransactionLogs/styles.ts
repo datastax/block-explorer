@@ -59,8 +59,9 @@ const LogContainer = styled(Box)({
   alignContent: 'center',
   alignItems: 'center',
   width: '100%',
-  marginLeft: '100px',
+  marginLeft: '50px',
   padding: '25px',
+  overflowX: 'scroll',
 })
 
 const CustomBadge = styled('span')(
@@ -115,12 +116,13 @@ const InputBox = styled('div')({
   borderRadius: '5px',
   padding: '10px',
   wordBreak: 'break-word',
-  width: '40vw',
+  width: '100%',
   color: colors.neutral300,
   display: 'flex',
   justifyContent: 'space-between',
   alignContent: 'center',
   alignItems: 'center',
+  overflowX: 'scroll',
 })
 
 const CustomButton = styled(Button)({
@@ -139,6 +141,5 @@ export {
   ColouredText,
   Highlight,
   InputBox,
-  SplitButton,
   CustomButton,
 }

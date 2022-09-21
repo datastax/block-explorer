@@ -12,11 +12,11 @@ import TransactionLogs from '@components/TransactionDetail/TransactionLogs'
 import {
   useGetBlocksLazyQuery,
   useGetConsecutiveTransactionsLazyQuery,
+  useGetLogByTransactionLazyQuery,
   useGetTransactionByHashQuery,
 } from 'lib/graphql/generated'
-import { TransactionDetails } from 'types'
+import { TransactionDetails, TabProps } from 'types'
 import { mapRawDataToTransactionDetails } from 'utils'
-import { mockLogsData, tabsList } from '@constants/stubs'
 
 interface TransactionProps {
   transactionHash: string
@@ -25,7 +25,7 @@ interface TransactionProps {
 const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
   const { transactionHash } = props
 
-  const [tabIndex, setTabIndex] = React.useState(0)
+  const [tabIndex, setTabIndex] = useState(0)
   const [blockConfirmation, setBlockConfirmation] = useState<number>()
   const [transactionDetailData, setTransactionDetailData] =
     useState<TransactionDetails>()
@@ -36,6 +36,28 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
         data: transactionHash as string,
       },
     })
+
+  const [getLogs, { data: transactionLogs, error: transactionLogsError }] =
+    useGetLogByTransactionLazyQuery()
+
+  if (transactionLogsError)
+    console.error('Error While Fetching Transaction Logs', transactionLogsError)
+
+  useEffect(() => {
+    if (transactionDetails?.getTransactionByHash?.block_number)
+      getLogs({
+        variables: {
+          data: {
+            transactionHash: transactionHash as string,
+            blockNumber: transactionDetails?.getTransactionByHash?.block_number,
+          },
+        },
+      })
+  }, [
+    getLogs,
+    transactionDetails?.getTransactionByHash?.block_number,
+    transactionHash,
+  ])
 
   const [
     getLatestBlocks,
@@ -162,6 +184,19 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
     setTabIndex(newValue)
   }
 
+  const tabsList: TabProps[] = [
+    {
+      label: 'Transaction Overview',
+      ariaControls: 'simple-tabpanel-0',
+      id: 'simple-tab-0',
+    },
+    {
+      label: `Logs (${transactionLogs?.getLogByTransaction?.length || 0})`,
+      ariaControls: 'simple-tabpanel-1',
+      id: 'simple-tab-2',
+    },
+  ]
+
   return (
     <>
       <Hero
@@ -188,7 +223,12 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
             >
               Transaction Receipt Event Logs
             </Typography>
-            <TransactionLogs logsData={mockLogsData} />
+            {transactionLogs &&
+              transactionLogs?.getLogByTransaction?.length > 0 && (
+                <TransactionLogs
+                  logsData={transactionLogs.getLogByTransaction}
+                />
+              )}
           </TabPanel>
         </>
       ) : (

@@ -1,5 +1,7 @@
 import colors from '@styles/ThemeProvider/colors'
-import { LogsData } from 'types'
+import { TransactionLogsOutput } from 'lib/graphql/generated'
+import { useState } from 'react'
+import DecodedData from './DecodedData'
 import {
   StyledTypography,
   Container,
@@ -14,19 +16,20 @@ import {
 } from './styles'
 
 interface TransactionLogsProps {
-  logsData: LogsData[]
+  logsData: TransactionLogsOutput[]
 }
 
 const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
+  const [isDecoded, setIsDecoded] = useState(false)
   return (
     <Container>
       {logsData.map(
-        ({ logIndex, address, name, topics, data, decodedData }) => (
+        ({ log_index, address, name, topics, data, decoded_data }) => (
           <Row
             sx={{
               borderBottom: `1px solid ${colors.neutral100}`,
             }}
-            key={address}
+            key={log_index}
           >
             <CustomBadge
               background={colors.actionPrimary}
@@ -36,7 +39,7 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
               padding="40px"
               badgeSize="80px"
             >
-              {logIndex}
+              {log_index}
             </CustomBadge>
             <LogContainer>
               <Row>
@@ -92,9 +95,17 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
                     Data
                   </Highlight>
                   <InputBox>
-                    {data}{' '}
-                    <CustomButton variant="contained" size="small">
-                      Dec
+                    {isDecoded ? (
+                      <DecodedData data={decoded_data as string} />
+                    ) : (
+                      data
+                    )}
+                    <CustomButton
+                      variant="contained"
+                      size="small"
+                      onClick={() => setIsDecoded(!isDecoded)}
+                    >
+                      {isDecoded ? 'Hex' : 'Dec'}
                     </CustomButton>
                   </InputBox>
                 </StyledTypography>
