@@ -1,17 +1,22 @@
+import { useEffect, useCallback, useState } from 'react'
 import type { NextPage, NextPageContext } from 'next'
+import Router from 'next/router'
+import { Typography, Box } from '@mui/material'
+import colors from '@styles/ThemeProvider/colors'
 import Hero from '@components/shared/Hero'
 import TransactionDetail from '@components/TransactionDetail'
-import Router from 'next/router'
+import CustomSkeleton from '@components/shared/CustomSkeleton'
+import Tabs from '@components/shared/Tabs/CustomTabs'
+import TabPanel from '@components/shared/Tabs/CustomTabsPanel'
+import TransactionLogs from '@components/TransactionDetail/TransactionLogs'
 import {
   useGetBlocksLazyQuery,
   useGetConsecutiveTransactionsLazyQuery,
   useGetTransactionByHashQuery,
 } from 'lib/graphql/generated'
-import { useEffect, useCallback, useState } from 'react'
 import { TransactionDetails } from 'types'
 import { mapRawDataToTransactionDetails } from 'utils'
-import { Box } from '@mui/material'
-import CustomSkeleton from '@components/shared/CustomSkeleton'
+import { mockLogsData, tabsList } from '@constants/stubs'
 
 interface TransactionProps {
   transactionHash: string
@@ -19,6 +24,8 @@ interface TransactionProps {
 
 const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
   const { transactionHash } = props
+
+  const [tabIndex, setTabIndex] = React.useState(0)
   const [blockConfirmation, setBlockConfirmation] = useState<number>()
   const [transactionDetailData, setTransactionDetailData] =
     useState<TransactionDetails>()
@@ -151,6 +158,10 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
     transactionDetails,
   ])
 
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue)
+  }
+
   return (
     <>
       <Hero
@@ -161,8 +172,25 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
         setNextConsecutiveState={setNextConsecutiveState}
         setPreviousConsecutiveState={setPreviousConsecutiveState}
       />
+
+      <Tabs tabIndex={tabIndex} tabsList={tabsList} onChange={handleChange} />
+
       {transactionDetailData ? (
-        <TransactionDetail TransactionData={transactionDetailData} />
+        <>
+          <TabPanel value={tabIndex} index={0}>
+            <TransactionDetail TransactionData={transactionDetailData} />
+          </TabPanel>
+          <TabPanel value={tabIndex} index={1}>
+            <Typography
+              fontWeight={500}
+              fontSize="22px"
+              color={colors.neutral100}
+            >
+              Transaction Receipt Event Logs
+            </Typography>
+            <TransactionLogs logsData={mockLogsData} />
+          </TabPanel>
+        </>
       ) : (
         <Box sx={{ width: '100%' }}>
           <CustomSkeleton rows={10} />
