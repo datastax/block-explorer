@@ -109,6 +109,11 @@ export type LogOutput = {
   transaction_index: Scalars['String'];
 };
 
+export type LogsInput = {
+  blockNumber: Scalars['Float'];
+  transactionHash: Scalars['String'];
+};
+
 export type Metadata = {
   __typename?: 'Metadata';
   animation_url?: Maybe<Scalars['String']>;
@@ -160,7 +165,7 @@ export type Query = {
   getBlocks: BlocksPageOutput;
   getContractByAddress: ContractOutput;
   getContractsByBlockNumber: Array<ContractOutput>;
-  getLogByTransactionHash: Array<LogOutput>;
+  getLogByTransaction: Array<TransactionLogsOutput>;
   getNFTByContractAddress: Array<NftOutput>;
   getTokenByContractAddress: TokenOutput;
   getTransactionByHash: TransactionsOutput;
@@ -197,8 +202,8 @@ export type QueryGetContractsByBlockNumberArgs = {
 };
 
 
-export type QueryGetLogByTransactionHashArgs = {
-  data: Scalars['String'];
+export type QueryGetLogByTransactionArgs = {
+  data: LogsInput;
 };
 
 
@@ -263,6 +268,17 @@ export type TokenOutput = {
 export type TransactionByIndexInput = {
   blockHash: Scalars['String'];
   transactionIndex: Scalars['Float'];
+};
+
+export type TransactionLogsOutput = {
+  __typename?: 'TransactionLogsOutput';
+  address: Scalars['String'];
+  data?: Maybe<Scalars['String']>;
+  decoded_data?: Maybe<Scalars['String']>;
+  events?: Maybe<Scalars['String']>;
+  log_index: Scalars['Float'];
+  name?: Maybe<Scalars['String']>;
+  topics: Array<Scalars['String']>;
 };
 
 export type TransactionsOutput = {
@@ -386,6 +402,13 @@ export type SearchRawQueryVariables = Exact<{
 
 
 export type SearchRawQuery = { __typename?: 'Query', searchRaw: { __typename?: 'SearchOutput', block?: { __typename?: 'BlockOutput', number: number } | null, transaction?: { __typename?: 'TransactionsOutput', hash: string } | null } };
+
+export type GetLogByTransactionQueryVariables = Exact<{
+  data: LogsInput;
+}>;
+
+
+export type GetLogByTransactionQuery = { __typename?: 'Query', getLogByTransaction: Array<{ __typename?: 'TransactionLogsOutput', name?: string | null, address: string, topics: Array<string>, data?: string | null, decoded_data?: string | null, log_index: number }> };
 
 
 export const GetBlocksDocument = gql`
@@ -972,3 +995,43 @@ export function useSearchRawLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type SearchRawQueryHookResult = ReturnType<typeof useSearchRawQuery>;
 export type SearchRawLazyQueryHookResult = ReturnType<typeof useSearchRawLazyQuery>;
 export type SearchRawQueryResult = Apollo.QueryResult<SearchRawQuery, SearchRawQueryVariables>;
+export const GetLogByTransactionDocument = gql`
+    query getLogByTransaction($data: LogsInput!) {
+  getLogByTransaction(data: $data) {
+    name
+    address
+    topics
+    data
+    decoded_data
+    log_index
+  }
+}
+    `;
+
+/**
+ * __useGetLogByTransactionQuery__
+ *
+ * To run a query within a React component, call `useGetLogByTransactionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLogByTransactionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLogByTransactionQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useGetLogByTransactionQuery(baseOptions: Apollo.QueryHookOptions<GetLogByTransactionQuery, GetLogByTransactionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLogByTransactionQuery, GetLogByTransactionQueryVariables>(GetLogByTransactionDocument, options);
+      }
+export function useGetLogByTransactionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLogByTransactionQuery, GetLogByTransactionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLogByTransactionQuery, GetLogByTransactionQueryVariables>(GetLogByTransactionDocument, options);
+        }
+export type GetLogByTransactionQueryHookResult = ReturnType<typeof useGetLogByTransactionQuery>;
+export type GetLogByTransactionLazyQueryHookResult = ReturnType<typeof useGetLogByTransactionLazyQuery>;
+export type GetLogByTransactionQueryResult = Apollo.QueryResult<GetLogByTransactionQuery, GetLogByTransactionQueryVariables>;
