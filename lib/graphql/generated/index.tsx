@@ -408,7 +408,7 @@ export type GetLogByTransactionQueryVariables = Exact<{
 }>;
 
 
-export type GetLogByTransactionQuery = { __typename?: 'Query', getLogByTransaction: Array<{ __typename?: 'TransactionLogsOutput', name?: string | null, address: string, topics: Array<string>, data?: string | null, decoded_data?: string | null, log_index: number }> };
+export type GetLogByTransactionQuery = { __typename?: 'Query', getLogByTransaction: Array<{ __typename?: 'TransactionLogsOutput', name?: string | null, address: string, topics: Array<string>, data?: string | null, decoded_data?: string | null, log_index: number, events?: string | null }> };
 
 
 export const GetBlocksDocument = gql`
@@ -1004,6 +1004,7 @@ export const GetLogByTransactionDocument = gql`
     data
     decoded_data
     log_index
+    events
   }
 }
     `;

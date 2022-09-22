@@ -1,6 +1,8 @@
 import DataBox from '@components/shared/DataBox'
+import HTMLParser from '@components/shared/HTMLParser'
 import colors from '@styles/ThemeProvider/colors'
 import { TransactionLogsOutput } from 'lib/graphql/generated'
+import { getEventNameFromRawData } from 'utils'
 import {
   StyledTypography,
   Container,
@@ -20,7 +22,7 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
   return (
     <Container>
       {logsData.map(
-        ({ log_index, address, name, topics, data, decoded_data }) => (
+        ({ log_index, address, name, topics, data, decoded_data, events }) => (
           <Row
             sx={{
               borderBottom: `1px solid ${colors.neutral100}`,
@@ -54,7 +56,9 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
                     Name
                   </Highlight>
                   <ColouredText color={colors.actionSecondary}>
-                    {name}
+                    <HTMLParser
+                      rawString={getEventNameFromRawData(name, events)}
+                    />
                   </ColouredText>
                 </StyledTypography>
               </Row>
