@@ -1,5 +1,6 @@
+import colors from '@styles/ThemeProvider/colors'
 import { BlockOutput, GetTransactionByHashQuery } from 'lib/graphql/generated'
-import { BlockDetails, TransactionDetails } from 'types'
+import { BlockDetails, LogEvent, TransactionDetails } from 'types'
 
 const numberRegex = /^[0-9]+$/
 
@@ -225,6 +226,33 @@ const mapRawDataToTransactionDetails = (
     input: transactionDetails?.getTransactionByHash?.input,
   }
 }
+
+const getEventNameFromRawData = (
+  name: string | undefined | null,
+  events: string | undefined | null
+) => {
+  if (!name) return ''
+  if (!events) return `${name}`
+
+  const parsedEvents = JSON.parse(events)
+  let FullEventName = ``
+  let count = 0
+  parsedEvents.map((event: LogEvent) => {
+    if (event['indexed']) {
+      FullEventName =
+        FullEventName +
+        `&nbsp;index_topic_${count}&nbsp;<ColouredText color={${colors.actionPrimary}}>${event['type']}</ColouredText>&nbsp;<ColouredText color={${colors.semanticRed}}>${event['name']}</ColouredText>,&nbsp;`
+    } else {
+      FullEventName =
+        FullEventName +
+        `&nbsp;<ColouredText color={${colors.actionPrimary}}>${event['type']}</ColouredText>&nbsp;<ColouredText color={${colors.semanticRed}}>${event['name']}</ColouredText>,&nbsp;`
+    }
+    count = count + 1
+  })
+
+  return `${name} ( ${FullEventName} )`
+}
+
 export {
   formatAddress,
   getDifference,
@@ -240,5 +268,6 @@ export {
   isNumber,
   mapRawDataToBlockDetails,
   mapRawDataToTransactionDetails,
+  getEventNameFromRawData,
 }
 export { default as createEmotionCache } from './createEmotionCache'

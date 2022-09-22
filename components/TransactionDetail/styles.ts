@@ -45,7 +45,7 @@ const TextStyle = styled('div')({
 const CustomLink = styled(ListItemText)({
   color: colors.actionPrimary,
   textDecoration: 'underline',
-  maxWidth: '11%',
+  maxWidth: '100%',
   cursor: 'pointer',
 })
 const CustomList = styled(List)({
