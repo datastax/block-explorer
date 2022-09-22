@@ -16,6 +16,7 @@ import {
   BorderLinearProgress,
   GasLimitStyle,
   ProgressDetail,
+  Wrapper,
 } from '../styles'
 
 interface BlockDetailRowProps {
@@ -66,11 +67,13 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
       case 'Size':
       case 'GasLimit':
         return data[objectKey] != null ? (
-          <ListItemText primary={data[objectKey]} />
+          <Wrapper>
+            <ListItemText primary={data[objectKey]} />
+          </Wrapper>
         ) : null
       case 'Timestamp':
         return (
-          <>
+          <Wrapper>
             <CustomListIcon>
               <Watch />
             </CustomListIcon>
@@ -78,11 +81,11 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
               {data[objectKey].time}
               <TimeColor>{data[objectKey].Date}</TimeColor>
             </ListItemText>
-          </>
+          </Wrapper>
         )
       case 'Transactions':
         return (
-          <>
+          <Wrapper>
             {' '}
             <Tooltip
               title="View All Transactions of this block"
@@ -124,30 +127,34 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
             <TransactionStyle>
               <ListItemText primary={'in this block'} />
             </TransactionStyle>
-          </>
+          </Wrapper>
         )
       case 'MinedBy':
         return (
           <ListItemText>
-            <AddressColor> {data[objectKey].address} </AddressColor>
-            {data[objectKey].miner}
-            <TimeColor>{data[objectKey].time}</TimeColor>
+            <Wrapper>
+              <AddressColor> {data[objectKey].address} </AddressColor>
+              {data[objectKey].miner}
+              <TimeColor>{data[objectKey].time}</TimeColor>
+            </Wrapper>
           </ListItemText>
         )
       case 'GasUsed':
         return (
           <ListItemText>
-            <GasLimitStyle>
-              {`${data[objectKey]} (${data['GasUsedPercetge'].toFixed(2)}%)`}
-              <BorderLinearProgress
-                variant="determinate"
-                value={data['GasUsedPercetge']}
-                positive={data['GasTargetPercentage'] > 0}
-              />
-              <ProgressDetail positive={data['GasTargetPercentage'] > 0}>
-                {`${Math.round(data['GasTargetPercentage'])}% Gas Target`}
-              </ProgressDetail>
-            </GasLimitStyle>
+            <Wrapper>
+              <GasLimitStyle>
+                {`${data[objectKey]} (${data['GasUsedPercetge'].toFixed(2)}%)`}
+                <BorderLinearProgress
+                  variant="determinate"
+                  value={data['GasUsedPercetge']}
+                  positive={data['GasTargetPercentage'] > 0}
+                />
+                <ProgressDetail positive={data['GasTargetPercentage'] > 0}>
+                  {`${Math.round(data['GasTargetPercentage'])}% Gas Target`}
+                </ProgressDetail>
+              </GasLimitStyle>
+            </Wrapper>
           </ListItemText>
         )
     }

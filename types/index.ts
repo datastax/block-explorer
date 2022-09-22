@@ -191,6 +191,27 @@ interface GasProgressProps {
   positive: boolean
 }
 
+type TabProps = {
+  label: string
+  id: string
+  ariaControls: string
+}
+
+type LogsData = {
+  address: string
+  name: string
+  topics: string[]
+  data: string
+  decodedData: string
+  logIndex: number
+}
+
+type LogEvent = {
+  indexed: boolean
+  name: string
+  type: string
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -211,4 +232,7 @@ export type {
   TransactionBlockDetail,
   CopyClipboardProps,
   GasProgressProps,
+  TabProps,
+  LogsData,
+  LogEvent,
 }
