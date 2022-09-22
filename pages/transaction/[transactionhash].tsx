@@ -1,17 +1,22 @@
+import { useEffect, useCallback, useState } from 'react'
 import type { NextPage, NextPageContext } from 'next'
+import Router from 'next/router'
+import { Typography, Box } from '@mui/material'
+import colors from '@styles/ThemeProvider/colors'
 import Hero from '@components/shared/Hero'
 import TransactionDetail from '@components/TransactionDetail'
-import Router from 'next/router'
+import CustomSkeleton from '@components/shared/CustomSkeleton'
+import Tabs from '@components/shared/Tabs/CustomTabs'
+import TabPanel from '@components/shared/Tabs/CustomTabsPanel'
+import TransactionLogs from '@components/TransactionDetail/TransactionLogs'
 import {
   useGetBlocksLazyQuery,
   useGetConsecutiveTransactionsLazyQuery,
+  useGetLogByTransactionLazyQuery,
   useGetTransactionByHashQuery,
 } from 'lib/graphql/generated'
-import { useEffect, useCallback, useState } from 'react'
-import { TransactionDetails } from 'types'
+import { TransactionDetails, TabProps } from 'types'
 import { mapRawDataToTransactionDetails } from 'utils'
-import { Box } from '@mui/material'
-import CustomSkeleton from '@components/shared/CustomSkeleton'
 
 interface TransactionProps {
   transactionHash: string
@@ -19,6 +24,8 @@ interface TransactionProps {
 
 const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
   const { transactionHash } = props
+
+  const [tabIndex, setTabIndex] = useState(0)
   const [blockConfirmation, setBlockConfirmation] = useState<number>()
   const [transactionDetailData, setTransactionDetailData] =
     useState<TransactionDetails>()
@@ -29,6 +36,28 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
         data: transactionHash as string,
       },
     })
+
+  const [getLogs, { data: transactionLogs, error: transactionLogsError }] =
+    useGetLogByTransactionLazyQuery()
+
+  if (transactionLogsError)
+    console.error('Error While Fetching Transaction Logs', transactionLogsError)
+
+  useEffect(() => {
+    if (transactionDetails?.getTransactionByHash?.block_number)
+      getLogs({
+        variables: {
+          data: {
+            transactionHash: transactionHash as string,
+            blockNumber: transactionDetails?.getTransactionByHash?.block_number,
+          },
+        },
+      })
+  }, [
+    getLogs,
+    transactionDetails?.getTransactionByHash?.block_number,
+    transactionHash,
+  ])
 
   const [
     getLatestBlocks,
@@ -151,6 +180,28 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
     transactionDetails,
   ])
 
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue)
+  }
+
+  const tabsList: TabProps[] = [
+    {
+      label: 'Transaction Overview',
+      ariaControls: 'simple-tabpanel-0',
+      id: 'simple-tab-0',
+    },
+    {
+      label: `Logs (${transactionLogs?.getLogByTransaction?.length || 0})`,
+      ariaControls: 'simple-tabpanel-1',
+      id: 'simple-tab-2',
+    },
+  ]
+
+  useEffect(() => {
+    const locationHash = window.location.hash
+    if (locationHash === '#eventlog') setTabIndex(1)
+  }, [])
+
   return (
     <>
       <Hero
@@ -161,8 +212,30 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
         setNextConsecutiveState={setNextConsecutiveState}
         setPreviousConsecutiveState={setPreviousConsecutiveState}
       />
+
+      <Tabs tabIndex={tabIndex} tabsList={tabsList} onChange={handleChange} />
+
       {transactionDetailData ? (
-        <TransactionDetail TransactionData={transactionDetailData} />
+        <>
+          <TabPanel value={tabIndex} index={0}>
+            <TransactionDetail TransactionData={transactionDetailData} />
+          </TabPanel>
+          <TabPanel value={tabIndex} index={1}>
+            <Typography
+              fontWeight={500}
+              fontSize="22px"
+              color={colors.neutral100}
+            >
+              Transaction Receipt Event Logs
+            </Typography>
+            {transactionLogs &&
+              transactionLogs?.getLogByTransaction?.length > 0 && (
+                <TransactionLogs
+                  logsData={transactionLogs.getLogByTransaction}
+                />
+              )}
+          </TabPanel>
+        </>
       ) : (
         <Box sx={{ width: '100%' }}>
           <CustomSkeleton rows={10} />

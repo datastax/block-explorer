@@ -13,6 +13,7 @@ import LinearProgress, {
   linearProgressClasses,
 } from '@mui/material/LinearProgress'
 import { GasProgressProps } from 'types'
+import theme from '@styles/ThemeProvider/theme'
 const DetailsTableContainer = styled(Box)({
   color: 'white',
   maxWidth: '1352px',
@@ -35,8 +36,15 @@ const CustomDivider = styled(Divider)({
   width: '100%',
 })
 const CustomListItemText = styled(ListItemText)({
-  maxWidth: '158px',
+  maxWidth: '15%',
   marginRight: '150px',
+  [theme.breakpoints.down('xmdB')]: {
+    marginRight: '75px',
+  },
+  [theme.breakpoints.down('md')]: {
+    maxWidth: '100px',
+    marginRight: '15px',
+  },
 })
 const CustomListIcon = styled(ListItemIcon)({
   minWidth: 'fit-content',
@@ -46,7 +54,13 @@ const GasLimitStyle = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  maxWidth: '55%',
+  width: '55%',
+  [theme.breakpoints.down('xmdB')]: {
+    width: '65%',
+  },
+  [theme.breakpoints.down('mdA')]: {
+    width: '85%',
+  },
 })
 const TransactionStyle = styled('div')({
   marginLeft: '10px',
@@ -65,7 +79,7 @@ const TimeColor = styled('span')({
 const CustomLink = styled(ListItemText)({
   color: colors.actionPrimary,
   textDecoration: 'underline',
-  maxWidth: '11%',
+  maxWidth: '100%',
   cursor: 'pointer',
 })
 const CustomList = styled(List)({
@@ -86,6 +100,24 @@ const BorderLinearProgress = styled(LinearProgress)(
     },
   })
 )
+
+const Wrapper = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignContent: 'center',
+  alignItems: 'center',
+  [theme.breakpoints.down('mdB')]: {
+    flexWrap: 'wrap',
+    maxWidth: '70%',
+  },
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+}))
+
 export {
   DetailsTableContainer,
   CustomTableContainer,
@@ -101,4 +133,5 @@ export {
   TimeColor,
   CustomLink,
   CustomList,
+  Wrapper,
 }
