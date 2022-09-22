@@ -216,5 +216,6 @@ query getLogByTransaction($data: LogsInput!) {
     data
     decoded_data
     log_index
+    events
   }
 }

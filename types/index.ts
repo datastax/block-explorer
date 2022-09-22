@@ -206,6 +206,12 @@ type LogsData = {
   logIndex: number
 }
 
+type LogEvent = {
+  indexed: boolean
+  name: string
+  type: string
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -228,4 +234,5 @@ export type {
   GasProgressProps,
   TabProps,
   LogsData,
+  LogEvent,
 }
