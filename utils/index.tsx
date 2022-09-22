@@ -245,7 +245,7 @@ const getEventNameFromRawData = (
     } else {
       FullEventName =
         FullEventName +
-        `&nbsp;<ColouredText color={${colors.semanticRed}}>${event['type']}</ColouredText>&nbsp;<ColouredText color={${colors.semanticRed}}>${event['name']}</ColouredText>,&nbsp;`
+        `&nbsp;<ColouredText color={${colors.actionPrimary}}>${event['type']}</ColouredText>&nbsp;<ColouredText color={${colors.semanticRed}}>${event['name']}</ColouredText>,&nbsp;`
     }
     count = count + 1
   })
