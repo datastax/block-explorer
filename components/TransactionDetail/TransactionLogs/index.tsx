@@ -1,7 +1,6 @@
+import DataBox from '@components/shared/DataBox'
 import colors from '@styles/ThemeProvider/colors'
 import { TransactionLogsOutput } from 'lib/graphql/generated'
-import { useState } from 'react'
-import DecodedData from './DecodedData'
 import {
   StyledTypography,
   Container,
@@ -11,8 +10,6 @@ import {
   List,
   ColouredText,
   Highlight,
-  InputBox,
-  CustomButton,
 } from './styles'
 
 interface TransactionLogsProps {
@@ -20,7 +17,6 @@ interface TransactionLogsProps {
 }
 
 const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
-  const [isDecoded, setIsDecoded] = useState(false)
   return (
     <Container>
       {logsData.map(
@@ -69,7 +65,7 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
                   </Highlight>
                   <List>
                     {topics?.map((topic, index) => (
-                      <StyledTypography key={topic}>
+                      <StyledTypography key={index}>
                         <Row>
                           <CustomBadge
                             background={colors.neutral300}
@@ -94,20 +90,7 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
                   <Highlight color={colors.neutral300} size="16px" weight={500}>
                     Data
                   </Highlight>
-                  <InputBox>
-                    {isDecoded ? (
-                      <DecodedData data={decoded_data as string} />
-                    ) : (
-                      data
-                    )}
-                    <CustomButton
-                      variant="contained"
-                      size="small"
-                      onClick={() => setIsDecoded(!isDecoded)}
-                    >
-                      {isDecoded ? 'Hex' : 'Dec'}
-                    </CustomButton>
-                  </InputBox>
+                  <DataBox decodedData={decoded_data} rawData={data} />
                 </StyledTypography>
               </Row>
             </LogContainer>

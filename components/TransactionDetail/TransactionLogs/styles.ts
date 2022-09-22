@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { Typography, Box, Button } from '@mui/material'
+import { Typography, Box } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 
 interface CustomBadgeProps {
@@ -111,26 +111,6 @@ const Highlight = styled('span')(({ color, size, weight }: HighlightProps) => ({
   width: '100px',
 }))
 
-const InputBox = styled('div')({
-  border: `1px solid ${colors.neutral500}`,
-  borderRadius: '5px',
-  padding: '10px',
-  wordBreak: 'break-word',
-  width: '100%',
-  color: colors.neutral300,
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignContent: 'center',
-  alignItems: 'center',
-  overflowX: 'scroll',
-})
-
-const CustomButton = styled(Button)({
-  display: 'flex',
-  alignSelf: 'flex-start',
-  marginLeft: '10px',
-})
-
 export {
   StyledTypography,
   Container,
@@ -140,6 +120,4 @@ export {
   List,
   ColouredText,
   Highlight,
-  InputBox,
-  CustomButton,
 }
