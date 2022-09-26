@@ -142,7 +142,9 @@ const mapRawDataToBlockDetails = (
     Transactions: `${data?.transaction_count}`,
     MinedBy: {
       address: data?.miner || '',
-      miner: `(Miner: ${formatAddress(data?.miner)})`,
+      miner: `(Miner: ${
+        data?.miners_name ? data?.miners_name : formatAddress(data?.miner)
+      })`,
       time: `in ${data?.mine_time} secs`,
     },
     BlockReward: `${data?.reward} Ether (${calculateStaticBlockReward(
