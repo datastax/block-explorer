@@ -81,6 +81,7 @@ query getBlockByNumber($data: Float!) {
     sha3_uncles
     nonce
     state_root
+    miners_name
   }
 }
 
@@ -188,6 +189,7 @@ query getBlockByHash($data: String!) {
     sha3_uncles
     nonce
     state_root
+    miners_name
   }
 }
 

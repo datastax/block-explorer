@@ -10,12 +10,8 @@ import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Container } from './styles'
 
 const LatestData = () => {
-
-
-  const [
-    getBlocks,
-    { data: latestBlocks, error: blocksError },
-  ] = useGetBlocksLazyQuery()
+  const [getBlocks, { data: latestBlocks, error: blocksError }] =
+    useGetBlocksLazyQuery()
 
   const [
     getTransactions,
@@ -31,7 +27,7 @@ const LatestData = () => {
 
   useEffect(() => {
     getTransactions({
-      pollInterval: 1000,
+      pollInterval: 12000,
       variables: {
         transactionsdata: {
           pagesInput: {
@@ -44,7 +40,7 @@ const LatestData = () => {
 
   useEffect(() => {
     getBlocks({
-      pollInterval: 1000,
+      pollInterval: 12000,
       variables: {
         data: {
           pageSize: 6,
@@ -52,8 +48,6 @@ const LatestData = () => {
       },
     })
   }, [getBlocks])
-
-
 
   const tabScreen = useMediaQuery('(max-width:1000px)')
   return (
