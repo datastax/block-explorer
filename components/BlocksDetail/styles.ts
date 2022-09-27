@@ -30,20 +30,21 @@ const CustomTableContainer = styled(TableContainer)({
 const CustomListItem = styled(ListItem)({
   paddingBottom: '15px',
   paddingTop: '15px',
+  [theme.breakpoints.down('smA')]: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+  },
 })
 const CustomDivider = styled(Divider)({
   background: colors.neutral500,
   width: '100%',
 })
 const CustomListItemText = styled(ListItemText)({
-  maxWidth: '15%',
-  marginRight: '150px',
-  [theme.breakpoints.down('xmdB')]: {
-    marginRight: '75px',
-  },
-  [theme.breakpoints.down('md')]: {
-    maxWidth: '100px',
-    marginRight: '15px',
+  width: '15%',
+  marginRight: '10%',
+  [theme.breakpoints.down('smA')]: {
+    width: '100%',
   },
 })
 const CustomListIcon = styled(ListItemIcon)({
@@ -58,14 +59,31 @@ const GasLimitStyle = styled('div')({
   [theme.breakpoints.down('xmdB')]: {
     width: '65%',
   },
+  [theme.breakpoints.down('xmdA')]: {
+    width: '75%',
+  },
   [theme.breakpoints.down('mdA')]: {
     width: '85%',
+  },
+  [theme.breakpoints.down('xmd')]: {
+    width: '100%',
   },
 })
 const TransactionStyle = styled('div')({
   marginLeft: '10px',
   marginRight: '10px',
 })
+
+const SideBox = styled('div')({
+  width: '18%',
+  display: 'flex',
+  marginRight: '10%',
+  alignItems: 'center',
+  [theme.breakpoints.down('smA')]: {
+    width: '100%',
+  },
+})
+
 const ProgressDetail = styled('span')(({ positive }: GasProgressProps) => ({
   color: positive ? colors.actionPrimary : colors.semanticRed,
 }))
@@ -106,15 +124,12 @@ const Wrapper = styled(Box)(() => ({
   justifyContent: 'flex-start',
   alignContent: 'center',
   alignItems: 'center',
-  [theme.breakpoints.down('mdB')]: {
-    flexWrap: 'wrap',
-    maxWidth: '70%',
-  },
-  [theme.breakpoints.down('md')]: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    alignItems: 'flex-start',
+  width: '75%',
+  flexWrap: 'wrap',
+
+  wordBreak: 'break-word',
+  [theme.breakpoints.down('smA')]: {
+    width: '100%',
   },
 }))
 
@@ -134,4 +149,5 @@ export {
   CustomLink,
   CustomList,
   Wrapper,
+  SideBox,
 }
