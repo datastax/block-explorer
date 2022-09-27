@@ -7,6 +7,8 @@ import {
   CustomListIcon,
   CustomLink,
   CustomList,
+  Wrapper,
+  SideBox,
 } from '@components/BlocksDetail/styles'
 import colors from '@styles/ThemeProvider/colors'
 import { ListItemText, Collapse, ListItemButton, Tooltip } from '@mui/material'
@@ -41,59 +43,83 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
           </CustomList>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <CustomListItem>
-              <CustomListIcon>
-                <Question />
-              </CustomListIcon>
-              <CustomListItemText primary="Hash:" />
-              <ListItemText primary={BlocksDetailsData?.Hash} />
+              <SideBox>
+                <CustomListIcon>
+                  <Question />
+                </CustomListIcon>
+                <CustomListItemText primary="Hash:" />
+              </SideBox>
+              <Wrapper>
+                <ListItemText primary={BlocksDetailsData?.Hash} />
+              </Wrapper>
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>
-              <CustomListIcon>
-                <Question />
-              </CustomListIcon>
-              <CustomListItemText primary="Parent Hash:" />
-              <Tooltip placement="top-start" title="View Parent Block">
-                <ListItemText
-                  primary={BlocksDetailsData?.ParentHash}
-                  sx={{ color: colors.actionSecondary, cursor: 'pointer' }}
-                  onClick={() => {
-                    router.push(`/block/${BlocksDetailsData?.ParentHash}`)
-                  }}
-                />
-              </Tooltip>
+              <SideBox>
+                <CustomListIcon>
+                  <Question />
+                </CustomListIcon>
+                <CustomListItemText primary="Parent Hash:" />
+              </SideBox>
+              <Wrapper>
+                <Tooltip placement="top-start" title="View Parent Block">
+                  <ListItemText
+                    primary={BlocksDetailsData?.ParentHash}
+                    sx={{ color: colors.actionSecondary, cursor: 'pointer' }}
+                    onClick={() => {
+                      router.push(`/block/${BlocksDetailsData?.ParentHash}`)
+                    }}
+                  />
+                </Tooltip>
+              </Wrapper>
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>
-              <CustomListIcon>
-                <Question />
-              </CustomListIcon>
-              <CustomListItemText primary="Nonce:" />
-              <ListItemText primary={BlocksDetailsData?.Nonce} />
+              <SideBox>
+                <CustomListIcon>
+                  <Question />
+                </CustomListIcon>
+                <CustomListItemText primary="Nonce:" />
+              </SideBox>
+              <Wrapper>
+                <ListItemText primary={BlocksDetailsData?.Nonce} />
+              </Wrapper>
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>
-              <CustomListIcon>
-                <Question />
-              </CustomListIcon>
-              <CustomListItemText primary="ExtraData:" />
-              <ListItemText primary={BlocksDetailsData?.ExtraData} />
+              <SideBox>
+                <CustomListIcon>
+                  <Question />
+                </CustomListIcon>
+                <CustomListItemText primary="ExtraData:" />
+              </SideBox>
+              <Wrapper>
+                <ListItemText primary={BlocksDetailsData?.ExtraData} />
+              </Wrapper>
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>
-              <CustomListIcon>
-                <Question />
-              </CustomListIcon>
-              <CustomListItemText primary="StateRoot:" />
-              <ListItemText primary={BlocksDetailsData?.StateRoot} />
+              <SideBox>
+                <CustomListIcon>
+                  <Question />
+                </CustomListIcon>
+                <CustomListItemText primary="StateRoot:" />
+              </SideBox>
+              <Wrapper>
+                <ListItemText primary={BlocksDetailsData?.StateRoot} />
+              </Wrapper>
             </CustomListItem>
             <CustomDivider />
             <CustomListItem>
-              <CustomListIcon>
-                <Question />
-              </CustomListIcon>
-              <CustomListItemText primary="Sha3Uncles:" />
-              <ListItemText primary={BlocksDetailsData?.Sha3Uncles} />
+              <SideBox>
+                <CustomListIcon>
+                  <Question />
+                </CustomListIcon>
+                <CustomListItemText primary="Sha3Uncles:" />
+              </SideBox>
+              <Wrapper>
+                <ListItemText primary={BlocksDetailsData?.Sha3Uncles} />
+              </Wrapper>
             </CustomListItem>
             <CustomDivider />
           </Collapse>
