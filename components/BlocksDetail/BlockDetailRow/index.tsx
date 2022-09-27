@@ -17,6 +17,7 @@ import {
   GasLimitStyle,
   ProgressDetail,
   Wrapper,
+  SideBox,
 } from '../styles'
 
 interface BlockDetailRowProps {
@@ -131,31 +132,28 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         )
       case 'MinedBy':
         return (
-          <ListItemText>
-            <Wrapper>
-              <AddressColor> {data[objectKey].address} </AddressColor>
-              {data[objectKey].miner}
-              <TimeColor>{data[objectKey].time}</TimeColor>
-            </Wrapper>
-          </ListItemText>
+          <Wrapper>
+            <AddressColor> {data[objectKey].address} </AddressColor>
+            &nbsp;
+            {data[objectKey].miner}
+            <TimeColor>{data[objectKey].time}</TimeColor>
+          </Wrapper>
         )
       case 'GasUsed':
         return (
-          <ListItemText>
-            <Wrapper>
-              <GasLimitStyle>
-                {`${data[objectKey]} (${data['GasUsedPercetge'].toFixed(2)}%)`}
-                <BorderLinearProgress
-                  variant="determinate"
-                  value={data['GasUsedPercetge']}
-                  positive={data['GasTargetPercentage'] > 0}
-                />
-                <ProgressDetail positive={data['GasTargetPercentage'] > 0}>
-                  {`${Math.round(data['GasTargetPercentage'])}% Gas Target`}
-                </ProgressDetail>
-              </GasLimitStyle>
-            </Wrapper>
-          </ListItemText>
+          <Wrapper>
+            <GasLimitStyle>
+              {`${data[objectKey]} (${data['GasUsedPercetge'].toFixed(2)}%)`}
+              <BorderLinearProgress
+                variant="determinate"
+                value={data['GasUsedPercetge']}
+                positive={data['GasTargetPercentage'] > 0}
+              />
+              <ProgressDetail positive={data['GasTargetPercentage'] > 0}>
+                {`${Math.round(data['GasTargetPercentage'])}% Gas Target`}
+              </ProgressDetail>
+            </GasLimitStyle>
+          </Wrapper>
         )
     }
   }
@@ -164,10 +162,12 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
       {getValueUI() && (
         <>
           <CustomListItem>
-            <CustomListIcon>
-              <Question />
-            </CustomListIcon>
-            <CustomListItemText primary={getKeyName()} />
+            <SideBox>
+              <CustomListIcon>
+                <Question />
+              </CustomListIcon>
+              <CustomListItemText primary={getKeyName()} />
+            </SideBox>
             {getValueUI()}
           </CustomListItem>
           <CustomDivider />
