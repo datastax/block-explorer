@@ -30,6 +30,7 @@ import {
 } from '../styles'
 import CopyClipboard from '../../shared/CopyClipboard/CopyClipboard'
 import { BlockEffect } from './styles'
+import { SideBox } from '@components/BlocksDetail/styles'
 
 const TransactionDetailRow = ({
   objectKey,
@@ -64,7 +65,11 @@ const TransactionDetailRow = ({
     switch (objectKey) {
       case 'TransactionFee':
       case 'GasPrice':
-        return <ListItemText primary={data[objectKey]} />
+        return (
+          <Wrapper>
+            <ListItemText primary={data[objectKey]} />
+          </Wrapper>
+        )
       case 'TransactionHash':
         return (
           <Wrapper>
@@ -91,7 +96,7 @@ const TransactionDetailRow = ({
         )
       case 'Status':
         return (
-          <>
+          <Wrapper>
             {data[objectKey] ? (
               <Chip
                 label="Success"
@@ -115,7 +120,7 @@ const TransactionDetailRow = ({
                 }
               />
             )}
-          </>
+          </Wrapper>
         )
       case 'Block':
         return (
@@ -184,7 +189,7 @@ const TransactionDetailRow = ({
         )
       case 'TransactionAction':
         return (
-          <>
+          <Wrapper>
             <TransactionMainBox>
               <TransactionInnerBox>
                 <RightSpacing>
@@ -221,7 +226,7 @@ const TransactionDetailRow = ({
                 </ListItemText>
               </TransactionInnerBox>
             </TransactionMainBox>
-          </>
+          </Wrapper>
         )
     }
   }
@@ -230,10 +235,12 @@ const TransactionDetailRow = ({
       {getValueUI() && (
         <>
           <CustomListItem>
-            <CustomListIcon>
-              {objectKey === 'TransactionAction' ? <Bulb /> : <Question />}
-            </CustomListIcon>
-            <CustomListItemText primary={getKeyName()} />
+            <SideBox>
+              <CustomListIcon>
+                {objectKey === 'TransactionAction' ? <Bulb /> : <Question />}
+              </CustomListIcon>
+              <CustomListItemText primary={getKeyName()} />
+            </SideBox>
             {getValueUI()}
           </CustomListItem>
           <CustomDivider />

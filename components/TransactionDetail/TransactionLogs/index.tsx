@@ -1,5 +1,6 @@
 import DataBox from '@components/shared/DataBox'
 import HTMLParser from '@components/shared/HTMLParser'
+import { useMediaQuery } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import { TransactionLogsOutput } from 'lib/graphql/generated'
 import { getEventNameFromRawData } from 'utils'
@@ -19,6 +20,7 @@ interface TransactionLogsProps {
 }
 
 const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
+  const smallScreen = useMediaQuery('(max-width:680px)')
   return (
     <Container>
       {logsData.map(
@@ -26,6 +28,8 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
           <Row
             sx={{
               borderBottom: `1px solid ${colors.neutral100}`,
+              display: 'flex',
+              flexDirection: smallScreen ? 'column' : 'row',
             }}
             key={log_index}
           >
