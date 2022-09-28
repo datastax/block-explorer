@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/system'
 import colors from '@styles/ThemeProvider/colors'
+import theme from '@styles/ThemeProvider/theme'
 const DetailsTableContainer = styled(Box)({
   color: 'white',
   maxWidth: '1352px',
@@ -25,14 +26,22 @@ const CustomTableContainer = styled(TableContainer)({
 const CustomListItem = styled(ListItem)({
   paddingBottom: '15px',
   paddingTop: '15px',
+  [theme.breakpoints.down('smA')]: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'start',
+  },
 })
 const CustomDivider = styled(Divider)({
   background: colors.neutral500,
   width: '100%',
 })
 const CustomListItemText = styled(ListItemText)({
-  maxWidth: '15%',
-  marginRight: '150px',
+  width: '15%',
+  marginRight: '10%',
+  [theme.breakpoints.down('smA')]: {
+    width: '100%',
+  },
 })
 const CustomListIcon = styled(ListItemIcon)({
   minWidth: 'fit-content',
@@ -54,8 +63,16 @@ const CustomList = styled(List)({
 })
 const Wrapper = styled('div')({
   display: 'flex',
-  flexDirection: 'row',
+  justifyContent: 'flex-start',
+  alignContent: 'center',
   alignItems: 'center',
+  width: '75%',
+  flexWrap: 'wrap',
+
+  wordBreak: 'break-word',
+  [theme.breakpoints.down('smA')]: {
+    width: '100%',
+  },
 })
 const RightSpacing = styled('div')({
   marginRight: '10px',
@@ -66,11 +83,20 @@ const RightLogoSpacing = styled('div')({
 const TransactionMainBox = styled('div')({
   display: 'flex',
   flexDirection: 'column',
+  minWidth: '460px',
+  [theme.breakpoints.down(820)]: {
+    minWidth: '100%',
+  },
 })
 const TransactionInnerBox = styled('div')({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
+  width: '100%',
+  [theme.breakpoints.down(660)]: {
+    flexDirection: 'column',
+    width: '190px',
+  },
 })
 const LoggedIn = styled('span')({
   color: colors.actionSecondary,
@@ -84,6 +110,17 @@ const InputBox = styled('div')({
   width: '40vw',
   color: colors.neutral300,
 })
+
+const SideBox = styled('div')({
+  width: '18%',
+  display: 'flex',
+  marginRight: '10%',
+  alignItems: 'center',
+  [theme.breakpoints.down('smA')]: {
+    width: '100%',
+  },
+})
+
 export {
   CustomListItem,
   CustomListIcon,
@@ -101,4 +138,5 @@ export {
   InputBox,
   TransactionMainBox as TransactionMainBox,
   TransactionInnerBox as TransactionInnerBox,
+  SideBox,
 }
