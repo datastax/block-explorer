@@ -109,6 +109,7 @@ const Highlight = styled('span')(({ color, size, weight }: HighlightProps) => ({
   fontWeight: weight,
   marginRight: '20px',
   width: '100px',
+  minWidth: '100px',
 }))
 
 export {
