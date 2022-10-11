@@ -27,7 +27,6 @@ const LatestData = () => {
 
   useEffect(() => {
     getTransactions({
-      pollInterval: 12000,
       variables: {
         transactionsdata: {
           pagesInput: {
@@ -40,7 +39,6 @@ const LatestData = () => {
 
   useEffect(() => {
     getBlocks({
-      pollInterval: 12000,
       variables: {
         data: {
           pageSize: 6,
