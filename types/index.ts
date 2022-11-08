@@ -212,6 +212,10 @@ type LogEvent = {
   type: string
 }
 
+type TokenGenerationPayload = {
+  tokenExpiry: number
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -235,4 +239,5 @@ export type {
   TabProps,
   LogsData,
   LogEvent,
+  TokenGenerationPayload,
 }
