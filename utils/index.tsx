@@ -270,6 +270,11 @@ const getEventNameFromRawData = (
   return `${name} ( ${FullEventName} )`
 }
 
+const timeLapseInSeconds = (timeInMinutes: number) => {
+  const timeInSeconds = timeInMinutes * 60
+  return Math.round(new Date().getTime() / 1000 + timeInSeconds)
+}
+
 export {
   formatAddress,
   getDifference,
@@ -286,5 +291,7 @@ export {
   mapRawDataToBlockDetails,
   mapRawDataToTransactionDetails,
   getEventNameFromRawData,
+  timeLapseInSeconds,
 }
 export { default as createEmotionCache } from './createEmotionCache'
+export * from './jwt'

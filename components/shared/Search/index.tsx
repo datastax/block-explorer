@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useSearchRawLazyQuery } from 'lib/graphql/generated'
 import router from 'next/router'
-import { searchPlaceHolders } from '@constants/stubs'
+import { searchPlaceHolders } from '@constants'
 const Search = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))

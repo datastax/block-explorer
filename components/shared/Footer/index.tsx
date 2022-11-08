@@ -1,4 +1,4 @@
-import { mediumBlogUrl } from '@constants/stubs'
+import { mediumBlogUrl } from '@constants'
 import { Stack } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import { Wrapper, Container, StyledTypography } from './styles'
