@@ -10,7 +10,7 @@ import {
   LogoBox,
   CustomStack,
 } from './styles'
-import { ROUTES } from '@constants/routes'
+import { ROUTES } from '@constants'
 import { Route } from '@types'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
