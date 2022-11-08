@@ -1,5 +1,7 @@
 overwrite: true
-schema: 'https://krypton-etl.herokuapp.com/graphql'
+schema: 'https://block.prod.cloud.datastax.com/graphql'
+  headers:
+    Authorization: "G!u1[{'-.Hbrr(0&SOs,n~0iKhI64aC_)y;u-V+Yq0cRcr0xW"
 documents: './lib/graphql/*.graphql'
 generates:
   lib/graphql/generated/index.tsx:
