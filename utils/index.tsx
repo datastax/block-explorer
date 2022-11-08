@@ -234,6 +234,21 @@ const getEventNameFromRawData = (
   events: string | undefined | null
 ) => {
   if (!name) return ''
+
+  const uniformString = name?.replace('(', ',').replace(')', '')
+  const params = uniformString?.split(',')
+  if (params?.length > 1) {
+    let NameWithParams = `<ColouredText color={${colors.actionSecondary}}>${params[0]}</ColouredText>(`
+    params.map((param: string, index) => {
+      if (index !== 0)
+        NameWithParams =
+          NameWithParams +
+          `<ColouredText color={${colors.actionPrimary}}>${param}</ColouredText>,&nbsp;`
+    })
+    NameWithParams += `<ColouredText color={${colors.actionSecondary}}>)</ColouredText>`
+    return NameWithParams
+  }
+
   if (!events) return `${name}`
 
   const parsedEvents = JSON.parse(events)
