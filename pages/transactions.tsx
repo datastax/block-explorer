@@ -1,6 +1,6 @@
 import Hero from '@components/shared/Hero'
 import TransactionsTable from '@components/Transactions/Table'
-import { transactionTitles } from '@constants/stubs'
+import { transactionTitles } from '@constants'
 import {
   TransactionsOutput,
   useGetPaginatedTransactionsLazyQuery,
