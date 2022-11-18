@@ -252,7 +252,7 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
                 />
               )}
           </TabPanel>
-          {internalTransactions.length !== 0 && (
+          {internalTransactions && internalTransactions.length > 0 && (
             <TabPanel value={tabIndex} index={2}>
               <InternalTxns data={internalTransactions} />
             </TabPanel>
