@@ -1,10 +1,11 @@
-import { Stack } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import React from 'react'
 import {
   BlockStyle,
   FontStyling,
 } from '@components/shared/Pagination/UpperPagination/styles'
 import PaginationButton from '../../PaginationButton'
+import colors from '@styles/ThemeProvider/colors'
 
 interface UpperPaginationProps {
   transaction: boolean
@@ -16,6 +17,8 @@ interface UpperPaginationProps {
   endingBlock: number
   setNextState: () => void
   setPreviousState: () => void
+  block?: number
+  intTxnPageSize?: number
 }
 
 const UpperPagination = ({
@@ -28,6 +31,8 @@ const UpperPagination = ({
   endingBlock,
   setNextState,
   setPreviousState,
+  block,
+  intTxnPageSize,
 }: UpperPaginationProps) => {
   return (
     <FontStyling>
@@ -46,7 +51,24 @@ const UpperPagination = ({
             </>
           ) : (
             <>
-              Block #{startingBlock} to #{endingBlock}
+              {block ? (
+                <Typography
+                  fontWeight={500}
+                  fontSize="22px"
+                  color={colors.neutral100}
+                >
+                  Block{' '}
+                  <span
+                    style={{
+                      color: colors.neutral300,
+                    }}
+                  >
+                    #{block}
+                  </span>
+                </Typography>
+              ) : (
+                `Block #${startingBlock} to #${endingBlock}`
+              )}
             </>
           )}
         </Stack>
@@ -58,7 +80,7 @@ const UpperPagination = ({
         >
           <PaginationButton
             lengthOfEachPage={lengthOfEachPage || 0}
-            pageSize={pageSize}
+            pageSize={intTxnPageSize ? intTxnPageSize : pageSize}
             rtl="true"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
@@ -68,7 +90,7 @@ const UpperPagination = ({
           <span>{`Page ${currentPage}`}</span>
           <PaginationButton
             lengthOfEachPage={lengthOfEachPage || 0}
-            pageSize={pageSize}
+            pageSize={intTxnPageSize ? intTxnPageSize : pageSize}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             setNext={setNextState}
