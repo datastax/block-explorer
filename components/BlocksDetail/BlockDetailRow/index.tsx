@@ -102,7 +102,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
                         blockHash: data['Hash'],
                       },
                     },
-                    `transactions?blockNumber=${data['BlockHeight']}`
+                    `/transactions?blockNumber=${data['BlockHeight']}`
                   )
                 }}
               >
@@ -119,12 +119,33 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
               {' '}
               <span>and</span>{' '}
             </TransactionStyle>
-            <Chip
-              label={`${data['internalTransaction']} contract internal transactions`}
-              bgcolor={colors.nordic}
-              border={`1px solid ${colors.actionPrimary}`}
-              titlecolor={colors.neutral100}
-            />
+            <Tooltip
+              title="View Internal Transactions of this block"
+              placement="top"
+            >
+              <div
+                onClick={() => {
+                  router.push(
+                    {
+                      pathname: '/internal-transactions',
+                      query: {
+                        blockNumber: data['BlockHeight'],
+                        totalInternalTransactions: data['internalTransaction'],
+                      },
+                    },
+                    `/internal-transactions?blockNumber=${data['BlockHeight']}`
+                  )
+                }}
+              >
+                <Chip
+                  label={`${data['internalTransaction']} contract internal transactions`}
+                  bgcolor={colors.nordic}
+                  border={`1px solid ${colors.actionPrimary}`}
+                  titlecolor={colors.neutral100}
+                  cursor="pointer"
+                />
+              </div>
+            </Tooltip>
             <TransactionStyle>
               <ListItemText primary={'in this block'} />
             </TransactionStyle>
