@@ -32,6 +32,7 @@ export type BlockOutput = {
   gas_used: Scalars['Float'];
   gas_used_percentage?: Maybe<Scalars['String']>;
   hash: Scalars['String'];
+  int_txn_count?: Maybe<Scalars['Float']>;
   logs_bloom?: Maybe<Scalars['String']>;
   mine_time?: Maybe<Scalars['Float']>;
   miner: Scalars['String'];
@@ -166,6 +167,7 @@ export type Query = {
   getBlocks: BlocksPageOutput;
   getContractByAddress: ContractOutput;
   getContractsByBlockNumber: Array<ContractOutput>;
+  getInternalTransactionByBlockNumber: Array<TracesOutput>;
   getLogByTransaction: Array<TransactionLogsOutput>;
   getNFTByContractAddress: Array<NftOutput>;
   getTokenByContractAddress: TokenOutput;
@@ -200,6 +202,11 @@ export type QueryGetContractByAddressArgs = {
 
 export type QueryGetContractsByBlockNumberArgs = {
   data: Scalars['Float'];
+};
+
+
+export type QueryGetInternalTransactionByBlockNumberArgs = {
+  data: TracesPagesInput;
 };
 
 
@@ -266,6 +273,24 @@ export type TokenOutput = {
   total_supply: Scalars['String'];
 };
 
+export type TracesOutput = {
+  __typename?: 'TracesOutput';
+  blockNumber: Scalars['String'];
+  from?: Maybe<Scalars['String']>;
+  gasLimit?: Maybe<Scalars['Float']>;
+  intTransactionIndex: Scalars['Float'];
+  to?: Maybe<Scalars['String']>;
+  transactionHash: Scalars['String'];
+  typeTraceAddress: Scalars['String'];
+  value?: Maybe<Scalars['Float']>;
+};
+
+export type TracesPagesInput = {
+  blockNumber?: InputMaybe<Scalars['Float']>;
+  pageNumber: Scalars['Float'];
+  pageSize: Scalars['Float'];
+};
+
 export type TransactionByIndexInput = {
   blockHash: Scalars['String'];
   transactionIndex: Scalars['Float'];
@@ -293,6 +318,7 @@ export type TransactionsOutput = {
   gas_price: Scalars['String'];
   hash: Scalars['String'];
   input?: Maybe<Scalars['String']>;
+  internalTxn?: Maybe<Array<TracesOutput>>;
   maxFee?: Maybe<Scalars['String']>;
   maxPriorityFee?: Maybe<Scalars['String']>;
   method?: Maybe<Scalars['String']>;
@@ -352,14 +378,14 @@ export type GetBlockByNumberQueryVariables = Exact<{
 }>;
 
 
-export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: string | null, state_root?: string | null, miners_name?: string | null } };
+export type GetBlockByNumberQuery = { __typename?: 'Query', getBlockByNumber: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: string | null, state_root?: string | null, miners_name?: string | null, int_txn_count?: number | null } };
 
 export type GetTransactionByHashQueryVariables = Exact<{
   data: Scalars['String'];
 }>;
 
 
-export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: string, input?: string | null, nonce?: number | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, method?: string | null, transaction_fees_usd?: string | null, transaction_index?: number | null, value?: number | null, value_usd?: string | null, transaction_fees?: string | null, baseFee?: string | null, maxFee?: string | null, maxPriorityFee?: string | null, txnBurntFee?: string | null, txnSavingFee?: string | null } };
+export type GetTransactionByHashQuery = { __typename?: 'Query', getTransactionByHash: { __typename?: 'TransactionsOutput', hash: string, block_hash: string, block_number: number, block_timestamp: string, from_address?: string | null, gas: number, gas_price: string, input?: string | null, nonce?: number | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: number | null, receipt_gas_used?: number | null, receipt_root?: string | null, receipt_status?: number | null, to_address?: string | null, method?: string | null, transaction_fees_usd?: string | null, transaction_index?: number | null, value?: number | null, value_usd?: string | null, transaction_fees?: string | null, baseFee?: string | null, maxFee?: string | null, maxPriorityFee?: string | null, txnBurntFee?: string | null, txnSavingFee?: string | null, internalTxn?: Array<{ __typename?: 'TracesOutput', blockNumber: string, transactionHash: string, intTransactionIndex: number, from?: string | null, to?: string | null, gasLimit?: number | null, typeTraceAddress: string, value?: number | null }> | null } };
 
 export type GetDashboardAnalyticsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -388,7 +414,7 @@ export type GetBlockByHashQueryVariables = Exact<{
 }>;
 
 
-export type GetBlockByHashQuery = { __typename?: 'Query', getBlockByHash: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: string | null, state_root?: string | null, miners_name?: string | null } };
+export type GetBlockByHashQuery = { __typename?: 'Query', getBlockByHash: { __typename?: 'BlockOutput', number: number, timestamp: string, transaction_count: number, mine_time?: number | null, miner: string, difficulty?: number | null, total_difficulty?: string | null, size?: number | null, gas_used: number, gas_limit: number, base_fee_per_gas?: string | null, burnt_fee?: string | null, extra_data?: string | null, reward?: string | null, uncle_reward?: string | null, txn_fees?: string | null, gas_target_percentage?: string | null, gas_used_percentage?: string | null, hash: string, parent_hash?: string | null, sha3_uncles?: string | null, nonce?: string | null, state_root?: string | null, miners_name?: string | null, int_txn_count?: number | null } };
 
 export type GetConsecutiveTransactionsQueryVariables = Exact<{
   transactionsdata: TransactionsPagesInput;
@@ -410,6 +436,13 @@ export type GetLogByTransactionQueryVariables = Exact<{
 
 
 export type GetLogByTransactionQuery = { __typename?: 'Query', getLogByTransaction: Array<{ __typename?: 'TransactionLogsOutput', name?: string | null, address: string, topics: Array<string>, data?: string | null, decoded_data?: string | null, log_index: number, events?: string | null }> };
+
+export type GetInternalTransactionByBlockNumberQueryVariables = Exact<{
+  data: TracesPagesInput;
+}>;
+
+
+export type GetInternalTransactionByBlockNumberQuery = { __typename?: 'Query', getInternalTransactionByBlockNumber: Array<{ __typename?: 'TracesOutput', blockNumber: string, transactionHash: string, intTransactionIndex: number, from?: string | null, to?: string | null, gasLimit?: number | null, typeTraceAddress: string, value?: number | null }> };
 
 
 export const GetBlocksDocument = gql`
@@ -613,6 +646,7 @@ export const GetBlockByNumberDocument = gql`
     nonce
     state_root
     miners_name
+    int_txn_count
   }
 }
     `;
@@ -674,6 +708,16 @@ export const GetTransactionByHashDocument = gql`
     txnBurntFee
     txnSavingFee
     input
+    internalTxn {
+      blockNumber
+      transactionHash
+      intTransactionIndex
+      from
+      to
+      gasLimit
+      typeTraceAddress
+      value
+    }
   }
 }
     `;
@@ -892,6 +936,7 @@ export const GetBlockByHashDocument = gql`
     nonce
     state_root
     miners_name
+    int_txn_count
   }
 }
     `;
@@ -1039,3 +1084,45 @@ export function useGetLogByTransactionLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type GetLogByTransactionQueryHookResult = ReturnType<typeof useGetLogByTransactionQuery>;
 export type GetLogByTransactionLazyQueryHookResult = ReturnType<typeof useGetLogByTransactionLazyQuery>;
 export type GetLogByTransactionQueryResult = Apollo.QueryResult<GetLogByTransactionQuery, GetLogByTransactionQueryVariables>;
+export const GetInternalTransactionByBlockNumberDocument = gql`
+    query getInternalTransactionByBlockNumber($data: TracesPagesInput!) {
+  getInternalTransactionByBlockNumber(data: $data) {
+    blockNumber
+    transactionHash
+    intTransactionIndex
+    from
+    to
+    gasLimit
+    typeTraceAddress
+    value
+  }
+}
+    `;
+
+/**
+ * __useGetInternalTransactionByBlockNumberQuery__
+ *
+ * To run a query within a React component, call `useGetInternalTransactionByBlockNumberQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetInternalTransactionByBlockNumberQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetInternalTransactionByBlockNumberQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useGetInternalTransactionByBlockNumberQuery(baseOptions: Apollo.QueryHookOptions<GetInternalTransactionByBlockNumberQuery, GetInternalTransactionByBlockNumberQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetInternalTransactionByBlockNumberQuery, GetInternalTransactionByBlockNumberQueryVariables>(GetInternalTransactionByBlockNumberDocument, options);
+      }
+export function useGetInternalTransactionByBlockNumberLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetInternalTransactionByBlockNumberQuery, GetInternalTransactionByBlockNumberQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetInternalTransactionByBlockNumberQuery, GetInternalTransactionByBlockNumberQueryVariables>(GetInternalTransactionByBlockNumberDocument, options);
+        }
+export type GetInternalTransactionByBlockNumberQueryHookResult = ReturnType<typeof useGetInternalTransactionByBlockNumberQuery>;
+export type GetInternalTransactionByBlockNumberLazyQueryHookResult = ReturnType<typeof useGetInternalTransactionByBlockNumberLazyQuery>;
+export type GetInternalTransactionByBlockNumberQueryResult = Apollo.QueryResult<GetInternalTransactionByBlockNumberQuery, GetInternalTransactionByBlockNumberQueryVariables>;
