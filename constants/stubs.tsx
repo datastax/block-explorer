@@ -45,6 +45,22 @@ const summaryBlocksDataTransactions: SummaryBlocksDataTransactions[] = [
   },
 ]
 
+const InternalTransactionTitle = [
+  'Parent Txn Hash',
+  'Type',
+  'From',
+  'To',
+  'Value',
+]
+
+const InternalTxnTitle = [
+  'Type Trace Address',
+  'From',
+  'To',
+  'Value',
+  'Gas Limit',
+]
+
 const BlocksTitle = [
   'Block',
   'Age',
@@ -104,4 +120,6 @@ export {
   BlocksTitle,
   mediumBlogUrl,
   searchPlaceHolders,
+  InternalTransactionTitle,
+  InternalTxnTitle,
 }

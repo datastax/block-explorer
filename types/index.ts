@@ -18,6 +18,22 @@ interface SummaryBlocksProps {
   secondayStat?: string
 }
 
+interface InternalTransactionData {
+  parentTxnHash: string
+  type: string
+  from: string
+  to: string
+  value: string
+}
+
+interface InternalTxnsTabData {
+  typeTraceAddress: string
+  from: string
+  to: string
+  value: string
+  gasLimit: string
+}
+
 interface ChipProps {
   bgcolor?: string
   border: string
@@ -240,4 +256,6 @@ export type {
   LogsData,
   LogEvent,
   TokenGenerationPayload,
+  InternalTransactionData,
+  InternalTxnsTabData,
 }
