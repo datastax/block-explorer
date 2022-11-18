@@ -82,6 +82,7 @@ query getBlockByNumber($data: Float!) {
     nonce
     state_root
     miners_name
+    int_txn_count
   }
 }
 
@@ -114,6 +115,16 @@ query getTransactionByHash($data: String!) {
     txnBurntFee
     txnSavingFee
     input
+    internalTxn {
+      blockNumber
+      transactionHash
+      intTransactionIndex
+      from
+      to
+      gasLimit
+      typeTraceAddress
+      value
+    }
   }
 }
 
@@ -190,6 +201,7 @@ query getBlockByHash($data: String!) {
     nonce
     state_root
     miners_name
+    int_txn_count
   }
 }
 
@@ -219,5 +231,18 @@ query getLogByTransaction($data: LogsInput!) {
     decoded_data
     log_index
     events
+  }
+}
+
+query getInternalTransactionByBlockNumber($data: TracesPagesInput!) {
+  getInternalTransactionByBlockNumber(data: $data) {
+    blockNumber
+    transactionHash
+    intTransactionIndex
+    from
+    to
+    gasLimit
+    typeTraceAddress
+    value
   }
 }

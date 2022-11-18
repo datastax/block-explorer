@@ -15,8 +15,12 @@ import {
   useGetLogByTransactionLazyQuery,
   useGetTransactionByHashQuery,
 } from 'lib/graphql/generated'
-import { TransactionDetails, TabProps } from 'types'
-import { mapRawDataToTransactionDetails } from 'utils'
+import { TransactionDetails, TabProps, InternalTxnsTabData } from 'types'
+import {
+  mapRawDataToInternalTransactions,
+  mapRawDataToTransactionDetails,
+} from 'utils'
+import InternalTxns from '@components/InternalTxnsTab'
 
 interface TransactionProps {
   transactionHash: string
@@ -29,6 +33,9 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
   const [blockConfirmation, setBlockConfirmation] = useState<number>()
   const [transactionDetailData, setTransactionDetailData] =
     useState<TransactionDetails>()
+  const [internalTransactions, setInternalTransactions] = useState<
+    InternalTxnsTabData[]
+  >([])
 
   const { data: transactionDetails, error: transactionError } =
     useGetTransactionByHashQuery({
@@ -167,10 +174,14 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
           },
         },
       })
-      if (blockConfirmation && !blockLoading)
+      if (blockConfirmation && !blockLoading) {
         setTransactionDetailData(
           mapRawDataToTransactionDetails(transactionDetails, blockConfirmation)
         )
+        setInternalTransactions(
+          mapRawDataToInternalTransactions(transactionDetails)
+        )
+      }
     }
   }, [
     blockConfirmation,
@@ -195,11 +206,17 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
       ariaControls: 'simple-tabpanel-1',
       id: 'simple-tab-2',
     },
+    {
+      label: `Internal Txns`,
+      ariaControls: 'simple-tabpanel-2',
+      id: 'simple-tab-3',
+    },
   ]
 
   useEffect(() => {
     const locationHash = window.location.hash
     if (locationHash === '#eventlog') setTabIndex(1)
+    if (locationHash === '#internal') setTabIndex(2)
   }, [])
 
   return (
@@ -208,7 +225,7 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
         title="Transaction Details"
         showChips={false}
         showPagination={true}
-        showDropdown={false} // FOR NOW WE ARE HIDING DROPDOWN, SETTING THIS PROP TO'false'
+        showDropdown={false}
         setNextConsecutiveState={setNextConsecutiveState}
         setPreviousConsecutiveState={setPreviousConsecutiveState}
       />
@@ -235,6 +252,11 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
                 />
               )}
           </TabPanel>
+          {internalTransactions && internalTransactions.length > 0 && (
+            <TabPanel value={tabIndex} index={2}>
+              <InternalTxns data={internalTransactions} />
+            </TabPanel>
+          )}
         </>
       ) : (
         <Box sx={{ width: '100%' }}>

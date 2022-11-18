@@ -15,7 +15,7 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { TransactionsOutput } from 'lib/graphql/generated'
+import { TracesOutput, TransactionsOutput } from 'lib/graphql/generated'
 import { Exchange, Eye } from '@components/shared/Icons'
 import Chip from '@components/shared/Chip'
 import { formatAddress, getDifference, weiToEther } from 'utils'
@@ -72,7 +72,7 @@ const TransactionsTable = ({
 
   const getUIValue = (
     keys: string[],
-    values: (string | number | null)[],
+    values: (string | number | null | TracesOutput[])[],
     index: number
   ) => {
     if (index > 7) return
@@ -90,10 +90,13 @@ const TransactionsTable = ({
       )} Ether`
   }
 
-  const getTransactionMethod = (transactionMethod: string | null | number) => {
+  const getTransactionMethod = (
+    transactionMethod: string | null | number | TracesOutput[]
+  ) => {
     if (!transactionMethod) return 'transfer'
     if (typeof transactionMethod === 'number') return transactionMethod
-    return transactionMethod.split('(')[0].substring(0, 10)
+    if (typeof transactionMethod === 'string')
+      return transactionMethod.split('(')[0].substring(0, 10)
   }
 
   return (

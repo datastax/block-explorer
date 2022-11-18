@@ -13,11 +13,12 @@ interface BottomPaginationProps {
   setPageSize: Dispatch<SetStateAction<number>>
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  setNext: Dispatch<SetStateAction<number | undefined>>
-  setPrevious: Dispatch<SetStateAction<number | undefined>>
+  setNext?: Dispatch<SetStateAction<number | undefined>>
+  setPrevious?: Dispatch<SetStateAction<number | undefined>>
   lengthOfEachPage: number
   setNextState: () => void
   setPreviousState: () => void
+  intTxnPageSize?: number
 }
 
 const BottomPagination = ({
@@ -30,10 +31,11 @@ const BottomPagination = ({
   lengthOfEachPage,
   setNextState,
   setPreviousState,
+  intTxnPageSize,
 }: BottomPaginationProps) => {
   const setValuesToDefault = () => {
-    setNext(undefined)
-    setPrevious(undefined)
+    setNext && setNext(undefined)
+    setPrevious && setPrevious(undefined)
     setCurrentPage(1)
   }
 
@@ -65,8 +67,8 @@ const BottomPagination = ({
           spacing={2}
         >
           <PaginationButton
+            pageSize={intTxnPageSize ? intTxnPageSize : pageSize}
             lengthOfEachPage={lengthOfEachPage || 0}
-            pageSize={pageSize}
             rtl="true"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
@@ -76,7 +78,7 @@ const BottomPagination = ({
           <span>{`Page ${currentPage}`}</span>
           <PaginationButton
             lengthOfEachPage={lengthOfEachPage || 0}
-            pageSize={pageSize}
+            pageSize={intTxnPageSize ? intTxnPageSize : pageSize}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             setNext={setNextState}
