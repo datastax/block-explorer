@@ -1,6 +1,16 @@
 import colors from '@styles/ThemeProvider/colors'
-import { BlockOutput, GetTransactionByHashQuery } from 'lib/graphql/generated'
-import { BlockDetails, LogEvent, TransactionDetails } from 'types'
+import {
+  BlockOutput,
+  GetInternalTransactionByBlockNumberQuery,
+  GetTransactionByHashQuery,
+} from 'lib/graphql/generated'
+import {
+  BlockDetails,
+  InternalTransactionData,
+  InternalTxnsTabData,
+  LogEvent,
+  TransactionDetails,
+} from 'types'
 
 const numberRegex = /^[0-9]+$/
 
@@ -131,7 +141,7 @@ const mapRawDataToBlockDetails = (
     Hash: data?.hash || '',
     ParentHash: data?.parent_hash || '',
     Nonce: data?.nonce,
-    internalTransaction: 0,
+    internalTransaction: data?.int_txn_count || 0,
     BlockHeight: data?.number.toString() || '',
     Timestamp: {
       time: `${getDifference(parseInt(data?.timestamp || ''))} ago`,
@@ -168,6 +178,42 @@ const mapRawDataToBlockDetails = (
       : null,
     ExtraData: `speth03�0\`' (Hex:${data?.extra_data})`,
   }
+}
+
+const mapRawDataToIntTransactions = (
+  internalTransactions: GetInternalTransactionByBlockNumberQuery
+): InternalTransactionData[] => {
+  const data =
+    internalTransactions.getInternalTransactionByBlockNumber.map(
+      (transaction) => {
+        return {
+          parentTxnHash: transaction?.transactionHash,
+          type: 'call',
+          from: transaction?.from ?? '',
+          to: transaction?.to ?? '',
+          value: String(transaction?.value?.toFixed(4)),
+        }
+      }
+    ) || []
+  return data
+}
+
+const mapRawDataToInternalTransactions = (
+  transactionDetails: GetTransactionByHashQuery
+): InternalTxnsTabData[] => {
+  const data =
+    transactionDetails?.getTransactionByHash?.internalTxn?.map(
+      (transaction) => {
+        return {
+          typeTraceAddress: transaction?.typeTraceAddress,
+          from: transaction?.from || '',
+          to: transaction?.to || '',
+          value: String(transaction?.value),
+          gasLimit: numberWithCommas(transaction?.gasLimit),
+        }
+      }
+    ) || []
+  return data
 }
 
 const mapRawDataToTransactionDetails = (
@@ -292,6 +338,8 @@ export {
   mapRawDataToTransactionDetails,
   getEventNameFromRawData,
   timeLapseInSeconds,
+  mapRawDataToInternalTransactions,
+  mapRawDataToIntTransactions,
 }
 export { default as createEmotionCache } from './createEmotionCache'
 export * from './jwt'
