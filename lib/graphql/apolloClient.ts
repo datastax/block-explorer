@@ -1,7 +1,6 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { GRAPHQL_ENDPOINT } from '@constants'
-import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 import { createJWt, timeLapseInSeconds, verifyJWT } from 'utils'
 import {
   readFromSessionStorage,
@@ -32,17 +31,12 @@ const retrieveToken = (key: string) => {
       console.log('token try', token)
       verifyJWT(token)
     } catch (error) {
-      if (
-        (error as Error).name === TokenExpiredError.name ||
-        (error as Error).name === JsonWebTokenError.name
-      ) {
-        console.log('error', error)
-        const generatedToken = createJWt(PAYLOAD, EXPIRY_TIME)
-        console.log('generatedToken', generatedToken)
-        writeToSessionStorage(key, generatedToken)
-        token = generatedToken
-        console.log('Token', generatedToken)
-      }
+      console.log('error', error)
+      const generatedToken = createJWt(PAYLOAD, EXPIRY_TIME)
+      console.log('generatedToken', generatedToken)
+      writeToSessionStorage(key, generatedToken)
+      token = generatedToken
+      console.log('Token', generatedToken)
     }
   }
   return token
