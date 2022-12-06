@@ -1,6 +1,7 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { GRAPHQL_ENDPOINT } from '@constants'
+import { TokenExpiredError } from 'jsonwebtoken'
 import { createJWt, timeLapseInSeconds, verifyJWT } from 'utils'
 import {
   readFromSessionStorage,
@@ -18,6 +19,8 @@ const EXPIRY_TIME = 60
 const PAYLOAD = { tokenExpiry: timeLapseInSeconds(1) }
 
 const retrieveToken = (key: string) => {
+  console.log('TokenExpiredError', TokenExpiredError.name)
+
   let token = readFromSessionStorage(key)
   console.log(`token on time ${new Date().toString()} ${token}`)
   if (!token) {
