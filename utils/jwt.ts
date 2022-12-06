@@ -8,7 +8,7 @@ const verifyJWT = (token: string): JwtPayload | undefined => {
   try {
     payload = jwt.verify(token, JWT_KEY) as JwtPayload
   } catch (error) {
-    console.log('error==verifyJWT', error)
+    throw error
   }
   return payload
 }
