@@ -12,27 +12,36 @@ const httpLink = createHttpLink({
   uri: GRAPHQL_ENDPOINT,
 })
 
-const EXPIRY_TIME = 3600
-const PAYLOAD = { tokenExpiry: timeLapseInSeconds(60) }
+// const EXPIRY_TIME = 3600
+// const PAYLOAD = { tokenExpiry: timeLapseInSeconds(60) }
+
+const EXPIRY_TIME = 60
+const PAYLOAD = { tokenExpiry: timeLapseInSeconds(1) }
 
 const retrieveToken = (key: string) => {
   let token = readFromSessionStorage(key)
+  console.log(`token on time ${new Date().toString()} ${token}`)
   if (!token) {
+    console.log('!token', token)
     const generatedToken = createJWt(PAYLOAD, EXPIRY_TIME)
     writeToSessionStorage(key, generatedToken)
     token = generatedToken
   }
   if (token) {
     try {
+      console.log('token try', token)
       verifyJWT(token)
     } catch (error) {
       if (
         (error as Error).name === TokenExpiredError.name ||
         (error as Error).name === JsonWebTokenError.name
       ) {
+        console.log('error', error)
         const generatedToken = createJWt(PAYLOAD, EXPIRY_TIME)
+        console.log('generatedToken', generatedToken)
         writeToSessionStorage(key, generatedToken)
         token = generatedToken
+        console.log('Token', generatedToken)
       }
     }
   }
