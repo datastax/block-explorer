@@ -1,6 +1,7 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { GRAPHQL_ENDPOINT } from '@constants'
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 import { createJWt, timeLapseInSeconds, verifyJWT } from 'utils'
 import {
   readFromSessionStorage,
@@ -25,9 +26,14 @@ const retrieveToken = (key: string) => {
     try {
       verifyJWT(token)
     } catch (error) {
-      const generatedToken = createJWt(PAYLOAD, EXPIRY_TIME)
-      writeToSessionStorage(key, generatedToken)
-      token = generatedToken
+      if (
+        (error as Error).name === TokenExpiredError.name ||
+        (error as Error).name === JsonWebTokenError.name
+      ) {
+        const generatedToken = createJWt(PAYLOAD, EXPIRY_TIME)
+        writeToSessionStorage(key, generatedToken)
+        token = generatedToken
+      }
     }
   }
   return token
@@ -36,11 +42,12 @@ const retrieveToken = (key: string) => {
 const authLink = setContext((_, { headers }) => {
   const RawToken = retrieveToken('Token')
 
-  const BearerToken = RawToken ? `Bearer ${RawToken}` : ''
+  // const BearerToken = RawToken ? `Bearer ${RawToken}` : ''
   return {
     headers: {
       ...headers,
-      authorization: BearerToken,
+      'x-cassandra-token': RawToken,
+      // authorization: BearerToken,
     },
   }
 })
