@@ -108,7 +108,7 @@ const BlocksTable = ({
                       border={`1px solid ${colors.neutral500}`}
                       fontWeight="500"
                       lineheight="157%"
-                      istransaction={istransaction}
+                      $istransaction={istransaction}
                     >
                       <HeaderBox>{title}</HeaderBox>
                     </CustomTableCellHeder>

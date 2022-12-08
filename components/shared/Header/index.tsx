@@ -80,7 +80,7 @@ const Header = () => {
             spacing={isMobile ? '20px' : '40px'}
             direction={'row'}
             theme={theme}
-            isHome={isHome}
+            $isHome={isHome}
           >
             {ROUTES.map(({ name, link }: Route, index) => (
               <Link passHref key={index} href={link}>
