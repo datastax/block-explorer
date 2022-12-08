@@ -23,6 +23,7 @@ import router from 'next/router'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Box } from '@mui/material'
 import { TransactionBlockDetail } from 'types'
+import { PAGINATION_EVENT } from 'constants/index'
 
 interface TransactionsTableProps {
   pageSize: number
@@ -52,23 +53,6 @@ const TransactionsTable = ({
   const endingTransaction = lengthOfEachPage
     ? transactions[lengthOfEachPage - 1]
     : undefined
-  const setNextState = () => {
-    setNext(endingTransaction?.transaction_index || undefined)
-    setPrevious(undefined)
-    setBlockDetails({
-      blockHash: endingTransaction?.block_hash || '',
-      blockNumber: endingTransaction?.block_number || 0,
-    })
-  }
-
-  const setPreviousState = () => {
-    setPrevious(startingTransaction?.transaction_index || undefined)
-    setNext(undefined)
-    setBlockDetails({
-      blockHash: startingTransaction?.block_hash || '',
-      blockNumber: startingTransaction?.block_number || 0,
-    })
-  }
 
   const getUIValue = (
     keys: string[],
@@ -99,6 +83,25 @@ const TransactionsTable = ({
       return transactionMethod.split('(')[0].substring(0, 10)
   }
 
+  const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
+    if (paginationEvent === PAGINATION_EVENT.NEXT) {
+      setNext(endingTransaction?.transaction_index || undefined)
+      setPrevious(undefined)
+      setBlockDetails({
+        blockHash: endingTransaction?.block_hash || '',
+        blockNumber: endingTransaction?.block_number || 0,
+      })
+    }
+    if (paginationEvent === PAGINATION_EVENT.PREV) {
+      setPrevious(startingTransaction?.transaction_index || undefined)
+      setNext(undefined)
+      setBlockDetails({
+        blockHash: startingTransaction?.block_hash || '',
+        blockNumber: startingTransaction?.block_number || 0,
+      })
+    }
+  }
+
   return (
     <BlockTableContainer>
       <CustomTableContainer>
@@ -112,8 +115,7 @@ const TransactionsTable = ({
               lengthOfEachPage={lengthOfEachPage || 0}
               startingBlock={0}
               endingBlock={0}
-              setNextState={setNextState}
-              setPreviousState={setPreviousState}
+              handlePagination={handlePagination}
             />
             <Table>
               <TableHead>
@@ -252,11 +254,8 @@ const TransactionsTable = ({
               setPageSize={setPageSize}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
-              setNext={setNext}
-              setPrevious={setPrevious}
               lengthOfEachPage={lengthOfEachPage || 0}
-              setNextState={setNextState}
-              setPreviousState={setPreviousState}
+              handlePagination={handlePagination}
             />
           </>
         ) : (

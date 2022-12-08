@@ -16,6 +16,7 @@ import {
   CustomTableCellBox,
 } from './styles'
 import { formatAddress } from 'utils'
+import { PAGINATION_EVENT } from 'constants/index'
 
 interface InternalTransactionProps {
   pageSize: number
@@ -42,12 +43,14 @@ const InternalTransactionTable = ({
 }: InternalTransactionProps) => {
   const startingBlock = 1
   const endingBlock = 1
-  const setNextState = () => {
-    setPageNumber(pageNumber + 1)
-  }
 
-  const setPreviousState = () => {
-    setPageNumber(pageNumber - 1)
+  const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
+    if (paginationEvent === PAGINATION_EVENT.NEXT) {
+      setPageNumber(pageNumber + 1)
+    }
+    if (paginationEvent === PAGINATION_EVENT.PREV) {
+      setPageNumber(pageNumber - 1)
+    }
   }
 
   useEffect(() => {
@@ -68,9 +71,8 @@ const InternalTransactionTable = ({
               lengthOfEachPage={totalInternalTransactions - 1}
               startingBlock={startingBlock}
               endingBlock={endingBlock}
-              setNextState={setNextState}
-              setPreviousState={setPreviousState}
               block={blockNumber}
+              handlePagination={handlePagination}
             />
 
             <Table>
@@ -143,8 +145,7 @@ const InternalTransactionTable = ({
               setPageSize={setPageSize}
               currentPage={pageNumber}
               setCurrentPage={setPageNumber}
-              setNextState={setNextState}
-              setPreviousState={setPreviousState}
+              handlePagination={handlePagination}
               intTxnPageSize={pageSize * pageNumber}
               lengthOfEachPage={totalInternalTransactions - 1}
             />
