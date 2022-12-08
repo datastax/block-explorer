@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import BlocksTable from '@components/Blocks/Table'
 import Hero from '@components/shared/Hero'
-import { BlocksTitle } from '@constants'
+import { BlocksTitle, PAGINATION_EVENT } from '@constants'
 import {
   useGetLatestBlockGroupQuery,
   useGetPaginatedEthBlocksLazyQuery,
@@ -24,8 +24,8 @@ const Blocks: NextPage = () => {
     { data: latestBlocks, error: blocksError, loading: loadingBlocks },
   ] = useGetPaginatedEthBlocksLazyQuery()
 
-  const handlePagintion = (nextClicked: boolean, previousClicked: boolean) => {
-    if (nextClicked)
+  const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
+    if (paginationEvent === PAGINATION_EVENT.NEXT)
       getPagintedEthBlocks({
         variables: {
           filter: {
@@ -44,7 +44,7 @@ const Blocks: NextPage = () => {
         },
       })
 
-    if (previousClicked) {
+    if (paginationEvent === PAGINATION_EVENT.PREV) {
       getPagintedEthBlocks({
         variables: {
           filter: {
@@ -128,7 +128,7 @@ const Blocks: NextPage = () => {
         Data={latestBlocks}
         titles={BlocksTitle}
         loading={latestBlockGroupLoading || loadingBlocks}
-        handlePagintion={handlePagintion}
+        handlePagination={handlePagination}
       />
     </>
   )

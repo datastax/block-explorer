@@ -25,6 +25,7 @@ import {
 import router from 'next/router'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Box } from '@mui/material'
+import { PAGINATION_EVENT } from 'constants/index'
 
 interface BlocksTableProps {
   pageSize: number
@@ -33,7 +34,7 @@ interface BlocksTableProps {
   Data: GetPaginatedEthBlocksQuery | undefined
   istransaction?: boolean
   loading: boolean
-  handlePagination: (nextClicked: boolean, previousClicked: boolean) => void
+  handlePagination: (event: PAGINATION_EVENT) => void
 }
 
 const BlocksTable = ({
@@ -50,10 +51,6 @@ const BlocksTable = ({
   const lengthOfEachPage = Data?.eth_blocks?.values?.length || 0
   const startingBlock = Data?.eth_blocks?.values?.[0]?.number || 0
   const endingBlock = Data?.eth_blocks?.values?.[pageSize - 1]?.number || 0
-
-  handlePagination(true, false)
-
-  handlePagination(false, true)
 
   const getValue = (index: number, Object: (string | number | null)[]) => {
     if (index === 1)
@@ -97,8 +94,7 @@ const BlocksTable = ({
               lengthOfEachPage={lengthOfEachPage}
               startingBlock={startingBlock}
               endingBlock={endingBlock}
-              setNextState={() => handlePagination(true, false)}
-              setPreviousState={() => handlePagination(false, true)}
+              handlePagination={handlePagination}
             />
 
             <Table>
@@ -176,8 +172,7 @@ const BlocksTable = ({
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               lengthOfEachPage={lengthOfEachPage}
-              setNextState={() => handlePagination(true, false)}
-              setPreviousState={() => handlePagination(false, true)}
+              handlePagination={handlePagination}
             />
           </>
         ) : (

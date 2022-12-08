@@ -6,6 +6,7 @@ import {
 } from '@components/shared/Pagination/UpperPagination/styles'
 import PaginationButton from '../../PaginationButton'
 import colors from '@styles/ThemeProvider/colors'
+import { PAGINATION_EVENT } from 'constants/index'
 
 interface UpperPaginationProps {
   transaction: boolean
@@ -15,10 +16,9 @@ interface UpperPaginationProps {
   lengthOfEachPage: number
   startingBlock: number
   endingBlock: number
-  setNextState: () => void
-  setPreviousState: () => void
   block?: number
   intTxnPageSize?: number
+  handlePagination: (event: PAGINATION_EVENT) => void
 }
 
 const UpperPagination = ({
@@ -29,10 +29,9 @@ const UpperPagination = ({
   lengthOfEachPage,
   startingBlock,
   endingBlock,
-  setNextState,
-  setPreviousState,
   block,
   intTxnPageSize,
+  handlePagination,
 }: UpperPaginationProps) => {
   return (
     <FontStyling>
@@ -84,8 +83,7 @@ const UpperPagination = ({
             rtl="true"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            setNext={setNextState}
-            setPrevious={setPreviousState}
+            handlePagination={handlePagination}
           />
           <span>{`Page ${currentPage}`}</span>
           <PaginationButton
@@ -93,8 +91,7 @@ const UpperPagination = ({
             pageSize={intTxnPageSize ? intTxnPageSize : pageSize}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            setNext={setNextState}
-            setPrevious={setPreviousState}
+            handlePagination={handlePagination}
           />
         </Stack>
       </Stack>

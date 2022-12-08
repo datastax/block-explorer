@@ -3,6 +3,7 @@ import {
   FontStyling,
 } from '@components/shared/Pagination/BottomPagination/styles'
 import { Stack } from '@mui/material'
+import { PAGINATION_EVENT } from 'constants/index'
 
 import React, { Dispatch, SetStateAction } from 'react'
 import PaginationButton from '../../PaginationButton'
@@ -14,9 +15,8 @@ interface BottomPaginationProps {
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   lengthOfEachPage: number
-  setNextState: () => void
-  setPreviousState: () => void
   intTxnPageSize?: number
+  handlePagination: (event: PAGINATION_EVENT) => void
 }
 
 const BottomPagination = ({
@@ -25,9 +25,8 @@ const BottomPagination = ({
   currentPage,
   setCurrentPage,
   lengthOfEachPage,
-  setNextState,
-  setPreviousState,
   intTxnPageSize,
+  handlePagination,
 }: BottomPaginationProps) => {
   const setValuesToDefault = () => {
     setCurrentPage(1)
@@ -66,8 +65,7 @@ const BottomPagination = ({
             rtl="true"
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            setNext={setNextState}
-            setPrevious={setPreviousState}
+            handlePagination={handlePagination}
           />
           <span>{`Page ${currentPage}`}</span>
           <PaginationButton
@@ -75,8 +73,7 @@ const BottomPagination = ({
             pageSize={intTxnPageSize ? intTxnPageSize : pageSize}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
-            setNext={setNextState}
-            setPrevious={setPreviousState}
+            handlePagination={handlePagination}
           />
         </Stack>
       </Stack>

@@ -1,3 +1,4 @@
+import { PAGINATION_EVENT } from 'constants/index'
 import * as React from 'react'
 import { CustomArrowButton } from '../SplitButton/styles'
 import { CustomButtonGroup, ArrowForwardStyle, ArrowBackStyle } from './styles'
@@ -5,20 +6,18 @@ export interface paginationProps {
   rtl?: string
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   currentPage: number
-  setNext: () => void
-  setPrevious: () => void
   lengthOfEachPage: number
   pageSize: number
+  handlePagination: (event: PAGINATION_EVENT) => void
 }
 
 export default function PaginationButton({
   rtl,
   setCurrentPage,
   currentPage,
-  setNext,
-  setPrevious,
   lengthOfEachPage,
   pageSize,
+  handlePagination,
 }: paginationProps) {
   return (
     <>
@@ -30,7 +29,7 @@ export default function PaginationButton({
             aria-haspopup="menu"
             onClick={() => {
               setCurrentPage(currentPage - 1)
-              setPrevious()
+              handlePagination(PAGINATION_EVENT.PREV)
             }}
           >
             <ArrowBackStyle disabled={currentPage === 1} />
@@ -47,7 +46,7 @@ export default function PaginationButton({
             aria-haspopup="menu"
             onClick={() => {
               setCurrentPage(currentPage + 1)
-              setNext()
+              handlePagination(PAGINATION_EVENT.NEXT)
             }}
           >
             <ArrowForwardStyle disabled={pageSize > lengthOfEachPage} />
