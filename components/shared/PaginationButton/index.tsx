@@ -24,14 +24,6 @@ export default function PaginationButton({
     <>
       {rtl ? (
         <CustomButtonGroup variant="outlined" disabled={currentPage === 1}>
-          {/* <CustomButton
-            onClick={() => {
-              setCurrentPage(1)
-              setPrevious(true, false)
-            }}
-          >
-            <FontStyling> FIRST </FontStyling>{' '}
-          </CustomButton> */}
           <CustomArrowButton
             size="small"
             aria-label="select merge strategy"
@@ -60,9 +52,6 @@ export default function PaginationButton({
           >
             <ArrowForwardStyle disabled={pageSize > lengthOfEachPage} />
           </CustomArrowButton>
-          {/* <CustomButton>
-            <FontStyling> LAST </FontStyling>{' '}
-          </CustomButton> */}
         </CustomButtonGroup>
       )}
     </>

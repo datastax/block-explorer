@@ -13,8 +13,6 @@ interface BottomPaginationProps {
   setPageSize: Dispatch<SetStateAction<number>>
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  setNext?: Dispatch<SetStateAction<number | undefined>>
-  setPrevious?: Dispatch<SetStateAction<number | undefined>>
   lengthOfEachPage: number
   setNextState: () => void
   setPreviousState: () => void
@@ -26,16 +24,12 @@ const BottomPagination = ({
   setPageSize,
   currentPage,
   setCurrentPage,
-  setNext,
-  setPrevious,
   lengthOfEachPage,
   setNextState,
   setPreviousState,
   intTxnPageSize,
 }: BottomPaginationProps) => {
   const setValuesToDefault = () => {
-    setNext && setNext(undefined)
-    setPrevious && setPrevious(undefined)
     setCurrentPage(1)
   }
 

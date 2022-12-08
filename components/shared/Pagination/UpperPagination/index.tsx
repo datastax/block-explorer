@@ -79,7 +79,7 @@ const UpperPagination = ({
           spacing={2}
         >
           <PaginationButton
-            lengthOfEachPage={lengthOfEachPage || 0}
+            lengthOfEachPage={lengthOfEachPage}
             pageSize={intTxnPageSize ? intTxnPageSize : pageSize}
             rtl="true"
             setCurrentPage={setCurrentPage}
@@ -89,7 +89,7 @@ const UpperPagination = ({
           />
           <span>{`Page ${currentPage}`}</span>
           <PaginationButton
-            lengthOfEachPage={lengthOfEachPage || 0}
+            lengthOfEachPage={lengthOfEachPage}
             pageSize={intTxnPageSize ? intTxnPageSize : pageSize}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}

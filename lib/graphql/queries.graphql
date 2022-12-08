@@ -22,3 +22,64 @@ query dashboard_analytics($filter: dashboard_analyticsFilterInput) {
     }
   }
 }
+
+query getEthBlocks($filter: eth_blocksFilterInput, $options: QueryOptions) {
+  eth_blocks(filter: $filter, options: $options) {
+    values {
+      number
+      timestamp
+      miner
+      transaction_count
+      hash
+      mine_time
+      reward
+    }
+  }
+}
+
+query getTransactionsOfLatestBlock(
+  $filter: transactionsFilterInput
+  $options: QueryOptions
+) {
+  transactions(filter: $filter, options: $options) {
+    values {
+      hash
+      block_timestamp
+      from_address
+      to_address
+      value
+    }
+  }
+}
+
+query getLatestBlockGroup($filter: dashboard_analyticsFilterInput) {
+  dashboard_analytics(filter: $filter) {
+    values {
+      latest_blocks_group
+      sum_of_burnt_fees
+    }
+  }
+}
+
+query getPaginatedEthBlocks(
+  $filter: eth_blocksFilterInput
+  $options: QueryOptions
+) {
+  eth_blocks(filter: $filter, options: $options) {
+    values {
+      number
+      timestamp
+      transaction_count
+      uncles_count
+      miner
+      gas_used
+      gas_limit
+      base_fee_per_gas
+      reward
+      burnt_fees
+      txn_fees
+      gas_used_percentage
+    }
+    pageState
+  }
+}

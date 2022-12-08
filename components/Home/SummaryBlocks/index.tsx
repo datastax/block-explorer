@@ -13,7 +13,7 @@ import {
   summaryBlocksDataTransactions,
 } from '@constants'
 import { useDashboard_AnalyticsLazyQuery } from 'lib/graphql/generated'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import {
   GraphData,
   SummaryBlocksDataPrice,
@@ -22,7 +22,10 @@ import {
 import { convertToMillion, numberWithCommas } from 'utils'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 
-const SummaryBlocks = () => {
+interface SummaryBlocksInterfce {
+  setLatestBlocksGroup: Dispatch<SetStateAction<number | undefined>>
+}
+const SummaryBlocks = ({ setLatestBlocksGroup }: SummaryBlocksInterfce) => {
   const [summaryBlocksDataPriceList, setSummaryBlocksDataPriceList] =
     useState<SummaryBlocksDataPrice[]>()
   const [
@@ -135,8 +138,12 @@ const SummaryBlocks = () => {
       setSummaryBlocksDataPriceList(blocksList)
       setSummaryBlocksDataTransactionsList(transactionsList)
       setGraph(graphData)
+      setLatestBlocksGroup(
+        data?.dashboard_analytics?.values?.[0]?.latest_blocks_group
+      )
     }
-  }, [data, getDashboardAnalytics])
+  }, [data, getDashboardAnalytics, setLatestBlocksGroup])
+
   return (
     <Container>
       <CardsBox>

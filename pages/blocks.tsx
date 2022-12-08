@@ -3,41 +3,113 @@ import BlocksTable from '@components/Blocks/Table'
 import Hero from '@components/shared/Hero'
 import { BlocksTitle } from '@constants'
 import {
-  useGetDashboardBurntFeeSumQuery,
-  useGetPaginatedBlocksQuery,
+  useGetLatestBlockGroupQuery,
+  useGetPaginatedEthBlocksLazyQuery,
 } from 'lib/graphql/generated'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { getNetworkUtilization } from 'utils'
 
 const Blocks: NextPage = () => {
   const [pageSize, setPageSize] = useState(10)
-  const [next, setNext] = useState<number>()
-  const [previous, setPrevious] = useState<number>()
+  const [pageStateArray, setPageStateArray] = useState<string[]>([''])
+  const [networkUtilization, setNetworkutilization] = useState<number>()
   const {
-    data: latestBlocks,
-    error: blocksError,
-    loading: loadingBlocks,
-  } = useGetPaginatedBlocksQuery({
-    variables: {
-      data: {
-        pageSize: pageSize,
-        next: next,
-        previous: previous,
-      },
-    },
-    onError: () => {
-      setNext(undefined)
-      setPrevious(undefined)
-    },
-  })
+    data: latestBlockGroup,
+    error: latestBlockGroupError,
+    loading: latestBlockGroupLoading,
+  } = useGetLatestBlockGroupQuery()
 
-  const { data: burntFeeSum, error: burntFeeSumError } =
-    useGetDashboardBurntFeeSumQuery()
+  const [
+    getPagintedEthBlocks,
+    { data: latestBlocks, error: blocksError, loading: loadingBlocks },
+  ] = useGetPaginatedEthBlocksLazyQuery()
+
+  const handlePagintion = (nextClicked: boolean, previousClicked: boolean) => {
+    if (nextClicked)
+      getPagintedEthBlocks({
+        variables: {
+          filter: {
+            blocks_group: {
+              eq: latestBlockGroup?.dashboard_analytics?.values?.[0]
+                ?.latest_blocks_group,
+            },
+          },
+          options: {
+            pageState: pageStateArray[pageStateArray.length - 1],
+            pageSize: pageSize,
+          },
+        },
+        onError: () => {
+          setPageStateArray([''])
+        },
+      })
+
+    if (previousClicked) {
+      getPagintedEthBlocks({
+        variables: {
+          filter: {
+            blocks_group: {
+              eq: latestBlockGroup?.dashboard_analytics?.values?.[0]
+                ?.latest_blocks_group,
+            },
+          },
+          options: {
+            pageState: pageStateArray[pageStateArray.length - 3] || null,
+            pageSize: pageSize,
+          },
+        },
+        onError: () => {
+          setPageStateArray([''])
+        },
+      })
+      setPageStateArray((prev) => prev.slice(0, -2))
+    }
+  }
+
+  useEffect(() => {
+    setPageStateArray([''])
+  }, [pageSize])
+
+  useEffect(() => {
+    if (latestBlockGroup) {
+      getPagintedEthBlocks({
+        variables: {
+          filter: {
+            blocks_group: {
+              eq: latestBlockGroup?.dashboard_analytics?.values?.[0]
+                ?.latest_blocks_group,
+            },
+          },
+          options: {
+            pageState: null,
+            pageSize: pageSize,
+          },
+        },
+        onError: () => {
+          setPageStateArray([''])
+        },
+      })
+    }
+  }, [getPagintedEthBlocks, latestBlockGroup, pageSize])
+
+  useEffect(() => {
+    if (latestBlocks) {
+      setNetworkutilization(getNetworkUtilization(latestBlocks))
+      if (latestBlocks?.eth_blocks?.pageState) {
+        setPageStateArray((prevState) => [
+          ...prevState,
+          String(latestBlocks?.eth_blocks?.pageState),
+        ])
+      }
+    }
+  }, [latestBlocks])
+
   if (blocksError) {
     console.error(blocksError)
   }
 
-  if (burntFeeSumError) {
-    console.error(burntFeeSumError)
+  if (latestBlockGroupError) {
+    console.error(latestBlockGroupError)
   }
 
   return (
@@ -45,17 +117,18 @@ const Blocks: NextPage = () => {
       <Hero
         title="Blocks"
         showChips={true}
-        networkUtilization={latestBlocks?.getBlocks?.networkUtilization}
-        burntFeeSum={burntFeeSum?.dashboardAnalytics?.burntFeeSum}
+        networkUtilization={networkUtilization}
+        burntFeeSum={
+          latestBlockGroup?.dashboard_analytics?.values?.[0]?.sum_of_burnt_fees
+        }
       />
       <BlocksTable
         pageSize={pageSize}
         setPageSize={setPageSize}
         Data={latestBlocks}
         titles={BlocksTitle}
-        setNext={setNext}
-        setPrevious={setPrevious}
-        loading={loadingBlocks}
+        loading={latestBlockGroupLoading || loadingBlocks}
+        handlePagintion={handlePagintion}
       />
     </>
   )

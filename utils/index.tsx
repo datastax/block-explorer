@@ -2,6 +2,7 @@ import colors from '@styles/ThemeProvider/colors'
 import {
   BlockOutput,
   GetInternalTransactionByBlockNumberQuery,
+  GetPaginatedEthBlocksQuery,
   GetTransactionByHashQuery,
 } from 'lib/graphql/generated'
 import {
@@ -321,6 +322,16 @@ const timeLapseInSeconds = (timeInMinutes: number) => {
   return Math.round(new Date().getTime() / 1000 + timeInSeconds)
 }
 
+const getNetworkUtilization = (blocks: GetPaginatedEthBlocksQuery) => {
+  const { values } = blocks?.eth_blocks || {}
+  const PageSize = values?.length || 0
+  let gasUsedSum = 0
+  values?.map((block) => {
+    gasUsedSum = gasUsedSum + Number(block.gas_used_percentage)
+  })
+  return gasUsedSum / PageSize
+}
+
 export {
   formatAddress,
   getDifference,
@@ -340,5 +351,6 @@ export {
   timeLapseInSeconds,
   mapRawDataToInternalTransactions,
   mapRawDataToIntTransactions,
+  getNetworkUtilization,
 }
 export { default as createEmotionCache } from './createEmotionCache'
