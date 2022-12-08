@@ -1,4 +1,4 @@
-import { PAGINATION_EVENT } from 'constants/index'
+import { PAGINATION_EVENT } from '@constants'
 import * as React from 'react'
 import { CustomArrowButton } from '../SplitButton/styles'
 import { CustomButtonGroup, ArrowForwardStyle, ArrowBackStyle } from './styles'

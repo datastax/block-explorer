@@ -3,7 +3,7 @@ import {
   FontStyling,
 } from '@components/shared/Pagination/BottomPagination/styles'
 import { Stack } from '@mui/material'
-import { PAGINATION_EVENT } from 'constants/index'
+import { PAGINATION_EVENT } from '@constants'
 
 import React, { Dispatch, SetStateAction } from 'react'
 import PaginationButton from '../../PaginationButton'

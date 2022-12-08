@@ -6,7 +6,7 @@ import {
 } from '@components/shared/Pagination/UpperPagination/styles'
 import PaginationButton from '../../PaginationButton'
 import colors from '@styles/ThemeProvider/colors'
-import { PAGINATION_EVENT } from 'constants/index'
+import { PAGINATION_EVENT } from '@constants'
 
 interface UpperPaginationProps {
   transaction: boolean

@@ -16,7 +16,7 @@ import {
   CustomTableCellBox,
 } from './styles'
 import { formatAddress } from 'utils'
-import { PAGINATION_EVENT } from 'constants/index'
+import { PAGINATION_EVENT } from '@constants'
 
 interface InternalTransactionProps {
   pageSize: number

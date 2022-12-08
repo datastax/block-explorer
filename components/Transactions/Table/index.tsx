@@ -23,7 +23,7 @@ import router from 'next/router'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Box } from '@mui/material'
 import { TransactionBlockDetail } from 'types'
-import { PAGINATION_EVENT } from 'constants/index'
+import { PAGINATION_EVENT } from '@constants'
 
 interface TransactionsTableProps {
   pageSize: number
