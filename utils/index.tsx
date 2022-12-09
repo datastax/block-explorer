@@ -1,6 +1,6 @@
 import colors from '@styles/ThemeProvider/colors'
 import {
-  BlockOutput,
+  Eth_BlockQuery,
   GetInternalTransactionByBlockNumberQuery,
   GetPaginatedEthBlocksQuery,
   GetTransactionByHashQuery,
@@ -133,51 +133,54 @@ const isNumber = (value: string) => {
 }
 
 const mapRawDataToBlockDetails = (
-  data: BlockOutput,
+  data: Eth_BlockQuery,
   block: string
 ): BlockDetails => {
+  const { values } = data?.eth_blocks || {}
   return {
-    Sha3Uncles: data?.sha3_uncles,
-    StateRoot: data?.state_root,
-    Hash: data?.hash || '',
-    ParentHash: data?.parent_hash || '',
-    Nonce: data?.nonce,
-    internalTransaction: data?.int_txn_count || 0,
-    BlockHeight: data?.number.toString() || '',
+    Sha3Uncles: values?.[0]?.sha3_uncles,
+    StateRoot: values?.[0]?.state_root,
+    Hash: values?.[0]?.hash || '',
+    ParentHash: values?.[0]?.parent_hash || '',
+    Nonce: values?.[0]?.nonce,
+    internalTransaction: values?.[0]?.int_txn_count || 0,
+    BlockHeight: values?.[0]?.number.toString() || '',
     Timestamp: {
-      time: `${getDifference(parseInt(data?.timestamp || ''))} ago`,
+      time: `${getDifference(parseInt(values?.[0]?.timestamp || ''))} ago`,
       Date: `(${new Date(
-        parseInt(data?.timestamp || '') * 1000
+        parseInt(values?.[0]?.timestamp || '') * 1000
       ).toUTCString()})`,
     },
-    Transactions: `${data?.transaction_count}`,
+    Transactions: `${values?.[0]?.transaction_count}`,
     MinedBy: {
-      address: data?.miner || '',
+      address: values?.[0]?.miner || '',
       miner: `(Miner: ${
-        data?.miners_name ? data?.miners_name : formatAddress(data?.miner)
+        values?.[0]?.miners_name
+          ? values?.[0]?.miners_name
+          : formatAddress(values?.[0]?.miner)
       })`,
-      time: `in ${data?.mine_time} secs`,
+      time: `in ${values?.[0]?.mine_time} secs`,
     },
-    BlockReward: `${data?.reward} Ether (${calculateStaticBlockReward(
+    BlockReward: `${values?.[0]?.reward} Ether (${calculateStaticBlockReward(
       block as string
-    )} + ${data?.txn_fees} - ${data?.burnt_fee})`,
-    UnclesReward: data?.uncle_reward || '',
-    Difficulty: numberWithCommas(data?.difficulty || 0) || '',
-    TotalDifficulty: numberWithCommas(data?.total_difficulty || 0) || '',
-    Size: numberWithCommas(data?.size || 0) + ' bytes',
-    GasUsed: numberWithCommas(data?.gas_used || 0),
-    GasUsedPercetge: parseFloat(data?.gas_used_percentage || ''),
-    GasTargetPercentage: parseFloat(data?.gas_target_percentage || ''),
-    GasLimit: numberWithCommas(data?.gas_limit || 0),
-    BaseFeePerGas: data?.base_fee_per_gas
-      ? `${data?.base_fee_per_gas} Ether (${etherToGwei(
-          parseFloat(data?.base_fee_per_gas || '')
+    )} + ${values?.[0]?.txn_fees} - ${values?.[0]?.burnt_fees})`,
+    UnclesReward: values?.[0]?.uncle_reward || '',
+    Difficulty: numberWithCommas(values?.[0]?.difficulty || 0) || '',
+    TotalDifficulty: numberWithCommas(values?.[0]?.total_difficulty || 0) || '',
+    Size: numberWithCommas(values?.[0]?.size || 0) + ' bytes',
+    GasUsed: numberWithCommas(values?.[0]?.gas_used || 0),
+    GasUsedPercetge: parseFloat(values?.[0]?.gas_used_percentage || ''),
+    GasTargetPercentage: parseFloat(values?.[0]?.gas_target_percentage || ''),
+    GasLimit: numberWithCommas(values?.[0]?.gas_limit || 0),
+    BaseFeePerGas: values?.[0]?.base_fee_per_gas
+      ? `${values?.[0]?.base_fee_per_gas} Ether (${etherToGwei(
+          parseFloat(values?.[0]?.base_fee_per_gas || '')
         )} Gwei)`
       : null,
-    BurntFees: parseFloat(data?.burnt_fee || '')
-      ? `🔥 ${data?.burnt_fee} Ether`
+    BurntFees: parseFloat(values?.[0]?.burnt_fees || '')
+      ? `🔥 ${values?.[0]?.burnt_fees} Ether`
       : null,
-    ExtraData: `speth03�0\`' (Hex:${data?.extra_data})`,
+    ExtraData: `speth03�0\`' (Hex:${values?.[0]?.extra_data})`,
   }
 }
 

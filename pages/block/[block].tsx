@@ -5,7 +5,8 @@ import { useRouter } from 'next/router'
 import { BlockDetails } from '@types'
 import {
   useGetBlockByHashLazyQuery,
-  useGetBlockByNumberLazyQuery,
+  useEth_BlockLazyQuery,
+  useGetLatestBlockGroupQuery,
 } from 'lib/graphql/generated'
 import { useEffect, useState } from 'react'
 import { formatAddress, isNumber, mapRawDataToBlockDetails } from 'utils'
@@ -18,8 +19,10 @@ const Block: NextPage = () => {
   const blockKey = block as string
   const [blockDetailsData, setBlockDetailsData] = useState<BlockDetails>()
 
+  const { data: latestBlockGroup } = useGetLatestBlockGroupQuery()
+
   const [getBlockDetailsByNumber, { data: blockDetails, error: blocksError }] =
-    useGetBlockByNumberLazyQuery()
+    useEth_BlockLazyQuery()
 
   const [
     getBlockDetailsByHash,
@@ -30,32 +33,38 @@ const Block: NextPage = () => {
     if (isNumber(blockKey))
       getBlockDetailsByNumber({
         variables: {
-          data: Number(blockKey),
+          blockGroup: latestBlockGroup,
+          blockNumber: Number(blockKey),
         },
       })
-    if (!isNumber(blockKey))
-      getBlockDetailsByHash({
-        variables: {
-          data: blockKey,
-        },
-      })
-  }, [blockKey, getBlockDetailsByHash, getBlockDetailsByNumber])
-
+    // if (!isNumber(blockKey))
+    //   getBlockDetailsByHash({
+    //     variables: {
+    //       data: blockKey,
+    //     },
+    //   })
+  }, [blockKey, getBlockDetailsByHash, getBlockDetailsByNumber, latestBlockGroup])
   if (blocksError || blocksErrorhash) {
     console.error(blocksError + ' ' + blocksErrorhash)
   }
 
   useEffect(() => {
+    console.log(
+      '🚀 ~ file: [block].tsx:54 ~ useEffect ~ blockDetails',
+      blockDetails
+    )
     if (blockDetails) {
-      setBlockDetailsData(
-        mapRawDataToBlockDetails(blockDetails?.getBlockByNumber, blockKey)
+      console.log(
+        'mapRawDataToBlockDetails(blockDetails, blockKey)',
+        mapRawDataToBlockDetails(blockDetails, blockKey)
       )
+      setBlockDetailsData(mapRawDataToBlockDetails(blockDetails, blockKey))
     }
-    if (blockDetailsHash) {
-      setBlockDetailsData(
-        mapRawDataToBlockDetails(blockDetailsHash?.getBlockByHash, blockKey)
-      )
-    }
+    // if (blockDetailsHash) {
+    //   setBlockDetailsData(
+    //     mapRawDataToBlockDetails(blockDetailsHash?.getBlockByHash, blockKey)
+    //   )
+    // }
   }, [block, blockDetails, blockDetailsHash, blockKey])
 
   return (

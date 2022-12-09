@@ -83,3 +83,37 @@ query getPaginatedEthBlocks(
     pageState
   }
 }
+
+query eth_block($blockGroup: BigInt, $blockNumber: BigInt) {
+  eth_blocks(
+    filter: { blocks_group: { eq: $blockGroup }, number: { eq: $blockNumber } }
+  ) {
+    values {
+      sha3_uncles
+      state_root
+      hash
+      parent_hash
+      nonce
+      int_txn_count
+      number
+      timestamp
+      transaction_count
+      miner
+      miners_name
+      mine_time
+      reward
+      txn_fees
+      burnt_fees
+      difficulty
+      uncle_reward
+      total_difficulty
+      size
+      gas_used
+      gas_used_percentage
+      gas_target_percentage
+      gas_limit
+      base_fee_per_gas
+      extra_data
+    }
+  }
+}
