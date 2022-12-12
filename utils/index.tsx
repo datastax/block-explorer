@@ -1,6 +1,6 @@
 import colors from '@styles/ThemeProvider/colors'
 import {
-  Eth_BlockQuery,
+  GetEthBlockByNumberQuery,
   GetInternalTransactionByBlockNumberQuery,
   GetPaginatedEthBlocksQuery,
   GetTransactionByHashQuery,
@@ -133,7 +133,7 @@ const isNumber = (value: string) => {
 }
 
 const mapRawDataToBlockDetails = (
-  data: Eth_BlockQuery,
+  data: GetEthBlockByNumberQuery,
   block: string
 ): BlockDetails => {
   const { values } = data?.eth_blocks || {}

@@ -55,8 +55,9 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
       getLogs({
         variables: {
           data: {
-            transactionHash: transactionHash as string,
-            blockNumber: transactionDetails?.getTransactionByHash?.block_number,
+            transaction_hash: transactionHash as string,
+            block_number:
+              transactionDetails?.getTransactionByHash?.block_number,
           },
         },
       })

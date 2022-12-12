@@ -37,6 +37,18 @@ query getEthBlocks($filter: eth_blocksFilterInput, $options: QueryOptions) {
   }
 }
 
+query getLatestEthBlock(
+  $filter: eth_blocksFilterInput
+  $options: QueryOptions
+) {
+  eth_blocks(filter: $filter, options: $options) {
+    values {
+      number
+      hash
+    }
+  }
+}
+
 query getTransactionsOfLatestBlock(
   $filter: transactionsFilterInput
   $options: QueryOptions
@@ -84,7 +96,28 @@ query getPaginatedEthBlocks(
   }
 }
 
-query eth_block($blockGroup: BigInt, $blockNumber: BigInt) {
+query getPaginatedEThTransactions(
+  $filter: transactionsFilterInput
+  $options: QueryOptions
+) {
+  transactions(filter: $filter, options: $options) {
+    values {
+      hash
+      method
+      block_number
+      block_timestamp
+      from_address
+      to_address
+      value
+      transaction_fees
+      transaction_index
+      block_hash
+    }
+    pageState
+  }
+}
+
+query getEthBlockByNumber($blockGroup: BigInt, $blockNumber: BigInt) {
   eth_blocks(
     filter: { blocks_group: { eq: $blockGroup }, number: { eq: $blockNumber } }
   ) {
@@ -114,6 +147,103 @@ query eth_block($blockGroup: BigInt, $blockNumber: BigInt) {
       gas_limit
       base_fee_per_gas
       extra_data
+    }
+  }
+}
+
+query getNextBlockForTransaction($blockGroup: BigInt, $blockNumber: BigInt) {
+  eth_blocks(
+    filter: { blocks_group: { eq: $blockGroup }, number: { lt: $blockNumber } }
+    options: { pageSize: 1 }
+  ) {
+    values {
+      hash
+    }
+  }
+}
+
+query getPreviousBlockForTransaction(
+  $blockGroup: BigInt
+  $blockNumber: BigInt
+) {
+  eth_blocks(
+    filter: { blocks_group: { eq: $blockGroup }, number: { gt: $blockNumber } }
+    options: { pageSize: 1 }
+  ) {
+    values {
+      hash
+    }
+  }
+}
+
+query getEthTransactionByHash($filter: transactionsFilterInput) {
+  transactions(filter: $filter) {
+    values {
+      hash
+      block_hash
+      block_number
+      block_timestamp
+      from_address
+      gas
+      gas_price
+      input
+      nonce
+      receipt_contract_address
+      receipt_cumulative_gas_used
+      receipt_gas_used
+      receipt_root
+      receipt_status
+      to_address
+      method
+      transaction_fees
+      transaction_index
+      value
+      transaction_fees
+      base_fee
+      max_fee
+      max_priority_fee
+      burnt_fee
+      txn_savings
+      input
+    }
+    pageState
+  }
+}
+
+query getLogsByEthTransaction($filter: logsFilterInput) {
+  logs(filter: $filter) {
+    values {
+      block_number
+      address
+      topic0
+      topic1
+      topic2
+      topic3
+      data
+      log_index
+      decoded_data
+      block_hash
+      block_timestamp
+      transaction_index
+      transaction_hash
+    }
+  }
+}
+
+query getInternalTransactionByEthBlockNumber(
+  $filter: tracesFilterInput
+  $options: QueryOptions
+) {
+  traces(filter: $filter, options: $options) {
+    values {
+      block_number
+      transaction_hash
+      internal_transaction_index
+      from_address
+      to_address
+      gas_limit
+      type_trace_address
+      value
     }
   }
 }

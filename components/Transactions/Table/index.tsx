@@ -15,7 +15,11 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { TracesOutput, TransactionsOutput } from 'lib/graphql/generated'
+import {
+  GetPaginatedEThTransactionsQuery,
+  TracesOutput,
+  TransactionsOutput,
+} from 'lib/graphql/generated'
 import { Exchange, Eye } from '@components/shared/Icons'
 import Chip from '@components/shared/Chip'
 import { formatAddress, getDifference, weiToEther } from 'utils'
@@ -29,11 +33,10 @@ interface TransactionsTableProps {
   pageSize: number
   setPageSize: Dispatch<SetStateAction<number>>
   titles: string[]
-  transactions: Partial<TransactionsOutput[]> | undefined
-  setNext: Dispatch<SetStateAction<number | undefined>>
-  setPrevious: Dispatch<SetStateAction<number | undefined>>
+  transactions: GetPaginatedEThTransactionsQuery | undefined
   loading: boolean
   setBlockDetails: Dispatch<SetStateAction<TransactionBlockDetail | undefined>>
+  handlePagination: (paginationEvent: PAGINATION_EVENT) => void
 }
 
 const TransactionsTable = ({
@@ -41,17 +44,17 @@ const TransactionsTable = ({
   setPageSize,
   titles,
   transactions,
-  setNext,
-  setPrevious,
   loading,
   setBlockDetails,
+  handlePagination,
 }: TransactionsTableProps) => {
   const [currentPage, setCurrentPage] = useState(1)
 
-  const lengthOfEachPage = transactions?.length
-  const startingTransaction = transactions ? transactions[0] : undefined
+  const lengthOfEachPage = transactions?.transactions?.values?.length
+  const startingTransaction = transactions?.transactions?.values?.[0]
+
   const endingTransaction = lengthOfEachPage
-    ? transactions[lengthOfEachPage - 1]
+    ? transactions?.transactions?.values?.[lengthOfEachPage - 1]
     : undefined
 
   const getUIValue = (
@@ -83,22 +86,20 @@ const TransactionsTable = ({
       return transactionMethod.split('(')[0].substring(0, 10)
   }
 
-  const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
+  const handleSettingBlockDetails = (paginationEvent: PAGINATION_EVENT) => {
     if (paginationEvent === PAGINATION_EVENT.NEXT) {
-      setNext(endingTransaction?.transaction_index || undefined)
-      setPrevious(undefined)
       setBlockDetails({
         blockHash: endingTransaction?.block_hash || '',
         blockNumber: endingTransaction?.block_number || 0,
       })
+      handlePagination(PAGINATION_EVENT.NEXT)
     }
     if (paginationEvent === PAGINATION_EVENT.PREV) {
-      setPrevious(startingTransaction?.transaction_index || undefined)
-      setNext(undefined)
       setBlockDetails({
         blockHash: startingTransaction?.block_hash || '',
         blockNumber: startingTransaction?.block_number || 0,
       })
+      handlePagination(PAGINATION_EVENT.PREV)
     }
   }
 
@@ -115,7 +116,7 @@ const TransactionsTable = ({
               lengthOfEachPage={lengthOfEachPage || 0}
               startingBlock={0}
               endingBlock={0}
-              handlePagination={handlePagination}
+              handlePagination={handleSettingBlockDetails}
             />
             <Table>
               <TableHead>
@@ -143,110 +144,113 @@ const TransactionsTable = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {transactions?.map((transaction, index) => (
-                  <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    key={index}
-                  >
-                    <>
-                      {[
-                        ...Array(
-                          Object.keys(transaction as TransactionsOutput).length
-                        ),
-                      ].map((_, index) => (
-                        <React.Fragment key={index}>
-                          <>
-                            {transaction && index == 5 && (
-                              <CustomTableCell
-                                color={''}
-                                border={`1px solid ${colors.neutral500}`}
-                              >
-                                <Exchange />
-                              </CustomTableCell>
-                            )}
-                          </>
-                          <CustomTableCell
-                            key={index}
-                            align="center"
-                            color={
-                              Object.keys(transaction as TransactionsOutput)[
-                                index
-                              ]
-                            }
-                            border={`1px solid ${colors.neutral500}`}
-                            fontWeight="400"
-                            lineheight="143%"
-                            padding={index > 7 ? 'none' : 'normal'}
-                          >
-                            <CustomTableCellBox
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                              }}
-                            >
-                              {transactions && index == 0 && (
-                                <IconWrapper>
-                                  <Eye />
-                                </IconWrapper>
-                              )}
-                              {Object.keys(transaction as TransactionsOutput)[
-                                index
-                              ] !== 'method' ? (
-                                <div
-                                  onClick={() => {
-                                    if (index == 0)
-                                      router.push(
-                                        `/transaction/${
-                                          Object.values(
-                                            transaction as TransactionsOutput
-                                          )[index]
-                                        }`
-                                      )
-                                    else if (index == 2)
-                                      router.push(
-                                        `/block/${
-                                          Object.values(
-                                            transaction as TransactionsOutput
-                                          )[index]
-                                        }`
-                                      )
-                                  }}
-                                  style={{
-                                    cursor:
-                                      index == 0 || index == 2
-                                        ? 'pointer'
-                                        : 'default',
-                                  }}
+                {transactions?.transactions?.values?.map(
+                  (transaction, index) => (
+                    <TableRow
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      key={index}
+                    >
+                      <>
+                        {[
+                          ...Array(
+                            Object.keys(transaction as TransactionsOutput)
+                              .length
+                          ),
+                        ].map((_, index) => (
+                          <React.Fragment key={index}>
+                            <>
+                              {transaction && index == 5 && (
+                                <CustomTableCell
+                                  color={''}
+                                  border={`1px solid ${colors.neutral500}`}
                                 >
-                                  {getUIValue(
-                                    Object.keys(
-                                      transaction as TransactionsOutput
-                                    ),
-                                    Object.values(
-                                      transaction as TransactionsOutput
-                                    ),
-                                    index
-                                  )}
-                                </div>
-                              ) : (
-                                <Chip
-                                  label={getTransactionMethod(
-                                    Object.values(
-                                      transaction as TransactionsOutput
-                                    )[index]
-                                  )}
-                                  bgcolor={colors.nordic}
-                                  border={`1px solid ${colors.actionPrimary}`}
-                                  titlecolor={colors.neutral100}
-                                />
+                                  <Exchange />
+                                </CustomTableCell>
                               )}
-                            </CustomTableCellBox>
-                          </CustomTableCell>
-                        </React.Fragment>
-                      ))}
-                    </>
-                  </TableRow>
-                ))}
+                            </>
+                            <CustomTableCell
+                              key={index}
+                              align="center"
+                              color={
+                                Object.keys(transaction as TransactionsOutput)[
+                                  index
+                                ]
+                              }
+                              border={`1px solid ${colors.neutral500}`}
+                              fontWeight="400"
+                              lineheight="143%"
+                              padding={index > 7 ? 'none' : 'normal'}
+                            >
+                              <CustomTableCellBox
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                {transactions && index == 0 && (
+                                  <IconWrapper>
+                                    <Eye />
+                                  </IconWrapper>
+                                )}
+                                {Object.keys(transaction as TransactionsOutput)[
+                                  index
+                                ] !== 'method' ? (
+                                  <div
+                                    onClick={() => {
+                                      if (index == 0)
+                                        router.push(
+                                          `/transaction/${
+                                            Object.values(
+                                              transaction as TransactionsOutput
+                                            )[index]
+                                          }`
+                                        )
+                                      else if (index == 2)
+                                        router.push(
+                                          `/block/${
+                                            Object.values(
+                                              transaction as TransactionsOutput
+                                            )[index]
+                                          }`
+                                        )
+                                    }}
+                                    style={{
+                                      cursor:
+                                        index == 0 || index == 2
+                                          ? 'pointer'
+                                          : 'default',
+                                    }}
+                                  >
+                                    {getUIValue(
+                                      Object.keys(
+                                        transaction as TransactionsOutput
+                                      ),
+                                      Object.values(
+                                        transaction as TransactionsOutput
+                                      ),
+                                      index
+                                    )}
+                                  </div>
+                                ) : (
+                                  <Chip
+                                    label={getTransactionMethod(
+                                      Object.values(
+                                        transaction as TransactionsOutput
+                                      )[index]
+                                    )}
+                                    bgcolor={colors.nordic}
+                                    border={`1px solid ${colors.actionPrimary}`}
+                                    titlecolor={colors.neutral100}
+                                  />
+                                )}
+                              </CustomTableCellBox>
+                            </CustomTableCell>
+                          </React.Fragment>
+                        ))}
+                      </>
+                    </TableRow>
+                  )
+                )}
               </TableBody>
             </Table>
             <BottomPagination
@@ -255,7 +259,7 @@ const TransactionsTable = ({
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               lengthOfEachPage={lengthOfEachPage || 0}
-              handlePagination={handlePagination}
+              handlePagination={handleSettingBlockDetails}
             />
           </>
         ) : (

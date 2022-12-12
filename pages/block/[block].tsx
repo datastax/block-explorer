@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { BlockDetails } from '@types'
 import {
   useGetBlockByHashLazyQuery,
-  useEth_BlockLazyQuery,
+  useGetEthBlockByNumberLazyQuery,
   useGetLatestBlockGroupQuery,
 } from 'lib/graphql/generated'
 import { useEffect, useState } from 'react'
@@ -22,7 +22,7 @@ const Block: NextPage = () => {
   const { data: latestBlockGroup } = useGetLatestBlockGroupQuery()
 
   const [getBlockDetailsByNumber, { data: blockDetails, error: blocksError }] =
-    useEth_BlockLazyQuery()
+    useGetEthBlockByNumberLazyQuery()
 
   const [
     getBlockDetailsByHash,
@@ -33,7 +33,9 @@ const Block: NextPage = () => {
     if (isNumber(blockKey))
       getBlockDetailsByNumber({
         variables: {
-          blockGroup: latestBlockGroup,
+          blockGroup:
+            latestBlockGroup?.dashboard_analytics?.values?.[0]
+              ?.latest_blocks_group,
           blockNumber: Number(blockKey),
         },
       })
@@ -43,7 +45,12 @@ const Block: NextPage = () => {
     //       data: blockKey,
     //     },
     //   })
-  }, [blockKey, getBlockDetailsByHash, getBlockDetailsByNumber, latestBlockGroup])
+  }, [
+    blockKey,
+    getBlockDetailsByHash,
+    getBlockDetailsByNumber,
+    latestBlockGroup,
+  ])
   if (blocksError || blocksErrorhash) {
     console.error(blocksError + ' ' + blocksErrorhash)
   }
