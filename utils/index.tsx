@@ -242,19 +242,19 @@ const mapRawDataToTransactionDetails = (
       time: `${getDifference(
         parseInt(
           transactionDetails?.transactions_by_hash?.values?.[0]
-            .block_timestamp || ''
+            ?.block_timestamp || ''
         )
       )} ago`,
       Date: `(${new Date(
         parseInt(
           transactionDetails?.transactions_by_hash?.values?.[0]
-            .block_timestamp || ''
+            ?.block_timestamp || ''
         ) * 1000
       ).toUTCString()})`,
     },
-    Gas_limit: transactionDetails.transactions_by_hash?.values?.[0].gas,
+    Gas_limit: transactionDetails.transactions_by_hash?.values?.[0]?.gas,
     Usage_Txn:
-      transactionDetails.transactions_by_hash?.values?.[0].receipt_gas_used,
+      transactionDetails.transactions_by_hash?.values?.[0]?.receipt_gas_used,
     TransactionAction: {
       approved: 'Approved',
       kuno: 'KUNO',
@@ -264,22 +264,22 @@ const mapRawDataToTransactionDetails = (
       token: 'Token Approvals',
     },
     From:
-      transactionDetails?.transactions_by_hash?.values?.[0].from_address || '',
-    To: transactionDetails?.transactions_by_hash?.values?.[0].to_address || '',
-    Value: `${transactionDetails?.transactions_by_hash?.values?.[0].value} Ether`,
+      transactionDetails?.transactions_by_hash?.values?.[0]?.from_address || '',
+    To: transactionDetails?.transactions_by_hash?.values?.[0]?.to_address || '',
+    Value: `${transactionDetails?.transactions_by_hash?.values?.[0]?.value} Ether`,
     Value_usd: `($${parseFloat(
       transactionDetails?.transactions_by_hash?.values?.[0]?.value || ''
     ).toFixed(2)})`,
     TransactionFee: `${
-      transactionDetails?.transactions_by_hash?.values?.[0].transaction_fees
+      transactionDetails?.transactions_by_hash?.values?.[0]?.transaction_fees
     } Ether ($${parseFloat(
       transactionDetails?.transactions_by_hash?.values?.[0]?.transaction_fees ||
         ''
     ).toFixed(2)})`,
     GasPrice: `${
-      transactionDetails?.transactions_by_hash?.values?.[0].gas_price
+      transactionDetails?.transactions_by_hash?.values?.[0]?.gas_price
     } Ether (${etherToGwei(
-      transactionDetails?.transactions_by_hash?.values?.[0].gas_price
+      transactionDetails?.transactions_by_hash?.values?.[0]?.gas_price
     )} Gwei)`,
     BaseFee: transactionDetails?.transactions_by_hash?.values?.[0]?.base_fee,
     MaxFee: transactionDetails?.transactions_by_hash?.values?.[0]?.max_fee,

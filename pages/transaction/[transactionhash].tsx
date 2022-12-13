@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react' // useCallback
 import type { NextPage, NextPageContext } from 'next'
-// import Router from 'next/router'
+import Router from 'next/router'
 import { Typography, Box } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import Hero from '@components/shared/Hero'
@@ -192,6 +192,8 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
 
   useEffect(() => {
     if (transactionDetails) {
+      if (transactionDetails?.transactions_by_hash?.values?.length === 0)
+        Router.push(`/404`)
       if (blockConfirmation && !blockLoading && internalTransactionsData) {
         setTransactionDetailData(
           mapRawDataToTransactionDetails(transactionDetails, blockConfirmation)

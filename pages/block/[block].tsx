@@ -1,24 +1,28 @@
 import type { NextPage } from 'next'
 import Hero from '@components/shared/Hero'
 import BlocksDetail from '@components/BlocksDetail'
-import { useRouter } from 'next/router'
 import { BlockDetails } from '@types'
 import {
   useGetEthBlockByNumberLazyQuery,
   useGetLatestBlockGroupQuery,
 } from 'lib/graphql/generated/generate'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { isNumber, mapRawDataToBlockDetails } from 'utils'
 import { Box } from '@mui/material'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
+import { useRouter } from 'next/router'
 
 const Block: NextPage = () => {
-  const router = useRouter()
-  const { block } = router.query
+  const Router = useRouter()
+  const { block } = Router.query
+
   const blockKey = block as string
   const [blockDetailsData, setBlockDetailsData] = useState<BlockDetails>()
-
   const { data: latestBlockGroup } = useGetLatestBlockGroupQuery()
+
+  const goTo404 = useCallback(() => {
+    Router.push(`/404`)
+  }, [Router])
 
   const [getBlockDetailsByNumber, { data: blockDetails, error: blocksError }] =
     useGetEthBlockByNumberLazyQuery()
@@ -39,18 +43,11 @@ const Block: NextPage = () => {
   ])
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ file: [block].tsx:54 ~ useEffect ~ blockDetails',
-      blockDetails
-    )
     if (blockDetails) {
-      console.log(
-        'mapRawDataToBlockDetails(blockDetails, blockKey)',
-        mapRawDataToBlockDetails(blockDetails, blockKey)
-      )
+      if (blockDetails?.eth_blocks?.values?.length === 0) goTo404()
       setBlockDetailsData(mapRawDataToBlockDetails(blockDetails, blockKey))
     }
-  }, [blockDetails, blockKey])
+  }, [blockDetails, blockKey, goTo404])
 
   if (blocksError) {
     console.error(blocksError)
