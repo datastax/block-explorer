@@ -9,7 +9,7 @@ import {
   ChipWrapper,
 } from './styles'
 import { useRouter } from 'next/router'
-import { GetTransactionsOfLatestBlockQuery } from 'lib/graphql/generated'
+import { GetTransactionsOfLatestBlockQuery } from 'lib/graphql/generated/generate'
 import { formatAddress, getDifference, weiToEther } from '@utils'
 
 interface transactionBlockProps {

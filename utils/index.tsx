@@ -1,10 +1,11 @@
 import colors from '@styles/ThemeProvider/colors'
 import {
   GetEthBlockByNumberQuery,
-  GetInternalTransactionByBlockNumberQuery,
+  GetEthTransactionByHashQuery,
+  GetInternalTransactionByEthBlockNumberQuery,
+  GetInternalTransactionByEthBlockNumber_Transaction_HashQuery,
   GetPaginatedEthBlocksQuery,
-  GetTransactionByHashQuery,
-} from 'lib/graphql/generated'
+} from 'lib/graphql/generated/generate'
 import {
   BlockDetails,
   InternalTransactionData,
@@ -185,35 +186,34 @@ const mapRawDataToBlockDetails = (
 }
 
 const mapRawDataToIntTransactions = (
-  internalTransactions: GetInternalTransactionByBlockNumberQuery
+  internalTransactions: GetInternalTransactionByEthBlockNumberQuery
 ): InternalTransactionData[] => {
   const data =
-    internalTransactions.getInternalTransactionByBlockNumber.map(
-      (transaction) => {
-        return {
-          parentTxnHash: transaction?.transactionHash,
-          type: 'call',
-          from: transaction?.from ?? '',
-          to: transaction?.to ?? '',
-          value: String(transaction?.value?.toFixed(4)),
-        }
+    internalTransactions?.traces?.values?.map((transaction) => {
+      return {
+        parentTxnHash: transaction?.transaction_hash,
+        type: 'call',
+        from: transaction?.from_address ?? '',
+        to: transaction?.to_address ?? '',
+        value: String(Number(transaction?.value).toFixed(4)),
       }
-    ) || []
+    }) || []
+
   return data
 }
 
 const mapRawDataToInternalTransactions = (
-  transactionDetails: GetTransactionByHashQuery
+  transactionDetails: GetInternalTransactionByEthBlockNumber_Transaction_HashQuery
 ): InternalTxnsTabData[] => {
   const data =
-    transactionDetails?.getTransactionByHash?.internalTxn?.map(
-      (transaction) => {
+    transactionDetails?.traces?.values?.map(
+      ({ from_address, to_address, gas_limit, type_trace_address, value }) => {
         return {
-          typeTraceAddress: transaction?.typeTraceAddress,
-          from: transaction?.from || '',
-          to: transaction?.to || '',
-          value: String(transaction?.value),
-          gasLimit: numberWithCommas(transaction?.gasLimit),
+          typeTraceAddress: type_trace_address,
+          from: from_address,
+          to: to_address,
+          value: String(value),
+          gasLimit: numberWithCommas(gas_limit),
         }
       }
     ) || []
@@ -221,31 +221,40 @@ const mapRawDataToInternalTransactions = (
 }
 
 const mapRawDataToTransactionDetails = (
-  transactionDetails: GetTransactionByHashQuery,
+  transactionDetails: GetEthTransactionByHashQuery,
   blockConfirmation: number
 ): TransactionDetails => {
   return {
-    Nonce: transactionDetails?.getTransactionByHash?.nonce,
+    Nonce: transactionDetails?.transactions_by_hash?.values?.[0]?.nonce,
     TransactionIndex:
-      transactionDetails?.getTransactionByHash?.transaction_index,
-    TransactionHash: transactionDetails?.getTransactionByHash.hash || '',
-    Status: transactionDetails?.getTransactionByHash.receipt_status,
-    Block: transactionDetails?.getTransactionByHash?.block_number,
+      transactionDetails?.transactions_by_hash?.values?.[0]?.transaction_index,
+    TransactionHash:
+      transactionDetails?.transactions_by_hash?.values?.[0]?.hash || '',
+    Status:
+      transactionDetails?.transactions_by_hash?.values?.[0]?.receipt_status,
+    Block: transactionDetails?.transactions_by_hash?.values?.[0]?.block_number,
     BlockConfirmation:
       blockConfirmation -
-      Number(transactionDetails?.getTransactionByHash?.block_number),
+      Number(
+        transactionDetails?.transactions_by_hash?.values?.[0]?.block_number
+      ),
     Timestamp: {
       time: `${getDifference(
-        parseInt(transactionDetails?.getTransactionByHash.block_timestamp || '')
+        parseInt(
+          transactionDetails?.transactions_by_hash?.values?.[0]
+            .block_timestamp || ''
+        )
       )} ago`,
       Date: `(${new Date(
         parseInt(
-          transactionDetails?.getTransactionByHash.block_timestamp || ''
+          transactionDetails?.transactions_by_hash?.values?.[0]
+            .block_timestamp || ''
         ) * 1000
       ).toUTCString()})`,
     },
-    Gas_limit: transactionDetails.getTransactionByHash.gas,
-    Usage_Txn: transactionDetails.getTransactionByHash.receipt_gas_used,
+    Gas_limit: transactionDetails.transactions_by_hash?.values?.[0].gas,
+    Usage_Txn:
+      transactionDetails.transactions_by_hash?.values?.[0].receipt_gas_used,
     TransactionAction: {
       approved: 'Approved',
       kuno: 'KUNO',
@@ -254,28 +263,33 @@ const mapRawDataToTransactionDetails = (
       checkIn: 'Check in',
       token: 'Token Approvals',
     },
-    From: transactionDetails?.getTransactionByHash.from_address || '',
-    To: transactionDetails?.getTransactionByHash.to_address || '',
-    Value: `${transactionDetails?.getTransactionByHash.value} Ether`,
+    From:
+      transactionDetails?.transactions_by_hash?.values?.[0].from_address || '',
+    To: transactionDetails?.transactions_by_hash?.values?.[0].to_address || '',
+    Value: `${transactionDetails?.transactions_by_hash?.values?.[0].value} Ether`,
     Value_usd: `($${parseFloat(
-      transactionDetails?.getTransactionByHash?.value_usd || ''
+      transactionDetails?.transactions_by_hash?.values?.[0]?.value || ''
     ).toFixed(2)})`,
     TransactionFee: `${
-      transactionDetails?.getTransactionByHash.transaction_fees
+      transactionDetails?.transactions_by_hash?.values?.[0].transaction_fees
     } Ether ($${parseFloat(
-      transactionDetails?.getTransactionByHash?.transaction_fees_usd || ''
+      transactionDetails?.transactions_by_hash?.values?.[0]?.transaction_fees ||
+        ''
     ).toFixed(2)})`,
     GasPrice: `${
-      transactionDetails?.getTransactionByHash.gas_price
+      transactionDetails?.transactions_by_hash?.values?.[0].gas_price
     } Ether (${etherToGwei(
-      transactionDetails?.getTransactionByHash.gas_price
+      transactionDetails?.transactions_by_hash?.values?.[0].gas_price
     )} Gwei)`,
-    BaseFee: transactionDetails?.getTransactionByHash?.baseFee,
-    MaxFee: transactionDetails?.getTransactionByHash?.maxFee,
-    MaxPriorityFee: transactionDetails?.getTransactionByHash?.maxPriorityFee,
-    TxnBurntFee: transactionDetails?.getTransactionByHash?.txnBurntFee,
-    TxnSavingFee: transactionDetails?.getTransactionByHash?.txnSavingFee,
-    input: transactionDetails?.getTransactionByHash?.input,
+    BaseFee: transactionDetails?.transactions_by_hash?.values?.[0]?.base_fee,
+    MaxFee: transactionDetails?.transactions_by_hash?.values?.[0]?.max_fee,
+    MaxPriorityFee:
+      transactionDetails?.transactions_by_hash?.values?.[0]?.max_priority_fee,
+    TxnBurntFee:
+      transactionDetails?.transactions_by_hash?.values?.[0]?.txn_savings, //
+    TxnSavingFee:
+      transactionDetails?.transactions_by_hash?.values?.[0]?.txn_savings,
+    input: transactionDetails?.transactions_by_hash?.values?.[0]?.input,
   }
 }
 

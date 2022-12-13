@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import InternalTransactionTable from '@components/InternalTransactions'
 import { InternalTransactionTitle } from 'constants/stubs'
 import { InternalTransactionData } from 'types'
-import { useGetInternalTransactionByBlockNumberQuery } from 'lib/graphql/generated'
+import { useGetInternalTransactionByEthBlockNumberQuery } from 'lib/graphql/generated/generate'
 import { mapRawDataToIntTransactions } from 'utils'
 
 const InternalTransaction: NextPage = () => {
@@ -24,12 +24,14 @@ const InternalTransaction: NextPage = () => {
     data: internalTransactions,
     error: internalTransactionsError,
     loading: loadingTransctions,
-  } = useGetInternalTransactionByBlockNumberQuery({
+  } = useGetInternalTransactionByEthBlockNumberQuery({
     variables: {
-      data: {
+      filter: {
+        block_number: { eq: blockNumber as string },
+      },
+      options: {
+        pageState: null,
         pageSize: pageSize,
-        blockNumber: Number(blockNumber),
-        pageNumber: pageNumber,
       },
     },
     onError: () => {

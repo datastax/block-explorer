@@ -9,7 +9,7 @@ import {
   ChipWrapper,
 } from './styles'
 import { useRouter } from 'next/router'
-import { GetEthBlocksQuery } from 'lib/graphql/generated'
+import { GetEthBlocksQuery } from 'lib/graphql/generated/generate'
 import { fixed, formatAddress, getDifference } from '@utils'
 
 interface BlockListProps {

@@ -12,7 +12,7 @@ import {
   summaryBlocksDataPrice,
   summaryBlocksDataTransactions,
 } from '@constants'
-import { useDashboard_AnalyticsLazyQuery } from 'lib/graphql/generated'
+import { useDashboard_AnalyticsLazyQuery } from 'lib/graphql/generated/generate'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import {
   GraphData,

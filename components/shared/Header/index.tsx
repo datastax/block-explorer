@@ -19,29 +19,36 @@ import Chip from '@components/shared/Chip'
 import colors from '@styles/ThemeProvider/colors'
 import theme from '@styles/ThemeProvider/theme'
 import {
-  GetDashboardHeaderQuery,
-  useGetDashboardHeaderQuery,
-} from 'lib/graphql/generated'
+  useDashboard_Analytics_HeaderQuery,
+  Dashboard_Analytics_HeaderQuery,
+} from 'lib/graphql/generated/generate'
 import { fixed } from 'utils'
 
 interface ChiplabelProps {
-  data: GetDashboardHeaderQuery | undefined
+  data: Dashboard_Analytics_HeaderQuery | undefined
 }
 const ChipLabel = ({ data }: ChiplabelProps) => {
   return (
     <>
       {data && (
         <StyledLabel>
-          Eth: ${fixed(data?.dashboardAnalytics?.etherPriceUSD, 2)}
+          Eth: $
+          {fixed(data?.dashboard_analytics?.values?.[0]?.ether_price_usd, 2)}
           <span>
             {' '}
-            ({fixed(data?.dashboardAnalytics?.pricePercentageChange, 2)}
+            (
+            {fixed(
+              data?.dashboard_analytics?.values?.[0]?.price_percentage_change,
+              2
+            )}
             %){' '}
           </span>
           <span>
             | ⛽️{' '}
-            {Number(data?.dashboardAnalytics?.networkBaseFee) +
-              Number(data?.dashboardAnalytics?.networkpriorityFee)}{' '}
+            {Number(data?.dashboard_analytics?.values?.[0]?.network_base_fee) +
+              Number(
+                data?.dashboard_analytics?.values?.[0]?.network_priority_fee
+              )}{' '}
             Gwei
           </span>
         </StyledLabel>
@@ -55,7 +62,7 @@ const Header = () => {
   const { pathname } = useRouter()
   const isHome = pathname === '/'
 
-  const { data, error } = useGetDashboardHeaderQuery()
+  const { data, error } = useDashboard_Analytics_HeaderQuery()
 
   if (error) {
     console.error(error)

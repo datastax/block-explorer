@@ -5,7 +5,7 @@ schema:
         x-cassandra-token: AstraCS:soPLjParGIPWFspQzlGoSIiP:8091429af710c011116d3fe3215aabcdf24acf13c3389fcdb680167b7c2f4b5b
 documents: './lib/graphql/*.graphql'
 generates:
-  lib/graphql/generated/index.tsx:
+  lib/graphql/generated/generate.tsx:
     plugins:
       - 'typescript'
       - 'typescript-operations'

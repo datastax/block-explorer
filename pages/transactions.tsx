@@ -8,8 +8,7 @@ import {
   useGetNextBlockForTransactionLazyQuery,
   useGetPaginatedEThTransactionsLazyQuery,
   useGetPreviousBlockForTransactionLazyQuery,
-  useGetTransactionsByBlockLazyQuery,
-} from 'lib/graphql/generated'
+} from 'lib/graphql/generated/generate'
 
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -87,7 +86,7 @@ const Transactions: NextPage = () => {
       error: transactionErrorByBlock,
       loading: loadingTransactionsByBlock,
     },
-  ] = useGetTransactionsByBlockLazyQuery()
+  ] = useGetPaginatedEThTransactionsLazyQuery()
 
   const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
     if (paginationEvent === PAGINATION_EVENT.NEXT)
@@ -111,7 +110,7 @@ const Transactions: NextPage = () => {
           const lengthOfLatestTransactions =
             respnsePreviousBlocks?.transactions?.values?.length || pageSize
 
-          if (lengthOfLatestTransactions < pageSize) {
+          if (lengthOfLatestTransactions < pageSize && latestTransactions) {
             getNextBlockTranscation({
               variables: {
                 blockGroup: Number(
@@ -207,14 +206,14 @@ const Transactions: NextPage = () => {
       })
       getTransactionsByBlock({
         variables: {
-          data: {
-            blockHash: blockHash,
-            blockNumber: Number(blockNumber),
-            pagesInput: {
-              pageSize: pageSize,
-              next: null,
-              previous: null,
+          filter: {
+            block_hash: {
+              eq: blockHash,
             },
+          },
+          options: {
+            pageState: null,
+            pageSize: pageSize,
           },
         },
         onError: () => {
@@ -257,6 +256,16 @@ const Transactions: NextPage = () => {
       ])
     }
   }, [latestTransactions])
+
+  useEffect(() => {
+    if (transactionsByBlock) {
+      setpaginatedTransactions(transactionsByBlock)
+      setPageStateArray((prevState) => [
+        ...prevState,
+        String(transactionsByBlock?.transactions?.pageState),
+      ])
+    }
+  }, [transactionsByBlock])
 
   if (
     transactionError ||

@@ -4,7 +4,7 @@ import { Stack, useMediaQuery } from '@mui/material'
 import {
   useGetEthBlocksLazyQuery,
   useGetTransactionsOfLatestBlockLazyQuery,
-} from '@lib/graphql/generated'
+} from 'lib/graphql/generated/generate'
 import { useEffect } from 'react'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Container } from './styles'

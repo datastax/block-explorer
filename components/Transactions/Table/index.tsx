@@ -17,9 +17,9 @@ import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
 import {
   GetPaginatedEThTransactionsQuery,
-  TracesOutput,
-  TransactionsOutput,
-} from 'lib/graphql/generated'
+  // TracesOutput,
+  // TransactionsOutput,
+} from 'lib/graphql/generated/generate'
 import { Exchange, Eye } from '@components/shared/Icons'
 import Chip from '@components/shared/Chip'
 import { formatAddress, getDifference, weiToEther } from 'utils'
@@ -59,7 +59,7 @@ const TransactionsTable = ({
 
   const getUIValue = (
     keys: string[],
-    values: (string | number | null | TracesOutput[])[],
+    values: (string | number | null | [])[],
     index: number
   ) => {
     if (index > 7) return
@@ -78,7 +78,7 @@ const TransactionsTable = ({
   }
 
   const getTransactionMethod = (
-    transactionMethod: string | null | number | TracesOutput[]
+    transactionMethod: string | null | number | []
   ) => {
     if (!transactionMethod) return 'transfer'
     if (typeof transactionMethod === 'number') return transactionMethod
@@ -151,102 +151,84 @@ const TransactionsTable = ({
                       key={index}
                     >
                       <>
-                        {[
-                          ...Array(
-                            Object.keys(transaction as TransactionsOutput)
-                              .length
-                          ),
-                        ].map((_, index) => (
-                          <React.Fragment key={index}>
-                            <>
-                              {transaction && index == 5 && (
-                                <CustomTableCell
-                                  color={''}
-                                  border={`1px solid ${colors.neutral500}`}
-                                >
-                                  <Exchange />
-                                </CustomTableCell>
-                              )}
-                            </>
-                            <CustomTableCell
-                              key={index}
-                              align="center"
-                              color={
-                                Object.keys(transaction as TransactionsOutput)[
-                                  index
-                                ]
-                              }
-                              border={`1px solid ${colors.neutral500}`}
-                              fontWeight="400"
-                              lineheight="143%"
-                              padding={index > 7 ? 'none' : 'normal'}
-                            >
-                              <CustomTableCellBox
-                                style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                }}
-                              >
-                                {transactions && index == 0 && (
-                                  <IconWrapper>
-                                    <Eye />
-                                  </IconWrapper>
-                                )}
-                                {Object.keys(transaction as TransactionsOutput)[
-                                  index
-                                ] !== 'method' ? (
-                                  <div
-                                    onClick={() => {
-                                      if (index == 0)
-                                        router.push(
-                                          `/transaction/${
-                                            Object.values(
-                                              transaction as TransactionsOutput
-                                            )[index]
-                                          }`
-                                        )
-                                      else if (index == 2)
-                                        router.push(
-                                          `/block/${
-                                            Object.values(
-                                              transaction as TransactionsOutput
-                                            )[index]
-                                          }`
-                                        )
-                                    }}
-                                    style={{
-                                      cursor:
-                                        index == 0 || index == 2
-                                          ? 'pointer'
-                                          : 'default',
-                                    }}
+                        {[...Array(Object.keys(transaction).length)].map(
+                          (_, index) => (
+                            <React.Fragment key={index}>
+                              <>
+                                {transaction && index == 5 && (
+                                  <CustomTableCell
+                                    color={''}
+                                    border={`1px solid ${colors.neutral500}`}
                                   >
-                                    {getUIValue(
-                                      Object.keys(
-                                        transaction as TransactionsOutput
-                                      ),
-                                      Object.values(
-                                        transaction as TransactionsOutput
-                                      ),
-                                      index
-                                    )}
-                                  </div>
-                                ) : (
-                                  <Chip
-                                    label={getTransactionMethod(
-                                      Object.values(
-                                        transaction as TransactionsOutput
-                                      )[index]
-                                    )}
-                                    bgcolor={colors.nordic}
-                                    border={`1px solid ${colors.actionPrimary}`}
-                                    titlecolor={colors.neutral100}
-                                  />
+                                    <Exchange />
+                                  </CustomTableCell>
                                 )}
-                              </CustomTableCellBox>
-                            </CustomTableCell>
-                          </React.Fragment>
-                        ))}
+                              </>
+                              <CustomTableCell
+                                key={index}
+                                align="center"
+                                color={Object.keys(transaction)[index]}
+                                border={`1px solid ${colors.neutral500}`}
+                                fontWeight="400"
+                                lineheight="143%"
+                                padding={index > 7 ? 'none' : 'normal'}
+                              >
+                                <CustomTableCellBox
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                  }}
+                                >
+                                  {transactions && index == 0 && (
+                                    <IconWrapper>
+                                      <Eye />
+                                    </IconWrapper>
+                                  )}
+                                  {Object.keys(transaction)[index] !==
+                                  'method' ? (
+                                    <div
+                                      onClick={() => {
+                                        if (index == 0)
+                                          router.push(
+                                            `/transaction/${
+                                              Object.values(transaction)[index]
+                                            }`
+                                          )
+                                        else if (index == 2)
+                                          router.push(
+                                            `/block/${
+                                              Object.values(transaction)[index]
+                                            }`
+                                          )
+                                      }}
+                                      style={{
+                                        cursor:
+                                          index == 0 || index == 2
+                                            ? 'pointer'
+                                            : 'default',
+                                      }}
+                                    >
+                                      {getUIValue(
+                                        Object.keys(transaction),
+                                        Object.values(transaction),
+                                        index
+                                      )}
+                                    </div>
+                                  ) : (
+                                    <Chip
+                                      label={getTransactionMethod(
+                                        Object.values(transaction)[index]
+                                      )}
+                                      bgcolor={colors.nordic}
+                                      border={`1px solid ${colors.actionPrimary}`}
+                                      titlecolor={colors.neutral100}
+                                    />
+                                  )}
+                                </CustomTableCellBox>
+                              </CustomTableCell>
+                            </React.Fragment>
+                          )
+                        )}
                       </>
                     </TableRow>
                   )

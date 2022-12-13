@@ -171,6 +171,11 @@ export type Mutation = {
    */
   bulkInserttransactions?: Maybe<Array<Maybe<TransactionsMutationResult>>>;
   /**
+   * Bulk insert mutations for the table 'transactions_by_hash'.
+   * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  bulkInserttransactions_by_hash?: Maybe<Array<Maybe<Transactions_By_HashMutationResult>>>;
+  /**
    * Delete mutation for the table 'contract_abis'.
    * Note that 'contract_address' is the field that corresponds to the table primary key.
    */
@@ -230,6 +235,11 @@ export type Mutation = {
    * Note that 'block_hash', 'transaction_index' and 'hash' are the fields that correspond to the table primary key.
    */
   deletetransactions?: Maybe<TransactionsMutationResult>;
+  /**
+   * Delete mutation for the table 'transactions_by_hash'.
+   * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  deletetransactions_by_hash?: Maybe<Transactions_By_HashMutationResult>;
   /**
    * Insert mutation for the table 'contract_abis'.
    * Note that 'contract_address' is the field that corresponds to the table primary key.
@@ -291,6 +301,11 @@ export type Mutation = {
    */
   inserttransactions?: Maybe<TransactionsMutationResult>;
   /**
+   * Insert mutation for the table 'transactions_by_hash'.
+   * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  inserttransactions_by_hash?: Maybe<Transactions_By_HashMutationResult>;
+  /**
    * Update mutation for the table 'contract_abis'.
    * Note that 'contract_address' is the field that corresponds to the table primary key.
    */
@@ -350,6 +365,11 @@ export type Mutation = {
    * Note that 'block_hash', 'transaction_index' and 'hash' are the fields that correspond to the table primary key.
    */
   updatetransactions?: Maybe<TransactionsMutationResult>;
+  /**
+   * Update mutation for the table 'transactions_by_hash'.
+   * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  updatetransactions_by_hash?: Maybe<Transactions_By_HashMutationResult>;
 };
 
 
@@ -434,6 +454,13 @@ export type MutationBulkInserttransactionsArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   values?: InputMaybe<Array<TransactionsInput>>;
+};
+
+
+export type MutationBulkInserttransactions_By_HashArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  values?: InputMaybe<Array<Transactions_By_HashInput>>;
 };
 
 
@@ -533,6 +560,14 @@ export type MutationDeletetransactionsArgs = {
 };
 
 
+export type MutationDeletetransactions_By_HashArgs = {
+  ifCondition?: InputMaybe<Transactions_By_HashFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Transactions_By_HashInput;
+};
+
+
 export type MutationInsertcontract_AbisArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
@@ -614,6 +649,13 @@ export type MutationInserttransactionsArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   value: TransactionsInput;
+};
+
+
+export type MutationInserttransactions_By_HashArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Transactions_By_HashInput;
 };
 
 
@@ -710,6 +752,14 @@ export type MutationUpdatetransactionsArgs = {
   ifExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   value: TransactionsInput;
+};
+
+
+export type MutationUpdatetransactions_By_HashArgs = {
+  ifCondition?: InputMaybe<Transactions_By_HashFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Transactions_By_HashInput;
 };
 
 export enum MutationConsistency {
@@ -816,6 +866,13 @@ export type Query = {
   transactions?: Maybe<TransactionsResult>;
   /** @deprecated No longer supported. Use root type instead. */
   transactionsFilter?: Maybe<TransactionsResult>;
+  /**
+   * Query for the table 'transactions_by_hash'.
+   * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  transactions_by_hash?: Maybe<Transactions_By_HashResult>;
+  /** @deprecated No longer supported. Use root type instead. */
+  transactions_by_hashFilter?: Maybe<Transactions_By_HashResult>;
 };
 
 
@@ -1008,6 +1065,22 @@ export type QueryTransactionsFilterArgs = {
   filter?: InputMaybe<TransactionsFilterInput>;
   options?: InputMaybe<QueryOptions>;
   orderBy?: InputMaybe<Array<InputMaybe<TransactionsOrder>>>;
+};
+
+
+export type QueryTransactions_By_HashArgs = {
+  filter?: InputMaybe<Transactions_By_HashFilterInput>;
+  groupBy?: InputMaybe<Transactions_By_HashGroupByInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Transactions_By_HashOrder>>>;
+  value?: InputMaybe<Transactions_By_HashInput>;
+};
+
+
+export type QueryTransactions_By_HashFilterArgs = {
+  filter?: InputMaybe<Transactions_By_HashFilterInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Transactions_By_HashOrder>>>;
 };
 
 export enum QueryConsistency {
@@ -3461,6 +3534,270 @@ export type TransactionsResult = {
   values?: Maybe<Array<Transactions>>;
 };
 
+/** The type used to represent results of a query for the table 'transactions_by_hash'. */
+export type Transactions_By_Hash = {
+  __typename?: 'transactions_by_hash';
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@39b7969}.
+   */
+  _bigint_function?: Maybe<Scalars['BigInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
+   * This is a variable-precision decimal.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@222c9ebb}.
+   */
+  _decimal_function?: Maybe<Scalars['Decimal']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@5d591da7}. */
+  _double_function?: Maybe<Scalars['Float']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
+   * This is a 32-bit IEEE-754 floating point.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@2ba83409}.
+   */
+  _float_function?: Maybe<Scalars['Float32']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@1970b925}. */
+  _int_function?: Maybe<Scalars['Int']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
+   * This is a 16-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@73205024}.
+   */
+  _smallint_function?: Maybe<Scalars['SmallInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
+   * .This is an 8-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@353fd1bd}.
+   */
+  _tinyint_function?: Maybe<Scalars['TinyInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
+   * This is an arbitrary-precision integer.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@3e09a24a}.
+   */
+  _varint_function?: Maybe<Scalars['Varint']>;
+  base_fee?: Maybe<Scalars['String']>;
+  block_hash?: Maybe<Scalars['String']>;
+  block_number?: Maybe<Scalars['BigInt']>;
+  block_timestamp?: Maybe<Scalars['String']>;
+  burnt_fee?: Maybe<Scalars['String']>;
+  from_address?: Maybe<Scalars['String']>;
+  gas?: Maybe<Scalars['BigInt']>;
+  gas_price?: Maybe<Scalars['String']>;
+  hash?: Maybe<Scalars['String']>;
+  input?: Maybe<Scalars['String']>;
+  max_fee?: Maybe<Scalars['String']>;
+  max_priority_fee?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  nonce?: Maybe<Scalars['BigInt']>;
+  receipt_contract_address?: Maybe<Scalars['String']>;
+  receipt_cumulative_gas_used?: Maybe<Scalars['BigInt']>;
+  receipt_gas_used?: Maybe<Scalars['BigInt']>;
+  receipt_root?: Maybe<Scalars['String']>;
+  receipt_status?: Maybe<Scalars['BigInt']>;
+  to_address?: Maybe<Scalars['String']>;
+  transaction_fees?: Maybe<Scalars['String']>;
+  transaction_index?: Maybe<Scalars['BigInt']>;
+  txn_savings?: Maybe<Scalars['String']>;
+  txn_type?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Decimal']>;
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_hash'. */
+export type Transactions_By_Hash_Bigint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_hash'. */
+export type Transactions_By_Hash_Decimal_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_hash'. */
+export type Transactions_By_Hash_Double_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_hash'. */
+export type Transactions_By_Hash_Float_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_hash'. */
+export type Transactions_By_Hash_Int_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_hash'. */
+export type Transactions_By_Hash_Smallint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_hash'. */
+export type Transactions_By_Hash_Tinyint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_hash'. */
+export type Transactions_By_Hash_Varint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+/**
+ * The input type used for filtering with non-equality operators for the table 'transactions_by_hash'.
+ * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
+ */
+export type Transactions_By_HashFilterInput = {
+  base_fee?: InputMaybe<StringFilterInput>;
+  block_hash?: InputMaybe<StringFilterInput>;
+  block_number?: InputMaybe<BigIntFilterInput>;
+  block_timestamp?: InputMaybe<StringFilterInput>;
+  burnt_fee?: InputMaybe<StringFilterInput>;
+  from_address?: InputMaybe<StringFilterInput>;
+  gas?: InputMaybe<BigIntFilterInput>;
+  gas_price?: InputMaybe<StringFilterInput>;
+  hash?: InputMaybe<StringFilterInput>;
+  input?: InputMaybe<StringFilterInput>;
+  max_fee?: InputMaybe<StringFilterInput>;
+  max_priority_fee?: InputMaybe<StringFilterInput>;
+  method?: InputMaybe<StringFilterInput>;
+  nonce?: InputMaybe<BigIntFilterInput>;
+  receipt_contract_address?: InputMaybe<StringFilterInput>;
+  receipt_cumulative_gas_used?: InputMaybe<BigIntFilterInput>;
+  receipt_gas_used?: InputMaybe<BigIntFilterInput>;
+  receipt_root?: InputMaybe<StringFilterInput>;
+  receipt_status?: InputMaybe<BigIntFilterInput>;
+  to_address?: InputMaybe<StringFilterInput>;
+  transaction_fees?: InputMaybe<StringFilterInput>;
+  transaction_index?: InputMaybe<BigIntFilterInput>;
+  txn_savings?: InputMaybe<StringFilterInput>;
+  txn_type?: InputMaybe<StringFilterInput>;
+  value?: InputMaybe<DecimalFilterInput>;
+};
+
+export type Transactions_By_HashGroupByInput = {
+  block_number?: InputMaybe<Scalars['Boolean']>;
+  hash?: InputMaybe<Scalars['Boolean']>;
+  transaction_index?: InputMaybe<Scalars['Boolean']>;
+};
+
+/**
+ * The input type for the table 'transactions_by_hash'.
+ * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
+ */
+export type Transactions_By_HashInput = {
+  base_fee?: InputMaybe<Scalars['String']>;
+  block_hash?: InputMaybe<Scalars['String']>;
+  block_number?: InputMaybe<Scalars['BigInt']>;
+  block_timestamp?: InputMaybe<Scalars['String']>;
+  burnt_fee?: InputMaybe<Scalars['String']>;
+  from_address?: InputMaybe<Scalars['String']>;
+  gas?: InputMaybe<Scalars['BigInt']>;
+  gas_price?: InputMaybe<Scalars['String']>;
+  hash?: InputMaybe<Scalars['String']>;
+  input?: InputMaybe<Scalars['String']>;
+  max_fee?: InputMaybe<Scalars['String']>;
+  max_priority_fee?: InputMaybe<Scalars['String']>;
+  method?: InputMaybe<Scalars['String']>;
+  nonce?: InputMaybe<Scalars['BigInt']>;
+  receipt_contract_address?: InputMaybe<Scalars['String']>;
+  receipt_cumulative_gas_used?: InputMaybe<Scalars['BigInt']>;
+  receipt_gas_used?: InputMaybe<Scalars['BigInt']>;
+  receipt_root?: InputMaybe<Scalars['String']>;
+  receipt_status?: InputMaybe<Scalars['BigInt']>;
+  to_address?: InputMaybe<Scalars['String']>;
+  transaction_fees?: InputMaybe<Scalars['String']>;
+  transaction_index?: InputMaybe<Scalars['BigInt']>;
+  txn_savings?: InputMaybe<Scalars['String']>;
+  txn_type?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['Decimal']>;
+};
+
+/** The type used to represent results of a mutation for the table 'transactions_by_hash'. */
+export type Transactions_By_HashMutationResult = {
+  __typename?: 'transactions_by_hashMutationResult';
+  /** This field is relevant and fulfilled with data, only when used with the @async directive */
+  accepted?: Maybe<Scalars['Boolean']>;
+  applied?: Maybe<Scalars['Boolean']>;
+  value?: Maybe<Transactions_By_Hash>;
+};
+
+/** The enum used to order a query result based on one or more fields for the table 'transactions_by_hash'. */
+export enum Transactions_By_HashOrder {
+  BaseFeeAsc = 'base_fee_ASC',
+  BaseFeeDesc = 'base_fee_DESC',
+  BlockHashAsc = 'block_hash_ASC',
+  BlockHashDesc = 'block_hash_DESC',
+  BlockNumberAsc = 'block_number_ASC',
+  BlockNumberDesc = 'block_number_DESC',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  BurntFeeAsc = 'burnt_fee_ASC',
+  BurntFeeDesc = 'burnt_fee_DESC',
+  FromAddressAsc = 'from_address_ASC',
+  FromAddressDesc = 'from_address_DESC',
+  GasAsc = 'gas_ASC',
+  GasDesc = 'gas_DESC',
+  GasPriceAsc = 'gas_price_ASC',
+  GasPriceDesc = 'gas_price_DESC',
+  HashAsc = 'hash_ASC',
+  HashDesc = 'hash_DESC',
+  InputAsc = 'input_ASC',
+  InputDesc = 'input_DESC',
+  MaxFeeAsc = 'max_fee_ASC',
+  MaxFeeDesc = 'max_fee_DESC',
+  MaxPriorityFeeAsc = 'max_priority_fee_ASC',
+  MaxPriorityFeeDesc = 'max_priority_fee_DESC',
+  MethodAsc = 'method_ASC',
+  MethodDesc = 'method_DESC',
+  NonceAsc = 'nonce_ASC',
+  NonceDesc = 'nonce_DESC',
+  ReceiptContractAddressAsc = 'receipt_contract_address_ASC',
+  ReceiptContractAddressDesc = 'receipt_contract_address_DESC',
+  ReceiptCumulativeGasUsedAsc = 'receipt_cumulative_gas_used_ASC',
+  ReceiptCumulativeGasUsedDesc = 'receipt_cumulative_gas_used_DESC',
+  ReceiptGasUsedAsc = 'receipt_gas_used_ASC',
+  ReceiptGasUsedDesc = 'receipt_gas_used_DESC',
+  ReceiptRootAsc = 'receipt_root_ASC',
+  ReceiptRootDesc = 'receipt_root_DESC',
+  ReceiptStatusAsc = 'receipt_status_ASC',
+  ReceiptStatusDesc = 'receipt_status_DESC',
+  ToAddressAsc = 'to_address_ASC',
+  ToAddressDesc = 'to_address_DESC',
+  TransactionFeesAsc = 'transaction_fees_ASC',
+  TransactionFeesDesc = 'transaction_fees_DESC',
+  TransactionIndexAsc = 'transaction_index_ASC',
+  TransactionIndexDesc = 'transaction_index_DESC',
+  TxnSavingsAsc = 'txn_savings_ASC',
+  TxnSavingsDesc = 'txn_savings_DESC',
+  TxnTypeAsc = 'txn_type_ASC',
+  TxnTypeDesc = 'txn_type_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC'
+}
+
+export type Transactions_By_HashResult = {
+  __typename?: 'transactions_by_hashResult';
+  pageState?: Maybe<Scalars['String']>;
+  values?: Maybe<Array<Transactions_By_Hash>>;
+};
+
 export type Dashboard_AnalyticsQueryVariables = Exact<{
   filter?: InputMaybe<Dashboard_AnalyticsFilterInput>;
 }>;
@@ -3540,11 +3877,11 @@ export type GetPreviousBlockForTransactionQueryVariables = Exact<{
 export type GetPreviousBlockForTransactionQuery = { __typename?: 'Query', eth_blocks?: { __typename?: 'eth_blocksResult', values?: Array<{ __typename?: 'eth_blocks', hash?: string | null }> | null } | null };
 
 export type GetEthTransactionByHashQueryVariables = Exact<{
-  filter?: InputMaybe<TransactionsFilterInput>;
+  filter?: InputMaybe<Transactions_By_HashFilterInput>;
 }>;
 
 
-export type GetEthTransactionByHashQuery = { __typename?: 'Query', transactions?: { __typename?: 'transactionsResult', pageState?: string | null, values?: Array<{ __typename?: 'transactions', hash?: string | null, block_hash?: string | null, block_number?: any | null, block_timestamp?: string | null, from_address?: string | null, gas?: any | null, gas_price?: string | null, input?: string | null, nonce?: any | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: any | null, receipt_gas_used?: any | null, receipt_root?: string | null, receipt_status?: any | null, to_address?: string | null, method?: string | null, transaction_fees?: string | null, transaction_index?: any | null, value?: any | null, base_fee?: string | null, max_fee?: string | null, max_priority_fee?: string | null, burnt_fee?: string | null, txn_savings?: string | null }> | null } | null };
+export type GetEthTransactionByHashQuery = { __typename?: 'Query', transactions_by_hash?: { __typename?: 'transactions_by_hashResult', pageState?: string | null, values?: Array<{ __typename?: 'transactions_by_hash', hash?: string | null, block_hash?: string | null, block_number?: any | null, block_timestamp?: string | null, from_address?: string | null, gas?: any | null, gas_price?: string | null, input?: string | null, nonce?: any | null, receipt_contract_address?: string | null, receipt_cumulative_gas_used?: any | null, receipt_gas_used?: any | null, receipt_root?: string | null, receipt_status?: any | null, to_address?: string | null, method?: string | null, transaction_fees?: string | null, transaction_index?: any | null, value?: any | null, base_fee?: string | null, max_fee?: string | null, max_priority_fee?: string | null, burnt_fee?: string | null, txn_savings?: string | null }> | null } | null };
 
 export type GetLogsByEthTransactionQueryVariables = Exact<{
   filter?: InputMaybe<LogsFilterInput>;
@@ -3560,6 +3897,20 @@ export type GetInternalTransactionByEthBlockNumberQueryVariables = Exact<{
 
 
 export type GetInternalTransactionByEthBlockNumberQuery = { __typename?: 'Query', traces?: { __typename?: 'tracesResult', values?: Array<{ __typename?: 'traces', block_number?: any | null, transaction_hash?: string | null, internal_transaction_index?: any | null, from_address?: string | null, to_address?: string | null, gas_limit?: any | null, type_trace_address?: string | null, value?: any | null }> | null } | null };
+
+export type GetInternalTransactionByEthBlockNumber_Transaction_HashQueryVariables = Exact<{
+  filter?: InputMaybe<TracesFilterInput>;
+}>;
+
+
+export type GetInternalTransactionByEthBlockNumber_Transaction_HashQuery = { __typename?: 'Query', traces?: { __typename?: 'tracesResult', values?: Array<{ __typename?: 'traces', block_number?: any | null, transaction_hash?: string | null, internal_transaction_index?: any | null, from_address?: string | null, to_address?: string | null, gas_limit?: any | null, type_trace_address?: string | null, value?: any | null }> | null } | null };
+
+export type Dashboard_Analytics_HeaderQueryVariables = Exact<{
+  filter?: InputMaybe<Dashboard_AnalyticsFilterInput>;
+}>;
+
+
+export type Dashboard_Analytics_HeaderQuery = { __typename?: 'Query', dashboard_analytics?: { __typename?: 'dashboard_analyticsResult', values?: Array<{ __typename?: 'dashboard_analytics', network_base_fee?: string | null, network_priority_fee?: string | null, price_percentage_change?: string | null, ether_price_usd?: string | null }> | null } | null };
 
 
 export const Dashboard_AnalyticsDocument = gql`
@@ -4024,8 +4375,8 @@ export type GetPreviousBlockForTransactionQueryHookResult = ReturnType<typeof us
 export type GetPreviousBlockForTransactionLazyQueryHookResult = ReturnType<typeof useGetPreviousBlockForTransactionLazyQuery>;
 export type GetPreviousBlockForTransactionQueryResult = Apollo.QueryResult<GetPreviousBlockForTransactionQuery, GetPreviousBlockForTransactionQueryVariables>;
 export const GetEthTransactionByHashDocument = gql`
-    query getEthTransactionByHash($filter: transactionsFilterInput) {
-  transactions(filter: $filter) {
+    query getEthTransactionByHash($filter: transactions_by_hashFilterInput) {
+  transactions_by_hash(filter: $filter) {
     values {
       hash
       block_hash
@@ -4180,3 +4531,87 @@ export function useGetInternalTransactionByEthBlockNumberLazyQuery(baseOptions?:
 export type GetInternalTransactionByEthBlockNumberQueryHookResult = ReturnType<typeof useGetInternalTransactionByEthBlockNumberQuery>;
 export type GetInternalTransactionByEthBlockNumberLazyQueryHookResult = ReturnType<typeof useGetInternalTransactionByEthBlockNumberLazyQuery>;
 export type GetInternalTransactionByEthBlockNumberQueryResult = Apollo.QueryResult<GetInternalTransactionByEthBlockNumberQuery, GetInternalTransactionByEthBlockNumberQueryVariables>;
+export const GetInternalTransactionByEthBlockNumber_Transaction_HashDocument = gql`
+    query getInternalTransactionByEthBlockNumber_Transaction_hash($filter: tracesFilterInput) {
+  traces(filter: $filter) {
+    values {
+      block_number
+      transaction_hash
+      internal_transaction_index
+      from_address
+      to_address
+      gas_limit
+      type_trace_address
+      value
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetInternalTransactionByEthBlockNumber_Transaction_HashQuery__
+ *
+ * To run a query within a React component, call `useGetInternalTransactionByEthBlockNumber_Transaction_HashQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetInternalTransactionByEthBlockNumber_Transaction_HashQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetInternalTransactionByEthBlockNumber_Transaction_HashQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useGetInternalTransactionByEthBlockNumber_Transaction_HashQuery(baseOptions?: Apollo.QueryHookOptions<GetInternalTransactionByEthBlockNumber_Transaction_HashQuery, GetInternalTransactionByEthBlockNumber_Transaction_HashQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetInternalTransactionByEthBlockNumber_Transaction_HashQuery, GetInternalTransactionByEthBlockNumber_Transaction_HashQueryVariables>(GetInternalTransactionByEthBlockNumber_Transaction_HashDocument, options);
+      }
+export function useGetInternalTransactionByEthBlockNumber_Transaction_HashLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetInternalTransactionByEthBlockNumber_Transaction_HashQuery, GetInternalTransactionByEthBlockNumber_Transaction_HashQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetInternalTransactionByEthBlockNumber_Transaction_HashQuery, GetInternalTransactionByEthBlockNumber_Transaction_HashQueryVariables>(GetInternalTransactionByEthBlockNumber_Transaction_HashDocument, options);
+        }
+export type GetInternalTransactionByEthBlockNumber_Transaction_HashQueryHookResult = ReturnType<typeof useGetInternalTransactionByEthBlockNumber_Transaction_HashQuery>;
+export type GetInternalTransactionByEthBlockNumber_Transaction_HashLazyQueryHookResult = ReturnType<typeof useGetInternalTransactionByEthBlockNumber_Transaction_HashLazyQuery>;
+export type GetInternalTransactionByEthBlockNumber_Transaction_HashQueryResult = Apollo.QueryResult<GetInternalTransactionByEthBlockNumber_Transaction_HashQuery, GetInternalTransactionByEthBlockNumber_Transaction_HashQueryVariables>;
+export const Dashboard_Analytics_HeaderDocument = gql`
+    query dashboard_analytics_header($filter: dashboard_analyticsFilterInput) {
+  dashboard_analytics(filter: $filter) {
+    values {
+      network_base_fee
+      network_priority_fee
+      price_percentage_change
+      ether_price_usd
+    }
+  }
+}
+    `;
+
+/**
+ * __useDashboard_Analytics_HeaderQuery__
+ *
+ * To run a query within a React component, call `useDashboard_Analytics_HeaderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDashboard_Analytics_HeaderQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDashboard_Analytics_HeaderQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useDashboard_Analytics_HeaderQuery(baseOptions?: Apollo.QueryHookOptions<Dashboard_Analytics_HeaderQuery, Dashboard_Analytics_HeaderQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Dashboard_Analytics_HeaderQuery, Dashboard_Analytics_HeaderQueryVariables>(Dashboard_Analytics_HeaderDocument, options);
+      }
+export function useDashboard_Analytics_HeaderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Dashboard_Analytics_HeaderQuery, Dashboard_Analytics_HeaderQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Dashboard_Analytics_HeaderQuery, Dashboard_Analytics_HeaderQueryVariables>(Dashboard_Analytics_HeaderDocument, options);
+        }
+export type Dashboard_Analytics_HeaderQueryHookResult = ReturnType<typeof useDashboard_Analytics_HeaderQuery>;
+export type Dashboard_Analytics_HeaderLazyQueryHookResult = ReturnType<typeof useDashboard_Analytics_HeaderLazyQuery>;
+export type Dashboard_Analytics_HeaderQueryResult = Apollo.QueryResult<Dashboard_Analytics_HeaderQuery, Dashboard_Analytics_HeaderQueryVariables>;

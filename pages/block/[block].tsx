@@ -4,12 +4,11 @@ import BlocksDetail from '@components/BlocksDetail'
 import { useRouter } from 'next/router'
 import { BlockDetails } from '@types'
 import {
-  useGetBlockByHashLazyQuery,
   useGetEthBlockByNumberLazyQuery,
   useGetLatestBlockGroupQuery,
-} from 'lib/graphql/generated'
+} from 'lib/graphql/generated/generate'
 import { useEffect, useState } from 'react'
-import { formatAddress, isNumber, mapRawDataToBlockDetails } from 'utils'
+import { isNumber, mapRawDataToBlockDetails } from 'utils'
 import { Box } from '@mui/material'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 
@@ -23,12 +22,6 @@ const Block: NextPage = () => {
 
   const [getBlockDetailsByNumber, { data: blockDetails, error: blocksError }] =
     useGetEthBlockByNumberLazyQuery()
-
-  const [
-    getBlockDetailsByHash,
-    { data: blockDetailsHash, error: blocksErrorhash },
-  ] = useGetBlockByHashLazyQuery()
-
   useEffect(() => {
     if (isNumber(blockKey))
       getBlockDetailsByNumber({
@@ -39,21 +32,11 @@ const Block: NextPage = () => {
           blockNumber: Number(blockKey),
         },
       })
-    // if (!isNumber(blockKey))
-    //   getBlockDetailsByHash({
-    //     variables: {
-    //       data: blockKey,
-    //     },
-    //   })
   }, [
     blockKey,
-    getBlockDetailsByHash,
     getBlockDetailsByNumber,
-    latestBlockGroup,
+    latestBlockGroup?.dashboard_analytics?.values,
   ])
-  if (blocksError || blocksErrorhash) {
-    console.error(blocksError + ' ' + blocksErrorhash)
-  }
 
   useEffect(() => {
     console.log(
@@ -67,21 +50,16 @@ const Block: NextPage = () => {
       )
       setBlockDetailsData(mapRawDataToBlockDetails(blockDetails, blockKey))
     }
-    // if (blockDetailsHash) {
-    //   setBlockDetailsData(
-    //     mapRawDataToBlockDetails(blockDetailsHash?.getBlockByHash, blockKey)
-    //   )
-    // }
-  }, [block, blockDetails, blockDetailsHash, blockKey])
+  }, [blockDetails, blockKey])
+
+  if (blocksError) {
+    console.error(blocksError)
+  }
 
   return (
     <>
       {block && (
-        <Hero
-          title="Block"
-          blockNumber={`#${formatAddress(blockKey)}`}
-          showChips={false}
-        />
+        <Hero title="Block" blockNumber={`#${blockKey}`} showChips={false} />
       )}
       {blockDetailsData ? (
         <BlocksDetail BlocksDetailsData={blockDetailsData} />

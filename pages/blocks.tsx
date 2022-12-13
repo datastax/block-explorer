@@ -5,7 +5,7 @@ import { BlocksTitle, PAGINATION_EVENT } from '@constants'
 import {
   useGetLatestBlockGroupQuery,
   useGetPaginatedEthBlocksLazyQuery,
-} from 'lib/graphql/generated'
+} from 'lib/graphql/generated/generate'
 import { useEffect, useState } from 'react'
 import { getNetworkUtilization } from 'utils'
 

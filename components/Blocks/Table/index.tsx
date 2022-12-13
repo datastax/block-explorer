@@ -15,7 +15,7 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { GetPaginatedEthBlocksQuery } from 'lib/graphql/generated'
+import { GetPaginatedEthBlocksQuery } from 'lib/graphql/generated/generate'
 import {
   etherToGwei,
   formatAddress,

@@ -176,8 +176,8 @@ query getPreviousBlockForTransaction(
   }
 }
 
-query getEthTransactionByHash($filter: transactionsFilterInput) {
-  transactions(filter: $filter) {
+query getEthTransactionByHash($filter: transactions_by_hashFilterInput) {
+  transactions_by_hash(filter: $filter) {
     values {
       hash
       block_hash
@@ -244,6 +244,34 @@ query getInternalTransactionByEthBlockNumber(
       gas_limit
       type_trace_address
       value
+    }
+  }
+}
+
+query getInternalTransactionByEthBlockNumber_Transaction_hash(
+  $filter: tracesFilterInput
+) {
+  traces(filter: $filter) {
+    values {
+      block_number
+      transaction_hash
+      internal_transaction_index
+      from_address
+      to_address
+      gas_limit
+      type_trace_address
+      value
+    }
+  }
+}
+
+query dashboard_analytics_header($filter: dashboard_analyticsFilterInput) {
+  dashboard_analytics(filter: $filter) {
+    values {
+      network_base_fee
+      network_priority_fee
+      price_percentage_change
+      ether_price_usd
     }
   }
 }
