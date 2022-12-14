@@ -39,7 +39,6 @@ const Transactions: NextPage = () => {
       loading: previousBlockTranscationLoading,
     },
   ] = useGetPreviousBlockForTransactionLazyQuery()
-  console.info('getPreviousBlockTranscation', getPreviousBlockTranscation)
   const [getLatestBlock, { error: latestBlockError }] =
     useGetLatestEthBlockLazyQuery()
 

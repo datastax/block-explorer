@@ -6,8 +6,8 @@ import {
   useGetEthBlockByNumberLazyQuery,
   useGetLatestBlockGroupQuery,
 } from 'lib/graphql/generated/generate'
-import { useCallback, useEffect, useState } from 'react'
-import { isNumber, mapRawDataToBlockDetails } from 'utils'
+import { useEffect, useState } from 'react'
+import { isNumber, mapRawDataToBlockDetails, redirect } from 'utils'
 import { Box } from '@mui/material'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { useRouter } from 'next/router'
@@ -19,10 +19,6 @@ const Block: NextPage = () => {
   const blockKey = block as string
   const [blockDetailsData, setBlockDetailsData] = useState<BlockDetails>()
   const { data: latestBlockGroup } = useGetLatestBlockGroupQuery()
-
-  const goTo404 = useCallback(() => {
-    Router.push(`/404`)
-  }, [Router])
 
   const [getBlockDetailsByNumber, { data: blockDetails, error: blocksError }] =
     useGetEthBlockByNumberLazyQuery()
@@ -44,10 +40,10 @@ const Block: NextPage = () => {
 
   useEffect(() => {
     if (blockDetails) {
-      if (blockDetails?.eth_blocks?.values?.length === 0) goTo404()
+      if (blockDetails?.eth_blocks?.values?.length === 0) redirect('/404')
       setBlockDetailsData(mapRawDataToBlockDetails(blockDetails, blockKey))
     }
-  }, [blockDetails, blockKey, goTo404])
+  }, [blockDetails, blockKey])
 
   if (blocksError) {
     console.error(blocksError)

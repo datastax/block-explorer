@@ -13,6 +13,7 @@ import {
   LogEvent,
   TransactionDetails,
 } from 'types'
+import Router from 'next/router'
 
 const numberRegex = /^[0-9]+$/
 
@@ -349,6 +350,10 @@ const getNetworkUtilization = (blocks: GetPaginatedEthBlocksQuery) => {
   return gasUsedSum / PageSize
 }
 
+const redirect = (path: string) => {
+  Router.push(path)
+}
+
 export {
   formatAddress,
   getDifference,
@@ -369,5 +374,6 @@ export {
   mapRawDataToInternalTransactions,
   mapRawDataToIntTransactions,
   getNetworkUtilization,
+  redirect,
 }
 export { default as createEmotionCache } from './createEmotionCache'
