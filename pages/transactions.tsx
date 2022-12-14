@@ -20,27 +20,24 @@ const Transactions: NextPage = () => {
 
   const [pageSize, setPageSize] = useState(10)
   const [pageStateArray, setPageStateArray] = useState<string[]>([''])
+  const [blockHashArray, setblockHashArray] = useState<string[]>([''])
   const [blockDetails, setBlockDetails] = useState<TransactionBlockDetail>()
   const [paginatedTransactions, setpaginatedTransactions] =
     useState<GetPaginatedEThTransactionsQuery>()
 
-  const blockNumber = router.query['blockNumber'] as string
-  const blockHash = router.query['blockHash'] as string
+  const blockHash = router.query['block'] as string
 
-  const [
-    getNextBlockTranscation,
-    { error: nextBlockTransactionError, loading: nextBlockTranscationLoading },
-  ] = useGetNextBlockForTransactionLazyQuery()
-
-  const [
-    getPreviousBlockTranscation,
-    {
-      error: previousBlockTransactionError,
-      loading: previousBlockTranscationLoading,
-    },
-  ] = useGetPreviousBlockForTransactionLazyQuery()
   const [getLatestBlock, { error: latestBlockError }] =
     useGetLatestEthBlockLazyQuery()
+
+  const [
+    getTransactions,
+    {
+      data: latestTransactions,
+      error: transactionError,
+      loading: loadingTransactions,
+    },
+  ] = useGetPaginatedEThTransactionsLazyQuery()
 
   const { data: blockGroupData, error: latestBlockGroupError } =
     useGetLatestBlockGroupQuery({
@@ -67,16 +64,11 @@ const Transactions: NextPage = () => {
       },
     })
 
-  const [
-    getTransactions,
-    {
-      data: latestTransactions,
-      error: transactionError,
-      loading: loadingTransactions,
-    },
-  ] = useGetPaginatedEThTransactionsLazyQuery()
-
   const [getNewTransactions] = useGetPaginatedEThTransactionsLazyQuery()
+
+  const [getNextBlockTranscation] = useGetNextBlockForTransactionLazyQuery()
+  const [getPreviousBlockTranscation] =
+    useGetPreviousBlockForTransactionLazyQuery()
 
   const [
     getTransactionsByBlock,
@@ -87,13 +79,15 @@ const Transactions: NextPage = () => {
     },
   ] = useGetPaginatedEThTransactionsLazyQuery()
 
-  const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
+  const handleBlockTransactionPagination = (
+    paginationEvent: PAGINATION_EVENT
+  ) => {
     if (paginationEvent === PAGINATION_EVENT.NEXT)
-      getTransactions({
+      getTransactionsByBlock({
         variables: {
           filter: {
             block_hash: {
-              eq: blockDetails?.blockHash,
+              eq: blockHash,
             },
           },
           options: {
@@ -102,12 +96,57 @@ const Transactions: NextPage = () => {
           },
         },
         onError: () => {
-          setBlockDetails(undefined)
           setPageStateArray([''])
         },
-        onCompleted: (respnsePreviousBlocks) => {
+      })
+
+    if (paginationEvent === PAGINATION_EVENT.PREV) {
+      getTransactionsByBlock({
+        variables: {
+          filter: {
+            block_hash: {
+              eq: blockHash,
+            },
+          },
+          options: {
+            pageState: pageStateArray[pageStateArray.length - 3] || null,
+            pageSize: pageSize,
+          },
+        },
+        onError: () => {
+          setPageStateArray([''])
+        },
+      })
+      setPageStateArray((prev) => prev.slice(0, -2))
+    }
+  }
+
+  const handleTransactionPagination = (paginationEvent: PAGINATION_EVENT) => {
+    if (paginationEvent === PAGINATION_EVENT.NEXT) {
+      const DATA_LENGTH = latestTransactions?.transactions?.values?.length || 0
+      const TRANSACTIONS_LIST = latestTransactions?.transactions?.values || []
+      getTransactions({
+        variables: {
+          filter: {
+            block_hash: {
+              eq: blockHashArray[blockHashArray?.length - 1],
+            },
+            transaction_index: {
+              gt: TRANSACTIONS_LIST?.[DATA_LENGTH - 1]?.transaction_index,
+            },
+          },
+          options: {
+            limit: pageSize,
+          },
+        },
+        onError: () => {
+          setBlockDetails(undefined)
+          setPageStateArray([''])
+          setblockHashArray([''])
+        },
+        onCompleted: (responsePreviousBlocks) => {
           const lengthOfLatestTransactions =
-            respnsePreviousBlocks?.transactions?.values?.length || pageSize
+            responsePreviousBlocks?.transactions?.values?.length || pageSize
 
           if (lengthOfLatestTransactions < pageSize && latestTransactions) {
             getNextBlockTranscation({
@@ -117,7 +156,7 @@ const Transactions: NextPage = () => {
                     ?.latest_blocks_group
                 ),
                 blockNumber: Number(
-                  respnsePreviousBlocks?.transactions?.values?.[
+                  responsePreviousBlocks?.transactions?.values?.[
                     lengthOfLatestTransactions - 1
                   ]?.block_number
                 ),
@@ -134,8 +173,7 @@ const Transactions: NextPage = () => {
                       },
                     },
                     options: {
-                      pageState: null,
-                      pageSize: pageSize - lengthOfLatestTransactions,
+                      limit: pageSize - lengthOfLatestTransactions,
                     },
                   },
                   onCompleted: (responseNewBlocks) => {
@@ -143,16 +181,20 @@ const Transactions: NextPage = () => {
                       transactions: {
                         pageState: responseNewBlocks?.transactions?.pageState,
                         values: [
-                          ...(respnsePreviousBlocks?.transactions?.values ||
+                          ...(responsePreviousBlocks?.transactions?.values ||
                             []),
                           ...(responseNewBlocks?.transactions?.values || []),
                         ],
                       },
                     }
                     setpaginatedTransactions(newArray)
-                    setPageStateArray((prevState) => [
+                    setblockHashArray((prevState) => [
                       ...prevState,
-                      String(responseNewBlocks?.transactions?.pageState),
+                      String(
+                        responseNewBlocks?.transactions?.values?.[
+                          responseNewBlocks?.transactions?.values?.length - 1
+                        ]?.block_hash
+                      ),
                     ])
                   },
                   onError: () => {
@@ -164,45 +206,96 @@ const Transactions: NextPage = () => {
           }
         },
       })
+    }
 
     if (paginationEvent === PAGINATION_EVENT.PREV) {
       getTransactions({
         variables: {
           filter: {
             block_hash: {
-              eq: blockDetails?.blockHash,
+              eq:
+                blockHashArray[blockHashArray?.length - 3] ||
+                blockDetails?.blockHash,
+            },
+            transaction_index: {
+              lt: paginatedTransactions?.transactions?.values?.[0]
+                ?.transaction_index,
             },
           },
           options: {
-            pageState: pageStateArray[pageStateArray.length - 3] || null,
-            pageSize: pageSize,
+            limit: pageSize,
           },
         },
         onError: () => {
           setBlockDetails(undefined)
           setPageStateArray([''])
+          setblockHashArray([''])
+        },
+        onCompleted: (responsePreviousBlocks) => {
+          const lengthOfLatestTransactions =
+            responsePreviousBlocks?.transactions?.values?.length || pageSize
+
+          if (lengthOfLatestTransactions < pageSize && latestTransactions) {
+            getPreviousBlockTranscation({
+              variables: {
+                blockGroup: Number(
+                  blockGroupData?.dashboard_analytics?.values?.[0]
+                    ?.latest_blocks_group
+                ),
+                blockNumber: Number(
+                  responsePreviousBlocks?.transactions?.values?.[
+                    lengthOfLatestTransactions - 1
+                  ]?.block_number
+                ),
+              },
+              onError: (error) => {
+                console.error('Error  :  ', error)
+              },
+              onCompleted: (res) => {
+                getNewTransactions({
+                  variables: {
+                    filter: {
+                      block_hash: {
+                        eq: res?.eth_blocks?.values?.[0]?.hash,
+                      },
+                    },
+                    options: {
+                      limit: pageSize - lengthOfLatestTransactions,
+                    },
+                  },
+                  onCompleted: (responseNewBlocks) => {
+                    const newArray: GetPaginatedEThTransactionsQuery = {
+                      transactions: {
+                        pageState: responseNewBlocks?.transactions?.pageState,
+                        values: [
+                          ...(responseNewBlocks?.transactions?.values || []),
+                          ...(responsePreviousBlocks?.transactions?.values ||
+                            []),
+                        ],
+                      },
+                    }
+                    setpaginatedTransactions(newArray)
+                  },
+                  onError: () => {
+                    setBlockDetails(undefined)
+                  },
+                })
+              },
+            })
+          }
         },
       })
-      setPageStateArray((prev) => prev.slice(0, -2))
+      setblockHashArray((prev) => prev.slice(0, -2))
     }
   }
 
   useEffect(() => {
     setPageStateArray([''])
+    setblockHashArray([''])
   }, [pageSize])
 
   useEffect(() => {
-    if (!blockHash && !blockNumber && transactionsByBlock) {
-      window.location.reload()
-    }
-  }, [blockNumber, blockHash, transactionsByBlock])
-
-  useEffect(() => {
-    if (blockNumber && blockHash) {
-      setBlockDetails({
-        blockHash: blockHash,
-        blockNumber: Number(blockNumber),
-      })
+    if (blockHash) {
       getTransactionsByBlock({
         variables: {
           filter: {
@@ -219,39 +312,15 @@ const Transactions: NextPage = () => {
           setBlockDetails(undefined)
         },
       })
-    } else {
-      getTransactions({
-        variables: {
-          filter: {
-            block_hash: {
-              eq: blockDetails?.blockHash,
-            },
-          },
-          options: {
-            pageState: null,
-            pageSize: pageSize,
-          },
-        },
-        onError: () => {
-          setBlockDetails(undefined)
-        },
-      })
     }
-  }, [
-    getTransactionsByBlock,
-    pageSize,
-    getTransactions,
-    blockNumber,
-    blockHash,
-    blockDetails?.blockHash,
-  ])
+  }, [blockHash, getTransactionsByBlock, pageSize])
 
   useEffect(() => {
     if (latestTransactions) {
       setpaginatedTransactions(latestTransactions)
-      setPageStateArray((prevState) => [
+      setblockHashArray((prevState) => [
         ...prevState,
-        String(latestTransactions?.transactions?.pageState),
+        String(latestTransactions?.transactions?.values?.[0]?.block_hash),
       ])
     }
   }, [latestTransactions])
@@ -266,23 +335,36 @@ const Transactions: NextPage = () => {
     }
   }, [transactionsByBlock])
 
+  useEffect(() => {
+    if (blockDetails?.blockHash && pageSize)
+      getTransactions({
+        variables: {
+          filter: {
+            block_hash: {
+              eq: blockDetails?.blockHash,
+            },
+          },
+          options: {
+            limit: pageSize,
+          },
+        },
+      })
+  }, [blockDetails?.blockHash, getTransactions, pageSize])
+
   if (
     transactionError ||
     transactionErrorByBlock ||
     latestBlockGroupError ||
-    latestBlockError ||
-    nextBlockTransactionError ||
-    previousBlockTransactionError
+    latestBlockError
   ) {
     console.error(
       transactionError ||
         transactionErrorByBlock ||
         latestBlockGroupError ||
-        latestBlockError ||
-        nextBlockTransactionError ||
-        previousBlockTransactionError
+        latestBlockError
     )
   }
+
   return (
     <>
       <Hero title="Transactions" />
@@ -291,14 +373,12 @@ const Transactions: NextPage = () => {
         transactions={paginatedTransactions}
         pageSize={pageSize}
         setPageSize={setPageSize}
-        handlePagination={handlePagination}
-        setBlockDetails={setBlockDetails}
-        loading={
-          loadingTransactions ||
-          loadingTransactionsByBlock ||
-          nextBlockTranscationLoading ||
-          previousBlockTranscationLoading
+        handlePagination={
+          blockHash
+            ? handleBlockTransactionPagination
+            : handleTransactionPagination
         }
+        loading={loadingTransactions || loadingTransactionsByBlock}
       />
     </>
   )

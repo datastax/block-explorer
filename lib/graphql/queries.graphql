@@ -154,7 +154,7 @@ query getEthBlockByNumber($blockGroup: BigInt, $blockNumber: BigInt) {
 query getNextBlockForTransaction($blockGroup: BigInt, $blockNumber: BigInt) {
   eth_blocks(
     filter: { blocks_group: { eq: $blockGroup }, number: { lt: $blockNumber } }
-    options: { pageSize: 1 }
+    options: { limit: 1 }
   ) {
     values {
       hash
@@ -168,7 +168,7 @@ query getPreviousBlockForTransaction(
 ) {
   eth_blocks(
     filter: { blocks_group: { eq: $blockGroup }, number: { gt: $blockNumber } }
-    options: { pageSize: 1 }
+    options: { limit: 1 }
   ) {
     values {
       hash
