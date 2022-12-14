@@ -245,6 +245,7 @@ query getInternalTransactionByEthBlockNumber(
       type_trace_address
       value
     }
+    pageState
   }
 }
 

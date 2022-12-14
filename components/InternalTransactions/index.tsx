@@ -28,6 +28,7 @@ interface InternalTransactionProps {
   setPageNumber: Dispatch<SetStateAction<number>>
   pageNumber: number
   totalInternalTransactions: number
+  handlePagination: (paginationEvent: PAGINATION_EVENT) => void
 }
 
 const InternalTransactionTable = ({
@@ -40,18 +41,10 @@ const InternalTransactionTable = ({
   setPageNumber,
   pageNumber,
   totalInternalTransactions,
+  handlePagination,
 }: InternalTransactionProps) => {
   const startingBlock = 1
   const endingBlock = 1
-
-  const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
-    if (paginationEvent === PAGINATION_EVENT.NEXT) {
-      setPageNumber(pageNumber + 1)
-    }
-    if (paginationEvent === PAGINATION_EVENT.PREV) {
-      setPageNumber(pageNumber - 1)
-    }
-  }
 
   useEffect(() => {
     if (Data.length === 0) setPageNumber(1)
@@ -74,7 +67,6 @@ const InternalTransactionTable = ({
               block={blockNumber}
               handlePagination={handlePagination}
             />
-
             <Table>
               <TableHead>
                 <TableRow>

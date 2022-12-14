@@ -3896,14 +3896,14 @@ export type GetInternalTransactionByEthBlockNumberQueryVariables = Exact<{
 }>;
 
 
-export type GetInternalTransactionByEthBlockNumberQuery = { __typename?: 'Query', traces?: { __typename?: 'tracesResult', values?: Array<{ __typename?: 'traces', block_number?: any | null, transaction_hash?: string | null, internal_transaction_index?: any | null, from_address?: string | null, to_address?: string | null, gas_limit?: any | null, type_trace_address?: string | null, value?: any | null }> | null } | null };
+export type GetInternalTransactionByEthBlockNumberQuery = { __typename?: 'Query', traces?: { __typename?: 'tracesResult', pageState?: string | null, values?: Array<{ __typename?: 'traces', block_number?: any | null, transaction_hash?: string | null, internal_transaction_index?: any | null, from_address?: string | null, to_address?: string | null, gas_limit?: any | null, type_trace_address?: string | null, value?: any | null }> | null } | null };
 
 export type GetInternalTransactionByEthBlockNumber_Transaction_HashQueryVariables = Exact<{
   filter?: InputMaybe<TracesFilterInput>;
 }>;
 
 
-export type GetInternalTransactionByEthBlockNumber_Transaction_HashQuery = { __typename?: 'Query', traces?: { __typename?: 'tracesResult', values?: Array<{ __typename?: 'traces', block_number?: any | null, transaction_hash?: string | null, internal_transaction_index?: any | null, from_address?: string | null, to_address?: string | null, gas_limit?: any | null, type_trace_address?: string | null, value?: any | null }> | null } | null };
+export type GetInternalTransactionByEthBlockNumber_Transaction_HashQuery = { __typename?: 'Query', traces?: { __typename?: 'tracesResult', pageState?: string | null, values?: Array<{ __typename?: 'traces', block_number?: any | null, transaction_hash?: string | null, internal_transaction_index?: any | null, from_address?: string | null, to_address?: string | null, gas_limit?: any | null, type_trace_address?: string | null, value?: any | null }> | null } | null };
 
 export type Dashboard_Analytics_HeaderQueryVariables = Exact<{
   filter?: InputMaybe<Dashboard_AnalyticsFilterInput>;
@@ -4499,6 +4499,7 @@ export const GetInternalTransactionByEthBlockNumberDocument = gql`
       type_trace_address
       value
     }
+    pageState
   }
 }
     `;
@@ -4544,6 +4545,7 @@ export const GetInternalTransactionByEthBlockNumber_Transaction_HashDocument = g
       type_trace_address
       value
     }
+    pageState
   }
 }
     `;
