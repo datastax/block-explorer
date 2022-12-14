@@ -2,12 +2,14 @@ import type { NextPage } from 'next'
 import Hero from '@components/shared/Hero'
 import BlocksDetail from '@components/BlocksDetail'
 import { BlockDetails } from '@types'
-import {
-  useGetEthBlockByNumberLazyQuery,
-  useGetLatestBlockGroupQuery,
-} from 'lib/graphql/generated/generate'
+import { useGetEthBlockByNumberLazyQuery } from 'lib/graphql/generated/generate'
 import { useEffect, useState } from 'react'
-import { isNumber, mapRawDataToBlockDetails, redirect } from 'utils'
+import {
+  getBlockGroupFromBlockNumber,
+  isNumber,
+  mapRawDataToBlockDetails,
+  redirect,
+} from 'utils'
 import { Box } from '@mui/material'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { useRouter } from 'next/router'
@@ -18,7 +20,6 @@ const Block: NextPage = () => {
 
   const blockKey = block as string
   const [blockDetailsData, setBlockDetailsData] = useState<BlockDetails>()
-  const { data: latestBlockGroup } = useGetLatestBlockGroupQuery()
 
   const [getBlockDetailsByNumber, { data: blockDetails, error: blocksError }] =
     useGetEthBlockByNumberLazyQuery()
@@ -26,17 +27,11 @@ const Block: NextPage = () => {
     if (isNumber(blockKey))
       getBlockDetailsByNumber({
         variables: {
-          blockGroup:
-            latestBlockGroup?.dashboard_analytics?.values?.[0]
-              ?.latest_blocks_group,
+          blockGroup: getBlockGroupFromBlockNumber(Number(blockKey)),
           blockNumber: Number(blockKey),
         },
       })
-  }, [
-    blockKey,
-    getBlockDetailsByNumber,
-    latestBlockGroup?.dashboard_analytics?.values,
-  ])
+  }, [blockKey, getBlockDetailsByNumber])
 
   useEffect(() => {
     if (blockDetails) {
@@ -47,6 +42,7 @@ const Block: NextPage = () => {
 
   if (blocksError) {
     console.error(blocksError)
+    redirect('/404')
   }
 
   return (

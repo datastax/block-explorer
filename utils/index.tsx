@@ -354,6 +354,10 @@ const redirect = (path: string) => {
   Router.push(path)
 }
 
+const getBlockGroupFromBlockNumber = (blockNumber: number) => {
+  return Math.ceil(blockNumber / 100000)
+}
+
 export {
   formatAddress,
   getDifference,
@@ -375,5 +379,6 @@ export {
   mapRawDataToIntTransactions,
   getNetworkUtilization,
   redirect,
+  getBlockGroupFromBlockNumber,
 }
 export { default as createEmotionCache } from './createEmotionCache'
