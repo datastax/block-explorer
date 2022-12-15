@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react' // useCallback
+import { useEffect, useState } from 'react'
 import type { NextPage, NextPageContext } from 'next'
 import Router from 'next/router'
 import { Typography, Box } from '@mui/material'
