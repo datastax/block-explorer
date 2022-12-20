@@ -52,7 +52,7 @@ const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
 
 const CustomTableCellHeder = styled(TableCell)((props: CustomTableProps) => ({
   color:
-    colorColumnHeaderNames.includes(props.color) && props.istransaction
+    colorColumnHeaderNames.includes(props.color) && props.$istransaction
       ? colors.actionSecondary
       : colors.neutral300,
   borderBottom: props.border,

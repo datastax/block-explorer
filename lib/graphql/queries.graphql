@@ -1,6 +1,31 @@
-query getBlocks($data: PagesInput!) {
-  getBlocks(data: $data) {
-    blocks {
+query dashboard_analytics($filter: dashboard_analyticsFilterInput) {
+  dashboard_analytics(filter: $filter) {
+    values {
+      id
+      block_number
+      chart_data
+      difficulty
+      ether_price_btc
+      ether_price_usd
+      hashrate
+      latest_blocks_group
+      market_cap_usd
+      med_gas_price
+      network_base_fee
+      network_priority_fee
+      previous_24h_block_number
+      price_percentage_change
+      sum_of_burnt_fees
+      total_transactions
+      tps
+      transactions_history_chart
+    }
+  }
+}
+
+query getEthBlocks($filter: eth_blocksFilterInput, $options: QueryOptions) {
+  eth_blocks(filter: $filter, options: $options) {
+    values {
       number
       timestamp
       miner
@@ -12,20 +37,48 @@ query getBlocks($data: PagesInput!) {
   }
 }
 
-query getTransactions($transactionsdata: TransactionsPagesInput!) {
-  transactions(data: $transactionsdata) {
-    hash
-    block_timestamp
-    from_address
-    to_address
-    value
+query getLatestEthBlock(
+  $filter: eth_blocksFilterInput
+  $options: QueryOptions
+) {
+  eth_blocks(filter: $filter, options: $options) {
+    values {
+      number
+      hash
+    }
   }
 }
 
-query getPaginatedBlocks($data: PagesInput!) {
-  getBlocks(data: $data) {
-    networkUtilization
-    blocks {
+query getTransactionsOfLatestBlock(
+  $filter: transactionsFilterInput
+  $options: QueryOptions
+) {
+  transactions(filter: $filter, options: $options) {
+    values {
+      hash
+      block_timestamp
+      from_address
+      to_address
+      value
+    }
+  }
+}
+
+query getLatestBlockGroup($filter: dashboard_analyticsFilterInput) {
+  dashboard_analytics(filter: $filter) {
+    values {
+      latest_blocks_group
+      sum_of_burnt_fees
+    }
+  }
+}
+
+query getPaginatedEthBlocks(
+  $filter: eth_blocksFilterInput
+  $options: QueryOptions
+) {
+  eth_blocks(filter: $filter, options: $options) {
+    values {
       number
       timestamp
       transaction_count
@@ -35,214 +88,191 @@ query getPaginatedBlocks($data: PagesInput!) {
       gas_limit
       base_fee_per_gas
       reward
-      burnt_fee
+      burnt_fees
       txn_fees
+      gas_used_percentage
     }
+    pageState
   }
 }
 
-query getPaginatedTransactions($transactionsdata: TransactionsPagesInput!) {
-  transactions(data: $transactionsdata) {
-    hash
-    method
-    block_number
-    block_timestamp
-    from_address
-    to_address
-    value
-    transaction_fees
-    transaction_index
-    block_hash
-  }
-}
-
-query getBlockByNumber($data: Float!) {
-  getBlockByNumber(data: $data) {
-    number
-    timestamp
-    transaction_count
-    mine_time
-    miner
-    difficulty
-    total_difficulty
-    size
-    gas_used
-    gas_limit
-    base_fee_per_gas
-    burnt_fee
-    extra_data
-    reward
-    uncle_reward
-    txn_fees
-    gas_target_percentage
-    gas_used_percentage
-    hash
-    parent_hash
-    sha3_uncles
-    nonce
-    state_root
-    miners_name
-    int_txn_count
-  }
-}
-
-query getTransactionByHash($data: String!) {
-  getTransactionByHash(data: $data) {
-    hash
-    block_hash
-    block_number
-    block_timestamp
-    from_address
-    gas
-    gas_price
-    input
-    nonce
-    receipt_contract_address
-    receipt_cumulative_gas_used
-    receipt_gas_used
-    receipt_root
-    receipt_status
-    to_address
-    method
-    transaction_fees_usd
-    transaction_index
-    value
-    value_usd
-    transaction_fees
-    baseFee
-    maxFee
-    maxPriorityFee
-    txnBurntFee
-    txnSavingFee
-    input
-    internalTxn {
-      blockNumber
-      transactionHash
-      intTransactionIndex
-      from
-      to
-      gasLimit
-      typeTraceAddress
+query getPaginatedEThTransactions(
+  $filter: transactionsFilterInput
+  $options: QueryOptions
+) {
+  transactions(filter: $filter, options: $options) {
+    values {
+      hash
+      method
+      block_number
+      block_timestamp
+      from_address
+      to_address
       value
+      transaction_fees
+      transaction_index
+      block_hash
     }
+    pageState
   }
 }
 
-query getDashboardAnalytics {
-  dashboardAnalytics {
-    etherPriceUSD
-    etherPriceBTC
-    marketCapUSD
-    difficulty
-    hashrate
-    tps
-    medGasPrice
-    totalTransactions
-    blockNumber
-    pricePercentageChange
-    chartData
-    transactionHistoryChart
-  }
-}
-
-query getDashboardHeader {
-  dashboardAnalytics {
-    networkBaseFee
-    networkpriorityFee
-    pricePercentageChange
-    etherPriceUSD
-  }
-}
-
-query getDashboardBurntFeeSum {
-  dashboardAnalytics {
-    burntFeeSum
-  }
-}
-
-query getTransactionsByBlock($data: TransactionsPagesInput!) {
-  getTransactionsByBlock(data: $data) {
-    hash
-    method
-    block_number
-    block_timestamp
-    from_address
-    to_address
-    value
-    transaction_fees
-    transaction_index
-    block_hash
-  }
-}
-
-query getBlockByHash($data: String!) {
-  getBlockByHash(data: $data) {
-    number
-    timestamp
-    transaction_count
-    mine_time
-    miner
-    difficulty
-    total_difficulty
-    size
-    gas_used
-    gas_limit
-    base_fee_per_gas
-    burnt_fee
-    extra_data
-    reward
-    uncle_reward
-    txn_fees
-    gas_target_percentage
-    gas_used_percentage
-    hash
-    parent_hash
-    sha3_uncles
-    nonce
-    state_root
-    miners_name
-    int_txn_count
-  }
-}
-
-query getConsecutiveTransactions($transactionsdata: TransactionsPagesInput!) {
-  transactions(data: $transactionsdata) {
-    hash
-  }
-}
-
-query searchRaw($data: String!) {
-  searchRaw(data: $data) {
-    block {
+query getEthBlockByNumber($blockGroup: BigInt, $blockNumber: BigInt) {
+  eth_blocks(
+    filter: { blocks_group: { eq: $blockGroup }, number: { eq: $blockNumber } }
+  ) {
+    values {
+      sha3_uncles
+      state_root
+      hash
+      parent_hash
+      nonce
+      int_txn_count
       number
+      timestamp
+      transaction_count
+      miner
+      miners_name
+      mine_time
+      reward
+      txn_fees
+      burnt_fees
+      difficulty
+      uncle_reward
+      total_difficulty
+      size
+      gas_used
+      gas_used_percentage
+      gas_target_percentage
+      gas_limit
+      base_fee_per_gas
+      extra_data
     }
-    transaction {
+  }
+}
+
+query getNextBlockForTransaction($blockGroup: BigInt, $blockNumber: BigInt) {
+  eth_blocks(
+    filter: { blocks_group: { eq: $blockGroup }, number: { lt: $blockNumber } }
+    options: { limit: 1 }
+  ) {
+    values {
       hash
     }
   }
 }
 
-query getLogByTransaction($data: LogsInput!) {
-  getLogByTransaction(data: $data) {
-    name
-    address
-    topics
-    data
-    decoded_data
-    log_index
-    events
+query getPreviousBlockForTransaction(
+  $blockGroup: BigInt
+  $blockNumber: BigInt
+) {
+  eth_blocks(
+    filter: { blocks_group: { eq: $blockGroup }, number: { gt: $blockNumber } }
+    options: { limit: 1 }
+  ) {
+    values {
+      hash
+    }
   }
 }
 
-query getInternalTransactionByBlockNumber($data: TracesPagesInput!) {
-  getInternalTransactionByBlockNumber(data: $data) {
-    blockNumber
-    transactionHash
-    intTransactionIndex
-    from
-    to
-    gasLimit
-    typeTraceAddress
-    value
+query getEthTransactionByHash($filter: transactions_by_hashFilterInput) {
+  transactions_by_hash(filter: $filter) {
+    values {
+      hash
+      block_hash
+      block_number
+      block_timestamp
+      from_address
+      gas
+      gas_price
+      input
+      nonce
+      receipt_contract_address
+      receipt_cumulative_gas_used
+      receipt_gas_used
+      receipt_root
+      receipt_status
+      to_address
+      method
+      transaction_fees
+      transaction_index
+      value
+      transaction_fees
+      base_fee
+      max_fee
+      max_priority_fee
+      burnt_fee
+      txn_savings
+      input
+    }
+    pageState
+  }
+}
+
+query getLogsByEthTransaction($filter: logsFilterInput) {
+  logs(filter: $filter) {
+    values {
+      block_number
+      address
+      topic0
+      topic1
+      topic2
+      topic3
+      data
+      log_index
+      decoded_data
+      block_hash
+      block_timestamp
+      transaction_index
+      transaction_hash
+    }
+  }
+}
+
+query getInternalTransactionByEthBlockNumber(
+  $filter: tracesFilterInput
+  $options: QueryOptions
+) {
+  traces(filter: $filter, options: $options) {
+    values {
+      block_number
+      transaction_hash
+      internal_transaction_index
+      from_address
+      to_address
+      gas_limit
+      type_trace_address
+      value
+    }
+    pageState
+  }
+}
+
+query getInternalTransactionByEthBlockNumber_Transaction_hash(
+  $filter: tracesFilterInput
+) {
+  traces(filter: $filter) {
+    values {
+      block_number
+      transaction_hash
+      internal_transaction_index
+      from_address
+      to_address
+      gas_limit
+      type_trace_address
+      value
+    }
+  }
+}
+
+query dashboard_analytics_header($filter: dashboard_analyticsFilterInput) {
+  dashboard_analytics(filter: $filter) {
+    values {
+      network_base_fee
+      network_priority_fee
+      price_percentage_change
+      ether_price_usd
+    }
   }
 }
