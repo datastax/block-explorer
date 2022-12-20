@@ -16,6 +16,7 @@ import {
   CustomTableCellBox,
 } from './styles'
 import { formatAddress } from 'utils'
+import { PAGINATION_EVENT } from '@constants'
 
 interface InternalTransactionProps {
   pageSize: number
@@ -27,6 +28,7 @@ interface InternalTransactionProps {
   setPageNumber: Dispatch<SetStateAction<number>>
   pageNumber: number
   totalInternalTransactions: number
+  handlePagination: (paginationEvent: PAGINATION_EVENT) => void
 }
 
 const InternalTransactionTable = ({
@@ -39,16 +41,10 @@ const InternalTransactionTable = ({
   setPageNumber,
   pageNumber,
   totalInternalTransactions,
+  handlePagination,
 }: InternalTransactionProps) => {
   const startingBlock = 1
   const endingBlock = 1
-  const setNextState = () => {
-    setPageNumber(pageNumber + 1)
-  }
-
-  const setPreviousState = () => {
-    setPageNumber(pageNumber - 1)
-  }
 
   useEffect(() => {
     if (Data.length === 0) setPageNumber(1)
@@ -68,11 +64,9 @@ const InternalTransactionTable = ({
               lengthOfEachPage={totalInternalTransactions - 1}
               startingBlock={startingBlock}
               endingBlock={endingBlock}
-              setNextState={setNextState}
-              setPreviousState={setPreviousState}
               block={blockNumber}
+              handlePagination={handlePagination}
             />
-
             <Table>
               <TableHead>
                 <TableRow>
@@ -143,8 +137,7 @@ const InternalTransactionTable = ({
               setPageSize={setPageSize}
               currentPage={pageNumber}
               setCurrentPage={setPageNumber}
-              setNextState={setNextState}
-              setPreviousState={setPreviousState}
+              handlePagination={handlePagination}
               intTxnPageSize={pageSize * pageNumber}
               lengthOfEachPage={totalInternalTransactions - 1}
             />

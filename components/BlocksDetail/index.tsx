@@ -67,7 +67,9 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
                     primary={BlocksDetailsData?.ParentHash}
                     sx={{ color: colors.actionSecondary, cursor: 'pointer' }}
                     onClick={() => {
-                      router.push(`/block/${BlocksDetailsData?.ParentHash}`)
+                      router.push(
+                        `/block/${Number(BlocksDetailsData?.BlockHeight) - 1}`
+                      )
                     }}
                   />
                 </Tooltip>

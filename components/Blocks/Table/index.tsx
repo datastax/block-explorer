@@ -15,7 +15,7 @@ import {
 } from './styles'
 import BottomPagination from '@components/shared/Pagination/BottomPagination'
 import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { GetPaginatedBlocksQuery } from 'lib/graphql/generated'
+import { GetPaginatedEthBlocksQuery } from 'lib/graphql/generated/generate'
 import {
   etherToGwei,
   formatAddress,
@@ -25,16 +25,16 @@ import {
 import router from 'next/router'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Box } from '@mui/material'
+import { PAGINATION_EVENT } from '@constants'
 
 interface BlocksTableProps {
   pageSize: number
   setPageSize: Dispatch<SetStateAction<number>>
   titles: string[]
-  Data: GetPaginatedBlocksQuery | undefined
+  Data: GetPaginatedEthBlocksQuery | undefined
   istransaction?: boolean
-  setNext: Dispatch<SetStateAction<number | undefined>>
-  setPrevious: Dispatch<SetStateAction<number | undefined>>
   loading: boolean
+  handlePagination: (event: PAGINATION_EVENT) => void
 }
 
 const BlocksTable = ({
@@ -43,27 +43,14 @@ const BlocksTable = ({
   titles,
   Data,
   istransaction,
-  setNext,
-  setPrevious,
   loading,
+  handlePagination,
 }: BlocksTableProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1)
 
-  const lengthOfEachPage = Data?.getBlocks?.blocks?.length || 0
-  const startingBlock = Data?.getBlocks?.blocks[0]?.number || 0
-  const endingBlock =
-    lengthOfEachPage && Data
-      ? Data?.getBlocks?.blocks[lengthOfEachPage - 1]?.number
-      : 0
-  const setNextState = () => {
-    setNext(endingBlock || undefined)
-    setPrevious(undefined)
-  }
-
-  const setPreviousState = () => {
-    setPrevious(startingBlock || undefined)
-    setNext(undefined)
-  }
+  const lengthOfEachPage = Data?.eth_blocks?.values?.length || 0
+  const startingBlock = Data?.eth_blocks?.values?.[0]?.number || 0
+  const endingBlock = Data?.eth_blocks?.values?.[pageSize - 1]?.number || 0
 
   const getValue = (index: number, Object: (string | number | null)[]) => {
     if (index === 1)
@@ -107,8 +94,7 @@ const BlocksTable = ({
               lengthOfEachPage={lengthOfEachPage}
               startingBlock={startingBlock}
               endingBlock={endingBlock}
-              setNextState={setNextState}
-              setPreviousState={setPreviousState}
+              handlePagination={handlePagination}
             />
 
             <Table>
@@ -122,7 +108,7 @@ const BlocksTable = ({
                       border={`1px solid ${colors.neutral500}`}
                       fontWeight="500"
                       lineheight="157%"
-                      istransaction={istransaction}
+                      $istransaction={istransaction}
                     >
                       <HeaderBox>{title}</HeaderBox>
                     </CustomTableCellHeder>
@@ -130,7 +116,7 @@ const BlocksTable = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Data?.getBlocks?.blocks.map((block, index) => (
+                {Data?.eth_blocks?.values?.map((block, index) => (
                   <TableRow
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     key={index}
@@ -185,11 +171,8 @@ const BlocksTable = ({
               setPageSize={setPageSize}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
-              setNext={setNext}
-              setPrevious={setPrevious}
               lengthOfEachPage={lengthOfEachPage}
-              setNextState={setNextState}
-              setPreviousState={setPreviousState}
+              handlePagination={handlePagination}
             />
           </>
         ) : (
