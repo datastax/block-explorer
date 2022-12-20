@@ -9,15 +9,18 @@ import {
   ChipWrapper,
 } from './styles'
 import { useRouter } from 'next/router'
-import { GetTransactionsQuery } from 'lib/graphql/generated'
+import { GetTransactionsOfLatestBlockQuery } from 'lib/graphql/generated/generate'
 import { formatAddress, getDifference, weiToEther } from '@utils'
 
 interface transactionBlockProps {
   title: string
-  transactions: GetTransactionsQuery | undefined
+  transactionsList: GetTransactionsOfLatestBlockQuery | undefined
 }
 
-const TransactionsList = ({ title, transactions }: transactionBlockProps) => {
+const TransactionsList = ({
+  title,
+  transactionsList,
+}: transactionBlockProps) => {
   const router = useRouter()
   return (
     <StyledCard>
@@ -32,7 +35,7 @@ const TransactionsList = ({ title, transactions }: transactionBlockProps) => {
 
       <Table>
         <TableBody>
-          {transactions?.transactions.map((transaction, index) => (
+          {transactionsList?.transactions?.values?.map((transaction, index) => (
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               key={index}
@@ -54,7 +57,10 @@ const TransactionsList = ({ title, transactions }: transactionBlockProps) => {
                 >
                   {formatAddress(transaction.hash)}
                   <strong>
-                    {getDifference(parseInt(transaction.block_timestamp))} ago
+                    {getDifference(
+                      parseInt(transaction?.block_timestamp || '')
+                    )}{' '}
+                    ago
                   </strong>
                 </ColumnBox>
               </CustomTableCell>

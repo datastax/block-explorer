@@ -18,7 +18,7 @@ interface LogoProps {
   theme: Theme
 }
 interface CustomStackProps {
-  isHome?: boolean
+  $isHome?: boolean
   theme: Theme
 }
 const Wrapper = styled(Box)(
@@ -77,11 +77,13 @@ const StyledLabel = styled('div')({
     color: colors.neutral300,
   },
 })
-const CustomStack = styled(Stack)(({ isHome, theme }: CustomStackProps) => ({
+const CustomStack = styled(Stack, {
+  shouldForwardProp: (prop: string) => prop[0] !== '$',
+})(({ $isHome, theme }: CustomStackProps) => ({
   [theme.breakpoints.down('sm')]: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: isHome && '5px',
+    marginBottom: $isHome && '5px',
     width: '100%',
   },
 }))

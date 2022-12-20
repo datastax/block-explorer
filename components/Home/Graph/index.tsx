@@ -26,8 +26,11 @@ const Graph = ({ graph }: GraphProps) => {
         if (mini > graph[i].value) mini = graph[i].value
         if (maxi < graph[i].value) maxi = graph[i].value
       }
-      setMin(mini)
-      setMax(maxi)
+      // TO PLOT GRAPH IN CENTER ADDING MARGINS ON MIN AND MAX
+      const marginMin = mini - 200000 < 0 ? 0 : min - 200000
+      const marginMax = mini + 200000
+      setMin(marginMin)
+      setMax(marginMax)
     }
   }, [graph, max, min])
 
@@ -45,7 +48,7 @@ const Graph = ({ graph }: GraphProps) => {
         data={graph || []}
         hideZero
         tooltip={renderTooltip}
-        domain={[min - 200000, max + 200000]}
+        domain={[min, max]}
       />
     </Container>
   )
