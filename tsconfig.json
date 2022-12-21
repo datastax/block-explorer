@@ -27,5 +27,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "codegen.js"],
-  "exclude": ["node_modules", "**/*/generate.tsx"]
+  "exclude": ["node_modules"]
 }

@@ -26,13 +26,17 @@ export default function SplitButton({
   const anchorRef = React.useRef<HTMLDivElement>(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
 
+  const handleClick = () => {
+    console.info(`You clicked ${options[selectedIndex]}`)
+  }
+
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     index: number
   ) => {
-    setValueToDefault()
     setSelectedIndex(index)
     setPageSize(options[index])
+    setValueToDefault()
     setOpen(false)
   }
 
@@ -54,7 +58,9 @@ export default function SplitButton({
   return (
     <React.Fragment>
       <ButtonGroup variant="outlined" ref={anchorRef} aria-label="split button">
-        <Button sx={{ color: 'white' }}>{pageSize}</Button>
+        <Button onClick={handleClick} sx={{ color: 'white' }}>
+          {pageSize}
+        </Button>
         <CustomArrowButton
           size="small"
           aria-controls={open ? 'split-button-menu' : undefined}

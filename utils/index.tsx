@@ -1,11 +1,9 @@
 import colors from '@styles/ThemeProvider/colors'
 import {
-  GetEthBlockByNumberQuery,
-  GetEthTransactionByHashQuery,
-  GetInternalTransactionByEthBlockNumberQuery,
-  GetInternalTransactionByEthBlockNumber_Transaction_HashQuery,
-  GetPaginatedEthBlocksQuery,
-} from 'lib/graphql/generated/generate'
+  BlockOutput,
+  GetInternalTransactionByBlockNumberQuery,
+  GetTransactionByHashQuery,
+} from 'lib/graphql/generated'
 import {
   BlockDetails,
   InternalTransactionData,
@@ -13,7 +11,6 @@ import {
   LogEvent,
   TransactionDetails,
 } from 'types'
-import Router from 'next/router'
 
 const numberRegex = /^[0-9]+$/
 
@@ -135,86 +132,84 @@ const isNumber = (value: string) => {
 }
 
 const mapRawDataToBlockDetails = (
-  data: GetEthBlockByNumberQuery,
+  data: BlockOutput,
   block: string
 ): BlockDetails => {
-  const { values } = data?.eth_blocks || {}
   return {
-    Sha3Uncles: values?.[0]?.sha3_uncles,
-    StateRoot: values?.[0]?.state_root,
-    Hash: values?.[0]?.hash || '',
-    ParentHash: values?.[0]?.parent_hash || '',
-    Nonce: values?.[0]?.nonce,
-    internalTransaction: values?.[0]?.int_txn_count || 0,
-    BlockHeight: values?.[0]?.number.toString() || '',
+    Sha3Uncles: data?.sha3_uncles,
+    StateRoot: data?.state_root,
+    Hash: data?.hash || '',
+    ParentHash: data?.parent_hash || '',
+    Nonce: data?.nonce,
+    internalTransaction: data?.int_txn_count || 0,
+    BlockHeight: data?.number.toString() || '',
     Timestamp: {
-      time: `${getDifference(parseInt(values?.[0]?.timestamp || ''))} ago`,
+      time: `${getDifference(parseInt(data?.timestamp || ''))} ago`,
       Date: `(${new Date(
-        parseInt(values?.[0]?.timestamp || '') * 1000
+        parseInt(data?.timestamp || '') * 1000
       ).toUTCString()})`,
     },
-    Transactions: `${values?.[0]?.transaction_count}`,
+    Transactions: `${data?.transaction_count}`,
     MinedBy: {
-      address: values?.[0]?.miner || '',
+      address: data?.miner || '',
       miner: `(Miner: ${
-        values?.[0]?.miners_name
-          ? values?.[0]?.miners_name
-          : formatAddress(values?.[0]?.miner)
+        data?.miners_name ? data?.miners_name : formatAddress(data?.miner)
       })`,
-      time: `in ${values?.[0]?.mine_time} secs`,
+      time: `in ${data?.mine_time} secs`,
     },
-    BlockReward: `${values?.[0]?.reward} Ether (${calculateStaticBlockReward(
+    BlockReward: `${data?.reward} Ether (${calculateStaticBlockReward(
       block as string
-    )} + ${values?.[0]?.txn_fees} - ${values?.[0]?.burnt_fees})`,
-    UnclesReward: values?.[0]?.uncle_reward || '',
-    Difficulty: numberWithCommas(values?.[0]?.difficulty || 0) || '',
-    TotalDifficulty: numberWithCommas(values?.[0]?.total_difficulty || 0) || '',
-    Size: numberWithCommas(values?.[0]?.size || 0) + ' bytes',
-    GasUsed: numberWithCommas(values?.[0]?.gas_used || 0),
-    GasUsedPercetge: parseFloat(values?.[0]?.gas_used_percentage || ''),
-    GasTargetPercentage: parseFloat(values?.[0]?.gas_target_percentage || ''),
-    GasLimit: numberWithCommas(values?.[0]?.gas_limit || 0),
-    BaseFeePerGas: values?.[0]?.base_fee_per_gas
-      ? `${values?.[0]?.base_fee_per_gas} Ether (${etherToGwei(
-          parseFloat(values?.[0]?.base_fee_per_gas || '')
+    )} + ${data?.txn_fees} - ${data?.burnt_fee})`,
+    UnclesReward: data?.uncle_reward || '',
+    Difficulty: numberWithCommas(data?.difficulty || 0) || '',
+    TotalDifficulty: numberWithCommas(data?.total_difficulty || 0) || '',
+    Size: numberWithCommas(data?.size || 0) + ' bytes',
+    GasUsed: numberWithCommas(data?.gas_used || 0),
+    GasUsedPercetge: parseFloat(data?.gas_used_percentage || ''),
+    GasTargetPercentage: parseFloat(data?.gas_target_percentage || ''),
+    GasLimit: numberWithCommas(data?.gas_limit || 0),
+    BaseFeePerGas: data?.base_fee_per_gas
+      ? `${data?.base_fee_per_gas} Ether (${etherToGwei(
+          parseFloat(data?.base_fee_per_gas || '')
         )} Gwei)`
       : null,
-    BurntFees: parseFloat(values?.[0]?.burnt_fees || '')
-      ? `🔥 ${values?.[0]?.burnt_fees} Ether`
+    BurntFees: parseFloat(data?.burnt_fee || '')
+      ? `🔥 ${data?.burnt_fee} Ether`
       : null,
-    ExtraData: `speth03�0\`' (Hex:${values?.[0]?.extra_data})`,
+    ExtraData: `speth03�0\`' (Hex:${data?.extra_data})`,
   }
 }
 
 const mapRawDataToIntTransactions = (
-  internalTransactions: GetInternalTransactionByEthBlockNumberQuery
+  internalTransactions: GetInternalTransactionByBlockNumberQuery
 ): InternalTransactionData[] => {
   const data =
-    internalTransactions?.traces?.values?.map((transaction) => {
-      return {
-        parentTxnHash: transaction?.transaction_hash,
-        type: 'call',
-        from: transaction?.from_address ?? '',
-        to: transaction?.to_address ?? '',
-        value: String(Number(transaction?.value).toFixed(4)),
+    internalTransactions.getInternalTransactionByBlockNumber.map(
+      (transaction) => {
+        return {
+          parentTxnHash: transaction?.transactionHash,
+          type: 'call',
+          from: transaction?.from ?? '',
+          to: transaction?.to ?? '',
+          value: String(transaction?.value?.toFixed(4)),
+        }
       }
-    }) || []
-
+    ) || []
   return data
 }
 
 const mapRawDataToInternalTransactions = (
-  transactionDetails: GetInternalTransactionByEthBlockNumber_Transaction_HashQuery
+  transactionDetails: GetTransactionByHashQuery
 ): InternalTxnsTabData[] => {
   const data =
-    transactionDetails?.traces?.values?.map(
-      ({ from_address, to_address, gas_limit, type_trace_address, value }) => {
+    transactionDetails?.getTransactionByHash?.internalTxn?.map(
+      (transaction) => {
         return {
-          typeTraceAddress: type_trace_address,
-          from: from_address,
-          to: to_address,
-          value: String(value),
-          gasLimit: numberWithCommas(gas_limit),
+          typeTraceAddress: transaction?.typeTraceAddress,
+          from: transaction?.from || '',
+          to: transaction?.to || '',
+          value: String(transaction?.value),
+          gasLimit: numberWithCommas(transaction?.gasLimit),
         }
       }
     ) || []
@@ -222,40 +217,31 @@ const mapRawDataToInternalTransactions = (
 }
 
 const mapRawDataToTransactionDetails = (
-  transactionDetails: GetEthTransactionByHashQuery,
+  transactionDetails: GetTransactionByHashQuery,
   blockConfirmation: number
 ): TransactionDetails => {
   return {
-    Nonce: transactionDetails?.transactions_by_hash?.values?.[0]?.nonce,
+    Nonce: transactionDetails?.getTransactionByHash?.nonce,
     TransactionIndex:
-      transactionDetails?.transactions_by_hash?.values?.[0]?.transaction_index,
-    TransactionHash:
-      transactionDetails?.transactions_by_hash?.values?.[0]?.hash || '',
-    Status:
-      transactionDetails?.transactions_by_hash?.values?.[0]?.receipt_status,
-    Block: transactionDetails?.transactions_by_hash?.values?.[0]?.block_number,
+      transactionDetails?.getTransactionByHash?.transaction_index,
+    TransactionHash: transactionDetails?.getTransactionByHash.hash || '',
+    Status: transactionDetails?.getTransactionByHash.receipt_status,
+    Block: transactionDetails?.getTransactionByHash?.block_number,
     BlockConfirmation:
       blockConfirmation -
-      Number(
-        transactionDetails?.transactions_by_hash?.values?.[0]?.block_number
-      ),
+      Number(transactionDetails?.getTransactionByHash?.block_number),
     Timestamp: {
       time: `${getDifference(
-        parseInt(
-          transactionDetails?.transactions_by_hash?.values?.[0]
-            ?.block_timestamp || ''
-        )
+        parseInt(transactionDetails?.getTransactionByHash.block_timestamp || '')
       )} ago`,
       Date: `(${new Date(
         parseInt(
-          transactionDetails?.transactions_by_hash?.values?.[0]
-            ?.block_timestamp || ''
+          transactionDetails?.getTransactionByHash.block_timestamp || ''
         ) * 1000
       ).toUTCString()})`,
     },
-    Gas_limit: transactionDetails.transactions_by_hash?.values?.[0]?.gas,
-    Usage_Txn:
-      transactionDetails.transactions_by_hash?.values?.[0]?.receipt_gas_used,
+    Gas_limit: transactionDetails.getTransactionByHash.gas,
+    Usage_Txn: transactionDetails.getTransactionByHash.receipt_gas_used,
     TransactionAction: {
       approved: 'Approved',
       kuno: 'KUNO',
@@ -264,33 +250,28 @@ const mapRawDataToTransactionDetails = (
       checkIn: 'Check in',
       token: 'Token Approvals',
     },
-    From:
-      transactionDetails?.transactions_by_hash?.values?.[0]?.from_address || '',
-    To: transactionDetails?.transactions_by_hash?.values?.[0]?.to_address || '',
-    Value: `${transactionDetails?.transactions_by_hash?.values?.[0]?.value} Ether`,
+    From: transactionDetails?.getTransactionByHash.from_address || '',
+    To: transactionDetails?.getTransactionByHash.to_address || '',
+    Value: `${transactionDetails?.getTransactionByHash.value} Ether`,
     Value_usd: `($${parseFloat(
-      transactionDetails?.transactions_by_hash?.values?.[0]?.value || ''
+      transactionDetails?.getTransactionByHash?.value_usd || ''
     ).toFixed(2)})`,
     TransactionFee: `${
-      transactionDetails?.transactions_by_hash?.values?.[0]?.transaction_fees
+      transactionDetails?.getTransactionByHash.transaction_fees
     } Ether ($${parseFloat(
-      transactionDetails?.transactions_by_hash?.values?.[0]?.transaction_fees ||
-        ''
+      transactionDetails?.getTransactionByHash?.transaction_fees_usd || ''
     ).toFixed(2)})`,
     GasPrice: `${
-      transactionDetails?.transactions_by_hash?.values?.[0]?.gas_price
+      transactionDetails?.getTransactionByHash.gas_price
     } Ether (${etherToGwei(
-      transactionDetails?.transactions_by_hash?.values?.[0]?.gas_price
+      transactionDetails?.getTransactionByHash.gas_price
     )} Gwei)`,
-    BaseFee: transactionDetails?.transactions_by_hash?.values?.[0]?.base_fee,
-    MaxFee: transactionDetails?.transactions_by_hash?.values?.[0]?.max_fee,
-    MaxPriorityFee:
-      transactionDetails?.transactions_by_hash?.values?.[0]?.max_priority_fee,
-    TxnBurntFee:
-      transactionDetails?.transactions_by_hash?.values?.[0]?.txn_savings, //
-    TxnSavingFee:
-      transactionDetails?.transactions_by_hash?.values?.[0]?.txn_savings,
-    input: transactionDetails?.transactions_by_hash?.values?.[0]?.input,
+    BaseFee: transactionDetails?.getTransactionByHash?.baseFee,
+    MaxFee: transactionDetails?.getTransactionByHash?.maxFee,
+    MaxPriorityFee: transactionDetails?.getTransactionByHash?.maxPriorityFee,
+    TxnBurntFee: transactionDetails?.getTransactionByHash?.txnBurntFee,
+    TxnSavingFee: transactionDetails?.getTransactionByHash?.txnSavingFee,
+    input: transactionDetails?.getTransactionByHash?.input,
   }
 }
 
@@ -340,24 +321,6 @@ const timeLapseInSeconds = (timeInMinutes: number) => {
   return Math.round(new Date().getTime() / 1000 + timeInSeconds)
 }
 
-const getNetworkUtilization = (blocks: GetPaginatedEthBlocksQuery) => {
-  const { values } = blocks?.eth_blocks || {}
-  const PageSize = values?.length || 0
-  let gasUsedSum = 0
-  values?.map((block) => {
-    gasUsedSum = gasUsedSum + Number(block.gas_used_percentage)
-  })
-  return gasUsedSum / PageSize
-}
-
-const redirect = (path: string) => {
-  Router.push(path)
-}
-
-const getBlockGroupFromBlockNumber = (blockNumber: number) => {
-  return Math.ceil(blockNumber / 100000)
-}
-
 export {
   formatAddress,
   getDifference,
@@ -377,8 +340,6 @@ export {
   timeLapseInSeconds,
   mapRawDataToInternalTransactions,
   mapRawDataToIntTransactions,
-  getNetworkUtilization,
-  redirect,
-  getBlockGroupFromBlockNumber,
 }
 export { default as createEmotionCache } from './createEmotionCache'
+export * from './jwt'

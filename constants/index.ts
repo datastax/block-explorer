@@ -2,13 +2,8 @@ const GRAPHQL_ENDPOINT =
   process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT ||
   'https://krypton-etl.herokuapp.com/graphql'
 
-const API_ACCESS_TOKEN = process.env.NEXT_PUBLIC_API_ACCESS_TOKEN
+const JWT_KEY = process.env.NEXT_PUBLIC_JWT_KEY || ''
 
-enum PAGINATION_EVENT {
-  PREV = 'previous',
-  NEXT = 'next',
-}
-
-export { GRAPHQL_ENDPOINT, API_ACCESS_TOKEN, PAGINATION_EVENT }
+export { GRAPHQL_ENDPOINT, JWT_KEY }
 export * from './routes'
 export * from './stubs'
