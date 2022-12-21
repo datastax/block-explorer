@@ -19,36 +19,29 @@ import Chip from '@components/shared/Chip'
 import colors from '@styles/ThemeProvider/colors'
 import theme from '@styles/ThemeProvider/theme'
 import {
-  useDashboard_Analytics_HeaderQuery,
-  Dashboard_Analytics_HeaderQuery,
-} from 'lib/graphql/generated/generate'
+  GetDashboardHeaderQuery,
+  useGetDashboardHeaderQuery,
+} from 'lib/graphql/generated'
 import { fixed } from 'utils'
 
 interface ChiplabelProps {
-  data: Dashboard_Analytics_HeaderQuery | undefined
+  data: GetDashboardHeaderQuery | undefined
 }
 const ChipLabel = ({ data }: ChiplabelProps) => {
   return (
     <>
       {data && (
         <StyledLabel>
-          Eth: $
-          {fixed(data?.dashboard_analytics?.values?.[0]?.ether_price_usd, 2)}
+          Eth: ${fixed(data?.dashboardAnalytics?.etherPriceUSD, 2)}
           <span>
             {' '}
-            (
-            {fixed(
-              data?.dashboard_analytics?.values?.[0]?.price_percentage_change,
-              2
-            )}
+            ({fixed(data?.dashboardAnalytics?.pricePercentageChange, 2)}
             %){' '}
           </span>
           <span>
             | ⛽️{' '}
-            {Number(data?.dashboard_analytics?.values?.[0]?.network_base_fee) +
-              Number(
-                data?.dashboard_analytics?.values?.[0]?.network_priority_fee
-              )}{' '}
+            {Number(data?.dashboardAnalytics?.networkBaseFee) +
+              Number(data?.dashboardAnalytics?.networkpriorityFee)}{' '}
             Gwei
           </span>
         </StyledLabel>
@@ -62,7 +55,7 @@ const Header = () => {
   const { pathname } = useRouter()
   const isHome = pathname === '/'
 
-  const { data, error } = useDashboard_Analytics_HeaderQuery()
+  const { data, error } = useGetDashboardHeaderQuery()
 
   if (error) {
     console.error(error)
@@ -87,7 +80,7 @@ const Header = () => {
             spacing={isMobile ? '20px' : '40px'}
             direction={'row'}
             theme={theme}
-            $isHome={isHome}
+            isHome={isHome}
           >
             {ROUTES.map(({ name, link }: Route, index) => (
               <Link passHref key={index} href={link}>

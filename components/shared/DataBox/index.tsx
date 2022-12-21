@@ -1,6 +1,6 @@
 import DecodedData from '@components/TransactionDetail/TransactionLogs/DecodedData'
 import { Maybe } from 'graphql/jsutils/Maybe'
-import { Scalars } from 'lib/graphql/generated/generate'
+import { Scalars } from 'lib/graphql/generated'
 import React, { useState } from 'react'
 import { InputBox, CustomButton } from './styles'
 

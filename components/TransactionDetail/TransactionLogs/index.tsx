@@ -2,7 +2,7 @@ import DataBox from '@components/shared/DataBox'
 import HTMLParser from '@components/shared/HTMLParser'
 import { useMediaQuery } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
-import { GetLogsByEthTransactionQuery } from 'lib/graphql/generated/generate'
+import { TransactionLogsOutput } from 'lib/graphql/generated'
 import { getEventNameFromRawData } from 'utils'
 import {
   StyledTypography,
@@ -16,24 +16,15 @@ import {
 } from './styles'
 
 interface TransactionLogsProps {
-  logsData: GetLogsByEthTransactionQuery
+  logsData: TransactionLogsOutput[]
 }
 
 const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
   const smallScreen = useMediaQuery('(max-width:680px)')
   return (
     <Container>
-      {logsData?.logs?.values?.map(
-        ({
-          log_index,
-          address,
-          data,
-          decoded_data,
-          topic0,
-          topic1,
-          topic2,
-          topic3,
-        }) => (
+      {logsData.map(
+        ({ log_index, address, name, topics, data, decoded_data, events }) => (
           <Row
             sx={{
               borderBottom: `1px solid ${colors.neutral100}`,
@@ -70,10 +61,7 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
                   </Highlight>
                   <ColouredText color={colors.actionSecondary}>
                     <HTMLParser
-                      rawString={getEventNameFromRawData(
-                        'Transfer(address,address,uint256)',
-                        ''
-                      )}
+                      rawString={getEventNameFromRawData(name, events)}
                     />
                   </ColouredText>
                 </StyledTypography>
@@ -84,8 +72,8 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
                     Topics
                   </Highlight>
                   <List>
-                    {topic0 && (
-                      <StyledTypography>
+                    {topics?.map((topic, index) => (
+                      <StyledTypography key={index}>
                         <Row>
                           <CustomBadge
                             background={colors.neutral300}
@@ -94,68 +82,14 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
                             padding="5px"
                             badgeSize="16px"
                           >
-                            {0}
+                            {index}
                           </CustomBadge>{' '}
                           <ColouredText color={colors.neutral300}>
-                            {topic0}
+                            {topic}
                           </ColouredText>
                         </Row>
                       </StyledTypography>
-                    )}
-                    {topic1 && (
-                      <StyledTypography>
-                        <Row>
-                          <CustomBadge
-                            background={colors.neutral300}
-                            size="16px"
-                            color={colors.nordic}
-                            padding="5px"
-                            badgeSize="16px"
-                          >
-                            {1}
-                          </CustomBadge>{' '}
-                          <ColouredText color={colors.neutral300}>
-                            {topic1}
-                          </ColouredText>
-                        </Row>
-                      </StyledTypography>
-                    )}
-                    {topic2 && (
-                      <StyledTypography>
-                        <Row>
-                          <CustomBadge
-                            background={colors.neutral300}
-                            size="16px"
-                            color={colors.nordic}
-                            padding="5px"
-                            badgeSize="16px"
-                          >
-                            {2}
-                          </CustomBadge>{' '}
-                          <ColouredText color={colors.neutral300}>
-                            {topic2}
-                          </ColouredText>
-                        </Row>
-                      </StyledTypography>
-                    )}
-                    {topic3 && (
-                      <StyledTypography>
-                        <Row>
-                          <CustomBadge
-                            background={colors.neutral300}
-                            size="16px"
-                            color={colors.nordic}
-                            padding="5px"
-                            badgeSize="16px"
-                          >
-                            {3}
-                          </CustomBadge>{' '}
-                          <ColouredText color={colors.neutral300}>
-                            {topic3}
-                          </ColouredText>
-                        </Row>
-                      </StyledTypography>
-                    )}
+                    ))}
                   </List>
                 </StyledTypography>
               </Row>

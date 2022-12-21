@@ -1,54 +1,71 @@
 import type { NextPage } from 'next'
 import Hero from '@components/shared/Hero'
 import BlocksDetail from '@components/BlocksDetail'
+import { useRouter } from 'next/router'
 import { BlockDetails } from '@types'
-import { useGetEthBlockByNumberLazyQuery } from 'lib/graphql/generated/generate'
-import { useEffect, useState } from 'react'
 import {
-  getBlockGroupFromBlockNumber,
-  isNumber,
-  mapRawDataToBlockDetails,
-  redirect,
-} from 'utils'
+  useGetBlockByHashLazyQuery,
+  useGetBlockByNumberLazyQuery,
+} from 'lib/graphql/generated'
+import { useEffect, useState } from 'react'
+import { formatAddress, isNumber, mapRawDataToBlockDetails } from 'utils'
 import { Box } from '@mui/material'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
-import { useRouter } from 'next/router'
 
 const Block: NextPage = () => {
-  const Router = useRouter()
-  const { block } = Router.query
-
+  const router = useRouter()
+  const { block } = router.query
   const blockKey = block as string
   const [blockDetailsData, setBlockDetailsData] = useState<BlockDetails>()
 
   const [getBlockDetailsByNumber, { data: blockDetails, error: blocksError }] =
-    useGetEthBlockByNumberLazyQuery()
+    useGetBlockByNumberLazyQuery()
+
+  const [
+    getBlockDetailsByHash,
+    { data: blockDetailsHash, error: blocksErrorhash },
+  ] = useGetBlockByHashLazyQuery()
+
   useEffect(() => {
     if (isNumber(blockKey))
       getBlockDetailsByNumber({
         variables: {
-          blockGroup: getBlockGroupFromBlockNumber(Number(blockKey)),
-          blockNumber: Number(blockKey),
+          data: Number(blockKey),
         },
       })
-  }, [blockKey, getBlockDetailsByNumber])
+    if (!isNumber(blockKey))
+      getBlockDetailsByHash({
+        variables: {
+          data: blockKey,
+        },
+      })
+  }, [blockKey, getBlockDetailsByHash, getBlockDetailsByNumber])
+
+  if (blocksError || blocksErrorhash) {
+    console.error(blocksError + ' ' + blocksErrorhash)
+  }
 
   useEffect(() => {
     if (blockDetails) {
-      if (blockDetails?.eth_blocks?.values?.length === 0) redirect('/404')
-      setBlockDetailsData(mapRawDataToBlockDetails(blockDetails, blockKey))
+      setBlockDetailsData(
+        mapRawDataToBlockDetails(blockDetails?.getBlockByNumber, blockKey)
+      )
     }
-  }, [blockDetails, blockKey])
-
-  if (blocksError) {
-    console.error(blocksError)
-    redirect('/404')
-  }
+    if (blockDetailsHash) {
+      setBlockDetailsData(
+        mapRawDataToBlockDetails(blockDetailsHash?.getBlockByHash, blockKey)
+      )
+    }
+  }, [block, blockDetails, blockDetailsHash, blockKey])
 
   return (
     <>
       {block && (
-        <Hero title="Block" blockNumber={`#${blockKey}`} showChips={false} />
+        <Hero
+          title="Block"
+          blockNumber={`#${formatAddress(blockKey)}`}
+          showChips={false}
+        />
       )}
       {blockDetailsData ? (
         <BlocksDetail BlocksDetailsData={blockDetailsData} />

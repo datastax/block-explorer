@@ -94,12 +94,16 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
             >
               <div
                 onClick={() => {
-                  router.push({
-                    pathname: '/transactions',
-                    query: {
-                      block: data['Hash'],
+                  router.push(
+                    {
+                      pathname: '/transactions',
+                      query: {
+                        blockNumber: data['BlockHeight'],
+                        blockHash: data['Hash'],
+                      },
                     },
-                  })
+                    `/transactions?blockNumber=${data['BlockHeight']}`
+                  )
                 }}
               >
                 <Chip

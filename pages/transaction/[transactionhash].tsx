@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import type { NextPage, NextPageContext } from 'next'
 import Router from 'next/router'
 import { Typography, Box } from '@mui/material'
@@ -10,12 +10,11 @@ import Tabs from '@components/shared/Tabs/CustomTabs'
 import TabPanel from '@components/shared/Tabs/CustomTabsPanel'
 import TransactionLogs from '@components/TransactionDetail/TransactionLogs'
 import {
-  useGetLogsByEthTransactionLazyQuery,
-  useGetEthTransactionByHashQuery,
-  useGetLatestEthBlockLazyQuery,
-  useGetLatestBlockGroupQuery,
-  useGetInternalTransactionByEthBlockNumber_Transaction_HashLazyQuery,
-} from 'lib/graphql/generated/generate'
+  useGetBlocksLazyQuery,
+  useGetConsecutiveTransactionsLazyQuery,
+  useGetLogByTransactionLazyQuery,
+  useGetTransactionByHashQuery,
+} from 'lib/graphql/generated'
 import { TransactionDetails, TabProps, InternalTxnsTabData } from 'types'
 import {
   mapRawDataToInternalTransactions,
@@ -38,135 +37,163 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
     InternalTxnsTabData[]
   >([])
 
-  const [
-    getInternalTransactions,
-    { data: internalTransactionsData, error: internalTransactionsError },
-  ] = useGetInternalTransactionByEthBlockNumber_Transaction_HashLazyQuery()
-
   const { data: transactionDetails, error: transactionError } =
-    useGetEthTransactionByHashQuery({
+    useGetTransactionByHashQuery({
       variables: {
-        filter: {
-          hash: {
-            eq: transactionHash as string,
-          },
-        },
+        data: transactionHash as string,
       },
     })
 
   const [getLogs, { data: transactionLogs, error: transactionLogsError }] =
-    useGetLogsByEthTransactionLazyQuery()
+    useGetLogByTransactionLazyQuery()
 
-  const [getLatestBlock, { error: blockError, loading: blockLoading }] =
-    useGetLatestEthBlockLazyQuery()
+  if (transactionLogsError)
+    console.error('Error While Fetching Transaction Logs', transactionLogsError)
 
-  const { error: latestBlockGroupError } = useGetLatestBlockGroupQuery({
-    onCompleted: (res) => {
-      getLatestBlock({
+  useEffect(() => {
+    if (transactionDetails?.getTransactionByHash?.block_number)
+      getLogs({
         variables: {
-          filter: {
-            blocks_group: {
-              eq: res?.dashboard_analytics?.values?.[0]?.latest_blocks_group,
+          data: {
+            transactionHash: transactionHash as string,
+            blockNumber: transactionDetails?.getTransactionByHash?.block_number,
+          },
+        },
+      })
+  }, [
+    getLogs,
+    transactionDetails?.getTransactionByHash?.block_number,
+    transactionHash,
+  ])
+
+  const [
+    getLatestBlocks,
+    { data: latestBlock, error: blockError, loading: blockLoading },
+  ] = useGetBlocksLazyQuery()
+
+  const [
+    getConsecutiveTransaction,
+    { data: consecutiveTransaction, error: consecutiveTransactionError },
+  ] = useGetConsecutiveTransactionsLazyQuery()
+
+  if (blockError || transactionError || consecutiveTransactionError) {
+    console.error(
+      blockError + ' ' + transactionError + ' ' + consecutiveTransactionError
+    )
+  }
+
+  const [nextConsecutive, setNextConsecutive] = useState<number | null>()
+  const [previousConsecutive, setPreviousConsecutive] = useState<
+    number | null
+  >()
+  const [blockHash, setBlockHash] = useState<string>()
+  const [blockNumber, setBlockNumber] = useState<number>()
+
+  const setNextConsecutiveState = () => {
+    setPreviousConsecutive(undefined)
+    setNextConsecutive(transactionDetailData?.TransactionIndex)
+    setBlockHash(transactionDetails?.getTransactionByHash?.block_hash)
+    setBlockNumber(transactionDetails?.getTransactionByHash?.block_number)
+  }
+
+  const setPreviousConsecutiveState = () => {
+    setPreviousConsecutive(transactionDetailData?.TransactionIndex)
+    setNextConsecutive(undefined)
+    setBlockHash(transactionDetails?.getTransactionByHash?.block_hash)
+    setBlockNumber(transactionDetails?.getTransactionByHash?.block_number)
+  }
+
+  const resetStates = useCallback((hash: string) => {
+    setPreviousConsecutive(undefined)
+    setNextConsecutive(undefined)
+    setBlockHash(undefined)
+    setBlockNumber(undefined)
+    Router.push(hash)
+  }, [])
+
+  useEffect(() => {
+    if (nextConsecutive || previousConsecutive === 0) {
+      getConsecutiveTransaction({
+        variables: {
+          transactionsdata: {
+            blockHash: blockHash,
+            blockNumber: blockNumber,
+            pagesInput: {
+              pageSize: 1,
+              next: nextConsecutive,
+              previous: undefined,
             },
           },
-          options: {
-            pageState: null,
+        },
+      })
+    }
+    if (previousConsecutive || previousConsecutive === 0) {
+      getConsecutiveTransaction({
+        variables: {
+          transactionsdata: {
+            blockHash: blockHash,
+            blockNumber: blockNumber,
+            pagesInput: {
+              pageSize: 1,
+              next: undefined,
+              previous: previousConsecutive,
+            },
+          },
+        },
+      })
+    }
+  }, [
+    blockHash,
+    blockNumber,
+    getConsecutiveTransaction,
+    nextConsecutive,
+    previousConsecutive,
+  ])
+
+  useEffect(() => {
+    if (consecutiveTransaction?.transactions[0]?.hash) {
+      resetStates(consecutiveTransaction?.transactions[0]?.hash)
+    }
+  }, [consecutiveTransaction?.transactions, resetStates])
+
+  if (transactionError || blockError) {
+    console.error(transactionError + ' ' + blockError)
+  }
+
+  useEffect(() => {
+    if (latestBlock)
+      setBlockConfirmation(latestBlock?.getBlocks?.blocks[0]?.number)
+  }, [latestBlock])
+
+  useEffect(() => {
+    if (transactionDetails) {
+      getLatestBlocks({
+        variables: {
+          data: {
             pageSize: 1,
           },
         },
-        onCompleted: (res) => {
-          setBlockConfirmation(res?.eth_blocks?.values?.[0]?.number)
-        },
       })
-    },
-  })
+      if (blockConfirmation && !blockLoading) {
+        setTransactionDetailData(
+          mapRawDataToTransactionDetails(transactionDetails, blockConfirmation)
+        )
+        setInternalTransactions(
+          mapRawDataToInternalTransactions(transactionDetails)
+        )
+      }
+    }
+  }, [
+    blockConfirmation,
+    blockLoading,
+    getLatestBlocks,
+    latestBlock,
+    transactionDetails,
+  ])
 
-  // const [
-  //   getConsecutiveTransaction,
-  //   { data: consecutiveTransaction, error: consecutiveTransactionError },
-  // ] = useGetConsecutiveTransactionsLazyQuery()
-
-  // const [nextConsecutive, setNextConsecutive] = useState<number | null>()
-  // const [previousConsecutive, setPreviousConsecutive] = useState<
-  //   number | null
-  // >()
-  // const [blockHash, setBlockHash] = useState<string>()
-  // const [blockNumber, setBlockNumber] = useState<number>()
-
-  // const setNextConsecutiveState = () => {
-  //   setPreviousConsecutive(undefined)
-  //   setNextConsecutive(transactionDetailData?.TransactionIndex)
-  //   setBlockHash(
-  //     transactionDetails?.transactions_by_hash?.values?.[0]?.block_hash || ''
-  //   )
-  //   setBlockNumber(
-  //     transactionDetails?.transactions_by_hash?.values?.[0]?.block_number
-  //   )
-  // }
-
-  // const setPreviousConsecutiveState = () => {
-  //   setPreviousConsecutive(transactionDetailData?.TransactionIndex)
-  //   setNextConsecutive(undefined)
-  //   setBlockHash(
-  //     transactionDetails?.transactions_by_hash?.values?.[0]?.block_hash || ''
-  //   )
-  //   setBlockNumber(
-  //     transactionDetails?.transactions_by_hash?.values?.[0]?.block_number
-  //   )
-  // }
-
-  // const resetStates = useCallback((hash: string) => {
-  //   setPreviousConsecutive(undefined)
-  //   setNextConsecutive(undefined)
-  //   setBlockHash(undefined)
-  //   setBlockNumber(undefined)
-  //   Router.push(hash)
-  // }, [])
-
-  // useEffect(() => {
-  //   if (nextConsecutive || previousConsecutive === 0) {
-  //     getConsecutiveTransaction({
-  //       variables: {
-  //         transactionsdata: {
-  //           blockHash: blockHash,
-  //           blockNumber: blockNumber,
-  //           pagesInput: {
-  //             pageSize: 1,
-  //             next: nextConsecutive,
-  //             previous: undefined,
-  //           },
-  //         },
-  //       },
-  //     })
-  //   }
-  //   if (previousConsecutive || previousConsecutive === 0) {
-  //     getConsecutiveTransaction({
-  //       variables: {
-  //         transactionsdata: {
-  //           blockHash: blockHash,
-  //           blockNumber: blockNumber,
-  //           pagesInput: {
-  //             pageSize: 1,
-  //             next: undefined,
-  //             previous: previousConsecutive,
-  //           },
-  //         },
-  //       },
-  //     })
-  //   }
-  // }, [
-  //   blockHash,
-  //   blockNumber,
-  //   getConsecutiveTransaction,
-  //   nextConsecutive,
-  //   previousConsecutive,
-  // ])
-
-  // useEffect(() => {
-  //   if (consecutiveTransaction?.transactions[0]?.hash) {
-  //     resetStates(consecutiveTransaction?.transactions[0]?.hash)
-  //   }
-  // }, [consecutiveTransaction?.transactions, resetStates])
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabIndex(newValue)
+  }
 
   const tabsList: TabProps[] = [
     {
@@ -175,7 +202,7 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
       id: 'simple-tab-0',
     },
     {
-      label: `Logs (${transactionLogs?.logs?.values?.length || 0})`,
+      label: `Logs (${transactionLogs?.getLogByTransaction?.length || 0})`,
       ariaControls: 'simple-tabpanel-1',
       id: 'simple-tab-2',
     },
@@ -186,93 +213,21 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
     },
   ]
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabIndex(newValue)
-  }
-
-  useEffect(() => {
-    if (transactionDetails) {
-      if (transactionDetails?.transactions_by_hash?.values?.length === 0)
-        Router.push(`/404`)
-      if (blockConfirmation && !blockLoading && internalTransactionsData) {
-        setTransactionDetailData(
-          mapRawDataToTransactionDetails(transactionDetails, blockConfirmation)
-        )
-        setInternalTransactions(
-          mapRawDataToInternalTransactions(internalTransactionsData)
-        )
-      }
-    }
-  }, [
-    blockConfirmation,
-    blockLoading,
-    internalTransactionsData,
-    transactionDetails,
-  ])
-
   useEffect(() => {
     const locationHash = window.location.hash
     if (locationHash === '#eventlog') setTabIndex(1)
     if (locationHash === '#internal') setTabIndex(2)
   }, [])
 
-  useEffect(() => {
-    if (transactionDetails?.transactions_by_hash?.values?.[0]?.block_number)
-      getLogs({
-        variables: {
-          filter: {
-            transaction_hash: { eq: transactionHash as string },
-            block_number: {
-              eq: transactionDetails?.transactions_by_hash?.values?.[0]
-                ?.block_number,
-            },
-          },
-        },
-      })
-    getInternalTransactions({
-      variables: {
-        filter: {
-          block_number: {
-            eq: transactionDetails?.transactions_by_hash?.values?.[0]
-              ?.block_number,
-          },
-          transaction_hash: {
-            eq: transactionDetails?.transactions_by_hash?.values?.[0]?.hash,
-          },
-        },
-      },
-    })
-  }, [
-    getInternalTransactions,
-    getLogs,
-    transactionDetails?.transactions_by_hash?.values,
-    transactionHash,
-  ])
-
-  if (transactionLogsError)
-    console.error('Error While Fetching Transaction Logs', transactionLogsError)
-  if (latestBlockGroupError) {
-    console.error(latestBlockGroupError)
-  }
-  if (blockError || transactionError || internalTransactionsError) {
-    console.error(
-      blockError + ' ' + transactionError + ' ' + internalTransactionsError
-    )
-  }
-
   return (
     <>
       <Hero
         title="Transaction Details"
         showChips={false}
-        showPagination={false}
+        showPagination={true}
         showDropdown={false}
-        setNextConsecutiveState={() => {
-          console.log('Next called')
-        }}
-        setPreviousConsecutiveState={() => {
-          console.log('Previous Called')
-        }}
+        setNextConsecutiveState={setNextConsecutiveState}
+        setPreviousConsecutiveState={setPreviousConsecutiveState}
       />
 
       <Tabs tabIndex={tabIndex} tabsList={tabsList} onChange={handleChange} />
@@ -290,9 +245,11 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
             >
               Transaction Receipt Event Logs
             </Typography>
-            {transactionLogs?.logs?.values &&
-              transactionLogs?.logs?.values?.length > 0 && (
-                <TransactionLogs logsData={transactionLogs} />
+            {transactionLogs &&
+              transactionLogs?.getLogByTransaction?.length > 0 && (
+                <TransactionLogs
+                  logsData={transactionLogs.getLogByTransaction}
+                />
               )}
           </TabPanel>
           {internalTransactions && internalTransactions.length > 0 && (

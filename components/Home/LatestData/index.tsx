@@ -2,24 +2,21 @@ import BlocksList from '@components/Home/BlocksList'
 import TransactionsList from '@components/Home/TransactionsList'
 import { Stack, useMediaQuery } from '@mui/material'
 import {
-  useGetEthBlocksLazyQuery,
-  useGetTransactionsOfLatestBlockLazyQuery,
-} from 'lib/graphql/generated/generate'
+  useGetBlocksLazyQuery,
+  useGetTransactionsLazyQuery,
+} from '@lib/graphql/generated'
 import { useEffect } from 'react'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 import { Container } from './styles'
 
-interface LatestDataInterface {
-  latestBlocksGroup: number | undefined
-}
-const LatestData = ({ latestBlocksGroup }: LatestDataInterface) => {
+const LatestData = () => {
   const [getBlocks, { data: latestBlocks, error: blocksError }] =
-    useGetEthBlocksLazyQuery()
+    useGetBlocksLazyQuery()
 
   const [
     getTransactions,
     { data: latestTransactions, error: transactionError },
-  ] = useGetTransactionsOfLatestBlockLazyQuery()
+  ] = useGetTransactionsLazyQuery()
   if (transactionError) {
     console.error(transactionError)
   }
@@ -29,37 +26,26 @@ const LatestData = ({ latestBlocksGroup }: LatestDataInterface) => {
   }
 
   useEffect(() => {
-    if (latestBlocks && latestBlocks?.eth_blocks?.values?.[0]?.hash) {
-      getTransactions({
-        variables: {
-          filter: {
-            block_hash: {
-              eq: latestBlocks?.eth_blocks?.values?.[0]?.hash,
-            },
-          },
-          options: {
+    getTransactions({
+      variables: {
+        transactionsdata: {
+          pagesInput: {
             pageSize: 6,
           },
         },
-      })
-    }
-  }, [getTransactions, latestBlocks])
+      },
+    })
+  }, [getTransactions])
 
   useEffect(() => {
-    if (latestBlocksGroup)
-      getBlocks({
-        variables: {
-          filter: {
-            blocks_group: {
-              eq: latestBlocksGroup,
-            },
-          },
-          options: {
-            pageSize: 6,
-          },
+    getBlocks({
+      variables: {
+        data: {
+          pageSize: 6,
         },
-      })
-  }, [getBlocks, latestBlocksGroup])
+      },
+    })
+  }, [getBlocks])
 
   const tabScreen = useMediaQuery('(max-width:1000px)')
   return (
@@ -74,7 +60,7 @@ const LatestData = ({ latestBlocksGroup }: LatestDataInterface) => {
       {latestTransactions ? (
         <TransactionsList
           title={'Latest Transactions'}
-          transactionsList={latestTransactions}
+          transactions={latestTransactions}
         />
       ) : (
         <Container>
