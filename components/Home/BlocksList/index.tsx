@@ -9,12 +9,12 @@ import {
   ChipWrapper,
 } from './styles'
 import { useRouter } from 'next/router'
-import { GetBlocksQuery } from 'lib/graphql/generated'
+import { GetEthBlocksQuery } from 'lib/graphql/generated/generate'
 import { fixed, formatAddress, getDifference } from '@utils'
 
 interface BlockListProps {
   title: string
-  blocks: GetBlocksQuery | undefined
+  blocks: GetEthBlocksQuery | undefined
 }
 
 const BlocksList = ({ title, blocks }: BlockListProps) => {
@@ -32,7 +32,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
 
       <Table>
         <TableBody>
-          {blocks?.getBlocks?.blocks?.map((Block, index) => (
+          {blocks?.eth_blocks?.values?.map((Block, index) => (
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               key={index}
@@ -54,7 +54,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                 >
                   {Block.number}
                   <strong>
-                    {getDifference(parseInt(Block.timestamp))} ago
+                    {getDifference(parseInt(Block?.timestamp || ''))} ago
                   </strong>
                 </ColumnBox>
               </CustomTableCell>

@@ -12,8 +12,8 @@ import {
   summaryBlocksDataPrice,
   summaryBlocksDataTransactions,
 } from '@constants'
-import { useGetDashboardAnalyticsLazyQuery } from 'lib/graphql/generated'
-import { useEffect, useState } from 'react'
+import { useDashboard_AnalyticsLazyQuery } from 'lib/graphql/generated/generate'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import {
   GraphData,
   SummaryBlocksDataPrice,
@@ -22,7 +22,10 @@ import {
 import { convertToMillion, numberWithCommas } from 'utils'
 import CustomSkeleton from '@components/shared/CustomSkeleton'
 
-const SummaryBlocks = () => {
+interface SummaryBlocksInterfce {
+  setLatestBlocksGroup: Dispatch<SetStateAction<number | undefined>>
+}
+const SummaryBlocks = ({ setLatestBlocksGroup }: SummaryBlocksInterfce) => {
   const [summaryBlocksDataPriceList, setSummaryBlocksDataPriceList] =
     useState<SummaryBlocksDataPrice[]>()
   const [
@@ -30,7 +33,7 @@ const SummaryBlocks = () => {
     setSummaryBlocksDataTransactionsList,
   ] = useState<SummaryBlocksDataTransactions[]>()
   const [graph, setGraph] = useState<GraphData[]>()
-  const [getDashboardAnalytics, { data }] = useGetDashboardAnalyticsLazyQuery()
+  const [getDashboardAnalytics, { data }] = useDashboard_AnalyticsLazyQuery()
 
   useEffect(() => {
     getDashboardAnalytics()
@@ -44,25 +47,29 @@ const SummaryBlocks = () => {
               block.title === 'Ether Price'
                 ? numberWithCommas(
                     parseFloat(
-                      data.dashboardAnalytics.etherPriceUSD || ''
+                      data?.dashboard_analytics?.values?.[0]?.ether_price_usd ||
+                        ''
                     ).toFixed(2)
                   )
                 : numberWithCommas(
                     parseFloat(
-                      data.dashboardAnalytics.marketCapUSD || ''
+                      data?.dashboard_analytics?.values?.[0]?.market_cap_usd ||
+                        ''
                     ).toFixed(2)
                   )
             }`,
             stat:
               block.title === 'Ether Price'
                 ? `@${parseFloat(
-                    data.dashboardAnalytics.etherPriceBTC || ''
+                    data?.dashboard_analytics?.values?.[0]?.ether_price_btc ||
+                      ''
                   ).toFixed(5)} BTC`
                 : undefined,
             supportingStat:
               block.title === 'Ether Price'
                 ? `${parseFloat(
-                    data.dashboardAnalytics.pricePercentageChange || ''
+                    data?.dashboard_analytics?.values?.[0]
+                      ?.price_percentage_change || ''
                   ).toFixed(2)}%`
                 : undefined,
             fontSizeOfValue: block.fontSizeOfValue,
@@ -78,54 +85,65 @@ const SummaryBlocks = () => {
               block.title === 'Difficuilty'
                 ? `${numberWithCommas(
                     (
-                      parseFloat(data.dashboardAnalytics.difficulty || '') /
-                      10e12
+                      parseFloat(
+                        data?.dashboard_analytics?.values?.[0]?.difficulty || ''
+                      ) / 10e12
                     ).toFixed(2)
                   )} TH`
                 : `${convertToMillion(
-                    parseInt(data.dashboardAnalytics.totalTransactions || '')
+                    parseInt(
+                      data?.dashboard_analytics?.values?.[0]
+                        ?.total_transactions || ''
+                    )
                   )}`,
             stat:
               block.title === 'Transactions'
-                ? `${parseFloat(data.dashboardAnalytics.tps || '').toFixed(
-                    1
-                  )} TPS`
+                ? `${parseFloat(
+                    data?.dashboard_analytics?.values?.[0]?.tps || ''
+                  ).toFixed(1)} TPS`
                 : block.stat,
             secondaryTitle: block.secondaryTitle,
             secondaryValue:
               block.secondaryTitle === 'Hash Rate'
                 ? `${numberWithCommas(
                     (
-                      parseFloat(data.dashboardAnalytics.hashrate || '') / 10e9
+                      parseFloat(
+                        data?.dashboard_analytics?.values?.[0]?.hashrate || ''
+                      ) / 10e9
                     ).toFixed(2)
                   )} GH/s`
                 : `${parseFloat(
-                    data.dashboardAnalytics.medGasPrice || ''
+                    data?.dashboard_analytics?.values?.[0]?.med_gas_price || ''
                   ).toFixed(2)} Gwei`,
             fontSizeOfValue: block.fontSizeOfValue,
             secondaryStat: block.secondaryStat,
           }
         })
       let count = 1
-      const graphData: GraphData[] =
-        data.dashboardAnalytics?.transactionHistoryChart
-          .map((node) => {
-            const date = new Date()
-            date.setDate(date.getDate() - count)
-            const day = date.getDate()
-            const month = date.toLocaleString('en-us', { month: 'long' })
-            count += 1
-            return {
-              label: `${month} ${day}`,
-              value: node,
-            }
-          })
-          .reverse()
+      const graphData: GraphData[] = JSON.parse(
+        data?.dashboard_analytics?.values?.[0]?.transactions_history_chart || ''
+      )
+        ?.map((node: string) => {
+          const date = new Date()
+          date.setDate(date.getDate() - count)
+          const day = date.getDate()
+          const month = date.toLocaleString('en-us', { month: 'long' })
+          count += 1
+          return {
+            label: `${month} ${day}`,
+            value: node,
+          }
+        })
+        .reverse()
       setSummaryBlocksDataPriceList(blocksList)
       setSummaryBlocksDataTransactionsList(transactionsList)
       setGraph(graphData)
+      setLatestBlocksGroup(
+        data?.dashboard_analytics?.values?.[0]?.latest_blocks_group
+      )
     }
-  }, [data, getDashboardAnalytics])
+  }, [data, getDashboardAnalytics, setLatestBlocksGroup])
+
   return (
     <Container>
       <CardsBox>

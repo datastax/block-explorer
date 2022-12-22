@@ -19,19 +19,19 @@ interface SummaryBlocksProps {
 }
 
 interface InternalTransactionData {
-  parentTxnHash: string
-  type: string
-  from: string
-  to: string
-  value: string
+  parentTxnHash: string | null | undefined
+  type: string | null | undefined
+  from: string | null | undefined
+  to: string | null | undefined
+  value: string | null | undefined
 }
 
 interface InternalTxnsTabData {
-  typeTraceAddress: string
-  from: string
-  to: string
-  value: string
-  gasLimit: string
+  typeTraceAddress: string | null | undefined
+  from: string | null | undefined
+  to: string | null | undefined
+  value: string | null | undefined
+  gasLimit: string | null | undefined
 }
 
 interface ChipProps {
@@ -60,7 +60,7 @@ interface CustomTableProps {
   fontWeight?: string
   lineheight?: string
   display?: string
-  istransaction?: boolean
+  $istransaction?: boolean
 }
 
 type BlocksDataHome = {
