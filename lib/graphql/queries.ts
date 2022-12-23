@@ -280,6 +280,19 @@ query dashboard_analytics_header($filter: dashboard_analyticsFilterInput) {
   }
 }`;
 
+const GET_LATEST_ETH_BLOCK = `
+query getLatestEthBlock(
+  $filter: eth_blocksFilterInput
+  $options: QueryOptions
+) {
+  eth_blocks(filter: $filter, options: $options) {
+    values {
+      number
+      hash
+    }
+  }
+}`;
+
 export {
   Get_PAGINATED_BLOCKS_QUERY,
   GET_LATEST_BLOCKS_GROUP,
@@ -295,4 +308,5 @@ export {
   GET_INTERNAL_TRANSACTIONS_OF_BLOCK,
   GET_INTERNAL_TRANSACTIONS_OF_TRANSACTION,
   GET_DASHBOARD_ANALYTICS_HEADER,
+  GET_LATEST_ETH_BLOCK,
 };
