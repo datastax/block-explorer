@@ -1,17 +1,17 @@
-import { Stack } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import React from 'react'
-import Chip from '@components/shared/Chip'
+import { Stack } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import React from 'react';
+import Chip from '@components/shared/Chip';
 import {
   MainHeading,
   Container,
   SubHeading,
   PaginationContainer,
-} from './styles'
-import { HeroProps } from 'types'
-import PaginationButton from '@components/TransactionDetail/TransactionHero/PaginationButton'
-import DropdownButton from '@components/TransactionDetail/TransactionHero/DropdownButton'
-import { getBurntFee } from 'utils'
+} from './styles';
+import { HeroProps } from 'types';
+import PaginationButton from '@components/TransactionDetail/TransactionHero/PaginationButton';
+import DropdownButton from '@components/TransactionDetail/TransactionHero/DropdownButton';
+import { getBurntFee } from 'utils';
 
 const Hero = ({
   title,
@@ -64,7 +64,7 @@ const Hero = ({
         </Stack>
       )}
     </Container>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

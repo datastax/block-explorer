@@ -1,27 +1,27 @@
-import colors from 'styles/ThemeProvider/colors'
-import { Table, TableBody, TableRow, Typography } from '@mui/material'
-import Chip from '@components/shared/Chip'
+import colors from 'styles/ThemeProvider/colors';
+import { Table, TableBody, TableRow, Typography } from '@mui/material';
+import Chip from '@components/shared/Chip';
 import {
   ColumnBox,
   CustomTableCell,
   StyledCard,
   StyledButton,
   ChipWrapper,
-} from './styles'
-import { useRouter } from 'next/router'
-import { GetTransactionsOfLatestBlockQuery } from 'lib/graphql/generated/generate'
-import { formatAddress, getDifference, weiToEther } from '@utils'
+} from './styles';
+import { useRouter } from 'next/router';
+import { GetTransactionsOfLatestBlockQuery } from 'lib/graphql/generated/generate';
+import { formatAddress, getDifference, weiToEther } from '@utils';
 
 interface transactionBlockProps {
-  title: string
-  transactionsList: GetTransactionsOfLatestBlockQuery | undefined
+  title: string;
+  transactionsList: GetTransactionsOfLatestBlockQuery | undefined;
 }
 
 const TransactionsList = ({
   title,
   transactionsList,
 }: transactionBlockProps) => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <StyledCard>
       <Typography
@@ -49,7 +49,7 @@ const TransactionsList = ({
                 <ColumnBox
                   flexValue="flex-start"
                   onClick={() => {
-                    router.push(`/transaction/${transaction.hash}`)
+                    router.push(`/transaction/${transaction.hash}`);
                   }}
                   style={{
                     cursor: 'pointer',
@@ -102,7 +102,7 @@ const TransactionsList = ({
         VIEW All TRANSACTIONS
       </StyledButton>
     </StyledCard>
-  )
-}
+  );
+};
 
-export default TransactionsList
+export default TransactionsList;

@@ -7,6 +7,6 @@ const ROUTES = [
     name: 'Transactions',
     link: '/transactions',
   },
-]
+];
 
-export { ROUTES }
+export { ROUTES };

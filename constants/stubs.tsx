@@ -3,9 +3,9 @@ import {
   TransactionLogo,
   MarketCap,
   Difficuilty,
-} from '@components/shared/Icons'
+} from '@components/shared/Icons';
 
-import { SummaryBlocksDataPrice, SummaryBlocksDataTransactions } from 'types'
+import { SummaryBlocksDataPrice, SummaryBlocksDataTransactions } from 'types';
 
 const summaryBlocksDataPrice: SummaryBlocksDataPrice[] = [
   {
@@ -22,7 +22,7 @@ const summaryBlocksDataPrice: SummaryBlocksDataPrice[] = [
     value: '$224,483,537,186.00',
     fontSizeOfValue: '24px',
   },
-]
+];
 
 const summaryBlocksDataTransactions: SummaryBlocksDataTransactions[] = [
   {
@@ -43,7 +43,7 @@ const summaryBlocksDataTransactions: SummaryBlocksDataTransactions[] = [
     secondaryValue: '1,052,318.84 GH/s',
     fontSizeOfValue: '20px',
   },
-]
+];
 
 const InternalTransactionTitle = [
   'Parent Txn Hash',
@@ -51,7 +51,7 @@ const InternalTransactionTitle = [
   'From',
   'To',
   'Value',
-]
+];
 
 const InternalTxnTitle = [
   'Type Trace Address',
@@ -59,7 +59,7 @@ const InternalTxnTitle = [
   'To',
   'Value',
   'Gas Limit',
-]
+];
 
 const BlocksTitle = [
   'Block',
@@ -72,7 +72,7 @@ const BlocksTitle = [
   'Base Fee',
   'Reward',
   'Burnt Fees (ETH)',
-]
+];
 
 const transactionTitles = [
   'Txn Hash',
@@ -84,7 +84,7 @@ const transactionTitles = [
   'To',
   'Value',
   'Txn Fee',
-]
+];
 
 const colorColumnNames = [
   'number',
@@ -95,7 +95,7 @@ const colorColumnNames = [
   'TxnHash',
   'from_address',
   'to_address',
-]
+];
 
 const searchPlaceHolders = [
   'Search by Txn Hash or Block Number',
@@ -104,12 +104,12 @@ const searchPlaceHolders = [
   'Search by Contract Hash',
   'Search by Token Address',
   'Search by ENS Domain',
-]
+];
 
 const mediumBlogUrl =
-  'https://medium.com/building-the-open-data-stack/tracking-nft-transfers-using-astra-db-and-web3-js-9232402c4417'
+  'https://medium.com/building-the-open-data-stack/tracking-nft-transfers-using-astra-db-and-web3-js-9232402c4417';
 
-const colorColumnHeaderNames = ['Age', 'Txn Fee']
+const colorColumnHeaderNames = ['Age', 'Txn Fee'];
 
 export {
   transactionTitles,
@@ -122,4 +122,4 @@ export {
   searchPlaceHolders,
   InternalTransactionTitle,
   InternalTxnTitle,
-}
+};

@@ -1,9 +1,9 @@
-import { SideBox } from '@components/BlocksDetail/styles'
-import { Question } from '@components/shared/Icons'
-import { Collapse, ListItemText, ListItemButton } from '@mui/material'
-import React from 'react'
-import { TransactionDetails } from 'types'
-import { getGasFeesPercentage, numberWithCommas } from 'utils'
+import { SideBox } from '@components/BlocksDetail/styles';
+import { Question } from '@components/shared/Icons';
+import { Collapse, ListItemText, ListItemButton } from '@mui/material';
+import React from 'react';
+import { TransactionDetails } from 'types';
+import { getGasFeesPercentage, numberWithCommas } from 'utils';
 import {
   DetailsTableContainer,
   CustomTableContainer,
@@ -15,19 +15,19 @@ import {
   LoggedIn,
   InputBox,
   Wrapper,
-} from './styles'
-import TransactionDetailRow from './TransactionDetailRow'
+} from './styles';
+import TransactionDetailRow from './TransactionDetailRow';
 
 interface TransactionDetailProps {
-  TransactionData: TransactionDetails
+  TransactionData: TransactionDetails;
 }
 
 const TransactionDetail = ({ TransactionData }: TransactionDetailProps) => {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
   return (
     <>
       <DetailsTableContainer>
@@ -143,7 +143,7 @@ const TransactionDetail = ({ TransactionData }: TransactionDetailProps) => {
         </CustomTableContainer>
       </DetailsTableContainer>
     </>
-  )
-}
+  );
+};
 
-export default TransactionDetail
+export default TransactionDetail;

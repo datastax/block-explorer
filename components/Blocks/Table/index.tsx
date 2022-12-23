@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import colors from '@styles/ThemeProvider/colors'
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import colors from '@styles/ThemeProvider/colors';
 import {
   BlockTableContainer,
   CustomTableCell,
@@ -12,29 +12,29 @@ import {
   HeaderBox,
   CustomTableCellBox,
   PercentageValue,
-} from './styles'
-import BottomPagination from '@components/shared/Pagination/BottomPagination'
-import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { GetPaginatedEthBlocksQuery } from 'lib/graphql/generated/generate'
+} from './styles';
+import BottomPagination from '@components/shared/Pagination/BottomPagination';
+import UpperPagination from '@components/shared/Pagination/UpperPagination';
+import { GetPaginatedEthBlocksQuery } from 'lib/graphql/generated/generate';
 import {
   etherToGwei,
   formatAddress,
   getDifference,
   numberWithCommas,
-} from 'utils'
-import router from 'next/router'
-import CustomSkeleton from '@components/shared/CustomSkeleton'
-import { Box } from '@mui/material'
-import { PAGINATION_EVENT } from '@constants'
+} from 'utils';
+import router from 'next/router';
+import CustomSkeleton from '@components/shared/CustomSkeleton';
+import { Box } from '@mui/material';
+import { PAGINATION_EVENT } from '@constants';
 
 interface BlocksTableProps {
-  pageSize: number
-  setPageSize: Dispatch<SetStateAction<number>>
-  titles: string[]
-  Data: GetPaginatedEthBlocksQuery | undefined
-  istransaction?: boolean
-  loading: boolean
-  handlePagination: (event: PAGINATION_EVENT) => void
+  pageSize: number;
+  setPageSize: Dispatch<SetStateAction<number>>;
+  titles: string[];
+  Data: GetPaginatedEthBlocksQuery | undefined;
+  istransaction?: boolean;
+  loading: boolean;
+  handlePagination: (event: PAGINATION_EVENT) => void;
 }
 
 const BlocksTable = ({
@@ -46,41 +46,42 @@ const BlocksTable = ({
   loading,
   handlePagination,
 }: BlocksTableProps) => {
-  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const lengthOfEachPage = Data?.eth_blocks?.values?.length || 0
-  const startingBlock = Data?.eth_blocks?.values?.[0]?.number || 0
-  const endingBlock = Data?.eth_blocks?.values?.[pageSize - 1]?.number || 0
+  const lengthOfEachPage = Data?.eth_blocks?.values?.length || 0;
+  const startingBlock = Data?.eth_blocks?.values?.[0]?.number || 0;
+  const endingBlock = Data?.eth_blocks?.values?.[pageSize - 1]?.number || 0;
 
   const getValue = (index: number, Object: (string | number | null)[]) => {
     if (index === 1)
-      return `${getDifference(parseInt(Object[index]?.toString() || ''))} ago`
-    if (index === 5 || index === 6) return numberWithCommas(Object[index] || '')
-    if (index > 9) return
-    if (index < 7) return formatAddress(Object[index]?.toString() || '')
+      return `${getDifference(parseInt(Object[index]?.toString() || ''))} ago`;
+    if (index === 5 || index === 6)
+      return numberWithCommas(Object[index] || '');
+    if (index > 9) return;
+    if (index < 7) return formatAddress(Object[index]?.toString() || '');
     else if (index > 7) {
-      let value = `${parseFloat(Object[index]?.toString() || '').toFixed(4)}`
-      if (index == 8) value += ' Ether'
-      return value
+      let value = `${parseFloat(Object[index]?.toString() || '').toFixed(4)}`;
+      if (index == 8) value += ' Ether';
+      return value;
     } else {
-      return `${etherToGwei(Object[index])} Gwei`
+      return `${etherToGwei(Object[index])} Gwei`;
     }
-  }
+  };
 
   const getPercentageValue = (
     index: number,
     Object: (string | number | null)[]
   ) => {
     if (index === 9) {
-      if (Object[10]?.toString() == '0') return '(0%)'
+      if (Object[10]?.toString() == '0') return '(0%)';
       return `(${(
         (parseFloat(Object[index]?.toString() || '') /
           parseFloat(Object[10]?.toString() || '')) *
         100
-      ).toFixed(2)}%)`
+      ).toFixed(2)}%)`;
     }
-    return ''
-  }
+    return '';
+  };
   return (
     <BlockTableContainer>
       <CustomTableContainer>
@@ -143,7 +144,7 @@ const BlocksTable = ({
                                 if (index == 0)
                                   router.push(
                                     `/block/${Object.values(block)[index]}`
-                                  )
+                                  );
                               }}
                               style={{
                                 cursor: index == 0 ? 'pointer' : 'default',
@@ -182,7 +183,7 @@ const BlocksTable = ({
         )}
       </CustomTableContainer>
     </BlockTableContainer>
-  )
-}
+  );
+};
 
-export default BlocksTable
+export default BlocksTable;

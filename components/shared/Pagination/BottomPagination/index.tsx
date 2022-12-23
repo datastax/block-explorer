@@ -1,22 +1,22 @@
 import {
   Records,
   FontStyling,
-} from '@components/shared/Pagination/BottomPagination/styles'
-import { Stack } from '@mui/material'
-import { PAGINATION_EVENT } from '@constants'
+} from '@components/shared/Pagination/BottomPagination/styles';
+import { Stack } from '@mui/material';
+import { PAGINATION_EVENT } from '@constants';
 
-import React, { Dispatch, SetStateAction } from 'react'
-import PaginationButton from '../../PaginationButton'
-import SplitButton from '../../SplitButton'
+import React, { Dispatch, SetStateAction } from 'react';
+import PaginationButton from '../../PaginationButton';
+import SplitButton from '../../SplitButton';
 
 interface BottomPaginationProps {
-  pageSize: number
-  setPageSize: Dispatch<SetStateAction<number>>
-  currentPage: number
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  lengthOfEachPage: number
-  intTxnPageSize?: number
-  handlePagination: (event: PAGINATION_EVENT) => void
+  pageSize: number;
+  setPageSize: Dispatch<SetStateAction<number>>;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  lengthOfEachPage: number;
+  intTxnPageSize?: number;
+  handlePagination: (event: PAGINATION_EVENT) => void;
 }
 
 const BottomPagination = ({
@@ -29,8 +29,8 @@ const BottomPagination = ({
   handlePagination,
 }: BottomPaginationProps) => {
   const setValuesToDefault = () => {
-    setCurrentPage(1)
-  }
+    setCurrentPage(1);
+  };
 
   return (
     <Records>
@@ -78,7 +78,7 @@ const BottomPagination = ({
         </Stack>
       </Stack>
     </Records>
-  )
-}
+  );
+};
 
-export default BottomPagination
+export default BottomPagination;

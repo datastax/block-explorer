@@ -1,16 +1,16 @@
-import { styled } from '@mui/system'
-import colors from '@styles/ThemeProvider/colors'
-import { Box, Theme, Typography } from '@mui/material'
+import { styled } from '@mui/system';
+import colors from '@styles/ThemeProvider/colors';
+import { Box, Theme, Typography } from '@mui/material';
 
 interface StyledTypographyProps {
-  theme?: Theme
-  fontColor?: string
+  theme?: Theme;
+  fontColor?: string;
 }
 
 const Container = styled(Box)({
   background: colors.neutral900,
   width: '100%',
-})
+});
 
 const Wrapper = styled(Box)({
   height: '56px',
@@ -19,7 +19,7 @@ const Wrapper = styled(Box)({
   alignItems: 'center',
   margin: 'auto',
   padding: '0px 44px',
-})
+});
 
 const StyledTypography = styled(Typography)(
   ({ fontColor }: StyledTypographyProps) => ({
@@ -32,6 +32,6 @@ const StyledTypography = styled(Typography)(
       cursor: 'pointer',
     },
   })
-)
+);
 
-export { Container, Wrapper, StyledTypography }
+export { Container, Wrapper, StyledTypography };

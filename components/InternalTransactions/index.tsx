@@ -1,12 +1,12 @@
-import CustomSkeleton from '@components/shared/CustomSkeleton'
-import BottomPagination from '@components/shared/Pagination/BottomPagination'
-import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { Table, TableHead, TableRow, TableBody, Box } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import React, { useEffect } from 'react'
-import { Dispatch, SetStateAction } from 'react'
-import { InternalTransactionData } from 'types'
-import router from 'next/router'
+import CustomSkeleton from '@components/shared/CustomSkeleton';
+import BottomPagination from '@components/shared/Pagination/BottomPagination';
+import UpperPagination from '@components/shared/Pagination/UpperPagination';
+import { Table, TableHead, TableRow, TableBody, Box } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import React, { useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
+import { InternalTransactionData } from 'types';
+import router from 'next/router';
 import {
   BlockTableContainer,
   CustomTableContainer,
@@ -14,21 +14,21 @@ import {
   HeaderBox,
   CustomTableCell,
   CustomTableCellBox,
-} from './styles'
-import { formatAddress } from 'utils'
-import { PAGINATION_EVENT } from '@constants'
+} from './styles';
+import { formatAddress } from 'utils';
+import { PAGINATION_EVENT } from '@constants';
 
 interface InternalTransactionProps {
-  pageSize: number
-  setPageSize: Dispatch<SetStateAction<number>>
-  titles: string[]
-  Data: InternalTransactionData[]
-  loading: boolean
-  blockNumber: number
-  setPageNumber: Dispatch<SetStateAction<number>>
-  pageNumber: number
-  totalInternalTransactions: number
-  handlePagination: (paginationEvent: PAGINATION_EVENT) => void
+  pageSize: number;
+  setPageSize: Dispatch<SetStateAction<number>>;
+  titles: string[];
+  Data: InternalTransactionData[];
+  loading: boolean;
+  blockNumber: number;
+  setPageNumber: Dispatch<SetStateAction<number>>;
+  pageNumber: number;
+  totalInternalTransactions: number;
+  handlePagination: (paginationEvent: PAGINATION_EVENT) => void;
 }
 
 const InternalTransactionTable = ({
@@ -43,12 +43,12 @@ const InternalTransactionTable = ({
   totalInternalTransactions,
   handlePagination,
 }: InternalTransactionProps) => {
-  const startingBlock = 1
-  const endingBlock = 1
+  const startingBlock = 1;
+  const endingBlock = 1;
 
   useEffect(() => {
-    if (Data.length === 0) setPageNumber(1)
-  }, [Data.length, setPageNumber])
+    if (Data.length === 0) setPageNumber(1);
+  }, [Data.length, setPageNumber]);
 
   return (
     <BlockTableContainer>
@@ -119,7 +119,7 @@ const InternalTransactionTable = ({
                                     `/transaction/${
                                       Object.values(block)[index]
                                     }`
-                                  )
+                                  );
                               }}
                             >
                               {formatAddress(Object.values(block)[index])}
@@ -149,7 +149,7 @@ const InternalTransactionTable = ({
         )}
       </CustomTableContainer>
     </BlockTableContainer>
-  )
-}
+  );
+};
 
-export default InternalTransactionTable
+export default InternalTransactionTable;

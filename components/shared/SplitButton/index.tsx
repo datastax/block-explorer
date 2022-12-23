@@ -1,20 +1,20 @@
-import * as React from 'react'
-import Button from '@mui/material/Button'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
-import Grow from '@mui/material/Grow'
-import Paper from '@mui/material/Paper'
-import Popper from '@mui/material/Popper'
-import MenuItem from '@mui/material/MenuItem'
-import MenuList from '@mui/material/MenuList'
-import { CustomArrowButton } from './styles'
-const options = [10, 25, 50, 100]
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Grow from '@mui/material/Grow';
+import Paper from '@mui/material/Paper';
+import Popper from '@mui/material/Popper';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
+import { CustomArrowButton } from './styles';
+const options = [10, 25, 50, 100];
 
 interface SplitButtonProps {
-  setPageSize: React.Dispatch<React.SetStateAction<number>>
-  pageSize: number
-  setValueToDefault: () => void
+  setPageSize: React.Dispatch<React.SetStateAction<number>>;
+  pageSize: number;
+  setValueToDefault: () => void;
 }
 
 export default function SplitButton({
@@ -22,34 +22,34 @@ export default function SplitButton({
   setPageSize,
   setValueToDefault,
 }: SplitButtonProps) {
-  const [open, setOpen] = React.useState(false)
-  const anchorRef = React.useRef<HTMLDivElement>(null)
-  const [selectedIndex, setSelectedIndex] = React.useState(0)
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef<HTMLDivElement>(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     index: number
   ) => {
-    setValueToDefault()
-    setSelectedIndex(index)
-    setPageSize(options[index])
-    setOpen(false)
-  }
+    setValueToDefault();
+    setSelectedIndex(index);
+    setPageSize(options[index]);
+    setOpen(false);
+  };
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen)
-  }
+    setOpen((prevOpen) => !prevOpen);
+  };
 
   const handleClose = (event: Event) => {
     if (
       anchorRef.current &&
       anchorRef.current.contains(event.target as HTMLElement)
     ) {
-      return
+      return;
     }
 
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   return (
     <React.Fragment>
@@ -100,5 +100,5 @@ export default function SplitButton({
         )}
       </Popper>
     </React.Fragment>
-  )
+  );
 }

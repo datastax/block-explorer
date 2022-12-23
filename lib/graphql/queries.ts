@@ -21,7 +21,7 @@ query getPaginatedEthBlocks(
     pageState
   }
 }
-`
+`;
 
 const GET_LATEST_BLOCKS_GROUP = `
 query getLatestBlockGroup($filter: dashboard_analyticsFilterInput) {
@@ -31,7 +31,7 @@ query getLatestBlockGroup($filter: dashboard_analyticsFilterInput) {
       sum_of_burnt_fees
     }
   }
-}`
+}`;
 
 const GET_DASHBOARD_ANALYTICS = `
 query dashboard_analytics($filter: dashboard_analyticsFilterInput) {
@@ -57,7 +57,7 @@ query dashboard_analytics($filter: dashboard_analyticsFilterInput) {
       transactions_history_chart
     }
   }
-}`
+}`;
 
 const GET_LATEST_ETH_BLOCKS = `
 query getEthBlocks($filter: eth_blocksFilterInput, $options: QueryOptions) {
@@ -72,7 +72,7 @@ query getEthBlocks($filter: eth_blocksFilterInput, $options: QueryOptions) {
       reward
     }
   }
-}`
+}`;
 
 const GET_LATEST_TRANSACTIONS = `
 query getTransactionsOfLatestBlock(
@@ -88,7 +88,7 @@ query getTransactionsOfLatestBlock(
       value
     }
   }
-}`
+}`;
 
 const GET_PAGINATED_ETH_TRANSACTIONS = `
 query getPaginatedEThTransactions(
@@ -110,7 +110,7 @@ query getPaginatedEThTransactions(
     }
     pageState
   }
-}`
+}`;
 
 const GET_ETH_BLOCK_BY_NUMBER = `
 query getEthBlockByNumber($blockGroup: BigInt, $blockNumber: BigInt) {
@@ -145,7 +145,7 @@ query getEthBlockByNumber($blockGroup: BigInt, $blockNumber: BigInt) {
       extra_data
     }
   }
-}`
+}`;
 
 const GET_NEXT_BLOCK = `
 query getNextBlockForTransaction($blockGroup: BigInt, $blockNumber: BigInt) {
@@ -157,7 +157,7 @@ query getNextBlockForTransaction($blockGroup: BigInt, $blockNumber: BigInt) {
       hash
     }
   }
-}`
+}`;
 
 const GET_PREVIOUS_BLOCK = `
 query getPreviousBlockForTransaction(
@@ -172,7 +172,7 @@ query getPreviousBlockForTransaction(
       hash
     }
   }
-}`
+}`;
 
 const GET_ETH_TRANSACTION_BY_HASH = `
 query getEthTransactionByHash($filter: transactions_by_hashFilterInput) {
@@ -207,7 +207,7 @@ query getEthTransactionByHash($filter: transactions_by_hashFilterInput) {
     }
     pageState
   }
-}`
+}`;
 
 const GET_LOGS_OF_TRANSACTION = `
 query getLogsByEthTransaction($filter: logsFilterInput) {
@@ -228,7 +228,7 @@ query getLogsByEthTransaction($filter: logsFilterInput) {
       transaction_hash
     }
   }
-}`
+}`;
 
 const GET_INTERNAL_TRANSACTIONS_OF_BLOCK = `
 query getInternalTransactionByEthBlockNumber(
@@ -248,7 +248,7 @@ query getInternalTransactionByEthBlockNumber(
     }
     pageState
   }
-}`
+}`;
 
 const GET_INTERNAL_TRANSACTIONS_OF_TRANSACTION = `
 query getInternalTransactionByEthBlockNumber_Transaction_hash(
@@ -266,7 +266,7 @@ query getInternalTransactionByEthBlockNumber_Transaction_hash(
       value
     }
   }
-}`
+}`;
 
 const GET_DASHBOARD_ANALYTICS_HEADER = `
 query dashboard_analytics_header($filter: dashboard_analyticsFilterInput) {
@@ -278,7 +278,7 @@ query dashboard_analytics_header($filter: dashboard_analyticsFilterInput) {
       ether_price_usd
     }
   }
-}`
+}`;
 
 export {
   Get_PAGINATED_BLOCKS_QUERY,
@@ -295,4 +295,4 @@ export {
   GET_INTERNAL_TRANSACTIONS_OF_BLOCK,
   GET_INTERNAL_TRANSACTIONS_OF_TRANSACTION,
   GET_DASHBOARD_ANALYTICS_HEADER,
-}
+};

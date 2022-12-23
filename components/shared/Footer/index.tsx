@@ -1,7 +1,7 @@
-import { mediumBlogUrl } from '@constants'
-import { Stack } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import { Wrapper, Container, StyledTypography } from './styles'
+import { mediumBlogUrl } from '@constants';
+import { Stack } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import { Wrapper, Container, StyledTypography } from './styles';
 
 const Footer = () => {
   return (
@@ -20,7 +20,7 @@ const Footer = () => {
         </Stack>
       </Wrapper>
     </Container>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

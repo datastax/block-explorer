@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import colors from '@styles/ThemeProvider/colors'
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import colors from '@styles/ThemeProvider/colors';
 import {
   BlockTableContainer,
   CustomTableCell,
@@ -12,25 +12,25 @@ import {
   HeaderBox,
   CustomTableCellBox,
   IconWrapper,
-} from './styles'
-import BottomPagination from '@components/shared/Pagination/BottomPagination'
-import UpperPagination from '@components/shared/Pagination/UpperPagination'
-import { GetPaginatedEThTransactionsQuery } from 'lib/graphql/generated/generate'
-import { Exchange, Eye } from '@components/shared/Icons'
-import Chip from '@components/shared/Chip'
-import { formatAddress, getDifference, weiToEther } from 'utils'
-import router from 'next/router'
-import CustomSkeleton from '@components/shared/CustomSkeleton'
-import { Box } from '@mui/material'
-import { PAGINATION_EVENT } from '@constants'
+} from './styles';
+import BottomPagination from '@components/shared/Pagination/BottomPagination';
+import UpperPagination from '@components/shared/Pagination/UpperPagination';
+import { GetPaginatedEThTransactionsQuery } from 'lib/graphql/generated/generate';
+import { Exchange, Eye } from '@components/shared/Icons';
+import Chip from '@components/shared/Chip';
+import { formatAddress, getDifference, weiToEther } from 'utils';
+import router from 'next/router';
+import CustomSkeleton from '@components/shared/CustomSkeleton';
+import { Box } from '@mui/material';
+import { PAGINATION_EVENT } from '@constants';
 
 interface TransactionsTableProps {
-  pageSize: number
-  setPageSize: Dispatch<SetStateAction<number>>
-  titles: string[]
-  transactions: GetPaginatedEThTransactionsQuery | undefined
-  loading: boolean
-  handlePagination: (paginationEvent: PAGINATION_EVENT) => void
+  pageSize: number;
+  setPageSize: Dispatch<SetStateAction<number>>;
+  titles: string[];
+  transactions: GetPaginatedEThTransactionsQuery | undefined;
+  loading: boolean;
+  handlePagination: (paginationEvent: PAGINATION_EVENT) => void;
 }
 
 const TransactionsTable = ({
@@ -41,38 +41,38 @@ const TransactionsTable = ({
   loading,
   handlePagination,
 }: TransactionsTableProps) => {
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const lengthOfEachPage = transactions?.transactions?.values?.length
+  const lengthOfEachPage = transactions?.transactions?.values?.length;
 
   const getUIValue = (
     keys: string[],
     values: (string | number | null | [])[],
     index: number
   ) => {
-    if (index > 7) return
+    if (index > 7) return;
 
     if (keys[index] === 'transaction_fees')
-      return parseFloat(values[index]?.toString() || '').toFixed(8)
+      return parseFloat(values[index]?.toString() || '').toFixed(8);
     else if (keys[index] === 'block_timestamp')
-      return `${getDifference(Number(values[index]))} ago`
+      return `${getDifference(Number(values[index]))} ago`;
     else if (keys[index] !== 'value')
-      return formatAddress(values[index]?.toString())
+      return formatAddress(values[index]?.toString());
     else
       return `${weiToEther(
         parseFloat(values[index]?.toString() || ''),
         4
-      )} Ether`
-  }
+      )} Ether`;
+  };
 
   const getTransactionMethod = (
     transactionMethod: string | null | number | []
   ) => {
-    if (!transactionMethod) return 'transfer'
-    if (typeof transactionMethod === 'number') return transactionMethod
+    if (!transactionMethod) return 'transfer';
+    if (typeof transactionMethod === 'number') return transactionMethod;
     if (typeof transactionMethod === 'string')
-      return transactionMethod.split('(')[0].substring(0, 10)
-  }
+      return transactionMethod.split('(')[0].substring(0, 10);
+  };
 
   return (
     <BlockTableContainer>
@@ -164,13 +164,13 @@ const TransactionsTable = ({
                                             `/transaction/${
                                               Object.values(transaction)[index]
                                             }`
-                                          )
+                                          );
                                         else if (index == 2)
                                           router.push(
                                             `/block/${
                                               Object.values(transaction)[index]
                                             }`
-                                          )
+                                          );
                                       }}
                                       style={{
                                         cursor:
@@ -222,7 +222,7 @@ const TransactionsTable = ({
         )}
       </CustomTableContainer>
     </BlockTableContainer>
-  )
-}
+  );
+};
 
-export default TransactionsTable
+export default TransactionsTable;

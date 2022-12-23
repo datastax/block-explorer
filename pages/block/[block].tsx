@@ -1,28 +1,28 @@
-import type { NextPage } from 'next'
-import Hero from '@components/shared/Hero'
-import BlocksDetail from '@components/BlocksDetail'
-import { BlockDetails } from '@types'
-import { useGetEthBlockByNumberLazyQuery } from 'lib/graphql/generated/generate'
-import { useEffect, useState } from 'react'
+import type { NextPage } from 'next';
+import Hero from '@components/shared/Hero';
+import BlocksDetail from '@components/BlocksDetail';
+import { BlockDetails } from '@types';
+import { useGetEthBlockByNumberLazyQuery } from 'lib/graphql/generated/generate';
+import { useEffect, useState } from 'react';
 import {
   getBlockGroupFromBlockNumber,
   isNumber,
   mapRawDataToBlockDetails,
   redirect,
-} from 'utils'
-import { Box } from '@mui/material'
-import CustomSkeleton from '@components/shared/CustomSkeleton'
-import { useRouter } from 'next/router'
+} from 'utils';
+import { Box } from '@mui/material';
+import CustomSkeleton from '@components/shared/CustomSkeleton';
+import { useRouter } from 'next/router';
 
 const Block: NextPage = () => {
-  const Router = useRouter()
-  const { block } = Router.query
+  const Router = useRouter();
+  const { block } = Router.query;
 
-  const blockKey = block as string
-  const [blockDetailsData, setBlockDetailsData] = useState<BlockDetails>()
+  const blockKey = block as string;
+  const [blockDetailsData, setBlockDetailsData] = useState<BlockDetails>();
 
   const [getBlockDetailsByNumber, { data: blockDetails, error: blocksError }] =
-    useGetEthBlockByNumberLazyQuery()
+    useGetEthBlockByNumberLazyQuery();
   useEffect(() => {
     if (isNumber(blockKey))
       getBlockDetailsByNumber({
@@ -30,19 +30,19 @@ const Block: NextPage = () => {
           blockGroup: getBlockGroupFromBlockNumber(Number(blockKey)),
           blockNumber: Number(blockKey),
         },
-      })
-  }, [blockKey, getBlockDetailsByNumber])
+      });
+  }, [blockKey, getBlockDetailsByNumber]);
 
   useEffect(() => {
     if (blockDetails) {
-      if (blockDetails?.eth_blocks?.values?.length === 0) redirect('/404')
-      setBlockDetailsData(mapRawDataToBlockDetails(blockDetails, blockKey))
+      if (blockDetails?.eth_blocks?.values?.length === 0) redirect('/404');
+      setBlockDetailsData(mapRawDataToBlockDetails(blockDetails, blockKey));
     }
-  }, [blockDetails, blockKey])
+  }, [blockDetails, blockKey]);
 
   if (blocksError) {
-    console.error(blocksError)
-    redirect('/404')
+    console.error(blocksError);
+    redirect('/404');
   }
 
   return (
@@ -58,7 +58,7 @@ const Block: NextPage = () => {
         </Box>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Block
+export default Block;

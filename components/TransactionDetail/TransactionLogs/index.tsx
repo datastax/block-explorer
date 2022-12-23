@@ -1,9 +1,9 @@
-import DataBox from '@components/shared/DataBox'
-import HTMLParser from '@components/shared/HTMLParser'
-import { useMediaQuery } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import { GetLogsByEthTransactionQuery } from 'lib/graphql/generated/generate'
-import { getEventNameFromRawData } from 'utils'
+import DataBox from '@components/shared/DataBox';
+import HTMLParser from '@components/shared/HTMLParser';
+import { useMediaQuery } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import { GetLogsByEthTransactionQuery } from 'lib/graphql/generated/generate';
+import { getEventNameFromRawData } from 'utils';
 import {
   StyledTypography,
   Container,
@@ -13,14 +13,14 @@ import {
   List,
   ColouredText,
   Highlight,
-} from './styles'
+} from './styles';
 
 interface TransactionLogsProps {
-  logsData: GetLogsByEthTransactionQuery
+  logsData: GetLogsByEthTransactionQuery;
 }
 
 const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
-  const smallScreen = useMediaQuery('(max-width:680px)')
+  const smallScreen = useMediaQuery('(max-width:680px)');
   return (
     <Container>
       {logsData?.logs?.values?.map(
@@ -172,7 +172,7 @@ const TransactionLogs = ({ logsData }: TransactionLogsProps) => {
         )
       )}
     </Container>
-  )
-}
+  );
+};
 
-export default TransactionLogs
+export default TransactionLogs;

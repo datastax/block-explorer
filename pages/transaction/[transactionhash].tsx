@@ -1,47 +1,47 @@
-import { useEffect, useState } from 'react'
-import type { NextPage, NextPageContext } from 'next'
-import Router from 'next/router'
-import { Typography, Box } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import Hero from '@components/shared/Hero'
-import TransactionDetail from '@components/TransactionDetail'
-import CustomSkeleton from '@components/shared/CustomSkeleton'
-import Tabs from '@components/shared/Tabs/CustomTabs'
-import TabPanel from '@components/shared/Tabs/CustomTabsPanel'
-import TransactionLogs from '@components/TransactionDetail/TransactionLogs'
+import { useEffect, useState } from 'react';
+import type { NextPage, NextPageContext } from 'next';
+import Router from 'next/router';
+import { Typography, Box } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import Hero from '@components/shared/Hero';
+import TransactionDetail from '@components/TransactionDetail';
+import CustomSkeleton from '@components/shared/CustomSkeleton';
+import Tabs from '@components/shared/Tabs/CustomTabs';
+import TabPanel from '@components/shared/Tabs/CustomTabsPanel';
+import TransactionLogs from '@components/TransactionDetail/TransactionLogs';
 import {
   useGetLogsByEthTransactionLazyQuery,
   useGetEthTransactionByHashQuery,
   useGetLatestEthBlockLazyQuery,
   useGetLatestBlockGroupQuery,
   useGetInternalTransactionByEthBlockNumber_Transaction_HashLazyQuery,
-} from 'lib/graphql/generated/generate'
-import { TransactionDetails, TabProps, InternalTxnsTabData } from 'types'
+} from 'lib/graphql/generated/generate';
+import { TransactionDetails, TabProps, InternalTxnsTabData } from 'types';
 import {
   mapRawDataToInternalTransactions,
   mapRawDataToTransactionDetails,
-} from 'utils'
-import InternalTxns from '@components/InternalTxnsTab'
+} from 'utils';
+import InternalTxns from '@components/InternalTxnsTab';
 
 interface TransactionProps {
-  transactionHash: string
+  transactionHash: string;
 }
 
 const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
-  const { transactionHash } = props
+  const { transactionHash } = props;
 
-  const [tabIndex, setTabIndex] = useState(0)
-  const [blockConfirmation, setBlockConfirmation] = useState<number>()
+  const [tabIndex, setTabIndex] = useState(0);
+  const [blockConfirmation, setBlockConfirmation] = useState<number>();
   const [transactionDetailData, setTransactionDetailData] =
-    useState<TransactionDetails>()
+    useState<TransactionDetails>();
   const [internalTransactions, setInternalTransactions] = useState<
     InternalTxnsTabData[]
-  >([])
+  >([]);
 
   const [
     getInternalTransactions,
     { data: internalTransactionsData, error: internalTransactionsError },
-  ] = useGetInternalTransactionByEthBlockNumber_Transaction_HashLazyQuery()
+  ] = useGetInternalTransactionByEthBlockNumber_Transaction_HashLazyQuery();
 
   const { data: transactionDetails, error: transactionError } =
     useGetEthTransactionByHashQuery({
@@ -52,13 +52,13 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
           },
         },
       },
-    })
+    });
 
   const [getLogs, { data: transactionLogs, error: transactionLogsError }] =
-    useGetLogsByEthTransactionLazyQuery()
+    useGetLogsByEthTransactionLazyQuery();
 
   const [getLatestBlock, { error: blockError, loading: blockLoading }] =
-    useGetLatestEthBlockLazyQuery()
+    useGetLatestEthBlockLazyQuery();
 
   const { error: latestBlockGroupError } = useGetLatestBlockGroupQuery({
     onCompleted: (res) => {
@@ -75,11 +75,11 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
           },
         },
         onCompleted: (res) => {
-          setBlockConfirmation(res?.eth_blocks?.values?.[0]?.number)
+          setBlockConfirmation(res?.eth_blocks?.values?.[0]?.number);
         },
-      })
+      });
     },
-  })
+  });
 
   // const [
   //   getConsecutiveTransaction,
@@ -184,23 +184,23 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
       ariaControls: 'simple-tabpanel-2',
       id: 'simple-tab-3',
     },
-  ]
+  ];
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabIndex(newValue)
-  }
+    setTabIndex(newValue);
+  };
 
   useEffect(() => {
     if (transactionDetails) {
       if (transactionDetails?.transactions_by_hash?.values?.length === 0)
-        Router.push(`/404`)
+        Router.push(`/404`);
       if (blockConfirmation && !blockLoading && internalTransactionsData) {
         setTransactionDetailData(
           mapRawDataToTransactionDetails(transactionDetails, blockConfirmation)
-        )
+        );
         setInternalTransactions(
           mapRawDataToInternalTransactions(internalTransactionsData)
-        )
+        );
       }
     }
   }, [
@@ -208,13 +208,13 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
     blockLoading,
     internalTransactionsData,
     transactionDetails,
-  ])
+  ]);
 
   useEffect(() => {
-    const locationHash = window.location.hash
-    if (locationHash === '#eventlog') setTabIndex(1)
-    if (locationHash === '#internal') setTabIndex(2)
-  }, [])
+    const locationHash = window.location.hash;
+    if (locationHash === '#eventlog') setTabIndex(1);
+    if (locationHash === '#internal') setTabIndex(2);
+  }, []);
 
   useEffect(() => {
     if (transactionDetails?.transactions_by_hash?.values?.[0]?.block_number)
@@ -228,7 +228,7 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
             },
           },
         },
-      })
+      });
     getInternalTransactions({
       variables: {
         filter: {
@@ -241,23 +241,26 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
           },
         },
       },
-    })
+    });
   }, [
     getInternalTransactions,
     getLogs,
     transactionDetails?.transactions_by_hash?.values,
     transactionHash,
-  ])
+  ]);
 
   if (transactionLogsError)
-    console.error('Error While Fetching Transaction Logs', transactionLogsError)
+    console.error(
+      'Error While Fetching Transaction Logs',
+      transactionLogsError
+    );
   if (latestBlockGroupError) {
-    console.error(latestBlockGroupError)
+    console.error(latestBlockGroupError);
   }
   if (blockError || transactionError || internalTransactionsError) {
     console.error(
       blockError + ' ' + transactionError + ' ' + internalTransactionsError
-    )
+    );
   }
 
   return (
@@ -268,10 +271,10 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
         showPagination={false}
         showDropdown={false}
         setNextConsecutiveState={() => {
-          console.log('Next called')
+          console.log('Next called');
         }}
         setPreviousConsecutiveState={() => {
-          console.log('Previous Called')
+          console.log('Previous Called');
         }}
       />
 
@@ -307,12 +310,12 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
         </Box>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Transaction
+export default Transaction;
 
 export async function getServerSideProps(context: NextPageContext) {
-  const { transactionhash } = context.query
-  return { props: { transactionHash: transactionhash as string } }
+  const { transactionhash } = context.query;
+  return { props: { transactionHash: transactionhash as string } };
 }

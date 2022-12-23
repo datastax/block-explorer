@@ -1,4 +1,4 @@
-import Chip from '@components/shared/Chip'
+import Chip from '@components/shared/Chip';
 import {
   Diamond,
   Paper,
@@ -9,13 +9,13 @@ import {
   StopWatch,
   Bulb,
   TickInButton,
-} from '@components/shared/Icons'
-import { ListItemText, Tooltip } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import router from 'next/router'
-import React from 'react'
-import { TransactionDetailRowProps } from 'types'
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
+} from '@components/shared/Icons';
+import { ListItemText, Tooltip } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import router from 'next/router';
+import React from 'react';
+import { TransactionDetailRowProps } from 'types';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import {
   CustomListItem,
   CustomListIcon,
@@ -27,10 +27,10 @@ import {
   RightLogoSpacing,
   TransactionMainBox,
   TransactionInnerBox,
-} from '../styles'
-import CopyClipboard from '../../shared/CopyClipboard/CopyClipboard'
-import { BlockEffect } from './styles'
-import { SideBox } from '@components/BlocksDetail/styles'
+} from '../styles';
+import CopyClipboard from '../../shared/CopyClipboard/CopyClipboard';
+import { BlockEffect } from './styles';
+import { SideBox } from '@components/BlocksDetail/styles';
 
 const TransactionDetailRow = ({
   objectKey,
@@ -39,27 +39,27 @@ const TransactionDetailRow = ({
   const getKeyName = () => {
     switch (objectKey) {
       case 'TransactionHash':
-        return 'Transaction Hash:'
+        return 'Transaction Hash:';
       case 'Status':
-        return 'Status:'
+        return 'Status:';
       case 'Block':
-        return 'Block:'
+        return 'Block:';
       case 'Timestamp':
-        return 'Timestamp:'
+        return 'Timestamp:';
       case 'TransactionAction':
-        return 'Transaction Action:'
+        return 'Transaction Action:';
       case 'From':
-        return 'From:'
+        return 'From:';
       case 'To':
-        return 'To:'
+        return 'To:';
       case 'Value':
-        return 'Value:'
+        return 'Value:';
       case 'TransactionFee':
-        return 'Transaction Fee:'
+        return 'Transaction Fee:';
       case 'GasPrice':
-        return 'Gas Price:'
+        return 'Gas Price:';
     }
-  }
+  };
 
   const getValueUI = () => {
     switch (objectKey) {
@@ -69,7 +69,7 @@ const TransactionDetailRow = ({
           <Wrapper>
             <ListItemText primary={data[objectKey]} />
           </Wrapper>
-        )
+        );
       case 'TransactionHash':
         return (
           <Wrapper>
@@ -78,7 +78,7 @@ const TransactionDetailRow = ({
             </RightSpacing>
             <CopyClipboard data={data[objectKey]} />
           </Wrapper>
-        )
+        );
       case 'Timestamp':
         return (
           <Wrapper>
@@ -93,7 +93,7 @@ const TransactionDetailRow = ({
             </CustomListIcon>
             <ListItemText>{data[objectKey].Date}</ListItemText>
           </Wrapper>
-        )
+        );
       case 'Status':
         return (
           <Wrapper>
@@ -121,7 +121,7 @@ const TransactionDetailRow = ({
               />
             )}
           </Wrapper>
-        )
+        );
       case 'Block':
         return (
           <Wrapper>
@@ -129,7 +129,7 @@ const TransactionDetailRow = ({
               <Tooltip title="View Block" placement="top">
                 <ListItemText
                   onClick={() => {
-                    router.push(`/block/${data[objectKey]}`)
+                    router.push(`/block/${data[objectKey]}`);
                   }}
                 >
                   <BlockEffect>{data[objectKey]}</BlockEffect>
@@ -143,7 +143,7 @@ const TransactionDetailRow = ({
               titlecolor={colors.neutral100}
             />
           </Wrapper>
-        )
+        );
       case 'From':
         return (
           <Wrapper>
@@ -154,7 +154,7 @@ const TransactionDetailRow = ({
             </RightSpacing>
             <CopyClipboard data={data[objectKey]} />
           </Wrapper>
-        )
+        );
       case 'To':
         return (
           <Wrapper>
@@ -172,7 +172,7 @@ const TransactionDetailRow = ({
             </CustomListIcon>
             <CopyClipboard data={data[objectKey]} />
           </Wrapper>
-        )
+        );
       case 'Value':
         return (
           <Wrapper>
@@ -186,7 +186,7 @@ const TransactionDetailRow = ({
             </RightSpacing>
             <ListItemText>{data['Value_usd']}</ListItemText>
           </Wrapper>
-        )
+        );
       case 'TransactionAction':
         return (
           <Wrapper>
@@ -227,9 +227,9 @@ const TransactionDetailRow = ({
               </TransactionInnerBox>
             </TransactionMainBox>
           </Wrapper>
-        )
+        );
     }
-  }
+  };
   return (
     <>
       {getValueUI() && (
@@ -247,7 +247,7 @@ const TransactionDetailRow = ({
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default TransactionDetailRow
+export default TransactionDetailRow;

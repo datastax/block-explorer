@@ -1,5 +1,5 @@
-import Search from '@components/shared/Search'
-import { SearchContainer, TitleText } from './styles'
+import Search from '@components/shared/Search';
+import { SearchContainer, TitleText } from './styles';
 
 const Hero = () => {
   return (
@@ -9,7 +9,7 @@ const Hero = () => {
         <Search />
       </SearchContainer>
     </>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

@@ -1,9 +1,13 @@
-import React from 'react'
-import { CustomPagingButton, ArrowBackStyle, ArrowForwardStyle } from './styles'
-import { ButtonGroup } from '@mui/material'
+import React from 'react';
+import {
+  CustomPagingButton,
+  ArrowBackStyle,
+  ArrowForwardStyle,
+} from './styles';
+import { ButtonGroup } from '@mui/material';
 interface PaginationProps {
-  setPreviousConsecutiveState?: () => void
-  setNextConsecutiveState?: () => void
+  setPreviousConsecutiveState?: () => void;
+  setNextConsecutiveState?: () => void;
 }
 
 const PaginationButton = ({
@@ -21,7 +25,7 @@ const PaginationButton = ({
         </CustomPagingButton>
       </ButtonGroup>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default PaginationButton
+export default PaginationButton;

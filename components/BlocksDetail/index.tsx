@@ -9,25 +9,25 @@ import {
   CustomList,
   Wrapper,
   SideBox,
-} from '@components/BlocksDetail/styles'
-import colors from '@styles/ThemeProvider/colors'
-import { ListItemText, Collapse, ListItemButton, Tooltip } from '@mui/material'
-import React from 'react'
-import { Question } from '@components/shared/Icons/index'
-import BlockDetailRow from './BlockDetailRow'
-import { BlockDetails } from '@types'
-import router from 'next/router'
+} from '@components/BlocksDetail/styles';
+import colors from '@styles/ThemeProvider/colors';
+import { ListItemText, Collapse, ListItemButton, Tooltip } from '@mui/material';
+import React from 'react';
+import { Question } from '@components/shared/Icons/index';
+import BlockDetailRow from './BlockDetailRow';
+import { BlockDetails } from '@types';
+import router from 'next/router';
 
 interface BlocksDetailProps {
-  BlocksDetailsData: BlockDetails
+  BlocksDetailsData: BlockDetails;
 }
 
 const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
   return (
     <>
       <DetailsTableContainer>
@@ -69,7 +69,7 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
                     onClick={() => {
                       router.push(
                         `/block/${Number(BlocksDetailsData?.BlockHeight) - 1}`
-                      )
+                      );
                     }}
                   />
                 </Tooltip>
@@ -135,7 +135,7 @@ const BlocksDetail = ({ BlocksDetailsData }: BlocksDetailProps) => {
         </CustomTableContainer>
       </DetailsTableContainer>
     </>
-  )
-}
+  );
+};
 
-export default BlocksDetail
+export default BlocksDetail;

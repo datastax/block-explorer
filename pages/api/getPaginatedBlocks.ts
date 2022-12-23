@@ -1,14 +1,14 @@
-import { gql } from '@apollo/client'
-import client from 'lib/graphql/apolloClient'
-import { Query } from 'lib/graphql/generated/generate'
-import { Get_PAGINATED_BLOCKS_QUERY } from 'lib/graphql/queries'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { gql } from '@apollo/client';
+import client from 'lib/graphql/apolloClient';
+import { Query } from 'lib/graphql/generated/generate';
+import { Get_PAGINATED_BLOCKS_QUERY } from 'lib/graphql/queries';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { blockGroup, pageState, pageSize } = req?.body
+  const { blockGroup, pageState, pageSize } = req?.body;
   const { data, error } = await client.query<Query>({
     query: gql`
       ${Get_PAGINATED_BLOCKS_QUERY}
@@ -24,7 +24,7 @@ export default async function handler(
         pageSize: pageSize,
       },
     },
-  })
+  });
 
-  res.json({ data, error })
+  res.json({ data, error });
 }

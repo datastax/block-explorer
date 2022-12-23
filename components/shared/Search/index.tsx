@@ -1,35 +1,35 @@
-import React, { useState } from 'react'
-import SearchIcon from '@mui/icons-material/Search'
-import { SearchButton, SearchInput, Wrapper, CustomFilter } from './styles'
-import { Box, FormControl, MenuItem, SelectChangeEvent } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import router from 'next/router'
-import { searchPlaceHolders } from '@constants'
-import { isNumber } from 'utils'
+import React, { useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import { SearchButton, SearchInput, Wrapper, CustomFilter } from './styles';
+import { Box, FormControl, MenuItem, SelectChangeEvent } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import router from 'next/router';
+import { searchPlaceHolders } from '@constants';
+import { isNumber } from 'utils';
 
 const Search = () => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const [filter, setFilter] = useState<unknown>(0)
-  const [search, setSearch] = useState('')
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [filter, setFilter] = useState<unknown>(0);
+  const [search, setSearch] = useState('');
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    setFilter(event.target.value)
-  }
+    setFilter(event.target.value);
+  };
 
   const handleClick = () => {
     if (search) {
-      if (isNumber(search)) router.push(`/block/${search}`)
-      else router.push(`/transaction/${search}`)
+      if (isNumber(search)) router.push(`/block/${search}`);
+      else router.push(`/transaction/${search}`);
     }
-  }
+  };
 
   return (
     <Wrapper
       onSubmit={(e) => {
-        e.preventDefault()
-        handleClick()
+        e.preventDefault();
+        handleClick();
       }}
     >
       {!isMobile ? (
@@ -64,7 +64,7 @@ const Search = () => {
         <SearchIcon />
       </SearchButton>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

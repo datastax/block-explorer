@@ -1,20 +1,20 @@
-import { CopyAll } from '@components/shared/Icons'
-import { ClickAwayListener, Tooltip } from '@mui/material'
-import { useState } from 'react'
-import { CopyClipboardProps } from 'types'
-import { copyToClipboard } from 'utils'
-import { Button } from './styles'
+import { CopyAll } from '@components/shared/Icons';
+import { ClickAwayListener, Tooltip } from '@mui/material';
+import { useState } from 'react';
+import { CopyClipboardProps } from 'types';
+import { copyToClipboard } from 'utils';
+import { Button } from './styles';
 
 const CopyClipboard = ({ data }: CopyClipboardProps) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleTooltipClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const handleTooltipOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
   return (
     <ClickAwayListener onClickAway={handleTooltipClose}>
       <Tooltip
@@ -31,8 +31,8 @@ const CopyClipboard = ({ data }: CopyClipboardProps) => {
       >
         <Button
           onClick={() => {
-            copyToClipboard(data)
-            handleTooltipOpen()
+            copyToClipboard(data);
+            handleTooltipOpen();
           }}
           style={{ cursor: 'pointer' }}
         >
@@ -40,7 +40,7 @@ const CopyClipboard = ({ data }: CopyClipboardProps) => {
         </Button>
       </Tooltip>
     </ClickAwayListener>
-  )
-}
+  );
+};
 
-export default CopyClipboard
+export default CopyClipboard;

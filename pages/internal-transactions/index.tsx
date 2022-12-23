@@ -1,26 +1,26 @@
-import type { NextPage } from 'next'
-import Hero from '@components/shared/Hero'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import InternalTransactionTable from '@components/InternalTransactions'
-import { InternalTransactionTitle } from 'constants/stubs'
-import { InternalTransactionData } from 'types'
-import { useGetInternalTransactionByEthBlockNumberLazyQuery } from 'lib/graphql/generated/generate'
-import { mapRawDataToIntTransactions } from 'utils'
-import { PAGINATION_EVENT } from '@constants'
+import type { NextPage } from 'next';
+import Hero from '@components/shared/Hero';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import InternalTransactionTable from '@components/InternalTransactions';
+import { InternalTransactionTitle } from 'constants/stubs';
+import { InternalTransactionData } from 'types';
+import { useGetInternalTransactionByEthBlockNumberLazyQuery } from 'lib/graphql/generated/generate';
+import { mapRawDataToIntTransactions } from 'utils';
+import { PAGINATION_EVENT } from '@constants';
 
 const InternalTransaction: NextPage = () => {
-  const router = useRouter()
-  const blockNumber = router.query['blockNumber'] as string
+  const router = useRouter();
+  const blockNumber = router.query['blockNumber'] as string;
   const totalInternalTransactions = router.query[
     'totalInternalTransactions'
-  ] as string
-  const [pageSize, setPageSize] = useState(10)
-  const [pageNumber, setPageNumber] = useState(1)
+  ] as string;
+  const [pageSize, setPageSize] = useState(10);
+  const [pageNumber, setPageNumber] = useState(1);
   const [internalTransactionsData, setInternalTransactionsData] = useState<
     InternalTransactionData[]
-  >([])
-  const [pageStateArray, setPageStateArray] = useState<string[]>([''])
+  >([]);
+  const [pageStateArray, setPageStateArray] = useState<string[]>(['']);
 
   const [
     getInternalTransactions,
@@ -29,7 +29,7 @@ const InternalTransaction: NextPage = () => {
       error: internalTransactionsError,
       loading: loadingTransctions,
     },
-  ] = useGetInternalTransactionByEthBlockNumberLazyQuery()
+  ] = useGetInternalTransactionByEthBlockNumberLazyQuery();
 
   const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
     if (paginationEvent === PAGINATION_EVENT.NEXT)
@@ -44,9 +44,9 @@ const InternalTransaction: NextPage = () => {
           },
         },
         onError: () => {
-          setPageStateArray([''])
+          setPageStateArray(['']);
         },
-      })
+      });
 
     if (paginationEvent === PAGINATION_EVENT.PREV) {
       getInternalTransactions({
@@ -60,29 +60,29 @@ const InternalTransaction: NextPage = () => {
           },
         },
         onError: () => {
-          setPageStateArray([''])
+          setPageStateArray(['']);
         },
-      })
-      setPageStateArray((prev) => prev.slice(0, -2))
+      });
+      setPageStateArray((prev) => prev.slice(0, -2));
     }
-  }
+  };
 
   if (internalTransactionsError) {
-    console.error(internalTransactionsError)
+    console.error(internalTransactionsError);
   }
 
   useEffect(() => {
     if (internalTransactions)
       setInternalTransactionsData(
         mapRawDataToIntTransactions(internalTransactions)
-      )
+      );
     if (internalTransactions?.traces?.pageState) {
       setPageStateArray((prevState) => [
         ...prevState,
         String(internalTransactions?.traces?.pageState),
-      ])
+      ]);
     }
-  }, [internalTransactions])
+  }, [internalTransactions]);
 
   useEffect(() => {
     getInternalTransactions({
@@ -96,14 +96,14 @@ const InternalTransaction: NextPage = () => {
         },
       },
       onError: () => {
-        setPageNumber(1)
+        setPageNumber(1);
       },
-    })
-  }, [blockNumber, getInternalTransactions, pageSize])
+    });
+  }, [blockNumber, getInternalTransactions, pageSize]);
 
   useEffect(() => {
-    setPageStateArray([''])
-  }, [pageSize])
+    setPageStateArray(['']);
+  }, [pageSize]);
 
   return (
     <>
@@ -121,7 +121,7 @@ const InternalTransaction: NextPage = () => {
         handlePagination={handlePagination}
       />
     </>
-  )
-}
+  );
+};
 
-export default InternalTransaction
+export default InternalTransaction;

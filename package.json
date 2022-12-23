@@ -8,7 +8,8 @@
     "start": "yarn generate && next start",
     "lint": "next lint",
     "generate": "graphql-codegen --config codegen.yml",
-    "export": "next export"
+    "export": "next export",
+    "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",

@@ -1,6 +1,6 @@
-import Hero from '@components/shared/Hero'
-import TransactionsTable from '@components/Transactions/Table'
-import { PAGINATION_EVENT, transactionTitles } from '@constants'
+import Hero from '@components/shared/Hero';
+import TransactionsTable from '@components/Transactions/Table';
+import { PAGINATION_EVENT, transactionTitles } from '@constants';
 import {
   GetPaginatedEThTransactionsQuery,
   useGetLatestBlockGroupQuery,
@@ -8,30 +8,30 @@ import {
   useGetNextBlockForTransactionLazyQuery,
   useGetPaginatedEThTransactionsLazyQuery,
   useGetPreviousBlockForTransactionLazyQuery,
-} from 'lib/graphql/generated/generate'
+} from 'lib/graphql/generated/generate';
 
-import { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { TransactionBlockDetail } from 'types'
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { TransactionBlockDetail } from 'types';
 
 const Transactions: NextPage = () => {
-  const router = useRouter()
-  const blockHash = router.query['block'] as string
+  const router = useRouter();
+  const blockHash = router.query['block'] as string;
 
-  const [pageSize, setPageSize] = useState(10)
-  const [pageStateArray, setPageStateArray] = useState<string[]>([''])
-  const [blockDetails, setBlockDetails] = useState<TransactionBlockDetail>()
+  const [pageSize, setPageSize] = useState(10);
+  const [pageStateArray, setPageStateArray] = useState<string[]>(['']);
+  const [blockDetails, setBlockDetails] = useState<TransactionBlockDetail>();
   const [paginatedTransactions, setpaginatedTransactions] =
-    useState<GetPaginatedEThTransactionsQuery>()
+    useState<GetPaginatedEThTransactionsQuery>();
 
   const [getLatestBlock, { error: latestBlockError }] =
-    useGetLatestEthBlockLazyQuery()
+    useGetLatestEthBlockLazyQuery();
 
-  const [getNextBlockTranscation] = useGetNextBlockForTransactionLazyQuery()
+  const [getNextBlockTranscation] = useGetNextBlockForTransactionLazyQuery();
 
   const [getPreviousBlockTranscation] =
-    useGetPreviousBlockForTransactionLazyQuery()
+    useGetPreviousBlockForTransactionLazyQuery();
 
   const [
     getTransactionsByBlock,
@@ -40,10 +40,10 @@ const Transactions: NextPage = () => {
       error: transactionErrorByBlock,
       loading: loadingTransactionsByBlock,
     },
-  ] = useGetPaginatedEThTransactionsLazyQuery()
+  ] = useGetPaginatedEThTransactionsLazyQuery();
 
   const [getNewTransactions, { error: newTransactionsError }] =
-    useGetPaginatedEThTransactionsLazyQuery()
+    useGetPaginatedEThTransactionsLazyQuery();
 
   const [
     getTransactions,
@@ -52,7 +52,7 @@ const Transactions: NextPage = () => {
       error: transactionError,
       loading: loadingTransactions,
     },
-  ] = useGetPaginatedEThTransactionsLazyQuery()
+  ] = useGetPaginatedEThTransactionsLazyQuery();
 
   const { data: blockGroupData, error: latestBlockGroupError } =
     useGetLatestBlockGroupQuery({
@@ -73,11 +73,11 @@ const Transactions: NextPage = () => {
             setBlockDetails({
               blockHash: String(res?.eth_blocks?.values?.[0]?.hash),
               blockNumber: res?.eth_blocks?.values?.[0]?.number,
-            })
+            });
           },
-        })
+        });
       },
-    })
+    });
 
   const handleBlockTransactionPagination = (
     paginationEvent: PAGINATION_EVENT
@@ -96,9 +96,9 @@ const Transactions: NextPage = () => {
           },
         },
         onError: () => {
-          setPageStateArray([''])
+          setPageStateArray(['']);
         },
-      })
+      });
 
     if (paginationEvent === PAGINATION_EVENT.PREV) {
       getTransactionsByBlock({
@@ -114,18 +114,19 @@ const Transactions: NextPage = () => {
           },
         },
         onError: () => {
-          setPageStateArray([''])
+          setPageStateArray(['']);
         },
-      })
-      setPageStateArray((prev) => prev.slice(0, -2))
+      });
+      setPageStateArray((prev) => prev.slice(0, -2));
     }
-  }
+  };
 
   const handleTransactionPagination = (paginationEvent: PAGINATION_EVENT) => {
     const LATEST_BLOCK_GROUP =
-      blockGroupData?.dashboard_analytics?.values?.[0]?.latest_blocks_group
-    const DATA_LENGTH = paginatedTransactions?.transactions?.values?.length || 0
-    const TRANSACTIONS_LIST = paginatedTransactions?.transactions?.values || []
+      blockGroupData?.dashboard_analytics?.values?.[0]?.latest_blocks_group;
+    const DATA_LENGTH =
+      paginatedTransactions?.transactions?.values?.length || 0;
+    const TRANSACTIONS_LIST = paginatedTransactions?.transactions?.values || [];
     if (paginationEvent === PAGINATION_EVENT.NEXT) {
       getTransactions({
         variables: {
@@ -142,12 +143,12 @@ const Transactions: NextPage = () => {
           },
         },
         onError: () => {
-          setBlockDetails(undefined)
-          setPageStateArray([''])
+          setBlockDetails(undefined);
+          setPageStateArray(['']);
         },
         onCompleted: (NextPageTransactions) => {
           const lengthOfNextPageTransactions =
-            NextPageTransactions?.transactions?.values?.length || pageSize
+            NextPageTransactions?.transactions?.values?.length || pageSize;
           if (lengthOfNextPageTransactions < pageSize && latestTransactions) {
             getNextBlockTranscation({
               variables: {
@@ -159,7 +160,7 @@ const Transactions: NextPage = () => {
                 ),
               },
               onError: (error) => {
-                console.error('Error While Fetching Next Block: ', error)
+                console.error('Error While Fetching Next Block: ', error);
               },
               onCompleted: (NextBlock) => {
                 getNewTransactions({
@@ -187,19 +188,19 @@ const Transactions: NextPage = () => {
                               ?.values || []),
                           ],
                         },
-                      }
+                      };
 
-                    setpaginatedTransactions(CombinedTransactions)
+                    setpaginatedTransactions(CombinedTransactions);
                   },
                   onError: () => {
-                    setBlockDetails(undefined)
+                    setBlockDetails(undefined);
                   },
-                })
+                });
               },
-            })
+            });
           }
         },
-      })
+      });
     }
 
     if (paginationEvent === PAGINATION_EVENT.PREV) {
@@ -218,12 +219,12 @@ const Transactions: NextPage = () => {
           },
         },
         onError: () => {
-          setBlockDetails(undefined)
-          setPageStateArray([''])
+          setBlockDetails(undefined);
+          setPageStateArray(['']);
         },
         onCompleted: (PreviousPageTransactions) => {
           const lengthOfPreviousPageTransactions =
-            PreviousPageTransactions?.transactions?.values?.length || pageSize
+            PreviousPageTransactions?.transactions?.values?.length || pageSize;
           if (
             (lengthOfPreviousPageTransactions < pageSize &&
               latestTransactions) ||
@@ -239,7 +240,7 @@ const Transactions: NextPage = () => {
                 ),
               },
               onError: (error) => {
-                console.error('Error While Fetching Previous Block: ', error)
+                console.error('Error While Fetching Previous Block: ', error);
               },
               onCompleted: (PreviousBlock) => {
                 getNewTransactions({
@@ -267,24 +268,24 @@ const Transactions: NextPage = () => {
                               ?.values || []),
                           ],
                         },
-                      }
-                    setpaginatedTransactions(combinedTransactions)
+                      };
+                    setpaginatedTransactions(combinedTransactions);
                   },
                   onError: () => {
-                    setBlockDetails(undefined)
+                    setBlockDetails(undefined);
                   },
-                })
+                });
               },
-            })
+            });
           }
         },
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
-    setPageStateArray([''])
-  }, [pageSize])
+    setPageStateArray(['']);
+  }, [pageSize]);
 
   useEffect(() => {
     if (blockHash) {
@@ -301,27 +302,27 @@ const Transactions: NextPage = () => {
           },
         },
         onError: () => {
-          setBlockDetails(undefined)
+          setBlockDetails(undefined);
         },
-      })
+      });
     }
-  }, [blockHash, getTransactionsByBlock, pageSize])
+  }, [blockHash, getTransactionsByBlock, pageSize]);
 
   useEffect(() => {
     if (latestTransactions) {
-      setpaginatedTransactions(latestTransactions)
+      setpaginatedTransactions(latestTransactions);
     }
-  }, [latestTransactions])
+  }, [latestTransactions]);
 
   useEffect(() => {
     if (transactionsByBlock) {
-      setpaginatedTransactions(transactionsByBlock)
+      setpaginatedTransactions(transactionsByBlock);
       setPageStateArray((prevState) => [
         ...prevState,
         String(transactionsByBlock?.transactions?.pageState),
-      ])
+      ]);
     }
-  }, [transactionsByBlock])
+  }, [transactionsByBlock]);
 
   useEffect(() => {
     if (blockDetails?.blockHash && pageSize)
@@ -336,8 +337,8 @@ const Transactions: NextPage = () => {
             limit: pageSize,
           },
         },
-      })
-  }, [blockDetails?.blockHash, getTransactions, pageSize])
+      });
+  }, [blockDetails?.blockHash, getTransactions, pageSize]);
 
   if (
     transactionError ||
@@ -352,7 +353,7 @@ const Transactions: NextPage = () => {
         latestBlockGroupError ||
         latestBlockError ||
         newTransactionsError
-    )
+    );
   }
 
   return (
@@ -371,7 +372,7 @@ const Transactions: NextPage = () => {
         loading={loadingTransactions || loadingTransactionsByBlock}
       />
     </>
-  )
-}
+  );
+};
 
-export default Transactions
+export default Transactions;

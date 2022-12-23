@@ -1,14 +1,14 @@
-import { PAGINATION_EVENT } from '@constants'
-import * as React from 'react'
-import { CustomArrowButton } from '../SplitButton/styles'
-import { CustomButtonGroup, ArrowForwardStyle, ArrowBackStyle } from './styles'
+import { PAGINATION_EVENT } from '@constants';
+import * as React from 'react';
+import { CustomArrowButton } from '../SplitButton/styles';
+import { CustomButtonGroup, ArrowForwardStyle, ArrowBackStyle } from './styles';
 export interface paginationProps {
-  rtl?: string
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  currentPage: number
-  lengthOfEachPage: number
-  pageSize: number
-  handlePagination: (event: PAGINATION_EVENT) => void
+  rtl?: string;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  lengthOfEachPage: number;
+  pageSize: number;
+  handlePagination: (event: PAGINATION_EVENT) => void;
 }
 
 export default function PaginationButton({
@@ -28,8 +28,8 @@ export default function PaginationButton({
             aria-label="select merge strategy"
             aria-haspopup="menu"
             onClick={() => {
-              setCurrentPage(currentPage - 1)
-              handlePagination(PAGINATION_EVENT.PREV)
+              setCurrentPage(currentPage - 1);
+              handlePagination(PAGINATION_EVENT.PREV);
             }}
           >
             <ArrowBackStyle disabled={currentPage === 1} />
@@ -45,8 +45,8 @@ export default function PaginationButton({
             aria-label="select merge strategy"
             aria-haspopup="menu"
             onClick={() => {
-              setCurrentPage(currentPage + 1)
-              handlePagination(PAGINATION_EVENT.NEXT)
+              setCurrentPage(currentPage + 1);
+              handlePagination(PAGINATION_EVENT.NEXT);
             }}
           >
             <ArrowForwardStyle disabled={pageSize > lengthOfEachPage} />
@@ -54,5 +54,5 @@ export default function PaginationButton({
         </CustomButtonGroup>
       )}
     </>
-  )
+  );
 }

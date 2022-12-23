@@ -1,24 +1,24 @@
-import { Stack, Typography } from '@mui/material'
-import React from 'react'
+import { Stack, Typography } from '@mui/material';
+import React from 'react';
 import {
   BlockStyle,
   FontStyling,
-} from '@components/shared/Pagination/UpperPagination/styles'
-import PaginationButton from '../../PaginationButton'
-import colors from '@styles/ThemeProvider/colors'
-import { PAGINATION_EVENT } from '@constants'
+} from '@components/shared/Pagination/UpperPagination/styles';
+import PaginationButton from '../../PaginationButton';
+import colors from '@styles/ThemeProvider/colors';
+import { PAGINATION_EVENT } from '@constants';
 
 interface UpperPaginationProps {
-  transaction: boolean
-  currentPage: number
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  pageSize: number
-  lengthOfEachPage: number
-  startingBlock: number
-  endingBlock: number
-  block?: number
-  intTxnPageSize?: number
-  handlePagination: (event: PAGINATION_EVENT) => void
+  transaction: boolean;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  pageSize: number;
+  lengthOfEachPage: number;
+  startingBlock: number;
+  endingBlock: number;
+  block?: number;
+  intTxnPageSize?: number;
+  handlePagination: (event: PAGINATION_EVENT) => void;
 }
 
 const UpperPagination = ({
@@ -96,7 +96,7 @@ const UpperPagination = ({
         </Stack>
       </Stack>
     </FontStyling>
-  )
-}
+  );
+};
 
-export default UpperPagination
+export default UpperPagination;
