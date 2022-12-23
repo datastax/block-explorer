@@ -1,21 +1,27 @@
-import colors from '@styles/ThemeProvider/colors'
+import colors from '@styles/ThemeProvider/colors';
 import {
+  Dashboard_AnalyticsQuery,
   GetEthBlockByNumberQuery,
   GetEthTransactionByHashQuery,
   GetInternalTransactionByEthBlockNumberQuery,
   GetInternalTransactionByEthBlockNumber_Transaction_HashQuery,
   GetPaginatedEthBlocksQuery,
-} from 'lib/graphql/generated/generate'
+} from 'lib/graphql/generated/generate';
 import {
   BlockDetails,
   InternalTransactionData,
   InternalTxnsTabData,
   LogEvent,
   TransactionDetails,
-} from 'types'
-import Router from 'next/router'
+} from 'types';
+import Router from 'next/router';
+import { ApolloError } from '@apollo/client';
+import {
+  summaryBlocksDataPrice,
+  summaryBlocksDataTransactions,
+} from '@constants';
 
-const numberRegex = /^[0-9]+$/
+const numberRegex = /^[0-9]+$/;
 
 const formatAddress = (
   address: string | null | undefined,
@@ -23,122 +29,122 @@ const formatAddress = (
   end = 5
 ) => {
   if (!address) {
-    return ''
+    return '';
   }
-  if (address.length < 15) return address
-  return address.slice(0, start) + '....' + address.slice(address.length - end)
-}
+  if (address.length < 15) return address;
+  return address.slice(0, start) + '....' + address.slice(address.length - end);
+};
 
 function numberWithCommas(value: number | string | null | undefined) {
-  if (!value) return '0'
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  if (!value) return '0';
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 const getDifference = (timestamp: number | undefined | null) => {
-  if (!timestamp) return 0
-  const currentDate = new Date().getTime()
-  const time = new Date(timestamp * 1000).getTime()
+  if (!timestamp) return 0;
+  const currentDate = new Date().getTime();
+  const time = new Date(timestamp * 1000).getTime();
 
-  let delta = Math.abs(currentDate - time) / 1000
+  let delta = Math.abs(currentDate - time) / 1000;
 
-  const days = Math.floor(delta / 86400)
-  delta -= days * 86400
+  const days = Math.floor(delta / 86400);
+  delta -= days * 86400;
 
-  const hours = Math.floor(delta / 3600) % 24
-  delta -= hours * 3600
+  const hours = Math.floor(delta / 3600) % 24;
+  delta -= hours * 3600;
 
-  const minutes = Math.floor(delta / 60) % 60
-  delta -= minutes * 60
+  const minutes = Math.floor(delta / 60) % 60;
+  delta -= minutes * 60;
 
-  const seconds = Math.floor(delta % 60)
+  const seconds = Math.floor(delta % 60);
 
   let templateString = [days, hours, minutes, seconds]
     .map((a, index) => {
       switch (index) {
         case 0:
-          return a > 0 ? `${a} Days, ` : ''
+          return a > 0 ? `${a} Days, ` : '';
         case 1:
-          return a > 0 ? `${a} Hours, ` : ''
+          return a > 0 ? `${a} Hours, ` : '';
         case 2:
-          return a > 0 ? `${a} Mins, ` : ''
+          return a > 0 ? `${a} Mins, ` : '';
         case 3:
-          return a > 0 ? `${a} Secs` : ''
+          return a > 0 ? `${a} Secs` : '';
       }
     })
     .join('  ')
-    .replaceAll('  ', ' ')
+    .replaceAll('  ', ' ');
 
   if (templateString.split(', ').length > 2) {
-    templateString = templateString.split(', ').splice(0, 2).join(', ')
+    templateString = templateString.split(', ').splice(0, 2).join(', ');
   }
-  return templateString
-}
+  return templateString;
+};
 
 const etherToGwei = (num: number | string | null | undefined) => {
-  if (!num) return 0
-  if (typeof num === 'string') return (Number(num) * 1000000000).toFixed(2)
-  if (num) return (num * 1000000000).toFixed(2)
-  return 0
-}
+  if (!num) return 0;
+  if (typeof num === 'string') return (Number(num) * 1000000000).toFixed(2);
+  if (num) return (num * 1000000000).toFixed(2);
+  return 0;
+};
 
 const calculateStaticBlockReward = (block: string) => {
-  const blockNumber = parseInt(block)
+  const blockNumber = parseInt(block);
   if (0 < blockNumber && blockNumber < 4369999) {
-    return 5
+    return 5;
   } else if (4369999 < blockNumber && blockNumber < 7279999) {
-    return 3
+    return 3;
   } else if (7279999 < blockNumber) {
-    return 2
+    return 2;
   }
-}
+};
 
 const convertToMillion = (num: number) => {
-  return `${(num / 1e6).toFixed(2)} M`
-}
+  return `${(num / 1e6).toFixed(2)} M`;
+};
 
 const weiToEther = (
   num: number | undefined | null | string,
   fixed?: number
 ) => {
-  if (!num) return 0
+  if (!num) return 0;
 
-  if (typeof num === 'string') return (Number(num) / 1e18).toFixed(fixed)
+  if (typeof num === 'string') return (Number(num) / 1e18).toFixed(fixed);
 
-  if (fixed) return (num / 1e18).toFixed(fixed)
-  return num / 1e18
-}
+  if (fixed) return (num / 1e18).toFixed(fixed);
+  return num / 1e18;
+};
 
 const copyToClipboard = (value: string) => {
-  navigator.clipboard.writeText(value)
-}
+  navigator.clipboard.writeText(value);
+};
 
 const fixed = (number: number | undefined | null | string, fixed: number) => {
-  if (!number) return 0
-  if (typeof number === 'string') return parseFloat(number).toFixed(fixed)
-  return number.toFixed(fixed)
-}
+  if (!number) return 0;
+  if (typeof number === 'string') return parseFloat(number).toFixed(fixed);
+  return number.toFixed(fixed);
+};
 
 const getBurntFee = (burntFeeSum: string | null | undefined) => {
-  return numberWithCommas(weiToEther(burntFeeSum, 2))
-}
+  return numberWithCommas(weiToEther(burntFeeSum, 2));
+};
 
 const getGasFeesPercentage = (
   usageTxn: number | null | undefined,
   gasLimit: number | null | undefined
 ) => {
-  if (!usageTxn || !gasLimit) return 0
-  return ((usageTxn / gasLimit) * 100).toFixed(2)
-}
+  if (!usageTxn || !gasLimit) return 0;
+  return ((usageTxn / gasLimit) * 100).toFixed(2);
+};
 
 const isNumber = (value: string) => {
-  return numberRegex.test(value)
-}
+  return numberRegex.test(value);
+};
 
 const mapRawDataToBlockDetails = (
   data: GetEthBlockByNumberQuery,
   block: string
 ): BlockDetails => {
-  const { values } = data?.eth_blocks || {}
+  const { values } = data?.eth_blocks || {};
   return {
     Sha3Uncles: values?.[0]?.sha3_uncles,
     StateRoot: values?.[0]?.state_root,
@@ -183,8 +189,8 @@ const mapRawDataToBlockDetails = (
       ? `🔥 ${values?.[0]?.burnt_fees} Ether`
       : null,
     ExtraData: `speth03�0\`' (Hex:${values?.[0]?.extra_data})`,
-  }
-}
+  };
+};
 
 const mapRawDataToIntTransactions = (
   internalTransactions: GetInternalTransactionByEthBlockNumberQuery
@@ -197,11 +203,11 @@ const mapRawDataToIntTransactions = (
         from: transaction?.from_address ?? '',
         to: transaction?.to_address ?? '',
         value: String(Number(transaction?.value).toFixed(4)),
-      }
-    }) || []
+      };
+    }) || [];
 
-  return data
-}
+  return data;
+};
 
 const mapRawDataToInternalTransactions = (
   transactionDetails: GetInternalTransactionByEthBlockNumber_Transaction_HashQuery
@@ -215,11 +221,11 @@ const mapRawDataToInternalTransactions = (
           to: to_address,
           value: String(value),
           gasLimit: numberWithCommas(gas_limit),
-        }
+        };
       }
-    ) || []
-  return data
-}
+    ) || [];
+  return data;
+};
 
 const mapRawDataToTransactionDetails = (
   transactionDetails: GetEthTransactionByHashQuery,
@@ -291,72 +297,189 @@ const mapRawDataToTransactionDetails = (
     TxnSavingFee:
       transactionDetails?.transactions_by_hash?.values?.[0]?.txn_savings,
     input: transactionDetails?.transactions_by_hash?.values?.[0]?.input,
-  }
-}
+  };
+};
 
 const getEventNameFromRawData = (
   name: string | undefined | null,
   events: string | undefined | null
 ) => {
-  if (!name) return ''
+  if (!name) return '';
 
-  const uniformString = name?.replace('(', ',').replace(')', '')
-  const params = uniformString?.split(',')
+  const uniformString = name?.replace('(', ',').replace(')', '');
+  const params = uniformString?.split(',');
   if (params?.length > 1) {
-    let NameWithParams = `<ColouredText color={${colors.actionSecondary}}>${params[0]}</ColouredText>(`
+    let NameWithParams = `<ColouredText color={${colors.actionSecondary}}>${params[0]}</ColouredText>(`;
     params.map((param: string, index) => {
       if (index !== 0)
         NameWithParams =
           NameWithParams +
-          `<ColouredText color={${colors.actionPrimary}}>${param}</ColouredText>,&nbsp;`
-    })
-    NameWithParams += `<ColouredText color={${colors.actionSecondary}}>)</ColouredText>`
-    return NameWithParams
+          `<ColouredText color={${colors.actionPrimary}}>${param}</ColouredText>,&nbsp;`;
+    });
+    NameWithParams += `<ColouredText color={${colors.actionSecondary}}>)</ColouredText>`;
+    return NameWithParams;
   }
 
-  if (!events) return `${name}`
+  if (!events) return `${name}`;
 
-  const parsedEvents = JSON.parse(events)
-  let FullEventName = ``
-  let count = 0
+  const parsedEvents = JSON.parse(events);
+  let FullEventName = ``;
+  let count = 0;
   parsedEvents.map((event: LogEvent) => {
     if (event['indexed']) {
       FullEventName =
         FullEventName +
-        `&nbsp;index_topic_${count}&nbsp;<ColouredText color={${colors.actionPrimary}}>${event['type']}</ColouredText>&nbsp;<ColouredText color={${colors.semanticRed}}>${event['name']}</ColouredText>,&nbsp;`
+        `&nbsp;index_topic_${count}&nbsp;<ColouredText color={${colors.actionPrimary}}>${event['type']}</ColouredText>&nbsp;<ColouredText color={${colors.semanticRed}}>${event['name']}</ColouredText>,&nbsp;`;
     } else {
       FullEventName =
         FullEventName +
-        `&nbsp;<ColouredText color={${colors.actionPrimary}}>${event['type']}</ColouredText>&nbsp;<ColouredText color={${colors.semanticRed}}>${event['name']}</ColouredText>,&nbsp;`
+        `&nbsp;<ColouredText color={${colors.actionPrimary}}>${event['type']}</ColouredText>&nbsp;<ColouredText color={${colors.semanticRed}}>${event['name']}</ColouredText>,&nbsp;`;
     }
-    count = count + 1
-  })
+    count = count + 1;
+  });
 
-  return `${name} ( ${FullEventName} )`
-}
+  return `${name} ( ${FullEventName} )`;
+};
 
 const timeLapseInSeconds = (timeInMinutes: number) => {
-  const timeInSeconds = timeInMinutes * 60
-  return Math.round(new Date().getTime() / 1000 + timeInSeconds)
-}
+  const timeInSeconds = timeInMinutes * 60;
+  return Math.round(new Date().getTime() / 1000 + timeInSeconds);
+};
 
 const getNetworkUtilization = (blocks: GetPaginatedEthBlocksQuery) => {
-  const { values } = blocks?.eth_blocks || {}
-  const PageSize = values?.length || 0
-  let gasUsedSum = 0
+  const { values } = blocks?.eth_blocks || {};
+  const PageSize = values?.length || 0;
+  let gasUsedSum = 0;
   values?.map((block) => {
-    gasUsedSum = gasUsedSum + Number(block.gas_used_percentage)
-  })
-  return gasUsedSum / PageSize
-}
+    gasUsedSum = gasUsedSum + Number(block.gas_used_percentage);
+  });
+  return gasUsedSum / PageSize;
+};
 
 const redirect = (path: string) => {
-  Router.push(path)
-}
+  Router.push(path);
+};
 
 const getBlockGroupFromBlockNumber = (blockNumber: number) => {
-  return Math.ceil(blockNumber / 100000)
-}
+  return Math.ceil(blockNumber / 100000);
+};
+
+const handleError = (queryName: string, error: ApolloError | Error) => {
+  console.error(`Error while calling ${queryName}`, error);
+};
+
+const mapRawDataToSummaryBlocks = (
+  dashboardAnalytics: Dashboard_AnalyticsQuery
+) => {
+  return summaryBlocksDataPrice.map((block) => {
+    return {
+      icon: block.icon,
+      title: block.title,
+      value: `$${
+        block.title === 'Ether Price'
+          ? numberWithCommas(
+              parseFloat(
+                dashboardAnalytics?.dashboard_analytics?.values?.[0]
+                  ?.ether_price_usd || ''
+              ).toFixed(2)
+            )
+          : numberWithCommas(
+              parseFloat(
+                dashboardAnalytics?.dashboard_analytics?.values?.[0]
+                  ?.market_cap_usd || ''
+              ).toFixed(2)
+            )
+      }`,
+      stat:
+        block.title === 'Ether Price'
+          ? `@${parseFloat(
+              dashboardAnalytics?.dashboard_analytics?.values?.[0]
+                ?.ether_price_btc || ''
+            ).toFixed(5)} BTC`
+          : undefined,
+      supportingStat:
+        block.title === 'Ether Price'
+          ? `${parseFloat(
+              dashboardAnalytics?.dashboard_analytics?.values?.[0]
+                ?.price_percentage_change || ''
+            ).toFixed(2)}%`
+          : undefined,
+      fontSizeOfValue: block.fontSizeOfValue,
+    };
+  });
+};
+
+const mapRawDataToSummaryTransactions = (
+  dashboardAnalytics: Dashboard_AnalyticsQuery
+) => {
+  return summaryBlocksDataTransactions.map((block) => {
+    return {
+      icon: block.icon,
+      title: block.title,
+      value:
+        block.title === 'Difficuilty'
+          ? `${numberWithCommas(
+              (
+                parseFloat(
+                  dashboardAnalytics?.dashboard_analytics?.values?.[0]
+                    ?.difficulty || ''
+                ) / 10e12
+              ).toFixed(2)
+            )} TH`
+          : `${convertToMillion(
+              parseInt(
+                dashboardAnalytics?.dashboard_analytics?.values?.[0]
+                  ?.total_transactions || ''
+              )
+            )}`,
+      stat:
+        block.title === 'Transactions'
+          ? `${parseFloat(
+              dashboardAnalytics?.dashboard_analytics?.values?.[0]?.tps || ''
+            ).toFixed(1)} TPS`
+          : block.stat,
+      secondaryTitle: block.secondaryTitle,
+      secondaryValue:
+        block.secondaryTitle === 'Hash Rate'
+          ? `${numberWithCommas(
+              (
+                parseFloat(
+                  dashboardAnalytics?.dashboard_analytics?.values?.[0]
+                    ?.hashrate || ''
+                ) / 10e9
+              ).toFixed(2)
+            )} GH/s`
+          : `${parseFloat(
+              dashboardAnalytics?.dashboard_analytics?.values?.[0]
+                ?.med_gas_price || ''
+            ).toFixed(2)} Gwei`,
+      fontSizeOfValue: block.fontSizeOfValue,
+      secondaryStat: block.secondaryStat,
+    };
+  });
+};
+
+const mapRawDataToGraphData = (
+  dashboardAnalytics: Dashboard_AnalyticsQuery
+) => {
+  let count = 1;
+  return JSON.parse(
+    dashboardAnalytics?.dashboard_analytics?.values?.[0]
+      ?.transactions_history_chart || ''
+  )
+    ?.map((node: string) => {
+      const date = new Date();
+      date.setDate(date.getDate() - count);
+      const day = date.getDate();
+      const month = date.toLocaleString('en-us', { month: 'long' });
+      count += 1;
+      return {
+        label: `${month} ${day}`,
+        value: node,
+      };
+    })
+    .reverse();
+};
 
 export {
   formatAddress,
@@ -380,5 +503,10 @@ export {
   getNetworkUtilization,
   redirect,
   getBlockGroupFromBlockNumber,
-}
-export { default as createEmotionCache } from './createEmotionCache'
+  handleError,
+  mapRawDataToSummaryBlocks,
+  mapRawDataToSummaryTransactions,
+  mapRawDataToGraphData,
+};
+export { default as createEmotionCache } from './createEmotionCache';
+export * from './api';

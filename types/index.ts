@@ -1,5 +1,7 @@
 import React from 'react'
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace'
+import { AxiosResponse } from 'axios'
+import { ApolloError } from '@apollo/client'
 
 type Route = {
   name: string
@@ -232,6 +234,10 @@ type TokenGenerationPayload = {
   tokenExpiry: number
 }
 
+interface AxiosApiResponse extends AxiosResponse {
+  error: ApolloError | undefined
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -258,4 +264,5 @@ export type {
   TokenGenerationPayload,
   InternalTransactionData,
   InternalTxnsTabData,
+  AxiosApiResponse,
 }

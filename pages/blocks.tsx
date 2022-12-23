@@ -1,116 +1,113 @@
-import type { NextPage } from 'next'
-import BlocksTable from '@components/Blocks/Table'
-import Hero from '@components/shared/Hero'
-import { BlocksTitle, PAGINATION_EVENT } from '@constants'
+import type { NextPage } from 'next';
+import BlocksTable from '@components/Blocks/Table';
+import Hero from '@components/shared/Hero';
+import { BlocksTitle, PAGINATION_EVENT } from '@constants';
 import {
-  useGetLatestBlockGroupQuery,
-  useGetPaginatedEthBlocksLazyQuery,
-} from 'lib/graphql/generated/generate'
-import { useEffect, useState } from 'react'
-import { getNetworkUtilization } from 'utils'
+  GetLatestBlockGroupQuery,
+  GetPaginatedEthBlocksQuery,
+} from 'lib/graphql/generated/generate';
+import { useEffect, useState } from 'react';
+import { GET, getNetworkUtilization, handleError, POST } from 'utils';
 
 const Blocks: NextPage = () => {
-  const [pageSize, setPageSize] = useState(10)
-  const [pageStateArray, setPageStateArray] = useState<string[]>([''])
-  const [networkUtilization, setNetworkutilization] = useState<number>()
-  const {
-    data: latestBlockGroup,
-    error: latestBlockGroupError,
-    loading: latestBlockGroupLoading,
-  } = useGetLatestBlockGroupQuery()
+  const [pageSize, setPageSize] = useState(10);
+  const [pageStateArray, setPageStateArray] = useState<string[]>(['']);
+  const [networkUtilization, setNetworkutilization] = useState<number>();
 
-  const [
-    getPagintedEthBlocks,
-    { data: latestBlocks, error: blocksError, loading: loadingBlocks },
-  ] = useGetPaginatedEthBlocksLazyQuery()
+  const [latestBlockGroupLoading, setlatestBlockGroupLoading] =
+    useState<boolean>(false);
+  const [latestBlockGroup, setLatestBlockGroup] =
+    useState<GetLatestBlockGroupQuery>();
 
-  const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
-    if (paginationEvent === PAGINATION_EVENT.NEXT)
-      getPagintedEthBlocks({
-        variables: {
-          filter: {
-            blocks_group: {
-              eq: latestBlockGroup?.dashboard_analytics?.values?.[0]
-                ?.latest_blocks_group,
-            },
-          },
-          options: {
-            pageState: pageStateArray[pageStateArray.length - 1],
-            pageSize: pageSize,
-          },
-        },
-        onError: () => {
-          setPageStateArray([''])
-        },
-      })
+  const [loadingBlocks, setloadingBlocks] = useState<boolean>(false);
+  const [latestBlocks, setLatestBlocks] =
+    useState<GetPaginatedEthBlocksQuery>();
+
+  const handlePagination = async (paginationEvent: PAGINATION_EVENT) => {
+    if (paginationEvent === PAGINATION_EVENT.NEXT) {
+      setloadingBlocks(true);
+      const { data, error } = await POST('getPaginatedBlocks', {
+        blockGroup:
+          latestBlockGroup?.dashboard_analytics?.values?.[0]
+            ?.latest_blocks_group,
+        pageState: pageStateArray[pageStateArray.length - 1],
+        pageSize,
+      });
+      setLatestBlocks(data);
+      setloadingBlocks(false);
+      if (error) {
+        handleError('getPaginatedBlocks', error);
+        setPageStateArray(['']);
+      }
+    }
 
     if (paginationEvent === PAGINATION_EVENT.PREV) {
-      getPagintedEthBlocks({
-        variables: {
-          filter: {
-            blocks_group: {
-              eq: latestBlockGroup?.dashboard_analytics?.values?.[0]
-                ?.latest_blocks_group,
-            },
-          },
-          options: {
-            pageState: pageStateArray[pageStateArray.length - 3] || null,
-            pageSize: pageSize,
-          },
-        },
-        onError: () => {
-          setPageStateArray([''])
-        },
-      })
-      setPageStateArray((prev) => prev.slice(0, -2))
+      setloadingBlocks(true);
+      const { data, error } = await POST('getPaginatedBlocks', {
+        blockGroup:
+          latestBlockGroup?.dashboard_analytics?.values?.[0]
+            ?.latest_blocks_group,
+        pageState: pageStateArray[pageStateArray.length - 3] || null,
+        pageSize,
+      });
+      setLatestBlocks(data);
+      setPageStateArray((prev) => prev.slice(0, -2));
+      setloadingBlocks(false);
+      if (error) {
+        handleError('getPaginatedBlocks', error);
+        setPageStateArray(['']);
+      }
     }
-  }
+  };
 
   useEffect(() => {
-    setPageStateArray([''])
-  }, [pageSize])
+    (async () => {
+      setlatestBlockGroupLoading(true);
+      const { data, error } = await GET('getLatestBlockGroup');
+      setLatestBlockGroup(data);
+      setlatestBlockGroupLoading(false);
+
+      if (error) {
+        handleError('getLatestBlockGroup', error);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
-    if (latestBlockGroup) {
-      getPagintedEthBlocks({
-        variables: {
-          filter: {
-            blocks_group: {
-              eq: latestBlockGroup?.dashboard_analytics?.values?.[0]
-                ?.latest_blocks_group,
-            },
-          },
-          options: {
-            pageState: null,
-            pageSize: pageSize,
-          },
-        },
-        onError: () => {
-          setPageStateArray([''])
-        },
-      })
-    }
-  }, [getPagintedEthBlocks, latestBlockGroup, pageSize])
+    (async () => {
+      if (latestBlockGroup) {
+        setloadingBlocks(true);
+        const { data, error } = await POST('getPaginatedBlocks', {
+          blockGroup:
+            latestBlockGroup?.dashboard_analytics?.values?.[0]
+              ?.latest_blocks_group,
+          pageState: null,
+          pageSize,
+        });
+        setLatestBlocks(data);
+        setloadingBlocks(false);
+        if (error) {
+          handleError('getPaginatedBlocks', error);
+        }
+      }
+    })();
+  }, [latestBlockGroup, pageSize]);
 
   useEffect(() => {
     if (latestBlocks) {
-      setNetworkutilization(getNetworkUtilization(latestBlocks))
+      setNetworkutilization(getNetworkUtilization(latestBlocks));
       if (latestBlocks?.eth_blocks?.pageState) {
         setPageStateArray((prevState) => [
           ...prevState,
           String(latestBlocks?.eth_blocks?.pageState),
-        ])
+        ]);
       }
     }
-  }, [latestBlocks])
+  }, [latestBlocks]);
 
-  if (blocksError) {
-    console.error(blocksError)
-  }
-
-  if (latestBlockGroupError) {
-    console.error(latestBlockGroupError)
-  }
+  useEffect(() => {
+    setPageStateArray(['']);
+  }, [pageSize]);
 
   return (
     <>
@@ -131,7 +128,7 @@ const Blocks: NextPage = () => {
         handlePagination={handlePagination}
       />
     </>
-  )
-}
+  );
+};
 
-export default Blocks
+export default Blocks;

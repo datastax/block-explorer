@@ -1,67 +1,55 @@
-import BlocksList from '@components/Home/BlocksList'
-import TransactionsList from '@components/Home/TransactionsList'
-import { Stack, useMediaQuery } from '@mui/material'
+import BlocksList from '@components/Home/BlocksList';
+import TransactionsList from '@components/Home/TransactionsList';
+import { Stack, useMediaQuery } from '@mui/material';
 import {
-  useGetEthBlocksLazyQuery,
-  useGetTransactionsOfLatestBlockLazyQuery,
-} from 'lib/graphql/generated/generate'
-import { useEffect } from 'react'
-import CustomSkeleton from '@components/shared/CustomSkeleton'
-import { Container } from './styles'
+  GetEthBlocksQuery,
+  GetTransactionsOfLatestBlockQuery,
+} from 'lib/graphql/generated/generate';
+import { useEffect, useState } from 'react';
+import CustomSkeleton from '@components/shared/CustomSkeleton';
+import { Container } from './styles';
+import { POST, handleError } from 'utils';
 
-interface LatestDataInterface {
-  latestBlocksGroup: number | undefined
+interface LatestDataProps {
+  latestBlocksGroup: number | undefined;
 }
-const LatestData = ({ latestBlocksGroup }: LatestDataInterface) => {
-  const [getBlocks, { data: latestBlocks, error: blocksError }] =
-    useGetEthBlocksLazyQuery()
 
-  const [
-    getTransactions,
-    { data: latestTransactions, error: transactionError },
-  ] = useGetTransactionsOfLatestBlockLazyQuery()
-  if (transactionError) {
-    console.error(transactionError)
-  }
-
-  if (blocksError) {
-    console.error(blocksError)
-  }
+const LatestData = ({ latestBlocksGroup }: LatestDataProps) => {
+  const [latestBlocks, setLatestBlocks] = useState<GetEthBlocksQuery>();
+  const [latestTransactions, setLatestTransactions] =
+    useState<GetTransactionsOfLatestBlockQuery>();
 
   useEffect(() => {
-    if (latestBlocks && latestBlocks?.eth_blocks?.values?.[0]?.hash) {
-      getTransactions({
-        variables: {
-          filter: {
-            block_hash: {
-              eq: latestBlocks?.eth_blocks?.values?.[0]?.hash,
-            },
-          },
-          options: {
-            pageSize: 6,
-          },
-        },
-      })
-    }
-  }, [getTransactions, latestBlocks])
+    (async () => {
+      if (latestBlocks && latestBlocks?.eth_blocks?.values?.[0]?.hash) {
+        const { data, error } = await POST('getLatestTransactionsList', {
+          blockHash: latestBlocks?.eth_blocks?.values?.[0]?.hash,
+          pageSize: 6,
+        });
+        setLatestTransactions(data);
+        if (error) {
+          handleError('getLatestTransactionsList', error);
+        }
+      }
+    })();
+  }, [latestBlocks]);
 
   useEffect(() => {
-    if (latestBlocksGroup)
-      getBlocks({
-        variables: {
-          filter: {
-            blocks_group: {
-              eq: latestBlocksGroup,
-            },
-          },
-          options: {
-            pageSize: 6,
-          },
-        },
-      })
-  }, [getBlocks, latestBlocksGroup])
+    (async () => {
+      if (latestBlocksGroup) {
+        const { data, error } = await POST('getLatestBlocksList', {
+          blockGroup: latestBlocksGroup,
+          pageSize: 6,
+        });
+        setLatestBlocks(data);
+        if (error) {
+          handleError('getLatestBlocksList', error);
+        }
+      }
+    })();
+  }, [latestBlocksGroup]);
 
-  const tabScreen = useMediaQuery('(max-width:1000px)')
+  const tabScreen = useMediaQuery('(max-width:1000px)');
   return (
     <Stack spacing={'24px'} direction={tabScreen ? 'column' : 'row'}>
       {latestBlocks ? (
@@ -82,7 +70,7 @@ const LatestData = ({ latestBlocksGroup }: LatestDataInterface) => {
         </Container>
       )}
     </Stack>
-  )
-}
+  );
+};
 
-export default LatestData
+export default LatestData;
