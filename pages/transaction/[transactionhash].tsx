@@ -10,76 +10,53 @@ import Tabs from '@components/shared/Tabs/CustomTabs';
 import TabPanel from '@components/shared/Tabs/CustomTabsPanel';
 import TransactionLogs from '@components/TransactionDetail/TransactionLogs';
 import {
-  useGetLogsByEthTransactionLazyQuery,
-  useGetEthTransactionByHashQuery,
-  useGetLatestEthBlockLazyQuery,
-  useGetLatestBlockGroupQuery,
-  useGetInternalTransactionByEthBlockNumber_Transaction_HashLazyQuery,
+  Query,
+  GetEthTransactionByHashQuery,
+  GetLogsByEthTransactionQuery,
+  GetInternalTransactionByEthBlockNumber_Transaction_HashQuery,
 } from 'lib/graphql/generated/generate';
 import { TransactionDetails, TabProps, InternalTxnsTabData } from 'types';
 import {
+  GET,
+  handleError,
   mapRawDataToInternalTransactions,
   mapRawDataToTransactionDetails,
+  POST,
 } from 'utils';
 import InternalTxns from '@components/InternalTxnsTab';
+import { ApolloError, gql } from '@apollo/client';
+import client from 'lib/graphql/apolloClient';
+import {
+  GET_ETH_TRANSACTION_BY_HASH,
+  GET_INTERNAL_TRANSACTIONS_OF_TRANSACTION,
+  GET_LOGS_OF_TRANSACTION,
+} from 'lib/graphql/queries';
 
 interface TransactionProps {
-  transactionHash: string;
+  transactionDetails: GetEthTransactionByHashQuery;
+  transactionLogs: GetLogsByEthTransactionQuery;
+  internalTransactionsData: GetInternalTransactionByEthBlockNumber_Transaction_HashQuery;
+  blockConfirmation: number;
+  transactionError: ApolloError;
+  transactionLogsError: ApolloError;
+  internalTransactionsError: ApolloError;
 }
 
-const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
-  const { transactionHash } = props;
-
+const Transaction: NextPage<TransactionProps> = ({
+  transactionDetails,
+  internalTransactionsData,
+  transactionLogs,
+  blockConfirmation,
+  transactionError,
+  transactionLogsError,
+  internalTransactionsError,
+}: TransactionProps) => {
   const [tabIndex, setTabIndex] = useState(0);
-  const [blockConfirmation, setBlockConfirmation] = useState<number>();
   const [transactionDetailData, setTransactionDetailData] =
     useState<TransactionDetails>();
   const [internalTransactions, setInternalTransactions] = useState<
     InternalTxnsTabData[]
   >([]);
-
-  const [
-    getInternalTransactions,
-    { data: internalTransactionsData, error: internalTransactionsError },
-  ] = useGetInternalTransactionByEthBlockNumber_Transaction_HashLazyQuery();
-
-  const { data: transactionDetails, error: transactionError } =
-    useGetEthTransactionByHashQuery({
-      variables: {
-        filter: {
-          hash: {
-            eq: transactionHash as string,
-          },
-        },
-      },
-    });
-
-  const [getLogs, { data: transactionLogs, error: transactionLogsError }] =
-    useGetLogsByEthTransactionLazyQuery();
-
-  const [getLatestBlock, { error: blockError, loading: blockLoading }] =
-    useGetLatestEthBlockLazyQuery();
-
-  const { error: latestBlockGroupError } = useGetLatestBlockGroupQuery({
-    onCompleted: (res) => {
-      getLatestBlock({
-        variables: {
-          filter: {
-            blocks_group: {
-              eq: res?.dashboard_analytics?.values?.[0]?.latest_blocks_group,
-            },
-          },
-          options: {
-            pageState: null,
-            pageSize: 1,
-          },
-        },
-        onCompleted: (res) => {
-          setBlockConfirmation(res?.eth_blocks?.values?.[0]?.number);
-        },
-      });
-    },
-  });
 
   // const [
   //   getConsecutiveTransaction,
@@ -194,7 +171,7 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
     if (transactionDetails) {
       if (transactionDetails?.transactions_by_hash?.values?.length === 0)
         Router.push(`/404`);
-      if (blockConfirmation && !blockLoading && internalTransactionsData) {
+      if (blockConfirmation && internalTransactionsData) {
         setTransactionDetailData(
           mapRawDataToTransactionDetails(transactionDetails, blockConfirmation)
         );
@@ -203,12 +180,7 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
         );
       }
     }
-  }, [
-    blockConfirmation,
-    blockLoading,
-    internalTransactionsData,
-    transactionDetails,
-  ]);
+  }, [blockConfirmation, internalTransactionsData, transactionDetails]);
 
   useEffect(() => {
     const locationHash = window.location.hash;
@@ -216,52 +188,17 @@ const Transaction: NextPage<TransactionProps> = (props: TransactionProps) => {
     if (locationHash === '#internal') setTabIndex(2);
   }, []);
 
-  useEffect(() => {
-    if (transactionDetails?.transactions_by_hash?.values?.[0]?.block_number)
-      getLogs({
-        variables: {
-          filter: {
-            transaction_hash: { eq: transactionHash as string },
-            block_number: {
-              eq: transactionDetails?.transactions_by_hash?.values?.[0]
-                ?.block_number,
-            },
-          },
-        },
-      });
-    getInternalTransactions({
-      variables: {
-        filter: {
-          block_number: {
-            eq: transactionDetails?.transactions_by_hash?.values?.[0]
-              ?.block_number,
-          },
-          transaction_hash: {
-            eq: transactionDetails?.transactions_by_hash?.values?.[0]?.hash,
-          },
-        },
-      },
-    });
-  }, [
-    getInternalTransactions,
-    getLogs,
-    transactionDetails?.transactions_by_hash?.values,
-    transactionHash,
-  ]);
-
+  if (transactionError) {
+    handleError('getTransactionByHash', transactionError);
+  }
   if (transactionLogsError)
-    console.error(
-      'Error While Fetching Transaction Logs',
-      transactionLogsError
+    handleError('getLogsOfTransaction', transactionLogsError);
+
+  if (internalTransactionsError)
+    handleError(
+      'getInternalTransactionsOfTransaction',
+      internalTransactionsError
     );
-  if (latestBlockGroupError) {
-    console.error(latestBlockGroupError);
-  }
-  if (blockError || transactionError || internalTransactionsError) {
-    console.error(
-      blockError + ' ' + transactionError + ' ' + internalTransactionsError
-    );
-  }
 
   return (
     <>
@@ -317,5 +254,86 @@ export default Transaction;
 
 export async function getServerSideProps(context: NextPageContext) {
   const { transactionhash } = context.query;
-  return { props: { transactionHash: transactionhash as string } };
+
+  let transactionLogs,
+    transactionLogsError,
+    internalTransactionsData,
+    internalTransactionsError,
+    blockConfirmation;
+
+  const { data: transactionDetails, error: transactionError } =
+    await client.query<Query>({
+      query: gql`
+        ${GET_ETH_TRANSACTION_BY_HASH}
+      `,
+      variables: {
+        filter: {
+          hash: {
+            eq: transactionhash as string,
+          },
+        },
+      },
+    });
+
+  if (transactionDetails?.transactions_by_hash?.values?.[0]?.block_number) {
+    const { data: logs, error: logsError } = await client.query<Query>({
+      query: gql`
+        ${GET_LOGS_OF_TRANSACTION}
+      `,
+      variables: {
+        filter: {
+          transaction_hash: { eq: transactionhash as string },
+          block_number: {
+            eq: transactionDetails?.transactions_by_hash?.values?.[0]
+              ?.block_number,
+          },
+        },
+      },
+    });
+
+    const { data: intTxns, error: intTxnsError } = await client.query<Query>({
+      query: gql`
+        ${GET_INTERNAL_TRANSACTIONS_OF_TRANSACTION}
+      `,
+      variables: {
+        filter: {
+          block_number: {
+            eq: transactionDetails?.transactions_by_hash?.values?.[0]
+              ?.block_number,
+          },
+          transaction_hash: {
+            eq: transactionDetails?.transactions_by_hash?.values?.[0]?.hash,
+          },
+        },
+      },
+    });
+    if (logs) transactionLogs = logs;
+    if (logsError) transactionLogsError = logsError;
+    if (intTxns) internalTransactionsData = intTxns;
+    if (intTxnsError) internalTransactionsError = intTxnsError;
+  }
+
+  const { data: latestBlockGroup } = await GET('getLatestBlockGroup');
+  if (latestBlockGroup) {
+    const { data: latestEthBlock } = await POST('getLatestEthBlock', {
+      blockGroup:
+        latestBlockGroup?.dashboard_analytics?.values?.[0]?.latest_blocks_group,
+      pageState: null,
+      pageSize: 1,
+    });
+    if (latestEthBlock)
+      blockConfirmation = latestEthBlock?.eth_blocks?.values?.[0]?.number;
+  }
+
+  return {
+    props: {
+      transactionDetails,
+      transactionLogs,
+      internalTransactionsData,
+      blockConfirmation,
+      transactionError: transactionError || null,
+      transactionLogsError: transactionLogsError || null,
+      internalTransactionsError: internalTransactionsError || null,
+    },
+  };
 }
