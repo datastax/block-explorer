@@ -31,6 +31,7 @@ interface TransactionsTableProps {
   transactions: GetPaginatedEThTransactionsQuery | undefined;
   loading: boolean;
   handlePagination: (paginationEvent: PAGINATION_EVENT) => void;
+  isTransactions?: boolean;
 }
 
 const TransactionsTable = ({
@@ -40,10 +41,13 @@ const TransactionsTable = ({
   transactions,
   loading,
   handlePagination,
+  isTransactions,
 }: TransactionsTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const lengthOfEachPage = transactions?.transactions?.values?.length;
+  const lengthOfEachPage = isTransactions
+    ? Number.MAX_VALUE
+    : transactions?.transactions?.values?.length;
 
   const getUIValue = (
     keys: string[],
@@ -80,7 +84,7 @@ const TransactionsTable = ({
         {!loading ? (
           <>
             <UpperPagination
-              transaction={true}
+              transaction
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               pageSize={pageSize}

@@ -8,7 +8,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { blockHash, pageState, pageSize } = req?.body;
+  const { blockHash, pageState, pageSize, limit, transactionIndexExpression } =
+    req?.body;
   const { data, error } = await client.query<Query>({
     query: gql`
       ${GET_PAGINATED_ETH_TRANSACTIONS}
@@ -18,10 +19,14 @@ export default async function handler(
         block_hash: {
           eq: blockHash,
         },
+        ...(transactionIndexExpression && {
+          transaction_index: transactionIndexExpression,
+        }),
       },
       options: {
-        pageState: pageState,
-        pageSize: pageSize,
+        ...(pageState && { pageState }),
+        ...(pageSize && { pageSize }),
+        ...(limit && { limit }),
       },
     },
   });
