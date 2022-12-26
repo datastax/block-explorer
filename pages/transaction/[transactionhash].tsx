@@ -17,11 +17,9 @@ import {
 } from 'lib/graphql/generated/generate';
 import { TransactionDetails, TabProps, InternalTxnsTabData } from 'types';
 import {
-  GET,
   handleError,
   mapRawDataToInternalTransactions,
   mapRawDataToTransactionDetails,
-  POST,
 } from 'utils';
 import InternalTxns from '@components/InternalTxnsTab';
 import { ApolloError, gql } from '@apollo/client';
@@ -29,7 +27,9 @@ import client from 'lib/graphql/apolloClient';
 import {
   GET_ETH_TRANSACTION_BY_HASH,
   GET_INTERNAL_TRANSACTIONS_OF_TRANSACTION,
+  GET_LATEST_BLOCKS_GROUP,
   GET_LOGS_OF_TRANSACTION,
+  GET_LATEST_ETH_BLOCK,
 } from 'lib/graphql/queries';
 
 interface TransactionProps {
@@ -324,13 +324,29 @@ export async function getServerSideProps(context: NextPageContext) {
     if (intTxnsError) internalTransactionsError = intTxnsError;
   }
 
-  const { data: latestBlockGroup } = await GET('getLatestBlockGroup');
+  const { data: latestBlockGroup } = await client.query<Query>({
+    query: gql`
+      ${GET_LATEST_BLOCKS_GROUP}
+    `,
+  });
+
   if (latestBlockGroup) {
-    const { data: latestEthBlock } = await POST('getLatestEthBlock', {
-      blockGroup:
-        latestBlockGroup?.dashboard_analytics?.values?.[0]?.latest_blocks_group,
-      pageState: null,
-      pageSize: 1,
+    const { data: latestEthBlock } = await client.query<Query>({
+      query: gql`
+        ${GET_LATEST_ETH_BLOCK}
+      `,
+      variables: {
+        filter: {
+          blocks_group: {
+            eq: latestBlockGroup?.dashboard_analytics?.values?.[0]
+              ?.latest_blocks_group,
+          },
+        },
+        options: {
+          pageState: null,
+          pageSize: 1,
+        },
+      },
     });
     if (latestEthBlock)
       blockConfirmation = latestEthBlock?.eth_blocks?.values?.[0]?.number;
@@ -341,7 +357,7 @@ export async function getServerSideProps(context: NextPageContext) {
       transactionDetails,
       transactionLogs,
       internalTransactionsData,
-      blockConfirmation,
+      blockConfirmation: blockConfirmation || 0,
       transactionError: transactionError || null,
       transactionLogsError: transactionLogsError || null,
       internalTransactionsError: internalTransactionsError || null,
