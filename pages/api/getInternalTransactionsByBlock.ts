@@ -1,0 +1,28 @@
+import { gql } from '@apollo/client';
+import client from 'lib/graphql/apolloClient';
+import { Query } from 'lib/graphql/generated/generate';
+import { GET_INTERNAL_TRANSACTIONS_OF_BLOCK } from 'lib/graphql/queries';
+import { NextApiRequest, NextApiResponse } from 'next';
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { blockNumber, pageState, pageSize } = req?.body;
+  const { data, error } = await client.query<Query>({
+    query: gql`
+      ${GET_INTERNAL_TRANSACTIONS_OF_BLOCK}
+    `,
+    variables: {
+      filter: {
+        block_number: { eq: blockNumber },
+      },
+      options: {
+        pageState: pageState,
+        pageSize: pageSize,
+      },
+    },
+  });
+
+  res.json({ data, error });
+}

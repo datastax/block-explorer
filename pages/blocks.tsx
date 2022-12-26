@@ -19,7 +19,7 @@ const Blocks: NextPage = () => {
   const [latestBlockGroup, setLatestBlockGroup] =
     useState<GetLatestBlockGroupQuery>();
 
-  const [loadingBlocks, setloadingBlocks] = useState<boolean>(false);
+  const [loadingBlocks, setloadingBlocks] = useState<boolean>(true);
   const [latestBlocks, setLatestBlocks] =
     useState<GetPaginatedEthBlocksQuery>();
 

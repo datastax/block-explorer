@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import InternalTransactionTable from '@components/InternalTransactions';
 import { InternalTransactionTitle } from 'constants/stubs';
 import { InternalTransactionData } from 'types';
-import { useGetInternalTransactionByEthBlockNumberLazyQuery } from 'lib/graphql/generated/generate';
-import { mapRawDataToIntTransactions } from 'utils';
+import { GetInternalTransactionByEthBlockNumberQuery } from 'lib/graphql/generated/generate';
+import { handleError, mapRawDataToIntTransactions, POST } from 'utils';
 import { PAGINATION_EVENT } from '@constants';
 
 const InternalTransaction: NextPage = () => {
@@ -20,56 +20,44 @@ const InternalTransaction: NextPage = () => {
   const [internalTransactionsData, setInternalTransactionsData] = useState<
     InternalTransactionData[]
   >([]);
+  const [loadingTransactions, setloadingTransactions] = useState<boolean>(true);
   const [pageStateArray, setPageStateArray] = useState<string[]>(['']);
+  const [internalTransactions, setinternalTransactions] =
+    useState<GetInternalTransactionByEthBlockNumberQuery>();
 
-  const [
-    getInternalTransactions,
-    {
-      data: internalTransactions,
-      error: internalTransactionsError,
-      loading: loadingTransctions,
-    },
-  ] = useGetInternalTransactionByEthBlockNumberLazyQuery();
+  const handlePagination = async (paginationEvent: PAGINATION_EVENT) => {
+    if (paginationEvent === PAGINATION_EVENT.NEXT) {
+      setloadingTransactions(true);
 
-  const handlePagination = (paginationEvent: PAGINATION_EVENT) => {
-    if (paginationEvent === PAGINATION_EVENT.NEXT)
-      getInternalTransactions({
-        variables: {
-          filter: {
-            block_number: { eq: blockNumber },
-          },
-          options: {
-            pageState: pageStateArray[pageStateArray.length - 1],
-            pageSize: pageSize,
-          },
-        },
-        onError: () => {
-          setPageStateArray(['']);
-        },
+      const { data, error } = await POST('getInternalTransactionsByBlock', {
+        blockNumber: blockNumber,
+        pageState: pageStateArray[pageStateArray.length - 1],
+        pageSize,
       });
+      setinternalTransactions(data);
+      setloadingTransactions(false);
+      if (error) {
+        handleError('getInternalTransactionsByBlock', error);
+        setPageStateArray(['']);
+      }
+    }
 
     if (paginationEvent === PAGINATION_EVENT.PREV) {
-      getInternalTransactions({
-        variables: {
-          filter: {
-            block_number: { eq: blockNumber },
-          },
-          options: {
-            pageState: pageStateArray[pageStateArray.length - 3] || null,
-            pageSize: pageSize,
-          },
-        },
-        onError: () => {
-          setPageStateArray(['']);
-        },
+      setloadingTransactions(true);
+      const { data, error } = await POST('getInternalTransactionsByBlock', {
+        blockNumber: blockNumber,
+        pageState: pageStateArray[pageStateArray.length - 3] || null,
+        pageSize,
       });
+      setinternalTransactions(data);
+      setloadingTransactions(false);
       setPageStateArray((prev) => prev.slice(0, -2));
+      if (error) {
+        handleError('getInternalTransactionsByBlock', error);
+        setPageStateArray(['']);
+      }
     }
   };
-
-  if (internalTransactionsError) {
-    console.error(internalTransactionsError);
-  }
 
   useEffect(() => {
     if (internalTransactions)
@@ -85,21 +73,21 @@ const InternalTransaction: NextPage = () => {
   }, [internalTransactions]);
 
   useEffect(() => {
-    getInternalTransactions({
-      variables: {
-        filter: {
-          block_number: { eq: blockNumber },
-        },
-        options: {
-          pageState: null,
-          pageSize: pageSize,
-        },
-      },
-      onError: () => {
+    (async () => {
+      setloadingTransactions(true);
+      const { data, error } = await POST('getInternalTransactionsByBlock', {
+        blockNumber: blockNumber,
+        pageState: null,
+        pageSize,
+      });
+      setloadingTransactions(false);
+      if (data) setinternalTransactions(data);
+      if (error) {
+        handleError('getInternalTransactionsByBlock', error);
         setPageNumber(1);
-      },
-    });
-  }, [blockNumber, getInternalTransactions, pageSize]);
+      }
+    })();
+  }, [blockNumber, pageSize]);
 
   useEffect(() => {
     setPageStateArray(['']);
@@ -115,7 +103,7 @@ const InternalTransaction: NextPage = () => {
         titles={InternalTransactionTitle}
         setPageNumber={setPageNumber}
         pageNumber={pageNumber}
-        loading={loadingTransctions}
+        loading={loadingTransactions}
         blockNumber={Number(blockNumber)}
         totalInternalTransactions={Number(totalInternalTransactions || '100')}
         handlePagination={handlePagination}
