@@ -1,49 +1,30 @@
-import type { NextPage } from 'next';
+import type { NextPage, NextPageContext } from 'next';
 import Hero from '@components/shared/Hero';
 import BlocksDetail from '@components/BlocksDetail';
 import { BlockDetails } from '@types';
-import { useGetEthBlockByNumberLazyQuery } from 'lib/graphql/generated/generate';
-import { useEffect, useState } from 'react';
+import { Query } from 'lib/graphql/generated/generate';
 import {
   getBlockGroupFromBlockNumber,
   isNumber,
   mapRawDataToBlockDetails,
-  redirect,
 } from 'utils';
 import { Box } from '@mui/material';
 import CustomSkeleton from '@components/shared/CustomSkeleton';
 import { useRouter } from 'next/router';
+import { GET_ETH_BLOCK_BY_NUMBER } from 'lib/graphql/queries';
+import { gql } from '@apollo/client';
+import client from 'lib/graphql/apolloClient';
 
-const Block: NextPage = () => {
+interface BlockDetailProps {
+  blockDetailsData: BlockDetails;
+}
+
+const Block: NextPage<BlockDetailProps> = ({
+  blockDetailsData,
+}: BlockDetailProps) => {
   const Router = useRouter();
   const { block } = Router.query;
-
   const blockKey = block as string;
-  const [blockDetailsData, setBlockDetailsData] = useState<BlockDetails>();
-
-  const [getBlockDetailsByNumber, { data: blockDetails, error: blocksError }] =
-    useGetEthBlockByNumberLazyQuery();
-  useEffect(() => {
-    if (isNumber(blockKey))
-      getBlockDetailsByNumber({
-        variables: {
-          blockGroup: getBlockGroupFromBlockNumber(Number(blockKey)),
-          blockNumber: Number(blockKey),
-        },
-      });
-  }, [blockKey, getBlockDetailsByNumber]);
-
-  useEffect(() => {
-    if (blockDetails) {
-      if (blockDetails?.eth_blocks?.values?.length === 0) redirect('/404');
-      setBlockDetailsData(mapRawDataToBlockDetails(blockDetails, blockKey));
-    }
-  }, [blockDetails, blockKey]);
-
-  if (blocksError) {
-    console.error(blocksError);
-    redirect('/404');
-  }
 
   return (
     <>
@@ -62,3 +43,44 @@ const Block: NextPage = () => {
 };
 
 export default Block;
+
+export async function getServerSideProps(context: NextPageContext) {
+  const { block } = context.query;
+
+  let blockDetailsData = null;
+  const blocksError = null;
+
+  if (block && isNumber(String(block))) {
+    const { data, error } = await client.query<Query>({
+      query: gql`
+        ${GET_ETH_BLOCK_BY_NUMBER}
+      `,
+      variables: {
+        blockGroup: getBlockGroupFromBlockNumber(Number(block)),
+        blockNumber: Number(block),
+      },
+    });
+    if (error || !data?.eth_blocks?.values?.[0]?.hash)
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/404',
+        },
+      };
+
+    if (data) blockDetailsData = mapRawDataToBlockDetails(data, String(block));
+  }
+  if (blocksError || !blockDetailsData)
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404',
+      },
+    };
+  return {
+    props: {
+      blockDetailsData,
+      blocksError: blocksError,
+    },
+  };
+}

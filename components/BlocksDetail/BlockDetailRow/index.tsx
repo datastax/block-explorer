@@ -160,7 +160,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         return (
           <Wrapper>
             <GasLimitStyle>
-              {`${data[objectKey]} (${data['GasUsedPercetge'].toFixed(2)}%)`}
+              {`${data[objectKey]} (${data['GasUsedPercetge']?.toFixed(2)}%)`}
               <BorderLinearProgress
                 variant="determinate"
                 value={data['GasUsedPercetge']}

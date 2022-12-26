@@ -275,6 +275,17 @@ export async function getServerSideProps(context: NextPageContext) {
       },
     });
 
+  if (
+    transactionError ||
+    !transactionDetails?.transactions_by_hash?.values?.[0]?.block_number
+  )
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/404',
+      },
+    };
+
   if (transactionDetails?.transactions_by_hash?.values?.[0]?.block_number) {
     const { data: logs, error: logsError } = await client.query<Query>({
       query: gql`

@@ -146,11 +146,11 @@ const mapRawDataToBlockDetails = (
 ): BlockDetails => {
   const { values } = data?.eth_blocks || {};
   return {
-    Sha3Uncles: values?.[0]?.sha3_uncles,
-    StateRoot: values?.[0]?.state_root,
+    Sha3Uncles: values?.[0]?.sha3_uncles || null,
+    StateRoot: values?.[0]?.state_root || null,
     Hash: values?.[0]?.hash || '',
     ParentHash: values?.[0]?.parent_hash || '',
-    Nonce: values?.[0]?.nonce,
+    Nonce: values?.[0]?.nonce || null,
     internalTransaction: values?.[0]?.int_txn_count || 0,
     BlockHeight: values?.[0]?.number.toString() || '',
     Timestamp: {
