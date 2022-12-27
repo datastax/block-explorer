@@ -52,21 +52,21 @@ const LatestData = ({ latestBlocksGroup }: LatestDataProps) => {
   const tabScreen = useMediaQuery('(max-width:1000px)');
   return (
     <Stack spacing={'24px'} direction={tabScreen ? 'column' : 'row'}>
-      {latestBlocks ? (
+      {latestBlocks?.eth_blocks?.values?.length ? (
         <BlocksList title={'Latest Blocks'} blocks={latestBlocks} />
       ) : (
         <Container>
-          <CustomSkeleton rows={6} />
+          <CustomSkeleton rows={10} />
         </Container>
       )}
-      {latestTransactions ? (
+      {latestTransactions?.transactions?.values?.length ? (
         <TransactionsList
           title={'Latest Transactions'}
           transactionsList={latestTransactions}
         />
       ) : (
         <Container>
-          <CustomSkeleton rows={6} />
+          <CustomSkeleton rows={10} />
         </Container>
       )}
     </Stack>
