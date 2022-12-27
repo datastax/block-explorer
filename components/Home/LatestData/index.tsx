@@ -3,6 +3,7 @@ import TransactionsList from '@components/Home/TransactionsList';
 import { Stack, useMediaQuery } from '@mui/material';
 import {
   GetEthBlocksQuery,
+  GetPaginatedEThTransactionsQuery,
   GetTransactionsOfLatestBlockQuery,
 } from 'lib/graphql/generated/generate';
 import { useEffect, useState } from 'react';
@@ -14,6 +15,8 @@ interface LatestDataProps {
   latestBlocksGroup: number | undefined;
 }
 
+const PAGE_SIZE = 6;
+
 const LatestData = ({ latestBlocksGroup }: LatestDataProps) => {
   const [latestBlocks, setLatestBlocks] = useState<GetEthBlocksQuery>();
   const [latestTransactions, setLatestTransactions] =
@@ -22,13 +25,39 @@ const LatestData = ({ latestBlocksGroup }: LatestDataProps) => {
   useEffect(() => {
     (async () => {
       if (latestBlocks && latestBlocks?.eth_blocks?.values?.[0]?.hash) {
-        const { data, error } = await POST('getLatestTransactionsList', {
-          blockHash: latestBlocks?.eth_blocks?.values?.[0]?.hash,
-          pageSize: 6,
-        });
-        setLatestTransactions(data);
+        const { data: transactions, error } = await POST(
+          'getLatestTransactionsList',
+          {
+            blockHash: latestBlocks?.eth_blocks?.values?.[1]?.hash,
+            pageSize: PAGE_SIZE,
+          }
+        );
         if (error) {
           handleError('getLatestTransactionsList', error);
+        }
+        if (transactions?.transactions?.values?.length < PAGE_SIZE) {
+          const { data: remainingTransactions, error } = await POST(
+            'getLatestTransactionsList',
+            {
+              blockHash: latestBlocks?.eth_blocks?.values?.[0]?.hash,
+              pageSize: PAGE_SIZE - transactions?.transactions?.values?.length,
+            }
+          );
+          if (error) {
+            handleError('getLatestTransactionsList', error);
+          }
+          const CombinedTransactions: GetPaginatedEThTransactionsQuery = {
+            transactions: {
+              pageState: remainingTransactions?.transactions?.pageState,
+              values: [
+                ...(transactions?.transactions?.values || []),
+                ...(remainingTransactions?.transactions?.values || []),
+              ],
+            },
+          };
+          setLatestTransactions(CombinedTransactions);
+        } else {
+          setLatestTransactions(transactions);
         }
       }
     })();
@@ -39,7 +68,7 @@ const LatestData = ({ latestBlocksGroup }: LatestDataProps) => {
       if (latestBlocksGroup) {
         const { data, error } = await POST('getLatestBlocksList', {
           blockGroup: latestBlocksGroup,
-          pageSize: 6,
+          pageSize: PAGE_SIZE,
         });
         setLatestBlocks(data);
         if (error) {
