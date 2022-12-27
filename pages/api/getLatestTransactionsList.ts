@@ -8,6 +8,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (!req?.headers['referer']) {
+    res.status(403).send({ message: 'UNAUTHORIZED' });
+  }
   const { blockHash, pageSize } = req?.body;
   const { data, error } = await client.query<Query>({
     query: gql`
