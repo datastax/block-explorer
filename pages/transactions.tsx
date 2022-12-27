@@ -19,8 +19,8 @@ const Transactions: NextPage = () => {
   const [pageStateArray, setPageStateArray] = useState<string[]>(['']);
   const [blockDetails, setBlockDetails] = useState<TransactionBlockDetail>();
   const [loadingTransactionsByBlock, setLoadingTransactionsByBlock] =
-    useState(false);
-  const [loadingTransactions, setLoadingTransactions] = useState(false);
+    useState(true);
+  const [loadingTransactions, setLoadingTransactions] = useState(true);
   const [blockGroupData, setBlockGroupData] =
     useState<GetLatestBlockGroupQuery>();
   const [transactionsByBlock, setTransactionsByBlock] =
@@ -303,7 +303,12 @@ const Transactions: NextPage = () => {
             ? handleBlockTransactionPagination
             : handleTransactionPagination
         }
-        loading={blockHash ? loadingTransactionsByBlock : loadingTransactions}
+        loading={
+          blockHash
+            ? loadingTransactionsByBlock
+            : loadingTransactions ||
+              !paginatedTransactions?.transactions?.values?.length
+        }
       />
     </>
   );
