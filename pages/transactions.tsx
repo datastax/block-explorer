@@ -1,15 +1,19 @@
 import Hero from '@components/shared/Hero';
 import TransactionsTable from '@components/Transactions/Table';
 import { PAGINATION_EVENT, transactionTitles } from '@constants';
-import {
-  GetLatestBlockGroupQuery,
-  GetPaginatedEThTransactionsQuery,
-} from 'lib/graphql/generated/generate';
+import { GetPaginatedEThTransactionsQuery } from 'lib/graphql/generated/generate';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { TransactionBlockDetail } from 'types';
-import { GET, handleError, POST } from 'utils';
+import {
+  handleError,
+  combineTransactions,
+  GET,
+  POST,
+  getTransactions,
+  getNextBlockHash,
+} from 'utils';
 
 const Transactions: NextPage = () => {
   const router = useRouter();
@@ -17,12 +21,12 @@ const Transactions: NextPage = () => {
 
   const [pageSize, setPageSize] = useState(10);
   const [pageStateArray, setPageStateArray] = useState<string[]>(['']);
-  const [blockDetails, setBlockDetails] = useState<TransactionBlockDetail>();
+  const [currentBlockDetails, setcurrentBlockDetails] =
+    useState<TransactionBlockDetail>();
   const [loadingTransactionsByBlock, setLoadingTransactionsByBlock] =
     useState(true);
   const [loadingTransactions, setLoadingTransactions] = useState(true);
-  const [blockGroupData, setBlockGroupData] =
-    useState<GetLatestBlockGroupQuery>();
+  const [latestBlockGroup, setlatestBlockGroup] = useState<number>(0);
   const [transactionsByBlock, setTransactionsByBlock] =
     useState<GetPaginatedEThTransactionsQuery>();
   const [paginatedTransactions, setpaginatedTransactions] =
@@ -38,7 +42,9 @@ const Transactions: NextPage = () => {
         handleError('getLatestBlockGroup', error);
       }
       if (data) {
-        setBlockGroupData(data);
+        setlatestBlockGroup(
+          data?.dashboard_analytics?.values?.[0]?.latest_blocks_group || 0
+        );
         const { data: latestEthBlock, error: latesEthBlockError } = await POST(
           'getLatestEthBlock',
           {
@@ -52,7 +58,7 @@ const Transactions: NextPage = () => {
           handleError('latesEthBlockError', latesEthBlockError);
         }
         if (latestEthBlock) {
-          setBlockDetails({
+          setcurrentBlockDetails({
             blockHash: String(latestEthBlock?.eth_blocks?.values?.[0]?.hash),
             blockNumber: latestEthBlock?.eth_blocks?.values?.[0]?.number,
           });
@@ -99,8 +105,6 @@ const Transactions: NextPage = () => {
   const handleTransactionPagination = async (
     paginationEvent: PAGINATION_EVENT
   ) => {
-    const LATEST_BLOCK_GROUP =
-      blockGroupData?.dashboard_analytics?.values?.[0]?.latest_blocks_group;
     const DATA_LENGTH =
       paginatedTransactions?.transactions?.values?.length || 0;
     const TRANSACTIONS_LIST = paginatedTransactions?.transactions?.values || [];
@@ -122,11 +126,11 @@ const Transactions: NextPage = () => {
         NextPageTransactions?.transactions?.values?.length || 0;
       if (error) {
         handleError('getPaginatedTransactions', error);
-        setBlockDetails(undefined);
+        setcurrentBlockDetails(undefined);
       }
       if (lengthOfNextPageTransactions < pageSize && latestTransactions) {
         const { data: NextBlock, error } = await POST('getNextBlock', {
-          blockGroup: Number(LATEST_BLOCK_GROUP),
+          blockGroup: Number(latestBlockGroup),
           blockNumber: Number(
             NextPageTransactions?.transactions?.values?.[
               lengthOfNextPageTransactions - 1
@@ -146,7 +150,7 @@ const Transactions: NextPage = () => {
           );
           if (error) {
             handleError('getPaginatedTransactions', error);
-            setBlockDetails(undefined);
+            setcurrentBlockDetails(undefined);
           }
           if (RemainingNewBlockTransactions) {
             const CombinedTransactions: GetPaginatedEThTransactionsQuery = {
@@ -185,14 +189,14 @@ const Transactions: NextPage = () => {
         PreviousPageTransactions?.transactions?.values?.length || 0;
       if (error) {
         handleError('getPaginatedTransactions', error);
-        setBlockDetails(undefined);
+        setcurrentBlockDetails(undefined);
       }
       if (
         (lengthOfPreviousPageTransactions < pageSize && latestTransactions) ||
         TRANSACTIONS_LIST[0]?.transaction_index == 0
       ) {
         const { data: PreviousBlock, error } = await POST('getPreviousBlock', {
-          blockGroup: Number(LATEST_BLOCK_GROUP),
+          blockGroup: Number(latestBlockGroup),
           blockNumber: Number(
             PreviousPageTransactions?.transactions?.values?.[
               lengthOfPreviousPageTransactions - 1
@@ -212,7 +216,7 @@ const Transactions: NextPage = () => {
           );
           if (error) {
             handleError('getPaginatedTransactions', error);
-            setBlockDetails(undefined);
+            setcurrentBlockDetails(undefined);
           }
 
           if (RemainingNewBlockTransactions) {
@@ -252,7 +256,7 @@ const Transactions: NextPage = () => {
         setLoadingTransactionsByBlock(false);
         if (error) {
           handleError('getPaginatedTransactions', error);
-          setBlockDetails(undefined);
+          setcurrentBlockDetails(undefined);
         }
       })();
     }
@@ -274,20 +278,53 @@ const Transactions: NextPage = () => {
   }, [transactionsByBlock]);
 
   useEffect(() => {
-    if (blockDetails?.blockHash && pageSize)
+    if (currentBlockDetails?.blockHash && pageSize) {
       (async () => {
         setLoadingTransactions(true);
-        const { data, error } = await POST('getPaginatedTransactions', {
-          blockHash: blockDetails?.blockHash,
-          limit: pageSize,
-        });
-        if (data) setLatestTransactions(data);
-        setLoadingTransactions(false);
-        if (error) {
-          handleError('getPaginatedTransactions', error);
+
+        const transactionsData = await getTransactions(
+          currentBlockDetails?.blockHash || '',
+          pageSize
+        );
+
+        const transactionsLength =
+          transactionsData?.transactions?.values?.length || 0;
+
+        if (transactionsLength === pageSize)
+          setLatestTransactions(transactionsData);
+
+        if (transactionsLength < pageSize) {
+          const nextBlockHash = await getNextBlockHash(
+            latestBlockGroup,
+            transactionsData?.transactions?.values?.[transactionsLength - 1]
+              ?.block_number || currentBlockDetails?.blockNumber
+          );
+
+          if (nextBlockHash) {
+            const RemainingNewBlockTransactions = await getTransactions(
+              nextBlockHash,
+              pageSize - transactionsLength
+            );
+
+            if (RemainingNewBlockTransactions) {
+              const CombinedTransactions: GetPaginatedEThTransactionsQuery =
+                combineTransactions(
+                  transactionsData,
+                  RemainingNewBlockTransactions
+                );
+              setpaginatedTransactions(CombinedTransactions);
+            }
+          }
         }
+        setLoadingTransactions(false);
       })();
-  }, [blockDetails?.blockHash, pageSize]);
+    }
+  }, [
+    currentBlockDetails?.blockHash,
+    currentBlockDetails?.blockNumber,
+    latestBlockGroup,
+    pageSize,
+  ]);
 
   return (
     <>

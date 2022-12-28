@@ -24,4 +24,32 @@ const POST = async (queryName: string, payload: Record<string, unknown>) => {
   return { data: null, error: null };
 };
 
-export { GET, POST };
+const getNextBlockHash = async (
+  latestBlockGroup: number,
+  currentBlockNumber: number
+) => {
+  const { data: NextBlock, error } = await POST('getNextBlock', {
+    blockGroup: Number(latestBlockGroup),
+    blockNumber: Number(currentBlockNumber),
+  });
+  if (error) {
+    handleError('getNextBlock', error);
+  }
+  if (NextBlock?.eth_blocks?.values?.[0]?.hash)
+    return NextBlock?.eth_blocks?.values?.[0]?.hash;
+  else return null;
+};
+
+const getTransactions = async (blockHash: string, pageSize: number) => {
+  const { data, error } = await POST('getPaginatedTransactions', {
+    blockHash,
+    limit: pageSize,
+  });
+  if (error) {
+    handleError('getNextBlock', error);
+  }
+  if (data?.transactions?.values?.length) return data;
+  else return null;
+};
+
+export { GET, POST, getTransactions, getNextBlockHash };

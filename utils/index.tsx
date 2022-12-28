@@ -6,6 +6,7 @@ import {
   GetInternalTransactionByEthBlockNumberQuery,
   GetInternalTransactionByEthBlockNumber_Transaction_HashQuery,
   GetPaginatedEthBlocksQuery,
+  GetPaginatedEThTransactionsQuery,
 } from 'lib/graphql/generated/generate';
 import {
   BlockDetails,
@@ -481,6 +482,21 @@ const mapRawDataToGraphData = (
     .reverse();
 };
 
+const combineTransactions = (
+  oldTransactions: GetPaginatedEThTransactionsQuery,
+  newTransactions: GetPaginatedEThTransactionsQuery
+): GetPaginatedEThTransactionsQuery => {
+  return {
+    transactions: {
+      pageState: newTransactions?.transactions?.pageState,
+      values: [
+        ...(oldTransactions?.transactions?.values || []),
+        ...(newTransactions?.transactions?.values || []),
+      ],
+    },
+  };
+};
+
 export {
   formatAddress,
   getDifference,
@@ -507,6 +523,7 @@ export {
   mapRawDataToSummaryBlocks,
   mapRawDataToSummaryTransactions,
   mapRawDataToGraphData,
+  combineTransactions,
 };
 export { default as createEmotionCache } from './createEmotionCache';
 export * from './api';
