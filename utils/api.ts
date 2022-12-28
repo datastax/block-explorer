@@ -40,6 +40,22 @@ const getNextBlockHash = async (
   else return null;
 };
 
+const getPreviousBlockHash = async (
+  latestBlockGroup: number,
+  currentBlockNumber: number
+) => {
+  const { data: NextBlock, error } = await POST('getPreviousBlock', {
+    blockGroup: Number(latestBlockGroup),
+    blockNumber: Number(currentBlockNumber),
+  });
+  if (error) {
+    handleError('getPreviousBlock', error);
+  }
+  if (NextBlock?.eth_blocks?.values?.[0]?.hash)
+    return NextBlock?.eth_blocks?.values?.[0]?.hash;
+  else return null;
+};
+
 const getTransactions = async (blockHash: string, pageSize: number) => {
   const { data, error } = await POST('getPaginatedTransactions', {
     blockHash,
@@ -52,4 +68,4 @@ const getTransactions = async (blockHash: string, pageSize: number) => {
   else return null;
 };
 
-export { GET, POST, getTransactions, getNextBlockHash };
+export { GET, POST, getTransactions, getNextBlockHash, getPreviousBlockHash };
