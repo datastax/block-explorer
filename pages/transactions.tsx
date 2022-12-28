@@ -187,15 +187,11 @@ const Transactions: NextPage = () => {
       if (PreviousPageTransactions)
         setLatestTransactions(PreviousPageTransactions);
 
-      if (
-        (lengthOfPreviousPageTransactions < pageSize && latestTransactions) ||
-        currentTransactionsList[0]?.transaction_index == 0
-      ) {
+      if (lengthOfPreviousPageTransactions < pageSize && latestTransactions) {
         const PreviousBlockHash = await getPreviousBlockHash(
           latestBlockGroup,
-          PreviousPageTransactions?.transactions?.values?.[
-            lengthOfPreviousPageTransactions - 1
-          ]?.block_number || currentBlockDetails?.blockNumber
+          PreviousPageTransactions?.transactions?.values?.[0]?.block_number ||
+            currentBlockDetails?.blockNumber
         );
 
         if (PreviousBlockHash) {
@@ -213,12 +209,12 @@ const Transactions: NextPage = () => {
           }
 
           if (RemainingNewBlockTransactions) {
-            const combinedTransactions: GetPaginatedEThTransactionsQuery =
+            const CombinedTransactions: GetPaginatedEThTransactionsQuery =
               combineTransactions(
                 RemainingNewBlockTransactions,
                 PreviousPageTransactions
               );
-            setpaginatedTransactions(combinedTransactions);
+            setpaginatedTransactions(CombinedTransactions);
           }
         }
       }
