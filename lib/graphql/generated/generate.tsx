@@ -3385,10 +3385,18 @@ export type Traces = {
    * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@7fc61c4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
+  block_hash?: Maybe<Scalars['String']>;
   block_number?: Maybe<Scalars['BigInt']>;
+  block_timestamp?: Maybe<Scalars['Timestamp']>;
+  call_type?: Maybe<Scalars['String']>;
+  error?: Maybe<Scalars['String']>;
   from_address?: Maybe<Scalars['String']>;
   gas_limit?: Maybe<Scalars['BigInt']>;
+  gas_used?: Maybe<Scalars['BigInt']>;
+  input?: Maybe<Scalars['String']>;
   internal_transaction_index?: Maybe<Scalars['BigInt']>;
+  output?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Decimal']>;
   to_address?: Maybe<Scalars['String']>;
   transaction_hash?: Maybe<Scalars['String']>;
   type_trace_address?: Maybe<Scalars['String']>;
@@ -3456,10 +3464,18 @@ export type Traces_Varint_FunctionArgs = {
  * Note that 'block_number', 'transaction_hash' and 'internal_transaction_index' are the fields that correspond to the table primary key.
  */
 export type TracesFilterInput = {
+  block_hash?: InputMaybe<StringFilterInput>;
   block_number?: InputMaybe<BigIntFilterInput>;
+  block_timestamp?: InputMaybe<TimestampFilterInput>;
+  call_type?: InputMaybe<StringFilterInput>;
+  error?: InputMaybe<StringFilterInput>;
   from_address?: InputMaybe<StringFilterInput>;
   gas_limit?: InputMaybe<BigIntFilterInput>;
+  gas_used?: InputMaybe<BigIntFilterInput>;
+  input?: InputMaybe<StringFilterInput>;
   internal_transaction_index?: InputMaybe<BigIntFilterInput>;
+  output?: InputMaybe<StringFilterInput>;
+  status?: InputMaybe<DecimalFilterInput>;
   to_address?: InputMaybe<StringFilterInput>;
   transaction_hash?: InputMaybe<StringFilterInput>;
   type_trace_address?: InputMaybe<StringFilterInput>;
@@ -3477,10 +3493,18 @@ export type TracesGroupByInput = {
  * Note that 'block_number', 'transaction_hash' and 'internal_transaction_index' are the fields that correspond to the table primary key.
  */
 export type TracesInput = {
+  block_hash?: InputMaybe<Scalars['String']>;
   block_number?: InputMaybe<Scalars['BigInt']>;
+  block_timestamp?: InputMaybe<Scalars['Timestamp']>;
+  call_type?: InputMaybe<Scalars['String']>;
+  error?: InputMaybe<Scalars['String']>;
   from_address?: InputMaybe<Scalars['String']>;
   gas_limit?: InputMaybe<Scalars['BigInt']>;
+  gas_used?: InputMaybe<Scalars['BigInt']>;
+  input?: InputMaybe<Scalars['String']>;
   internal_transaction_index?: InputMaybe<Scalars['BigInt']>;
+  output?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Decimal']>;
   to_address?: InputMaybe<Scalars['String']>;
   transaction_hash?: InputMaybe<Scalars['String']>;
   type_trace_address?: InputMaybe<Scalars['String']>;
@@ -3498,14 +3522,30 @@ export type TracesMutationResult = {
 
 /** The enum used to order a query result based on one or more fields for the table 'traces'. */
 export enum TracesOrder {
+  BlockHashAsc = 'block_hash_ASC',
+  BlockHashDesc = 'block_hash_DESC',
   BlockNumberAsc = 'block_number_ASC',
   BlockNumberDesc = 'block_number_DESC',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  CallTypeAsc = 'call_type_ASC',
+  CallTypeDesc = 'call_type_DESC',
+  ErrorAsc = 'error_ASC',
+  ErrorDesc = 'error_DESC',
   FromAddressAsc = 'from_address_ASC',
   FromAddressDesc = 'from_address_DESC',
   GasLimitAsc = 'gas_limit_ASC',
   GasLimitDesc = 'gas_limit_DESC',
+  GasUsedAsc = 'gas_used_ASC',
+  GasUsedDesc = 'gas_used_DESC',
+  InputAsc = 'input_ASC',
+  InputDesc = 'input_DESC',
   InternalTransactionIndexAsc = 'internal_transaction_index_ASC',
   InternalTransactionIndexDesc = 'internal_transaction_index_DESC',
+  OutputAsc = 'output_ASC',
+  OutputDesc = 'output_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC',
   ToAddressAsc = 'to_address_ASC',
   ToAddressDesc = 'to_address_DESC',
   TransactionHashAsc = 'transaction_hash_ASC',
