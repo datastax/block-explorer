@@ -1,8 +1,8 @@
-import NotFoundPage from '@components/shared/404'
-import React from 'react'
+import NotFoundPage from '@components/shared/404';
+import React from 'react';
 
 const NotFound = () => {
-  return <NotFoundPage />
-}
+  return <NotFoundPage />;
+};
 
-export default NotFound
+export default NotFound;

@@ -1,6 +1,6 @@
-import React from 'react'
-import { ChipProps } from 'types'
-import { CustomChip } from './styles'
+import React from 'react';
+import { ChipProps } from 'types';
+import { CustomChip } from './styles';
 
 const Chip = ({
   label,
@@ -20,7 +20,7 @@ const Chip = ({
       icon={icon}
       cursor={cursor}
     />
-  )
-}
+  );
+};
 
-export default Chip
+export default Chip;

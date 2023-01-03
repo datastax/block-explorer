@@ -1,7 +1,7 @@
 import { productPageUrl } from '@constants'
-import { Stack } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import { Wrapper, Container, StyledTypography } from './styles'
+import { Stack } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import { Wrapper, Container, StyledTypography } from './styles';
 
 const Footer = () => {
   return (
@@ -9,7 +9,7 @@ const Footer = () => {
       <Wrapper>
         <Stack spacing={'24px'} direction={'row'}>
           <StyledTypography color={colors.neutral100}>
-            DataStax © 2022
+            DataStax © {new Date().getFullYear()}
           </StyledTypography>
           <StyledTypography color={colors.neutral100}>
             🚀️ Powered By Astra -{' '}
@@ -20,7 +20,7 @@ const Footer = () => {
         </Stack>
       </Wrapper>
     </Container>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

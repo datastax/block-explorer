@@ -1,24 +1,24 @@
-import { styled } from '@mui/system'
-import { Typography, Box } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
+import { styled } from '@mui/system';
+import { Typography, Box } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
 
 interface CustomBadgeProps {
-  background: string
-  color: string
-  size: string
-  circular?: boolean
-  padding: string
-  badgeSize: string
+  background: string;
+  color: string;
+  size: string;
+  circular?: boolean;
+  padding: string;
+  badgeSize: string;
 }
 
 interface ColouredTextProps {
-  color: string
+  color: string;
 }
 
 interface HighlightProps {
-  color: string
-  size: string
-  weight: number
+  color: string;
+  size: string;
+  weight: number;
 }
 
 const StyledTypography = styled(Typography)({
@@ -27,7 +27,7 @@ const StyledTypography = styled(Typography)({
   justifyContent: 'flex-start',
   alignContent: 'center',
   alignItems: 'center',
-})
+});
 
 const Container = styled(Box)({
   display: 'flex',
@@ -41,7 +41,7 @@ const Container = styled(Box)({
   textDecoration: 'none',
   background: colors.neutral900,
   padding: '24px',
-})
+});
 
 const Row = styled(Box)({
   display: 'flex',
@@ -50,7 +50,7 @@ const Row = styled(Box)({
   alignItems: 'center',
   width: '100%',
   padding: '5px 0px',
-})
+});
 
 const LogContainer = styled(Box)({
   display: 'flex',
@@ -62,7 +62,7 @@ const LogContainer = styled(Box)({
   marginLeft: '50px',
   padding: '25px',
   overflowX: 'scroll',
-})
+});
 
 const CustomBadge = styled('span')(
   ({
@@ -87,7 +87,7 @@ const CustomBadge = styled('span')(
     color: color,
     marginRight: '10px',
   })
-)
+);
 
 const List = styled(Box)({
   display: 'flex',
@@ -97,11 +97,11 @@ const List = styled(Box)({
   flexDirection: 'column',
   fontSize: '16px',
   fontWeight: 500,
-})
+});
 
 const ColouredText = styled('span')(({ color }: ColouredTextProps) => ({
   color: color,
-}))
+}));
 
 const Highlight = styled('span')(({ color, size, weight }: HighlightProps) => ({
   color: color,
@@ -110,7 +110,7 @@ const Highlight = styled('span')(({ color, size, weight }: HighlightProps) => ({
   marginRight: '20px',
   width: '100px',
   minWidth: '100px',
-}))
+}));
 
 export {
   StyledTypography,
@@ -121,4 +121,4 @@ export {
   List,
   ColouredText,
   Highlight,
-}
+};

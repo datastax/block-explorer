@@ -1,11 +1,11 @@
-import Head from 'next/head'
-import React from 'react'
-import Footer from '@components/shared/Footer'
-import Header from '@components/shared/Header'
-import { MainContainer, Wrapper } from './styles'
+import Head from 'next/head';
+import React from 'react';
+import Footer from '@components/shared/Footer';
+import Header from '@components/shared/Header';
+import { MainContainer, Wrapper } from './styles';
 
 interface LayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
@@ -29,6 +29,6 @@ const Layout = ({ children }: LayoutProps) => {
       </MainContainer>
       <Footer />
     </>
-  )
-}
-export default Layout
+  );
+};
+export default Layout;

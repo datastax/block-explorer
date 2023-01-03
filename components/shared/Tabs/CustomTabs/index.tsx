@@ -1,15 +1,15 @@
-import * as React from 'react'
-import { Tabs } from '@mui/material'
-import { TabProps } from '@types'
-import { CustomTab } from './styles'
+import * as React from 'react';
+import { Tabs } from '@mui/material';
+import { TabProps } from '@types';
+import { CustomTab } from './styles';
 
 interface TabsProps {
-  tabsList: TabProps[]
+  tabsList: TabProps[];
   onChange: (
     event: React.SyntheticEvent<Element, Event>,
     tabIndex: number
-  ) => void | undefined
-  tabIndex: number
+  ) => void | undefined;
+  tabIndex: number;
 }
 
 const CustomTabs = ({ tabsList, onChange, tabIndex }: TabsProps) => {
@@ -24,7 +24,7 @@ const CustomTabs = ({ tabsList, onChange, tabIndex }: TabsProps) => {
         />
       ))}
     </Tabs>
-  )
-}
+  );
+};
 
-export default CustomTabs
+export default CustomTabs;

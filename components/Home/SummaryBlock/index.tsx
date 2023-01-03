@@ -1,7 +1,7 @@
-import colors from '@styles/ThemeProvider/colors'
-import { Box, Typography, useMediaQuery } from '@mui/material'
-import { StyledCard, StyledTypograph } from './styles'
-import { SummaryBlocksProps } from 'types'
+import colors from '@styles/ThemeProvider/colors';
+import { Box, Typography, useMediaQuery } from '@mui/material';
+import { StyledCard, StyledTypograph } from './styles';
+import { SummaryBlocksProps } from 'types';
 
 const SummaryBlock = ({
   icon,
@@ -14,8 +14,8 @@ const SummaryBlock = ({
   fontSizeOfValue,
   secondayStat,
 }: SummaryBlocksProps) => {
-  const matches1330 = useMediaQuery('(max-width:1330px)')
-  const matches1240 = useMediaQuery('(max-width:1240px)')
+  const matches1330 = useMediaQuery('(max-width:1330px)');
+  const matches1240 = useMediaQuery('(max-width:1240px)');
   return (
     <StyledCard>
       <Box padding="4px 1px">{icon()}</Box>
@@ -69,7 +69,7 @@ const SummaryBlock = ({
         </Box>
       )}
     </StyledCard>
-  )
-}
+  );
+};
 
-export default SummaryBlock
+export default SummaryBlock;

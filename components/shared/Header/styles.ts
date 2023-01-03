@@ -1,25 +1,25 @@
-import { styled } from '@mui/system'
-import colors from '@styles/ThemeProvider/colors'
-import { Box, Stack, Theme } from '@mui/material'
+import { styled } from '@mui/system';
+import colors from '@styles/ThemeProvider/colors';
+import { Box, Stack, Theme } from '@mui/material';
 const Container = styled(Box)({
   background: colors.neutral900,
   width: '100%',
-})
+});
 
 interface WrapperProps {
-  height?: string
-  padding?: string
-  theme: Theme
-  isHome?: boolean
-  marginTop?: string
+  height?: string;
+  padding?: string;
+  theme: Theme;
+  isHome?: boolean;
+  marginTop?: string;
 }
 interface LogoProps {
-  isHome?: boolean
-  theme: Theme
+  isHome?: boolean;
+  theme: Theme;
 }
 interface CustomStackProps {
-  isHome?: boolean
-  theme: Theme
+  $isHome?: boolean;
+  theme: Theme;
 }
 const Wrapper = styled(Box)(
   ({ height, theme, isHome, marginTop }: WrapperProps) => ({
@@ -41,7 +41,7 @@ const Wrapper = styled(Box)(
       padding: !isHome ? '26px 15px 0px' : '0px 15px',
     },
   })
-)
+);
 
 const StyledLink = styled('a')({
   textDecoration: 'None',
@@ -49,7 +49,7 @@ const StyledLink = styled('a')({
   fontWeight: 500,
   fontSize: '16px',
   lineHeight: '14px',
-})
+});
 
 const SearchBox = styled(Box)((props) => ({
   width: '80%',
@@ -60,7 +60,7 @@ const SearchBox = styled(Box)((props) => ({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-}))
+}));
 const LogoBox = styled(Box)(({ isHome, theme }: LogoProps) => ({
   width: '20%',
   [theme.breakpoints.down('md')]: {
@@ -68,7 +68,7 @@ const LogoBox = styled(Box)(({ isHome, theme }: LogoProps) => ({
     marginBottom: '15px',
     marginTop: isHome && '15px',
   },
-}))
+}));
 const StyledLabel = styled('div')({
   span: {
     color: colors.semanticRed,
@@ -76,15 +76,17 @@ const StyledLabel = styled('div')({
   'span:last-child': {
     color: colors.neutral300,
   },
-})
-const CustomStack = styled(Stack)(({ isHome, theme }: CustomStackProps) => ({
+});
+const CustomStack = styled(Stack, {
+  shouldForwardProp: (prop: string) => prop[0] !== '$',
+})(({ $isHome, theme }: CustomStackProps) => ({
   [theme.breakpoints.down('sm')]: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: isHome && '5px',
+    marginBottom: $isHome && '5px',
     width: '100%',
   },
-}))
+}));
 export {
   Container,
   Wrapper,
@@ -93,4 +95,4 @@ export {
   SearchBox,
   LogoBox,
   CustomStack,
-}
+};

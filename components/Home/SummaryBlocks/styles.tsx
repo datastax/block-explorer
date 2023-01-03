@@ -1,6 +1,6 @@
-import { styled } from '@mui/system'
-import { Box, Stack } from '@mui/material'
-import theme from '@styles/ThemeProvider/theme'
+import { styled } from '@mui/system';
+import { Box, Stack } from '@mui/material';
+import theme from '@styles/ThemeProvider/theme';
 
 const Container = styled(Box)({
   display: 'flex',
@@ -10,7 +10,7 @@ const Container = styled(Box)({
   padding: '56px 0px',
   width: '100%',
   justifyContent: 'space-between',
-})
+});
 
 const PriceStack = styled(Stack)({
   width: '320px',
@@ -41,7 +41,7 @@ const PriceStack = styled(Stack)({
   [theme.breakpoints.down('xsB')]: {
     width: '100%',
   },
-})
+});
 const TransactionStack = styled(Stack)({
   width: '434px',
   [theme.breakpoints.down('xxmdB')]: {
@@ -71,7 +71,7 @@ const TransactionStack = styled(Stack)({
   [theme.breakpoints.down('xsB')]: {
     width: '100%',
   },
-})
+});
 
 const CardsBox = styled(Box)({
   width: '57.55%',
@@ -84,7 +84,7 @@ const CardsBox = styled(Box)({
     flexDirection: 'column',
   },
   justifyContent: 'space-between',
-})
+});
 
 const GraphBox = styled(Box)({
   margin: 0,
@@ -92,11 +92,11 @@ const GraphBox = styled(Box)({
   [theme.breakpoints.down('xmd')]: {
     width: '100%',
   },
-})
+});
 
 const SkeletonWrapper = styled(Box)({
   width: '100%',
-})
+});
 export {
   Container,
   PriceStack,
@@ -104,4 +104,4 @@ export {
   CardsBox,
   GraphBox,
   SkeletonWrapper,
-}
+};

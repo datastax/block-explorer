@@ -1,7 +1,7 @@
-import { styled } from '@mui/system'
-import colors from '@styles/ThemeProvider/colors'
-import { Button, InputBase } from '@mui/material'
-import Select from '@mui/material/Select'
+import { styled } from '@mui/system';
+import colors from '@styles/ThemeProvider/colors';
+import { Button, InputBase } from '@mui/material';
+import Select from '@mui/material/Select';
 const Wrapper = styled('form')((props) => ({
   p: '2px 4px',
   display: 'flex',
@@ -16,7 +16,7 @@ const Wrapper = styled('form')((props) => ({
   [props.theme.breakpoints.down('sm')]: {
     minWidth: '300px',
   },
-}))
+}));
 
 const SearchInput = styled(InputBase)((props) => ({
   ml: 1,
@@ -36,7 +36,7 @@ const SearchInput = styled(InputBase)((props) => ({
     borderRadius: '4px 0px 0px 4px',
     width: '100%',
   },
-}))
+}));
 
 const SearchButton = styled(Button)({
   minWidth: '40px !important',
@@ -47,7 +47,7 @@ const SearchButton = styled(Button)({
   svg: {
     color: colors.neutral100,
   },
-})
+});
 
 const CustomFilter = styled(Select)({
   color: colors.darkTextSecondary,
@@ -64,10 +64,10 @@ const CustomFilter = styled(Select)({
   '& .MuiSvgIcon-root': {
     color: colors.darkTextSecondary,
   },
-})
+});
 
 const MenuTitle = styled('span')({
   paddingRight: '15px',
-})
+});
 
-export { Wrapper, SearchInput, SearchButton, CustomFilter, MenuTitle }
+export { Wrapper, SearchInput, SearchButton, CustomFilter, MenuTitle };

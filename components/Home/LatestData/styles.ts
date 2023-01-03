@@ -1,6 +1,6 @@
-import { styled } from '@mui/system'
-import { Box } from '@mui/material'
-import theme from '@styles/ThemeProvider/theme'
+import { styled } from '@mui/system';
+import { Box } from '@mui/material';
+import theme from '@styles/ThemeProvider/theme';
 
 const Container = styled(Box)({
   width: '50%',
@@ -10,6 +10,6 @@ const Container = styled(Box)({
   [theme.breakpoints.down('xsA')]: {
     width: '470px',
   },
-})
+});
 
-export { Container }
+export { Container };

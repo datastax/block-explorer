@@ -1,10 +1,10 @@
-import * as React from 'react'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import { CustomDropButton, TextStyle } from './styles'
-import { DropButtonProps } from 'types'
+import * as React from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { CustomDropButton, TextStyle } from './styles';
+import { DropButtonProps } from 'types';
 export default function DropdownButton({ title }: DropButtonProps) {
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
@@ -22,5 +22,5 @@ export default function DropdownButton({ title }: DropButtonProps) {
         </React.Fragment>
       )}
     </PopupState>
-  )
+  );
 }

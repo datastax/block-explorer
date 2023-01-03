@@ -18,5 +18,5 @@ const colors = {
   darkTextSecondary: '#FFFFFFB2',
   neutral500: '#6D6F71',
   actionSecondaryHover: '#D1C4FF',
-}
-export default colors
+};
+export default colors;

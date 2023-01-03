@@ -1,5 +1,5 @@
-import { styled } from '@mui/system'
-import { Box } from '@mui/material'
+import { styled } from '@mui/system';
+import { Box } from '@mui/material';
 
 const Container = styled(Box)({
   marginTop: '16px',
@@ -7,5 +7,5 @@ const Container = styled(Box)({
   marginRight: 0,
   width: '100%',
   height: '191px',
-})
-export { Container }
+});
+export { Container };
