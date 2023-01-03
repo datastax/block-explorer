@@ -1,7 +1,7 @@
-import { styled } from '@mui/system'
-import { Box, Card } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import theme from '@styles/ThemeProvider/theme'
+import { styled } from '@mui/system';
+import { Box, Card } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import theme from '@styles/ThemeProvider/theme';
 
 const StyledTypograph = styled('div')({
   fontWeight: 500,
@@ -22,7 +22,7 @@ const StyledTypograph = styled('div')({
     },
     lineHeight: '18.75px',
   },
-})
+});
 
 const Container = styled(Card)({
   padding: '32px',
@@ -32,7 +32,7 @@ const Container = styled(Card)({
   [theme.breakpoints.down('xmdB')]: {
     padding: '32px 10px',
   },
-})
+});
 
 const ToolTip = styled(Box)({
   padding: '15px',
@@ -55,5 +55,5 @@ const ToolTip = styled(Box)({
     margin: 0,
     padding: 0,
   },
-})
-export { StyledTypograph, Container, ToolTip }
+});
+export { StyledTypograph, Container, ToolTip };

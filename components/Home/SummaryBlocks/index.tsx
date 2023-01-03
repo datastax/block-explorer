@@ -1,5 +1,5 @@
-import Graph from '@components/Home/Graph'
-import SummaryBlock from '@components/Home/SummaryBlock'
+import Graph from '@components/Home/Graph';
+import SummaryBlock from '@components/Home/SummaryBlock';
 import {
   CardsBox,
   Container,
@@ -7,125 +7,69 @@ import {
   PriceStack,
   TransactionStack,
   SkeletonWrapper,
-} from './styles'
-import {
-  summaryBlocksDataPrice,
-  summaryBlocksDataTransactions,
-} from '@constants'
-import { useGetDashboardAnalyticsLazyQuery } from 'lib/graphql/generated'
-import { useEffect, useState } from 'react'
+} from './styles';
+import { Dashboard_AnalyticsQuery } from 'lib/graphql/generated/generate';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   GraphData,
   SummaryBlocksDataPrice,
   SummaryBlocksDataTransactions,
-} from 'types'
-import { convertToMillion, numberWithCommas } from 'utils'
-import CustomSkeleton from '@components/shared/CustomSkeleton'
+} from 'types';
+import {
+  GET,
+  handleError,
+  mapRawDataToGraphData,
+  mapRawDataToSummaryBlocks,
+  mapRawDataToSummaryTransactions,
+} from 'utils';
+import CustomSkeleton from '@components/shared/CustomSkeleton';
 
-const SummaryBlocks = () => {
+interface SummaryBlocksInterfce {
+  setLatestBlocksGroup: Dispatch<SetStateAction<number | undefined>>;
+}
+
+const SummaryBlocks = ({ setLatestBlocksGroup }: SummaryBlocksInterfce) => {
+  const [graph, setGraph] = useState<GraphData[]>();
+  const [dashboardAnalytics, setDashboardAnalytics] =
+    useState<Dashboard_AnalyticsQuery>();
   const [summaryBlocksDataPriceList, setSummaryBlocksDataPriceList] =
-    useState<SummaryBlocksDataPrice[]>()
+    useState<SummaryBlocksDataPrice[]>();
   const [
     summaryBlocksDataTransactionsList,
     setSummaryBlocksDataTransactionsList,
-  ] = useState<SummaryBlocksDataTransactions[]>()
-  const [graph, setGraph] = useState<GraphData[]>()
-  const [getDashboardAnalytics, { data }] = useGetDashboardAnalyticsLazyQuery()
+  ] = useState<SummaryBlocksDataTransactions[]>();
 
   useEffect(() => {
-    getDashboardAnalytics()
-    if (data) {
-      const blocksList: SummaryBlocksDataPrice[] = summaryBlocksDataPrice.map(
-        (block) => {
-          return {
-            icon: block.icon,
-            title: block.title,
-            value: `$${
-              block.title === 'Ether Price'
-                ? numberWithCommas(
-                    parseFloat(
-                      data.dashboardAnalytics.etherPriceUSD || ''
-                    ).toFixed(2)
-                  )
-                : numberWithCommas(
-                    parseFloat(
-                      data.dashboardAnalytics.marketCapUSD || ''
-                    ).toFixed(2)
-                  )
-            }`,
-            stat:
-              block.title === 'Ether Price'
-                ? `@${parseFloat(
-                    data.dashboardAnalytics.etherPriceBTC || ''
-                  ).toFixed(5)} BTC`
-                : undefined,
-            supportingStat:
-              block.title === 'Ether Price'
-                ? `${parseFloat(
-                    data.dashboardAnalytics.pricePercentageChange || ''
-                  ).toFixed(2)}%`
-                : undefined,
-            fontSizeOfValue: block.fontSizeOfValue,
-          }
-        }
-      )
+    (async () => {
+      const { data, error } = await GET('getDashboardAnalytics');
+      setDashboardAnalytics(data);
+
+      if (error) {
+        handleError('getDashboardAnalytics', error);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (dashboardAnalytics) {
+      const blocksList: SummaryBlocksDataPrice[] =
+        mapRawDataToSummaryBlocks(dashboardAnalytics);
+
       const transactionsList: SummaryBlocksDataTransactions[] =
-        summaryBlocksDataTransactions.map((block) => {
-          return {
-            icon: block.icon,
-            title: block.title,
-            value:
-              block.title === 'Difficuilty'
-                ? `${numberWithCommas(
-                    (
-                      parseFloat(data.dashboardAnalytics.difficulty || '') /
-                      10e12
-                    ).toFixed(2)
-                  )} TH`
-                : `${convertToMillion(
-                    parseInt(data.dashboardAnalytics.totalTransactions || '')
-                  )}`,
-            stat:
-              block.title === 'Transactions'
-                ? `${parseFloat(data.dashboardAnalytics.tps || '').toFixed(
-                    1
-                  )} TPS`
-                : block.stat,
-            secondaryTitle: block.secondaryTitle,
-            secondaryValue:
-              block.secondaryTitle === 'Hash Rate'
-                ? `${numberWithCommas(
-                    (
-                      parseFloat(data.dashboardAnalytics.hashrate || '') / 10e9
-                    ).toFixed(2)
-                  )} GH/s`
-                : `${parseFloat(
-                    data.dashboardAnalytics.medGasPrice || ''
-                  ).toFixed(2)} Gwei`,
-            fontSizeOfValue: block.fontSizeOfValue,
-            secondaryStat: block.secondaryStat,
-          }
-        })
-      let count = 1
-      const graphData: GraphData[] =
-        data.dashboardAnalytics?.transactionHistoryChart
-          .map((node) => {
-            const date = new Date()
-            date.setDate(date.getDate() - count)
-            const day = date.getDate()
-            const month = date.toLocaleString('en-us', { month: 'long' })
-            count += 1
-            return {
-              label: `${month} ${day}`,
-              value: node,
-            }
-          })
-          .reverse()
-      setSummaryBlocksDataPriceList(blocksList)
-      setSummaryBlocksDataTransactionsList(transactionsList)
-      setGraph(graphData)
+        mapRawDataToSummaryTransactions(dashboardAnalytics);
+
+      const graphData: GraphData[] = mapRawDataToGraphData(dashboardAnalytics);
+
+      setSummaryBlocksDataPriceList(blocksList);
+      setSummaryBlocksDataTransactionsList(transactionsList);
+      setGraph(graphData);
+      setLatestBlocksGroup(
+        dashboardAnalytics?.dashboard_analytics?.values?.[0]
+          ?.latest_blocks_group
+      );
     }
-  }, [data, getDashboardAnalytics])
+  }, [dashboardAnalytics, setLatestBlocksGroup]);
+
   return (
     <Container>
       <CardsBox>
@@ -180,7 +124,7 @@ const SummaryBlocks = () => {
         )}
       </GraphBox>
     </Container>
-  )
-}
+  );
+};
 
-export default SummaryBlocks
+export default SummaryBlocks;

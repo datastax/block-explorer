@@ -1,10 +1,10 @@
-import Chip from '@components/shared/Chip'
-import { Question, Watch } from '@components/shared/Icons'
-import { ListItemText, Tooltip } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import router from 'next/router'
-import React from 'react'
-import { BlockDetails } from 'types'
+import Chip from '@components/shared/Chip';
+import { Question, Watch } from '@components/shared/Icons';
+import { ListItemText, Tooltip } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import router from 'next/router';
+import React from 'react';
+import { BlockDetails } from 'types';
 import {
   CustomListItem,
   CustomListIcon,
@@ -18,43 +18,43 @@ import {
   ProgressDetail,
   Wrapper,
   SideBox,
-} from '../styles'
+} from '../styles';
 
 interface BlockDetailRowProps {
-  objectKey: string
-  data: BlockDetails
+  objectKey: string;
+  data: BlockDetails;
 }
 const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
   const getKeyName = () => {
     switch (objectKey) {
       case 'BlockHeight':
-        return 'Block Height:'
+        return 'Block Height:';
       case 'Timestamp':
-        return 'Timestamp:'
+        return 'Timestamp:';
       case 'Transactions':
-        return 'Transactions:'
+        return 'Transactions:';
       case 'MinedBy':
-        return 'Mined By:'
+        return 'Mined By:';
       case 'BlockReward':
-        return 'Block Reward:'
+        return 'Block Reward:';
       case 'UnclesReward':
-        return 'Uncles Reward:'
+        return 'Uncles Reward:';
       case 'Difficulty':
-        return 'Difficulty:'
+        return 'Difficulty:';
       case 'TotalDifficulty':
-        return 'Total Difficulty:'
+        return 'Total Difficulty:';
       case 'Size':
-        return 'Size:'
+        return 'Size:';
       case 'GasUsed':
-        return 'Gas Used:'
+        return 'Gas Used:';
       case 'GasLimit':
-        return 'Gas Limit:'
+        return 'Gas Limit:';
       case 'BaseFeePerGas':
-        return 'Base Fee Per Gas:'
+        return 'Base Fee Per Gas:';
       case 'BurntFees':
-        return 'Burnt Fees:'
+        return 'Burnt Fees:';
     }
-  }
+  };
 
   const getValueUI = () => {
     switch (objectKey) {
@@ -71,7 +71,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
           <Wrapper>
             <ListItemText primary={data[objectKey]} />
           </Wrapper>
-        ) : null
+        ) : null;
       case 'Timestamp':
         return (
           <Wrapper>
@@ -83,7 +83,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
               <TimeColor>{data[objectKey].Date}</TimeColor>
             </ListItemText>
           </Wrapper>
-        )
+        );
       case 'Transactions':
         return (
           <Wrapper>
@@ -94,16 +94,12 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
             >
               <div
                 onClick={() => {
-                  router.push(
-                    {
-                      pathname: '/transactions',
-                      query: {
-                        blockNumber: data['BlockHeight'],
-                        blockHash: data['Hash'],
-                      },
+                  router.push({
+                    pathname: '/transactions',
+                    query: {
+                      block: data['Hash'],
                     },
-                    `/transactions?blockNumber=${data['BlockHeight']}`
-                  )
+                  });
                 }}
               >
                 <Chip
@@ -134,7 +130,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
                       },
                     },
                     `/internal-transactions?blockNumber=${data['BlockHeight']}`
-                  )
+                  );
                 }}
               >
                 <Chip
@@ -150,7 +146,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
               <ListItemText primary={'in this block'} />
             </TransactionStyle>
           </Wrapper>
-        )
+        );
       case 'MinedBy':
         return (
           <Wrapper>
@@ -159,12 +155,12 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
             {data[objectKey].miner}
             <TimeColor>{data[objectKey].time}</TimeColor>
           </Wrapper>
-        )
+        );
       case 'GasUsed':
         return (
           <Wrapper>
             <GasLimitStyle>
-              {`${data[objectKey]} (${data['GasUsedPercetge'].toFixed(2)}%)`}
+              {`${data[objectKey]} (${data['GasUsedPercetge']?.toFixed(2)}%)`}
               <BorderLinearProgress
                 variant="determinate"
                 value={data['GasUsedPercetge']}
@@ -175,9 +171,9 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
               </ProgressDetail>
             </GasLimitStyle>
           </Wrapper>
-        )
+        );
     }
-  }
+  };
   return (
     <>
       {getValueUI() && (
@@ -195,7 +191,7 @@ const BlockDetailRow = ({ objectKey, data }: BlockDetailRowProps) => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default BlockDetailRow
+export default BlockDetailRow;

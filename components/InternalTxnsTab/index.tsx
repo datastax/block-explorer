@@ -1,11 +1,11 @@
-import { Typography } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import { InternalTxnTitle } from 'constants/stubs'
-import { InternalTxnsTabData } from 'types'
-import TxnsTable from './Table'
+import { Typography } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import { InternalTxnTitle } from 'constants/stubs';
+import { InternalTxnsTabData } from 'types';
+import TxnsTable from './Table';
 
 interface props {
-  data: InternalTxnsTabData[]
+  data: InternalTxnsTabData[];
 }
 
 const InternalTxns = ({ data }: props) => {
@@ -16,6 +16,6 @@ const InternalTxns = ({ data }: props) => {
       </Typography>
       <TxnsTable titles={InternalTxnTitle} Data={data} loading={false} />
     </>
-  )
-}
-export default InternalTxns
+  );
+};
+export default InternalTxns;
