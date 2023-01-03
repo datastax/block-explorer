@@ -1,4 +1,4 @@
-import { mediumBlogUrl } from '@constants'
+import { productPageUrl } from '@constants'
 import { Stack } from '@mui/material'
 import colors from '@styles/ThemeProvider/colors'
 import { Wrapper, Container, StyledTypography } from './styles'
@@ -13,7 +13,7 @@ const Footer = () => {
           </StyledTypography>
           <StyledTypography color={colors.neutral100}>
             🚀️ Powered By Astra -{' '}
-            <span onClick={() => window.open(mediumBlogUrl, '_blank')}>
+            <span onClick={() => window.open(productPageUrl, '_blank')}>
               See How It’s Done
             </span>
           </StyledTypography>
