@@ -1,7 +1,7 @@
-import { styled } from '@mui/system'
-import colors from '@styles/ThemeProvider/colors'
-import { Box, Typography } from '@mui/material'
-import theme from '@styles/ThemeProvider/theme'
+import { styled } from '@mui/system';
+import colors from '@styles/ThemeProvider/colors';
+import { Box, Typography } from '@mui/material';
+import theme from '@styles/ThemeProvider/theme';
 
 const TitleText = styled(Typography)({
   fontWeight: 600,
@@ -20,11 +20,11 @@ const TitleText = styled(Typography)({
   },
   lineHeight: '65.53px',
   color: colors.neutral100,
-})
+});
 
 const SearchContainer = styled(Box)({
   display: 'flex',
   marginTop: '32px',
-})
+});
 
-export { TitleText, SearchContainer }
+export { TitleText, SearchContainer };

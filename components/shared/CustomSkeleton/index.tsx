@@ -1,9 +1,9 @@
-import { Skeleton } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import React from 'react'
+import { Skeleton } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import React from 'react';
 
 interface CustomSkeletonProps {
-  rows: number
+  rows: number;
 }
 
 const CustomSkeleton = ({ rows }: CustomSkeletonProps) => {
@@ -18,7 +18,7 @@ const CustomSkeleton = ({ rows }: CustomSkeletonProps) => {
         />
       ))}
     </>
-  )
-}
+  );
+};
 
-export default CustomSkeleton
+export default CustomSkeleton;

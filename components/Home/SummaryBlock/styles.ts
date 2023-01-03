@@ -1,7 +1,7 @@
-import { styled } from '@mui/system'
-import { Card, Typography } from '@mui/material'
-import colors from 'styles/ThemeProvider/colors'
-import theme from '@styles/ThemeProvider/theme'
+import { styled } from '@mui/system';
+import { Card, Typography } from '@mui/material';
+import colors from 'styles/ThemeProvider/colors';
+import theme from '@styles/ThemeProvider/theme';
 
 const StyledCard = styled(Card)(() => ({
   padding: '32px 0px 32px 32px',
@@ -14,7 +14,7 @@ const StyledCard = styled(Card)(() => ({
   [theme.breakpoints.down('mdB')]: {
     padding: '32px 0px 32px 10px',
   },
-}))
+}));
 
 const StyledTypograph = styled(Typography)({
   color: colors.neutral100,
@@ -28,6 +28,6 @@ const StyledTypograph = styled(Typography)({
   [theme.breakpoints.down('mdB')]: {
     fontSize: '14px',
   },
-})
+});
 
-export { StyledCard, StyledTypograph }
+export { StyledCard, StyledTypograph };

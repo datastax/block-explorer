@@ -1,16 +1,16 @@
-import DecodedData from '@components/TransactionDetail/TransactionLogs/DecodedData'
-import { Maybe } from 'graphql/jsutils/Maybe'
-import { Scalars } from 'lib/graphql/generated'
-import React, { useState } from 'react'
-import { InputBox, CustomButton } from './styles'
+import DecodedData from '@components/TransactionDetail/TransactionLogs/DecodedData';
+import { Maybe } from 'graphql/jsutils/Maybe';
+import { Scalars } from 'lib/graphql/generated/generate';
+import React, { useState } from 'react';
+import { InputBox, CustomButton } from './styles';
 
 interface DataBoxProps {
-  decodedData: Maybe<Scalars['String']>
-  rawData: Maybe<Scalars['String']>
+  decodedData: Maybe<Scalars['String']>;
+  rawData: Maybe<Scalars['String']>;
 }
 
 const DataBox = ({ decodedData, rawData }: DataBoxProps) => {
-  const [isDecoded, setIsDecoded] = useState(false)
+  const [isDecoded, setIsDecoded] = useState(false);
   return (
     <InputBox>
       {isDecoded ? <DecodedData data={decodedData as string} /> : rawData}
@@ -23,7 +23,7 @@ const DataBox = ({ decodedData, rawData }: DataBoxProps) => {
         {isDecoded ? 'Hex' : 'Dec'}
       </CustomButton>
     </InputBox>
-  )
-}
+  );
+};
 
-export default DataBox
+export default DataBox;

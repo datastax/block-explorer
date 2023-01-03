@@ -1,8 +1,8 @@
-import CustomSkeleton from '@components/shared/CustomSkeleton'
-import { Table, TableHead, TableRow, TableBody, Box } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import React from 'react'
-import { InternalTxnsTabData } from 'types'
+import CustomSkeleton from '@components/shared/CustomSkeleton';
+import { Table, TableHead, TableRow, TableBody, Box } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import React from 'react';
+import { InternalTxnsTabData } from 'types';
 import {
   BlockTableContainer,
   CustomTableCell,
@@ -10,12 +10,12 @@ import {
   CustomTableCellHeder,
   CustomTableContainer,
   HeaderBox,
-} from './styles'
+} from './styles';
 
 interface TableProps {
-  titles: string[]
-  Data: InternalTxnsTabData[]
-  loading: boolean
+  titles: string[];
+  Data: InternalTxnsTabData[];
+  loading: boolean;
 }
 
 const TxnsTable = ({ titles, Data, loading }: TableProps) => {
@@ -88,7 +88,7 @@ const TxnsTable = ({ titles, Data, loading }: TableProps) => {
         )}
       </CustomTableContainer>
     </BlockTableContainer>
-  )
-}
+  );
+};
 
-export default TxnsTable
+export default TxnsTable;

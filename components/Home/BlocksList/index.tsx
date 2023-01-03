@@ -1,24 +1,24 @@
-import colors from 'styles/ThemeProvider/colors'
-import { Table, TableBody, TableRow, Typography } from '@mui/material'
-import Chip from '@components/shared/Chip'
+import colors from 'styles/ThemeProvider/colors';
+import { Table, TableBody, TableRow, Typography } from '@mui/material';
+import Chip from '@components/shared/Chip';
 import {
   ColumnBox,
   CustomTableCell,
   StyledCard,
   StyledButton,
   ChipWrapper,
-} from './styles'
-import { useRouter } from 'next/router'
-import { GetBlocksQuery } from 'lib/graphql/generated'
-import { fixed, formatAddress, getDifference } from '@utils'
+} from './styles';
+import { useRouter } from 'next/router';
+import { GetEthBlocksQuery } from 'lib/graphql/generated/generate';
+import { fixed, formatAddress, getDifference } from '@utils';
 
 interface BlockListProps {
-  title: string
-  blocks: GetBlocksQuery | undefined
+  title: string;
+  blocks: GetEthBlocksQuery | undefined;
 }
 
 const BlocksList = ({ title, blocks }: BlockListProps) => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <StyledCard>
       <Typography
@@ -32,7 +32,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
 
       <Table>
         <TableBody>
-          {blocks?.getBlocks?.blocks?.map((Block, index) => (
+          {blocks?.eth_blocks?.values?.map((Block, index) => (
             <TableRow
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               key={index}
@@ -46,7 +46,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                 <ColumnBox
                   flexValue="flex-start"
                   onClick={() => {
-                    router.push(`/block/${Block.number}`)
+                    router.push(`/block/${Block.number}`);
                   }}
                   style={{
                     cursor: 'pointer',
@@ -54,7 +54,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
                 >
                   {Block.number}
                   <strong>
-                    {getDifference(parseInt(Block.timestamp))} ago
+                    {getDifference(parseInt(Block?.timestamp || ''))} ago
                   </strong>
                 </ColumnBox>
               </CustomTableCell>
@@ -99,7 +99,7 @@ const BlocksList = ({ title, blocks }: BlockListProps) => {
         VIEW All BLOCKS
       </StyledButton>
     </StyledCard>
-  )
-}
+  );
+};
 
-export default BlocksList
+export default BlocksList;

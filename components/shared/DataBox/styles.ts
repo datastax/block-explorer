@@ -1,6 +1,6 @@
-import { Button, styled } from '@mui/material'
-import colors from '@styles/ThemeProvider/colors'
-import theme from '@styles/ThemeProvider/theme'
+import { Button, styled } from '@mui/material';
+import colors from '@styles/ThemeProvider/colors';
+import theme from '@styles/ThemeProvider/theme';
 
 const InputBox = styled('div')({
   border: `1px solid ${colors.neutral500}`,
@@ -18,7 +18,7 @@ const InputBox = styled('div')({
   alignItems: 'center',
   overflowX: 'scroll',
   transition: 'all 1s ease-in',
-})
+});
 
 const CustomButton = styled(Button)({
   display: 'flex',
@@ -28,6 +28,6 @@ const CustomButton = styled(Button)({
     background: colors.neutral300,
     color: colors.neutral100,
   },
-})
+});
 
-export { InputBox, CustomButton }
+export { InputBox, CustomButton };

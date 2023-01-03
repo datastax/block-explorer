@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import colors from 'styles/ThemeProvider/colors'
+import colors from 'styles/ThemeProvider/colors';
 import {
   CartesianGrid,
   AreaChart,
@@ -8,21 +8,21 @@ import {
   YAxis,
   ResponsiveContainer,
   Tooltip,
-} from 'recharts'
-import { Container } from './styles'
+} from 'recharts';
+import { Container } from './styles';
 export type ChartType = {
-  label: string
-  value: number
-}
+  label: string;
+  value: number;
+};
 
 type ChartProps = {
-  className?: string
-  data: ChartType[]
-  domain?: Array<number>
-  tooltip?: (payload: any) => JSX.Element
-  hideZero?: boolean
-  hideGradient?: boolean
-}
+  className?: string;
+  data: ChartType[];
+  domain?: Array<number>;
+  tooltip?: (payload: any) => JSX.Element;
+  hideZero?: boolean;
+  hideGradient?: boolean;
+};
 
 const Chart = ({
   data,
@@ -32,18 +32,18 @@ const Chart = ({
   tooltip,
 }: ChartProps) => {
   const CustomTooltip = (props: any) => {
-    const { active, payload } = props
+    const { active, payload } = props;
     return active && payload && payload.length && tooltip ? (
       <div>{tooltip(payload[0].payload)}</div>
-    ) : null
-  }
+    ) : null;
+  };
 
   const formatterYAxis = (value: number) => {
     if (hideZero && value === 0) {
-      return ''
+      return '';
     }
-    return `${(value / 1000).toFixed(0)}k`
-  }
+    return `${(value / 1000).toFixed(0)}k`;
+  };
 
   return (
     <Container>
@@ -108,7 +108,7 @@ const Chart = ({
         </AreaChart>
       </ResponsiveContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default Chart
+export default Chart;
