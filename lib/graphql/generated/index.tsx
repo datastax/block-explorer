@@ -275,12 +275,22 @@ export type TokenOutput = {
 
 export type TracesOutput = {
   __typename?: 'TracesOutput';
+  blockHash: Scalars['String'];
   blockNumber: Scalars['String'];
+  blockTimestamp: Scalars['String'];
+  callType?: Maybe<Scalars['String']>;
+  error?: Maybe<Scalars['String']>;
   from?: Maybe<Scalars['String']>;
   gasLimit?: Maybe<Scalars['Float']>;
+  gasUsed?: Maybe<Scalars['Float']>;
+  input?: Maybe<Scalars['String']>;
   intTransactionIndex: Scalars['Float'];
+  output?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Float']>;
+  subtraces?: Maybe<Scalars['Float']>;
   to?: Maybe<Scalars['String']>;
   transactionHash: Scalars['String'];
+  transactionIndex?: Maybe<Scalars['Float']>;
   typeTraceAddress: Scalars['String'];
   value?: Maybe<Scalars['Float']>;
 };

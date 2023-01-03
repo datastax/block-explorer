@@ -8,7 +8,8 @@
     "start": "yarn generate && next start",
     "lint": "next lint",
     "generate": "graphql-codegen --config codegen.yml",
-    "export": "next export"
+    "export": "next export",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",
@@ -28,6 +29,7 @@
     "jsonwebtoken": "^8.5.1",
     "material-ui-popup-state": "^3.1.1",
     "next": "12.1.6",
+    "next-sitemap": "^3.1.44",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "recharts": "^2.1.10"
