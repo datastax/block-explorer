@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { startingBlock, latestBlockNumber } = req?.body;
-  const endingBlock = Number(startingBlock) + 50000;
+  const endingBlock = Number(startingBlock) + 40000;
   const data = generateBlockNumberRoutes(
     startingBlock,
     endingBlock,
@@ -14,9 +14,3 @@ export default async function handler(
   );
   res.json({ data });
 }
-
-export const config = {
-  api: {
-    responseLimit: '20mb',
-  },
-};
