@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { startingBlock, latestBlockNumber } = req?.body;
-  const endingBlock = Number(startingBlock) + 40000;
+  const endingBlock = Number(startingBlock) + 25000;
   const data = generateBlockNumberRoutes(
     startingBlock,
     endingBlock,

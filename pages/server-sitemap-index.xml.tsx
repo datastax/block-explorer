@@ -8,7 +8,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const latestBlockNumber = await getLatestEthBlockNumber(blockGroup);
 
   const urlsList = [];
-  for (let index = 1; index <= latestBlockNumber; index += 40000) {
+  for (let index = 1; index <= latestBlockNumber; index += 25000) {
     urlsList.push(`${SITE_URL}/server-sitemaps/${index}.xml`);
   }
 
