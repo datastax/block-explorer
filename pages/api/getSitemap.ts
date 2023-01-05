@@ -14,3 +14,9 @@ export default async function handler(
   );
   res.json({ data });
 }
+
+export const config = {
+  api: {
+    responseLimit: false, // Determines how much data should be sent from the response body. It is automatically enabled and defaults to 4mb.
+  },
+};
