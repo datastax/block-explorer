@@ -1,7 +1,29 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ISitemapField } from 'next-sitemap';
 import { generateBlockNumberRoutes } from 'utils';
-import zlib from 'zlib';
+import Compression from 'compression';
+
+const compression = Compression({
+  threshold: 0,
+});
+
+function runMiddleware(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  fn: Function
+) {
+  return new Promise((resolve, reject) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    fn(req, res, (result: any) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,23 +31,12 @@ export default async function handler(
 ) {
   const { startingBlock, latestBlockNumber } = req?.body;
   const endingBlock = Number(startingBlock) + 30000;
-  let data: ISitemapField[] | unknown = generateBlockNumberRoutes(
+  const data: ISitemapField[] = generateBlockNumberRoutes(
     startingBlock,
     endingBlock,
     latestBlockNumber
   );
 
-  const bufferObject = Buffer.from(JSON.stringify(data));
-  const compressedData = await new Promise((resolve, reject) =>
-    zlib.gzip(bufferObject, function (err, zippedData) {
-      if (err) {
-        console.log('Error while generating gzip: ', err);
-        reject(undefined);
-      } else {
-        resolve(zippedData);
-      }
-    })
-  );
-  if (compressedData) data = compressedData;
+  await runMiddleware(req, res, compression);
   res.json({ data });
 }
