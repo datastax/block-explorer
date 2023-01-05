@@ -1,6 +1,6 @@
-import React from 'react'
-import Logo from '@components/shared/Logo'
-import { Box, useMediaQuery } from '@mui/material'
+import React, { useEffect, useState } from 'react';
+import Logo from '@components/shared/Logo';
+import { Box, useMediaQuery } from '@mui/material';
 import {
   Container,
   Wrapper,
@@ -9,57 +9,70 @@ import {
   SearchBox,
   LogoBox,
   CustomStack,
-} from './styles'
-import { ROUTES } from '@constants'
-import { Route } from '@types'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import Search from '@components/shared/Search'
-import Chip from '@components/shared/Chip'
-import colors from '@styles/ThemeProvider/colors'
-import theme from '@styles/ThemeProvider/theme'
-import {
-  GetDashboardHeaderQuery,
-  useGetDashboardHeaderQuery,
-} from 'lib/graphql/generated'
-import { fixed } from 'utils'
+} from './styles';
+import { ROUTES } from '@constants';
+import { Route } from '@types';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Search from '@components/shared/Search';
+import Chip from '@components/shared/Chip';
+import colors from '@styles/ThemeProvider/colors';
+import theme from '@styles/ThemeProvider/theme';
+import { Dashboard_Analytics_HeaderQuery } from 'lib/graphql/generated/generate';
+import { fixed, GET, handleError } from 'utils';
 
 interface ChiplabelProps {
-  data: GetDashboardHeaderQuery | undefined
+  data: Dashboard_Analytics_HeaderQuery | undefined;
 }
 const ChipLabel = ({ data }: ChiplabelProps) => {
   return (
     <>
       {data && (
         <StyledLabel>
-          Eth: ${fixed(data?.dashboardAnalytics?.etherPriceUSD, 2)}
+          Eth: $
+          {fixed(data?.dashboard_analytics?.values?.[0]?.ether_price_usd, 2)}
           <span>
             {' '}
-            ({fixed(data?.dashboardAnalytics?.pricePercentageChange, 2)}
+            (
+            {fixed(
+              data?.dashboard_analytics?.values?.[0]?.price_percentage_change,
+              2
+            )}
             %){' '}
           </span>
           <span>
             | ⛽️{' '}
-            {Number(data?.dashboardAnalytics?.networkBaseFee) +
-              Number(data?.dashboardAnalytics?.networkpriorityFee)}{' '}
+            {Number(data?.dashboard_analytics?.values?.[0]?.network_base_fee) +
+              Number(
+                data?.dashboard_analytics?.values?.[0]?.network_priority_fee
+              )}{' '}
             Gwei
           </span>
         </StyledLabel>
       )}
     </>
-  )
-}
+  );
+};
 
 const Header = () => {
-  const isMobile = useMediaQuery(theme.breakpoints.down('smA'))
-  const { pathname } = useRouter()
-  const isHome = pathname === '/'
+  const isMobile = useMediaQuery(theme.breakpoints.down('smA'));
+  const { pathname } = useRouter();
+  const isHome = pathname === '/';
 
-  const { data, error } = useGetDashboardHeaderQuery()
+  const [dashboardAnalytics, setDashboardAnalytics] =
+    useState<Dashboard_Analytics_HeaderQuery>();
 
-  if (error) {
-    console.error(error)
-  }
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await GET('getDashboardAnalyticsHeader');
+      setDashboardAnalytics(data);
+
+      if (error) {
+        handleError('getDashboardAnalyticsHeader', error);
+      }
+    })();
+  }, []);
+
   return (
     <Container>
       <Wrapper theme={theme} height="72px" isHome={isHome}>
@@ -80,7 +93,7 @@ const Header = () => {
             spacing={isMobile ? '20px' : '40px'}
             direction={'row'}
             theme={theme}
-            isHome={isHome}
+            $isHome={isHome}
           >
             {ROUTES.map(({ name, link }: Route, index) => (
               <Link passHref key={index} href={link}>
@@ -98,9 +111,9 @@ const Header = () => {
           padding="12px 44px 26px !important"
           marginTop="60px"
         >
-          {!isMobile && data ? (
+          {!isMobile && dashboardAnalytics ? (
             <Chip
-              label={<ChipLabel data={data} />}
+              label={<ChipLabel data={dashboardAnalytics} />}
               bgcolor={colors.neutral700}
               border={`1px solid ${colors.neutral300}`}
               titlecolor={colors.neutral100}
@@ -118,7 +131,7 @@ const Header = () => {
         </Wrapper>
       )}
     </Container>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

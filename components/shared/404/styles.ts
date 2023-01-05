@@ -1,5 +1,5 @@
-import { styled } from '@mui/system'
-import { Box } from '@mui/material'
+import { styled } from '@mui/system';
+import { Box } from '@mui/material';
 
 const Container = styled(Box)({
   color: 'white',
@@ -7,5 +7,5 @@ const Container = styled(Box)({
   justifyContent: 'center',
   alignItems: 'center',
   height: '68vh',
-})
-export { Container }
+});
+export { Container };

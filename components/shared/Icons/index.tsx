@@ -1,4 +1,4 @@
-import colors from '@styles/ThemeProvider/colors'
+import colors from '@styles/ThemeProvider/colors';
 const Ether = () => {
   return (
     <svg
@@ -13,8 +13,8 @@ const Ether = () => {
         fill="#AB92FF"
       />
     </svg>
-  )
-}
+  );
+};
 
 const Options = () => {
   return (
@@ -38,8 +38,8 @@ const Options = () => {
         fill="white"
       />
     </svg>
-  )
-}
+  );
+};
 
 const TransactionLogo = () => {
   return (
@@ -59,8 +59,8 @@ const TransactionLogo = () => {
       <path d="M12 8H6V10H12V8Z" fill="#AB92FF" />
       <path d="M15 8H13V10H15V8Z" fill="#AB92FF" />
     </svg>
-  )
-}
+  );
+};
 
 const MarketCap = () => {
   return (
@@ -76,8 +76,8 @@ const MarketCap = () => {
         fill="#AB92FF"
       />
     </svg>
-  )
-}
+  );
+};
 
 const Difficuilty = () => {
   return (
@@ -93,8 +93,8 @@ const Difficuilty = () => {
         fill="#AB92FF"
       />
     </svg>
-  )
-}
+  );
+};
 
 const ArrowDown = () => {
   return (
@@ -110,8 +110,8 @@ const ArrowDown = () => {
         fill="white"
       />
     </svg>
-  )
-}
+  );
+};
 const Question = () => {
   return (
     <svg
@@ -126,8 +126,8 @@ const Question = () => {
         fill={colors.neutral500}
       />
     </svg>
-  )
-}
+  );
+};
 const Watch = () => {
   return (
     <svg
@@ -142,8 +142,8 @@ const Watch = () => {
         fill={colors.neutral300}
       />
     </svg>
-  )
-}
+  );
+};
 const Diamond = () => {
   return (
     <svg
@@ -158,8 +158,8 @@ const Diamond = () => {
         fill="#6D6F71"
       />
     </svg>
-  )
-}
+  );
+};
 const Paper = () => {
   return (
     <svg
@@ -174,8 +174,8 @@ const Paper = () => {
         fill="#6D6F71"
       />
     </svg>
-  )
-}
+  );
+};
 const User = () => {
   return (
     <svg
@@ -190,8 +190,8 @@ const User = () => {
         fill="#6D6F71"
       />
     </svg>
-  )
-}
+  );
+};
 
 const Eye = () => {
   return (
@@ -207,8 +207,8 @@ const Eye = () => {
         fill="#A2A2A3"
       />
     </svg>
-  )
-}
+  );
+};
 
 const Exchange = () => {
   return (
@@ -224,8 +224,8 @@ const Exchange = () => {
         fill="#6D6F71"
       />
     </svg>
-  )
-}
+  );
+};
 
 const Bulb = () => {
   return (
@@ -241,8 +241,8 @@ const Bulb = () => {
         fill={colors.neutral500}
       />
     </svg>
-  )
-}
+  );
+};
 
 const Tick = () => {
   return (
@@ -260,8 +260,8 @@ const Tick = () => {
         fill="#05D8C3"
       />
     </svg>
-  )
-}
+  );
+};
 const TickInButton = () => {
   return (
     <svg
@@ -278,8 +278,8 @@ const TickInButton = () => {
         fill="#05D8C3"
       />
     </svg>
-  )
-}
+  );
+};
 const CopyAll = () => {
   return (
     <svg
@@ -294,8 +294,8 @@ const CopyAll = () => {
         fill="white"
       />
     </svg>
-  )
-}
+  );
+};
 const StopWatch = () => {
   return (
     <svg
@@ -310,8 +310,8 @@ const StopWatch = () => {
         fill="#6D6F71"
       />
     </svg>
-  )
-}
+  );
+};
 
 export {
   ArrowDown,
@@ -332,4 +332,4 @@ export {
   Difficuilty,
   Eye,
   Exchange,
-}
+};

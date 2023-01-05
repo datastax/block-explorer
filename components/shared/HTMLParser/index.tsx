@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
-import ReactHtmlParser, { HTMLReactParserOptions } from 'html-react-parser'
-import { ColouredText } from '@components/TransactionDetail/TransactionLogs/styles'
+import React from 'react';
+import ReactHtmlParser, { HTMLReactParserOptions } from 'html-react-parser';
+import { ColouredText } from '@components/TransactionDetail/TransactionLogs/styles';
 
 interface HTMLParserProps {
-  rawString: string
+  rawString: string;
 }
 
 const HTMLParser = ({ rawString }: HTMLParserProps): JSX.Element => {
@@ -15,11 +15,11 @@ const HTMLParser = ({ rawString }: HTMLParserProps): JSX.Element => {
           <ColouredText color={`${domNode?.attribs?.color.replace('{', '')}`}>
             {domNode?.children[0]?.data}
           </ColouredText>
-        )
+        );
       }
     },
-  }
-  return ReactHtmlParser(rawString, parserOptions) as JSX.Element
-}
+  };
+  return ReactHtmlParser(rawString, parserOptions) as JSX.Element;
+};
 
-export default HTMLParser
+export default HTMLParser;

@@ -1,5 +1,5 @@
-import { Chip, styled } from '@mui/material'
-import { ChipProps } from 'types'
+import { Chip, styled } from '@mui/material';
+import { ChipProps } from 'types';
 
 const CustomChip = styled(Chip)(
   ({ bgcolor, border, titlecolor, icon, cursor }: ChipProps) => ({
@@ -12,6 +12,6 @@ const CustomChip = styled(Chip)(
     },
     cursor: cursor,
   })
-)
+);
 
-export { CustomChip }
+export { CustomChip };

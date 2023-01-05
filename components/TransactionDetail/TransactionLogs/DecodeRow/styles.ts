@@ -1,5 +1,5 @@
-import colors from '@styles/ThemeProvider/colors'
-import { Select, styled } from '@mui/material'
+import colors from '@styles/ThemeProvider/colors';
+import { Select, styled } from '@mui/material';
 
 const CustomSelect = styled(Select)({
   color: colors.actionPrimary,
@@ -9,6 +9,6 @@ const CustomSelect = styled(Select)({
   border: `1px solid ${colors.neutral100}`,
   padding: '5px',
   '& svg': { fill: colors.neutral100, marginLeft: '10px' },
-})
+});
 
-export { CustomSelect }
+export { CustomSelect };

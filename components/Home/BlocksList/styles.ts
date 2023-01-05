@@ -1,11 +1,11 @@
-import { styled } from '@mui/system'
-import colors from '@styles/ThemeProvider/colors'
-import { Box, Button, Card, TableCell } from '@mui/material'
-import { CustomTableProps } from 'types'
-import theme from '@styles/ThemeProvider/theme'
+import { styled } from '@mui/system';
+import colors from '@styles/ThemeProvider/colors';
+import { Box, Button, Card, TableCell } from '@mui/material';
+import { CustomTableProps } from 'types';
+import theme from '@styles/ThemeProvider/theme';
 
 interface columnBoxProps {
-  flexValue: string
+  flexValue: string;
 }
 
 const StyledCard = styled(Card)({
@@ -21,7 +21,7 @@ const StyledCard = styled(Card)({
   [theme.breakpoints.down('lg')]: {
     padding: '15px',
   },
-})
+});
 
 const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
   color: props.color,
@@ -41,7 +41,7 @@ const CustomTableCell = styled(TableCell)((props: CustomTableProps) => ({
   span: {
     color: colors.neutral100,
   },
-}))
+}));
 
 const ColumnBox = styled(Box)((props: columnBoxProps) => ({
   display: 'flex',
@@ -51,7 +51,7 @@ const ColumnBox = styled(Box)((props: columnBoxProps) => ({
   [theme.breakpoints.down('lg')]: {
     minWidth: 'auto',
   },
-}))
+}));
 
 const StyledButton = styled(Button)({
   width: '100%',
@@ -65,12 +65,12 @@ const StyledButton = styled(Button)({
   '&:hover': {
     backgroundColor: colors.actionSecondaryHover,
   },
-})
+});
 
 const ChipWrapper = styled('div')({
   display: 'flex',
   width: '100%',
   justifyContent: 'flex-end',
-})
+});
 
-export { StyledCard, CustomTableCell, ColumnBox, StyledButton, ChipWrapper }
+export { StyledCard, CustomTableCell, ColumnBox, StyledButton, ChipWrapper };

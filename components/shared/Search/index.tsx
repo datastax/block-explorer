@@ -1,55 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import SearchIcon from '@mui/icons-material/Search'
-import { SearchButton, SearchInput, Wrapper, CustomFilter } from './styles'
-import { Box, FormControl, MenuItem, SelectChangeEvent } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useSearchRawLazyQuery } from 'lib/graphql/generated'
-import router from 'next/router'
-import { searchPlaceHolders } from '@constants'
+import React, { useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import { SearchButton, SearchInput, Wrapper, CustomFilter } from './styles';
+import { Box, FormControl, MenuItem, SelectChangeEvent } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import router from 'next/router';
+import { searchPlaceHolders } from '@constants';
+import { isNumber } from 'utils';
+
 const Search = () => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const [filter, setFilter] = useState<unknown>(0)
-  const [search, setSearch] = useState('')
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [filter, setFilter] = useState<unknown>(0);
+  const [search, setSearch] = useState('');
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    setFilter(event.target.value)
-  }
-
-  const [getSearchRaw, { data, loading, error }] = useSearchRawLazyQuery()
-
-  if (error) {
-    console.error('Error Getting Search Results :>> ', error?.message)
-  }
+    setFilter(event.target.value);
+  };
 
   const handleClick = () => {
-    if (search)
-      getSearchRaw({
-        variables: {
-          data: search,
-        },
-      })
-  }
-
-  useEffect(() => {
-    if (data?.searchRaw.block?.number) {
-      router.push(`/block/${data?.searchRaw.block?.number}`)
-    } else if (data?.searchRaw.transaction?.hash) {
-      router.push(`/transaction/${data?.searchRaw.transaction?.hash}`)
-    } else if (
-      data &&
-      (!data?.searchRaw.transaction?.hash || !data?.searchRaw.block?.number)
-    ) {
-      router.push(`/404`)
+    if (search) {
+      if (isNumber(search)) router.push(`/block/${search}`);
+      else router.push(`/transaction/${search}`);
     }
-  }, [data])
+  };
 
   return (
     <Wrapper
       onSubmit={(e) => {
-        e.preventDefault()
-        handleClick()
+        e.preventDefault();
+        handleClick();
       }}
     >
       {!isMobile ? (
@@ -80,11 +60,11 @@ const Search = () => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <SearchButton type="submit" disabled={loading} onClick={handleClick}>
+      <SearchButton type="submit" onClick={handleClick}>
         <SearchIcon />
       </SearchButton>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
