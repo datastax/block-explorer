@@ -8,7 +8,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { startingBlock, latestBlockNumber } = req?.body;
-  const endingBlock = Number(startingBlock) + 50000;
+  const endingBlock = Number(startingBlock) + 30000;
   let data: ISitemapField[] | unknown = generateBlockNumberRoutes(
     startingBlock,
     endingBlock,
