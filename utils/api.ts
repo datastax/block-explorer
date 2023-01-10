@@ -5,6 +5,7 @@ import { Query } from 'lib/graphql/generated/generate';
 import {
   GET_LATEST_ETH_BLOCK,
   GET_LATEST_BLOCKS_GROUP,
+  GET_TRANSACTIONS_BY_DATE,
 } from 'lib/graphql/queries';
 import { AxiosApiResponse } from 'types';
 import { handleError } from 'utils';
@@ -111,6 +112,42 @@ const getLatestBlockGroup = async () => {
   return blockGroup;
 };
 
+const getTransactionsList = async (
+  date: string,
+  pageSize: number,
+  blockNumber?: number
+) => {
+  const { data: transactionsList, error } = await client.query<Query>({
+    query: gql`
+      ${GET_TRANSACTIONS_BY_DATE}
+    `,
+    variables: {
+      filter: {
+        date: {
+          eq: date,
+        },
+        ...(blockNumber && {
+          block_number: {
+            lt: blockNumber,
+          },
+        }),
+      },
+      options: {
+        pageSize,
+      },
+    },
+  });
+  if (error) {
+    console.log(
+      `Error while fetching transactions list where blockNumber: ${blockNumber} `,
+      error
+    );
+  }
+
+  const list = transactionsList?.transactions_by_date?.values;
+  return list || [];
+};
+
 export {
   GET,
   POST,
@@ -119,4 +156,5 @@ export {
   getPreviousBlockHash,
   getLatestBlockGroup,
   getLatestEthBlockNumber,
+  getTransactionsList,
 };

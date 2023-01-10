@@ -276,3 +276,15 @@ query dashboard_analytics_header($filter: dashboard_analyticsFilterInput) {
     }
   }
 }
+
+query getTransactionsByDate(
+  $filter: transactions_by_dateFilterInput
+  $options: QueryOptions
+) {
+  transactions_by_date(filter: $filter, options: $options) {
+    values {
+      hash
+      block_number
+    }
+  }
+}
