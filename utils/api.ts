@@ -1,4 +1,11 @@
+import { gql } from '@apollo/client';
 import axios from 'axios';
+import client from 'lib/graphql/apolloClient';
+import { Query } from 'lib/graphql/generated/generate';
+import {
+  GET_LATEST_ETH_BLOCK,
+  GET_LATEST_BLOCKS_GROUP,
+} from 'lib/graphql/queries';
 import { AxiosApiResponse } from 'types';
 import { handleError } from 'utils';
 
@@ -68,4 +75,48 @@ const getTransactions = async (blockHash: string, pageSize: number) => {
   else return null;
 };
 
-export { GET, POST, getTransactions, getNextBlockHash, getPreviousBlockHash };
+const getLatestEthBlockNumber = async (blockGroup: number) => {
+  const { data: latestBlocksResponse } = await client.query<Query>({
+    query: gql`
+      ${GET_LATEST_ETH_BLOCK}
+    `,
+    variables: {
+      filter: {
+        blocks_group: {
+          eq: blockGroup,
+        },
+      },
+      options: {
+        pageState: null,
+        pageSize: 1,
+      },
+    },
+  });
+
+  const latestBlockNumber =
+    latestBlocksResponse?.eth_blocks?.values?.[0]?.number;
+  return latestBlockNumber;
+};
+
+const getLatestBlockGroup = async () => {
+  const { data: latestBlockGroupResponse } = await client.query<Query>({
+    query: gql`
+      ${GET_LATEST_BLOCKS_GROUP}
+    `,
+  });
+
+  const blockGroup =
+    latestBlockGroupResponse?.dashboard_analytics?.values?.[0]
+      ?.latest_blocks_group;
+  return blockGroup;
+};
+
+export {
+  GET,
+  POST,
+  getTransactions,
+  getNextBlockHash,
+  getPreviousBlockHash,
+  getLatestBlockGroup,
+  getLatestEthBlockNumber,
+};

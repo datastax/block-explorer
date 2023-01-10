@@ -527,3 +527,4 @@ export {
 };
 export { default as createEmotionCache } from './createEmotionCache';
 export * from './api';
+export * from './sitemapUtils';

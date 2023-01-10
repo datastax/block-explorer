@@ -9,6 +9,7 @@
     "lint": "next lint",
     "generate": "graphql-codegen --config codegen.yml",
     "export": "next export",
+    "postbuild": "next-sitemap",
     "format:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
@@ -25,16 +26,19 @@
     "@mui/icons-material": "^5.8.0",
     "@mui/material": "^5.8.1",
     "axios": "^1.2.1",
+    "compression": "^1.7.4",
     "graphql": "^16.5.0",
     "html-react-parser": "^3.0.4",
     "jsonwebtoken": "^8.5.1",
     "material-ui-popup-state": "^3.1.1",
     "next": "12.1.6",
+    "next-sitemap": "^3.1.44",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "recharts": "^2.1.10"
   },
   "devDependencies": {
+    "@types/compression": "^1.7.2",
     "@types/node": "17.0.35",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.5",
