@@ -1,6 +1,6 @@
 import { getServerSideSitemapIndex } from 'next-sitemap';
 import { GetServerSidePropsContext } from 'next';
-import { SITE_URL } from '@constants';
+import { SITEMAP_SIZE, SITE_URL } from '@constants';
 import { getLatestBlockGroup, getLatestEthBlockNumber } from 'utils';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -8,7 +8,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const latestBlockNumber = await getLatestEthBlockNumber(blockGroup);
 
   const urlsList = [];
-  for (let index = 1; index <= latestBlockNumber; index += 30000) {
+  for (let index = 1; index <= latestBlockNumber; index += SITEMAP_SIZE) {
     urlsList.push(`${SITE_URL}/server-sitemaps/blocks/${index}.xml`);
   }
 
