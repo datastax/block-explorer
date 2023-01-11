@@ -15,7 +15,9 @@ export async function getServerSideProps({ res, req, query }: NextPageContext) {
     {
       date: queryDetails?.[0],
       size: SITEMAP_SIZE,
-      blockNumber: queryDetails?.[1] ? Number(queryDetails?.[1]) : undefined,
+      blockNumber: queryDetails?.[1]
+        ? Number(queryDetails?.[1]?.slice(0, -4))
+        : undefined,
     }
   );
 

@@ -1,31 +1,31 @@
 import { getServerSideSitemapIndex } from 'next-sitemap';
 import { GetServerSidePropsContext } from 'next';
-import { SITEMAP_SIZE, SITE_URL } from '@constants';
-import { getTransactionsList } from 'utils';
+import { SITE_URL } from '@constants';
+import { getPassedSecondsToday, getTransactionsList } from 'utils';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const DATE = '2023-01-09';
+  const startDate = new Date().toISOString().slice(0, 10);
   const urlsList: string[] = [
-    `${SITE_URL}/server-sitemaps/transactions/${DATE}*0.xml`,
+    `${SITE_URL}/server-sitemaps/transactions/${startDate}*0.xml`,
   ];
-  let lastBlockNumber: number;
 
-  let transactionsList = await getTransactionsList(DATE, SITEMAP_SIZE);
-
-  lastBlockNumber =
-    transactionsList[transactionsList?.length - 1]?.block_number;
-
-  while (transactionsList?.length === SITEMAP_SIZE) {
-    const newTransactionsList = await getTransactionsList(
-      DATE,
-      SITEMAP_SIZE,
-      lastBlockNumber
-    );
-    lastBlockNumber =
-      newTransactionsList[newTransactionsList?.length - 1]?.block_number;
-    const url = `${SITE_URL}/server-sitemaps/transactions/${DATE}*${lastBlockNumber}.xml`;
-    transactionsList = newTransactionsList;
-    urlsList.push(url);
+  for (let day = 0; day < 5; day++) {
+    const startDate = new Date().toISOString().slice(0, 10);
+    const previousDate = new Date(startDate);
+    previousDate.setDate(new Date(startDate).getDate() - day);
+    const date = previousDate.toISOString().slice(0, 10);
+    const transactionsList = await getTransactionsList(date, 1);
+    const timeStamp = transactionsList[0]?.block_timestamp;
+    const latestBlockNumber = transactionsList[0]?.block_number;
+    const currentDayBlocks = getPassedSecondsToday(String(timeStamp));
+    for (
+      let index = latestBlockNumber;
+      index > latestBlockNumber - currentDayBlocks;
+      index = index - 150
+    ) {
+      const url = `${SITE_URL}/server-sitemaps/transactions/${date}*${index}.xml`;
+      urlsList.push(url);
+    }
   }
 
   return getServerSideSitemapIndex(context, urlsList);

@@ -302,6 +302,7 @@ query getTransactionsByDate($filter:transactions_by_dateFilterInput, $options:Qu
     values {
       hash
       block_number
+      block_timestamp
     }
   }
 }`;

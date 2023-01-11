@@ -126,11 +126,13 @@ const getTransactionsList = async (
         date: {
           eq: date,
         },
-        ...(blockNumber && {
-          block_number: {
-            lt: blockNumber,
-          },
-        }),
+        ...(blockNumber &&
+          pageSize !== 1 && {
+            block_number: {
+              lt: blockNumber,
+              gt: blockNumber - 150,
+            },
+          }),
       },
       options: {
         pageSize,

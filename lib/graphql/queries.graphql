@@ -285,6 +285,7 @@ query getTransactionsByDate(
     values {
       hash
       block_number
+      block_timestamp
     }
   }
 }
