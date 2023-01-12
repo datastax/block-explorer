@@ -1,6 +1,6 @@
 overwrite: true
 schema:
-  - https://17517945-533c-4cc6-9510-a037786a7233-us-east-2.apps.astra.datastax.com/api/graphql/polygon:
+  - https://0a52dae4-8afe-4220-a1fa-eedf661a161e-us-west-2.apps.astra.datastax.com/api/graphql/ethereum:
       headers:
         x-cassandra-token: AstraCS:soPLjParGIPWFspQzlGoSIiP:8091429af710c011116d3fe3215aabcdf24acf13c3389fcdb680167b7c2f4b5b
 documents: './lib/graphql/*.graphql'
