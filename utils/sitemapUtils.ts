@@ -29,4 +29,21 @@ const createSitemap = (urlList: ISitemapField[]) =>
     ${urlList.map((url) => toUrl(url)).join('')}
     </urlset>`;
 
-export { generateBlockNumberRoutes, createSitemap };
+const generateTransactionsHashRoutes = (
+  transactionsList: Array<{ hash: string; block_number: string }>
+) => {
+  const transactionsHashRoutes: ISitemapField[] = [];
+  transactionsList.map((transaction) => {
+    transactionsHashRoutes.push({
+      loc: `${SITE_URL}/transaction/${transaction?.hash}`,
+      lastmod: new Date().toISOString(),
+    });
+  });
+  return transactionsHashRoutes;
+};
+
+export {
+  generateBlockNumberRoutes,
+  createSitemap,
+  generateTransactionsHashRoutes,
+};
