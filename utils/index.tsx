@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import colors from '@styles/ThemeProvider/colors';
 import {
   Dashboard_AnalyticsQuery,
@@ -497,6 +498,19 @@ const combineTransactions = (
   };
 };
 
+const getPassedSecondsToday = (timestampHex: string) => {
+  const timeStamp = parseInt(timestampHex);
+  const date: any = new Date(timeStamp * 1000);
+  const today: any = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+  const secondsPassed = (date - today) / 1000;
+  const currentDayBlocks = Math.floor(secondsPassed / 12);
+  return currentDayBlocks;
+};
+
 export {
   formatAddress,
   getDifference,
@@ -524,6 +538,7 @@ export {
   mapRawDataToSummaryTransactions,
   mapRawDataToGraphData,
   combineTransactions,
+  getPassedSecondsToday,
 };
 export { default as createEmotionCache } from './createEmotionCache';
 export * from './api';

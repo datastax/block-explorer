@@ -7,4 +7,5 @@ Host: https://eth-explorer.datastax.com
 
 # Sitemaps
 Sitemap: https://eth-explorer.datastax.com/sitemap.xml
-Sitemap: https://eth-explorer.datastax.com/server-sitemap-index.xml
+Sitemap: https://eth-explorer.datastax.com/blocks-sitemap-index.xml
+Sitemap: https://eth-explorer.datastax.com/transactions-sitemap-index.xml

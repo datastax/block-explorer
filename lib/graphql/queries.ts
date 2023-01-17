@@ -293,6 +293,20 @@ query getLatestEthBlock(
   }
 }`;
 
+const GET_TRANSACTIONS_BY_DATE = `
+query getTransactionsByDate($filter:transactions_by_dateFilterInput, $options:QueryOptions){
+  transactions_by_date(
+    filter: $filter 
+    options: $options
+  ) {
+    values {
+      hash
+      block_number
+      block_timestamp
+    }
+  }
+}`;
+
 export {
   Get_PAGINATED_BLOCKS_QUERY,
   GET_LATEST_BLOCKS_GROUP,
@@ -309,4 +323,5 @@ export {
   GET_INTERNAL_TRANSACTIONS_OF_TRANSACTION,
   GET_DASHBOARD_ANALYTICS_HEADER,
   GET_LATEST_ETH_BLOCK,
+  GET_TRANSACTIONS_BY_DATE,
 };

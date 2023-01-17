@@ -9,7 +9,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const urlsList = [];
   for (let index = 1; index <= latestBlockNumber; index += SITEMAP_SIZE) {
-    urlsList.push(`${SITE_URL}/server-sitemaps/${index}.xml`);
+    urlsList.push(`${SITE_URL}/server-sitemaps/blocks/${index}.xml`);
   }
 
   return getServerSideSitemapIndex(context, urlsList);

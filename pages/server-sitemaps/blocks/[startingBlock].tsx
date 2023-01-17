@@ -14,7 +14,7 @@ export async function getServerSideProps({ res, req, query }: NextPageContext) {
   const latestBlockGroup = await getLatestBlockGroup();
   const latestBlockNumber = await getLatestEthBlockNumber(latestBlockGroup);
   const response = await axios.post<AxiosApiResponse>(
-    `${isLocalhost ? 'http' : 'https'}://${host}/api/getSitemap`,
+    `${isLocalhost ? 'http' : 'https'}://${host}/api/getBlocksSitemap`,
     {
       startingBlock: Number(startingBlock?.slice(0, -4)),
       latestBlockNumber,

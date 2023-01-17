@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ISitemapField } from 'next-sitemap';
-import { generateBlockNumberRoutes } from 'utils';
+import { generateTransactionsHashRoutes, getTransactionsList } from 'utils';
 import Compression from 'compression';
 
 const compression = Compression({
@@ -29,12 +28,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { startingBlock, latestBlockNumber } = req?.body;
-  const endingBlock = Number(startingBlock) + 30000;
-  const data: ISitemapField[] = generateBlockNumberRoutes(
-    startingBlock,
-    endingBlock,
-    latestBlockNumber
+  const { date, size, blockNumber } = req?.body;
+  const transactions = await getTransactionsList(date, size, blockNumber);
+  const data = generateTransactionsHashRoutes(
+    transactions as Array<{ hash: string; block_number: string }>
   );
 
   await runMiddleware(req, res, compression);

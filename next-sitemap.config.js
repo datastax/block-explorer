@@ -3,8 +3,16 @@ const siteUrl = 'https://eth-explorer.datastax.com';
 module.exports = {
   siteUrl,
   generateRobotsTxt: true,
-  exclude: ['/server-sitemap-index.xml', '/server-sitemaps/*tsx'],
+  exclude: [
+    '/blocks-sitemap-index.xml',
+    '/transactions-sitemap-index.xml',
+    '/server-sitemaps/blocks/*tsx',
+    '/server-sitemaps/transactions/*tsx',
+  ],
   robotsTxtOptions: {
-    additionalSitemaps: [`${siteUrl}/server-sitemap-index.xml`],
+    additionalSitemaps: [
+      `${siteUrl}/blocks-sitemap-index.xml`,
+      `${siteUrl}/transactions-sitemap-index.xml`,
+    ],
   },
 };
