@@ -1,5 +1,5 @@
 {
-	"name": "NFT Explorer",
+	"name": "Blockchain Explorer",
 	"description": "Built using React and Next JS, Block Explorer gives the user real-time view of the latest blocks and ETH transactions.",
 	"duration": "30 minutes",
 	"skillLevel": "Beginner",
