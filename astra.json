@@ -1,0 +1,17 @@
+{
+	"name": "NFT Explorer",
+	"description": "Built using React and Next JS, Block Explorer gives the user real-time view of the latest blocks and ETH transactions.",
+	"duration": "30 minutes",
+	"skillLevel": "Beginner",
+	"githubUrl": "https://github.com/datastax/block-explorer",
+	"tags": [{
+		"name": "javascript"
+	}, {
+		"name": "Web3"
+	}, {
+		"name": "NextJS"
+	}],
+	"category": "apps",
+	"priority": 3,
+	"heroImage": "https://github.com/datastax/block-explorer/blob/master/hero.png"
+}
