@@ -9,3 +9,4 @@ Create a real-time Ethereum block explorer in minutes with this repo and Astra B
 5. Set `API_ACCESS_TOKEN` to your Astra token
 6. Install dependencies: `yarn install`
 7. Start the app with `yarn start`
+
