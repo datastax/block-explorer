@@ -10,3 +10,5 @@ Create a real-time Ethereum block explorer in minutes with this repo and Astra B
 6. Install dependencies: `yarn install`
 7. Start the app with `yarn start`
 
+## Deployment
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdatastax%2Fblock-explorer&env=API_ACCESS_TOKEN,NEXT_PUBLIC_GRAPHQL_ENDPOINT&envDescription=Astra%20API%20keys%20needed%20for%20the%20application&project-name=Astra%20Block%20Explorer)
