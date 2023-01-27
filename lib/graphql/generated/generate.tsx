@@ -128,6 +128,16 @@ export type IntFilterInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   /**
+   * Bulk insert mutations for the table 'assets'.
+   * Note that 'address', 'token_address', 'token_id', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  bulkInsertassets?: Maybe<Array<Maybe<AssetsMutationResult>>>;
+  /**
+   * Bulk insert mutations for the table 'block_numbers_by_date'.
+   * Note that 'date' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  bulkInsertblock_numbers_by_date?: Maybe<Array<Maybe<Block_Numbers_By_DateMutationResult>>>;
+  /**
    * Bulk insert mutations for the table 'contract_abis'.
    * Note that 'contract_address' is the field that corresponds to the table primary key.
    */
@@ -158,6 +168,11 @@ export type Mutation = {
    */
   bulkInsertlogs?: Maybe<Array<Maybe<LogsMutationResult>>>;
   /**
+   * Bulk insert mutations for the table 'logs_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  bulkInsertlogs_by_date?: Maybe<Array<Maybe<Logs_By_DateMutationResult>>>;
+  /**
    * Bulk insert mutations for the table 'nfts'.
    * Note that 'contract_address' and 'token_id' are the fields that correspond to the table primary key.
    */
@@ -173,6 +188,11 @@ export type Mutation = {
    */
   bulkInserttoken_transfers?: Maybe<Array<Maybe<Token_TransfersMutationResult>>>;
   /**
+   * Bulk insert mutations for the table 'token_transfers_by_token_address'.
+   * Note that 'token_address', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  bulkInserttoken_transfers_by_token_address?: Maybe<Array<Maybe<Token_Transfers_By_Token_AddressMutationResult>>>;
+  /**
    * Bulk insert mutations for the table 'tokens'.
    * Note that 'address' and 'block_number' are the fields that correspond to the table primary key.
    */
@@ -183,10 +203,20 @@ export type Mutation = {
    */
   bulkInserttraces?: Maybe<Array<Maybe<TracesMutationResult>>>;
   /**
+   * Bulk insert mutations for the table 'traces_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'internal_transaction_index' are the fields that correspond to the table primary key.
+   */
+  bulkInserttraces_by_date?: Maybe<Array<Maybe<Traces_By_DateMutationResult>>>;
+  /**
    * Bulk insert mutations for the table 'transactions'.
    * Note that 'block_hash', 'transaction_index' and 'hash' are the fields that correspond to the table primary key.
    */
   bulkInserttransactions?: Maybe<Array<Maybe<TransactionsMutationResult>>>;
+  /**
+   * Bulk insert mutations for the table 'transactions_by_address'.
+   * Note that 'from_address', 'block_number', 'hash' and 'transaction_index' are the fields that correspond to the table primary key.
+   */
+  bulkInserttransactions_by_address?: Maybe<Array<Maybe<Transactions_By_AddressMutationResult>>>;
   /**
    * Bulk insert mutations for the table 'transactions_by_date'.
    * Note that 'date', 'block_number' and 'hash' are the fields that correspond to the table primary key.
@@ -197,6 +227,16 @@ export type Mutation = {
    * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
    */
   bulkInserttransactions_by_hash?: Maybe<Array<Maybe<Transactions_By_HashMutationResult>>>;
+  /**
+   * Delete mutation for the table 'assets'.
+   * Note that 'address', 'token_address', 'token_id', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  deleteassets?: Maybe<AssetsMutationResult>;
+  /**
+   * Delete mutation for the table 'block_numbers_by_date'.
+   * Note that 'date' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  deleteblock_numbers_by_date?: Maybe<Block_Numbers_By_DateMutationResult>;
   /**
    * Delete mutation for the table 'contract_abis'.
    * Note that 'contract_address' is the field that corresponds to the table primary key.
@@ -228,6 +268,11 @@ export type Mutation = {
    */
   deletelogs?: Maybe<LogsMutationResult>;
   /**
+   * Delete mutation for the table 'logs_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  deletelogs_by_date?: Maybe<Logs_By_DateMutationResult>;
+  /**
    * Delete mutation for the table 'nfts'.
    * Note that 'contract_address' and 'token_id' are the fields that correspond to the table primary key.
    */
@@ -243,6 +288,11 @@ export type Mutation = {
    */
   deletetoken_transfers?: Maybe<Token_TransfersMutationResult>;
   /**
+   * Delete mutation for the table 'token_transfers_by_token_address'.
+   * Note that 'token_address', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  deletetoken_transfers_by_token_address?: Maybe<Token_Transfers_By_Token_AddressMutationResult>;
+  /**
    * Delete mutation for the table 'tokens'.
    * Note that 'address' and 'block_number' are the fields that correspond to the table primary key.
    */
@@ -253,10 +303,20 @@ export type Mutation = {
    */
   deletetraces?: Maybe<TracesMutationResult>;
   /**
+   * Delete mutation for the table 'traces_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'internal_transaction_index' are the fields that correspond to the table primary key.
+   */
+  deletetraces_by_date?: Maybe<Traces_By_DateMutationResult>;
+  /**
    * Delete mutation for the table 'transactions'.
    * Note that 'block_hash', 'transaction_index' and 'hash' are the fields that correspond to the table primary key.
    */
   deletetransactions?: Maybe<TransactionsMutationResult>;
+  /**
+   * Delete mutation for the table 'transactions_by_address'.
+   * Note that 'from_address', 'block_number', 'hash' and 'transaction_index' are the fields that correspond to the table primary key.
+   */
+  deletetransactions_by_address?: Maybe<Transactions_By_AddressMutationResult>;
   /**
    * Delete mutation for the table 'transactions_by_date'.
    * Note that 'date', 'block_number' and 'hash' are the fields that correspond to the table primary key.
@@ -267,6 +327,16 @@ export type Mutation = {
    * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
    */
   deletetransactions_by_hash?: Maybe<Transactions_By_HashMutationResult>;
+  /**
+   * Insert mutation for the table 'assets'.
+   * Note that 'address', 'token_address', 'token_id', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  insertassets?: Maybe<AssetsMutationResult>;
+  /**
+   * Insert mutation for the table 'block_numbers_by_date'.
+   * Note that 'date' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  insertblock_numbers_by_date?: Maybe<Block_Numbers_By_DateMutationResult>;
   /**
    * Insert mutation for the table 'contract_abis'.
    * Note that 'contract_address' is the field that corresponds to the table primary key.
@@ -298,6 +368,11 @@ export type Mutation = {
    */
   insertlogs?: Maybe<LogsMutationResult>;
   /**
+   * Insert mutation for the table 'logs_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  insertlogs_by_date?: Maybe<Logs_By_DateMutationResult>;
+  /**
    * Insert mutation for the table 'nfts'.
    * Note that 'contract_address' and 'token_id' are the fields that correspond to the table primary key.
    */
@@ -313,6 +388,11 @@ export type Mutation = {
    */
   inserttoken_transfers?: Maybe<Token_TransfersMutationResult>;
   /**
+   * Insert mutation for the table 'token_transfers_by_token_address'.
+   * Note that 'token_address', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  inserttoken_transfers_by_token_address?: Maybe<Token_Transfers_By_Token_AddressMutationResult>;
+  /**
    * Insert mutation for the table 'tokens'.
    * Note that 'address' and 'block_number' are the fields that correspond to the table primary key.
    */
@@ -323,10 +403,20 @@ export type Mutation = {
    */
   inserttraces?: Maybe<TracesMutationResult>;
   /**
+   * Insert mutation for the table 'traces_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'internal_transaction_index' are the fields that correspond to the table primary key.
+   */
+  inserttraces_by_date?: Maybe<Traces_By_DateMutationResult>;
+  /**
    * Insert mutation for the table 'transactions'.
    * Note that 'block_hash', 'transaction_index' and 'hash' are the fields that correspond to the table primary key.
    */
   inserttransactions?: Maybe<TransactionsMutationResult>;
+  /**
+   * Insert mutation for the table 'transactions_by_address'.
+   * Note that 'from_address', 'block_number', 'hash' and 'transaction_index' are the fields that correspond to the table primary key.
+   */
+  inserttransactions_by_address?: Maybe<Transactions_By_AddressMutationResult>;
   /**
    * Insert mutation for the table 'transactions_by_date'.
    * Note that 'date', 'block_number' and 'hash' are the fields that correspond to the table primary key.
@@ -337,6 +427,16 @@ export type Mutation = {
    * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
    */
   inserttransactions_by_hash?: Maybe<Transactions_By_HashMutationResult>;
+  /**
+   * Update mutation for the table 'assets'.
+   * Note that 'address', 'token_address', 'token_id', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  updateassets?: Maybe<AssetsMutationResult>;
+  /**
+   * Update mutation for the table 'block_numbers_by_date'.
+   * Note that 'date' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  updateblock_numbers_by_date?: Maybe<Block_Numbers_By_DateMutationResult>;
   /**
    * Update mutation for the table 'contract_abis'.
    * Note that 'contract_address' is the field that corresponds to the table primary key.
@@ -368,6 +468,11 @@ export type Mutation = {
    */
   updatelogs?: Maybe<LogsMutationResult>;
   /**
+   * Update mutation for the table 'logs_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  updatelogs_by_date?: Maybe<Logs_By_DateMutationResult>;
+  /**
    * Update mutation for the table 'nfts'.
    * Note that 'contract_address' and 'token_id' are the fields that correspond to the table primary key.
    */
@@ -383,6 +488,11 @@ export type Mutation = {
    */
   updatetoken_transfers?: Maybe<Token_TransfersMutationResult>;
   /**
+   * Update mutation for the table 'token_transfers_by_token_address'.
+   * Note that 'token_address', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  updatetoken_transfers_by_token_address?: Maybe<Token_Transfers_By_Token_AddressMutationResult>;
+  /**
    * Update mutation for the table 'tokens'.
    * Note that 'address' and 'block_number' are the fields that correspond to the table primary key.
    */
@@ -393,10 +503,20 @@ export type Mutation = {
    */
   updatetraces?: Maybe<TracesMutationResult>;
   /**
+   * Update mutation for the table 'traces_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'internal_transaction_index' are the fields that correspond to the table primary key.
+   */
+  updatetraces_by_date?: Maybe<Traces_By_DateMutationResult>;
+  /**
    * Update mutation for the table 'transactions'.
    * Note that 'block_hash', 'transaction_index' and 'hash' are the fields that correspond to the table primary key.
    */
   updatetransactions?: Maybe<TransactionsMutationResult>;
+  /**
+   * Update mutation for the table 'transactions_by_address'.
+   * Note that 'from_address', 'block_number', 'hash' and 'transaction_index' are the fields that correspond to the table primary key.
+   */
+  updatetransactions_by_address?: Maybe<Transactions_By_AddressMutationResult>;
   /**
    * Update mutation for the table 'transactions_by_date'.
    * Note that 'date', 'block_number' and 'hash' are the fields that correspond to the table primary key.
@@ -407,6 +527,20 @@ export type Mutation = {
    * Note that 'hash', 'transaction_index' and 'block_number' are the fields that correspond to the table primary key.
    */
   updatetransactions_by_hash?: Maybe<Transactions_By_HashMutationResult>;
+};
+
+
+export type MutationBulkInsertassetsArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  values?: InputMaybe<Array<AssetsInput>>;
+};
+
+
+export type MutationBulkInsertblock_Numbers_By_DateArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  values?: InputMaybe<Array<Block_Numbers_By_DateInput>>;
 };
 
 
@@ -452,6 +586,13 @@ export type MutationBulkInsertlogsArgs = {
 };
 
 
+export type MutationBulkInsertlogs_By_DateArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  values?: InputMaybe<Array<Logs_By_DateInput>>;
+};
+
+
 export type MutationBulkInsertnftsArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
@@ -473,6 +614,13 @@ export type MutationBulkInserttoken_TransfersArgs = {
 };
 
 
+export type MutationBulkInserttoken_Transfers_By_Token_AddressArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  values?: InputMaybe<Array<Token_Transfers_By_Token_AddressInput>>;
+};
+
+
 export type MutationBulkInserttokensArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
@@ -487,10 +635,24 @@ export type MutationBulkInserttracesArgs = {
 };
 
 
+export type MutationBulkInserttraces_By_DateArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  values?: InputMaybe<Array<Traces_By_DateInput>>;
+};
+
+
 export type MutationBulkInserttransactionsArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   values?: InputMaybe<Array<TransactionsInput>>;
+};
+
+
+export type MutationBulkInserttransactions_By_AddressArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  values?: InputMaybe<Array<Transactions_By_AddressInput>>;
 };
 
 
@@ -505,6 +667,22 @@ export type MutationBulkInserttransactions_By_HashArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   values?: InputMaybe<Array<Transactions_By_HashInput>>;
+};
+
+
+export type MutationDeleteassetsArgs = {
+  ifCondition?: InputMaybe<AssetsFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: AssetsInput;
+};
+
+
+export type MutationDeleteblock_Numbers_By_DateArgs = {
+  ifCondition?: InputMaybe<Block_Numbers_By_DateFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Block_Numbers_By_DateInput;
 };
 
 
@@ -556,6 +734,14 @@ export type MutationDeletelogsArgs = {
 };
 
 
+export type MutationDeletelogs_By_DateArgs = {
+  ifCondition?: InputMaybe<Logs_By_DateFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Logs_By_DateInput;
+};
+
+
 export type MutationDeletenftsArgs = {
   ifCondition?: InputMaybe<NftsFilterInput>;
   ifExists?: InputMaybe<Scalars['Boolean']>;
@@ -580,6 +766,14 @@ export type MutationDeletetoken_TransfersArgs = {
 };
 
 
+export type MutationDeletetoken_Transfers_By_Token_AddressArgs = {
+  ifCondition?: InputMaybe<Token_Transfers_By_Token_AddressFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Token_Transfers_By_Token_AddressInput;
+};
+
+
 export type MutationDeletetokensArgs = {
   ifCondition?: InputMaybe<TokensFilterInput>;
   ifExists?: InputMaybe<Scalars['Boolean']>;
@@ -596,11 +790,27 @@ export type MutationDeletetracesArgs = {
 };
 
 
+export type MutationDeletetraces_By_DateArgs = {
+  ifCondition?: InputMaybe<Traces_By_DateFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Traces_By_DateInput;
+};
+
+
 export type MutationDeletetransactionsArgs = {
   ifCondition?: InputMaybe<TransactionsFilterInput>;
   ifExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   value: TransactionsInput;
+};
+
+
+export type MutationDeletetransactions_By_AddressArgs = {
+  ifCondition?: InputMaybe<Transactions_By_AddressFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Transactions_By_AddressInput;
 };
 
 
@@ -617,6 +827,20 @@ export type MutationDeletetransactions_By_HashArgs = {
   ifExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   value: Transactions_By_HashInput;
+};
+
+
+export type MutationInsertassetsArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: AssetsInput;
+};
+
+
+export type MutationInsertblock_Numbers_By_DateArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Block_Numbers_By_DateInput;
 };
 
 
@@ -662,6 +886,13 @@ export type MutationInsertlogsArgs = {
 };
 
 
+export type MutationInsertlogs_By_DateArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Logs_By_DateInput;
+};
+
+
 export type MutationInsertnftsArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
@@ -683,6 +914,13 @@ export type MutationInserttoken_TransfersArgs = {
 };
 
 
+export type MutationInserttoken_Transfers_By_Token_AddressArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Token_Transfers_By_Token_AddressInput;
+};
+
+
 export type MutationInserttokensArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
@@ -697,10 +935,24 @@ export type MutationInserttracesArgs = {
 };
 
 
+export type MutationInserttraces_By_DateArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Traces_By_DateInput;
+};
+
+
 export type MutationInserttransactionsArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   value: TransactionsInput;
+};
+
+
+export type MutationInserttransactions_By_AddressArgs = {
+  ifNotExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Transactions_By_AddressInput;
 };
 
 
@@ -715,6 +967,22 @@ export type MutationInserttransactions_By_HashArgs = {
   ifNotExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   value: Transactions_By_HashInput;
+};
+
+
+export type MutationUpdateassetsArgs = {
+  ifCondition?: InputMaybe<AssetsFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: AssetsInput;
+};
+
+
+export type MutationUpdateblock_Numbers_By_DateArgs = {
+  ifCondition?: InputMaybe<Block_Numbers_By_DateFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Block_Numbers_By_DateInput;
 };
 
 
@@ -766,6 +1034,14 @@ export type MutationUpdatelogsArgs = {
 };
 
 
+export type MutationUpdatelogs_By_DateArgs = {
+  ifCondition?: InputMaybe<Logs_By_DateFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Logs_By_DateInput;
+};
+
+
 export type MutationUpdatenftsArgs = {
   ifCondition?: InputMaybe<NftsFilterInput>;
   ifExists?: InputMaybe<Scalars['Boolean']>;
@@ -790,6 +1066,14 @@ export type MutationUpdatetoken_TransfersArgs = {
 };
 
 
+export type MutationUpdatetoken_Transfers_By_Token_AddressArgs = {
+  ifCondition?: InputMaybe<Token_Transfers_By_Token_AddressFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Token_Transfers_By_Token_AddressInput;
+};
+
+
 export type MutationUpdatetokensArgs = {
   ifCondition?: InputMaybe<TokensFilterInput>;
   ifExists?: InputMaybe<Scalars['Boolean']>;
@@ -806,11 +1090,27 @@ export type MutationUpdatetracesArgs = {
 };
 
 
+export type MutationUpdatetraces_By_DateArgs = {
+  ifCondition?: InputMaybe<Traces_By_DateFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Traces_By_DateInput;
+};
+
+
 export type MutationUpdatetransactionsArgs = {
   ifCondition?: InputMaybe<TransactionsFilterInput>;
   ifExists?: InputMaybe<Scalars['Boolean']>;
   options?: InputMaybe<MutationOptions>;
   value: TransactionsInput;
+};
+
+
+export type MutationUpdatetransactions_By_AddressArgs = {
+  ifCondition?: InputMaybe<Transactions_By_AddressFilterInput>;
+  ifExists?: InputMaybe<Scalars['Boolean']>;
+  options?: InputMaybe<MutationOptions>;
+  value: Transactions_By_AddressInput;
 };
 
 
@@ -844,6 +1144,20 @@ export type MutationOptions = {
 
 export type Query = {
   __typename?: 'Query';
+  /**
+   * Query for the table 'assets'.
+   * Note that 'address', 'token_address', 'token_id', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  assets?: Maybe<AssetsResult>;
+  /** @deprecated No longer supported. Use root type instead. */
+  assetsFilter?: Maybe<AssetsResult>;
+  /**
+   * Query for the table 'block_numbers_by_date'.
+   * Note that 'date' and 'block_number' are the fields that correspond to the table primary key.
+   */
+  block_numbers_by_date?: Maybe<Block_Numbers_By_DateResult>;
+  /** @deprecated No longer supported. Use root type instead. */
+  block_numbers_by_dateFilter?: Maybe<Block_Numbers_By_DateResult>;
   /**
    * Query for the table 'contract_abis'.
    * Note that 'contract_address' is the field that corresponds to the table primary key.
@@ -892,6 +1206,13 @@ export type Query = {
   /** @deprecated No longer supported. Use root type instead. */
   logsFilter?: Maybe<LogsResult>;
   /**
+   * Query for the table 'logs_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  logs_by_date?: Maybe<Logs_By_DateResult>;
+  /** @deprecated No longer supported. Use root type instead. */
+  logs_by_dateFilter?: Maybe<Logs_By_DateResult>;
+  /**
    * Query for the table 'nfts'.
    * Note that 'contract_address' and 'token_id' are the fields that correspond to the table primary key.
    */
@@ -913,6 +1234,13 @@ export type Query = {
   /** @deprecated No longer supported. Use root type instead. */
   token_transfersFilter?: Maybe<Token_TransfersResult>;
   /**
+   * Query for the table 'token_transfers_by_token_address'.
+   * Note that 'token_address', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+   */
+  token_transfers_by_token_address?: Maybe<Token_Transfers_By_Token_AddressResult>;
+  /** @deprecated No longer supported. Use root type instead. */
+  token_transfers_by_token_addressFilter?: Maybe<Token_Transfers_By_Token_AddressResult>;
+  /**
    * Query for the table 'tokens'.
    * Note that 'address' and 'block_number' are the fields that correspond to the table primary key.
    */
@@ -927,12 +1255,26 @@ export type Query = {
   /** @deprecated No longer supported. Use root type instead. */
   tracesFilter?: Maybe<TracesResult>;
   /**
+   * Query for the table 'traces_by_date'.
+   * Note that 'date', 'block_number', 'transaction_hash' and 'internal_transaction_index' are the fields that correspond to the table primary key.
+   */
+  traces_by_date?: Maybe<Traces_By_DateResult>;
+  /** @deprecated No longer supported. Use root type instead. */
+  traces_by_dateFilter?: Maybe<Traces_By_DateResult>;
+  /**
    * Query for the table 'transactions'.
    * Note that 'block_hash', 'transaction_index' and 'hash' are the fields that correspond to the table primary key.
    */
   transactions?: Maybe<TransactionsResult>;
   /** @deprecated No longer supported. Use root type instead. */
   transactionsFilter?: Maybe<TransactionsResult>;
+  /**
+   * Query for the table 'transactions_by_address'.
+   * Note that 'from_address', 'block_number', 'hash' and 'transaction_index' are the fields that correspond to the table primary key.
+   */
+  transactions_by_address?: Maybe<Transactions_By_AddressResult>;
+  /** @deprecated No longer supported. Use root type instead. */
+  transactions_by_addressFilter?: Maybe<Transactions_By_AddressResult>;
   /**
    * Query for the table 'transactions_by_date'.
    * Note that 'date', 'block_number' and 'hash' are the fields that correspond to the table primary key.
@@ -947,6 +1289,38 @@ export type Query = {
   transactions_by_hash?: Maybe<Transactions_By_HashResult>;
   /** @deprecated No longer supported. Use root type instead. */
   transactions_by_hashFilter?: Maybe<Transactions_By_HashResult>;
+};
+
+
+export type QueryAssetsArgs = {
+  filter?: InputMaybe<AssetsFilterInput>;
+  groupBy?: InputMaybe<AssetsGroupByInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<AssetsOrder>>>;
+  value?: InputMaybe<AssetsInput>;
+};
+
+
+export type QueryAssetsFilterArgs = {
+  filter?: InputMaybe<AssetsFilterInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<AssetsOrder>>>;
+};
+
+
+export type QueryBlock_Numbers_By_DateArgs = {
+  filter?: InputMaybe<Block_Numbers_By_DateFilterInput>;
+  groupBy?: InputMaybe<Block_Numbers_By_DateGroupByInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Block_Numbers_By_DateOrder>>>;
+  value?: InputMaybe<Block_Numbers_By_DateInput>;
+};
+
+
+export type QueryBlock_Numbers_By_DateFilterArgs = {
+  filter?: InputMaybe<Block_Numbers_By_DateFilterInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Block_Numbers_By_DateOrder>>>;
 };
 
 
@@ -1046,6 +1420,22 @@ export type QueryLogsFilterArgs = {
 };
 
 
+export type QueryLogs_By_DateArgs = {
+  filter?: InputMaybe<Logs_By_DateFilterInput>;
+  groupBy?: InputMaybe<Logs_By_DateGroupByInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Logs_By_DateOrder>>>;
+  value?: InputMaybe<Logs_By_DateInput>;
+};
+
+
+export type QueryLogs_By_DateFilterArgs = {
+  filter?: InputMaybe<Logs_By_DateFilterInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Logs_By_DateOrder>>>;
+};
+
+
 export type QueryNftsArgs = {
   filter?: InputMaybe<NftsFilterInput>;
   groupBy?: InputMaybe<NftsGroupByInput>;
@@ -1094,6 +1484,22 @@ export type QueryToken_TransfersFilterArgs = {
 };
 
 
+export type QueryToken_Transfers_By_Token_AddressArgs = {
+  filter?: InputMaybe<Token_Transfers_By_Token_AddressFilterInput>;
+  groupBy?: InputMaybe<Token_Transfers_By_Token_AddressGroupByInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Token_Transfers_By_Token_AddressOrder>>>;
+  value?: InputMaybe<Token_Transfers_By_Token_AddressInput>;
+};
+
+
+export type QueryToken_Transfers_By_Token_AddressFilterArgs = {
+  filter?: InputMaybe<Token_Transfers_By_Token_AddressFilterInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Token_Transfers_By_Token_AddressOrder>>>;
+};
+
+
 export type QueryTokensArgs = {
   filter?: InputMaybe<TokensFilterInput>;
   groupBy?: InputMaybe<TokensGroupByInput>;
@@ -1126,6 +1532,22 @@ export type QueryTracesFilterArgs = {
 };
 
 
+export type QueryTraces_By_DateArgs = {
+  filter?: InputMaybe<Traces_By_DateFilterInput>;
+  groupBy?: InputMaybe<Traces_By_DateGroupByInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Traces_By_DateOrder>>>;
+  value?: InputMaybe<Traces_By_DateInput>;
+};
+
+
+export type QueryTraces_By_DateFilterArgs = {
+  filter?: InputMaybe<Traces_By_DateFilterInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Traces_By_DateOrder>>>;
+};
+
+
 export type QueryTransactionsArgs = {
   filter?: InputMaybe<TransactionsFilterInput>;
   groupBy?: InputMaybe<TransactionsGroupByInput>;
@@ -1139,6 +1561,22 @@ export type QueryTransactionsFilterArgs = {
   filter?: InputMaybe<TransactionsFilterInput>;
   options?: InputMaybe<QueryOptions>;
   orderBy?: InputMaybe<Array<InputMaybe<TransactionsOrder>>>;
+};
+
+
+export type QueryTransactions_By_AddressArgs = {
+  filter?: InputMaybe<Transactions_By_AddressFilterInput>;
+  groupBy?: InputMaybe<Transactions_By_AddressGroupByInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Transactions_By_AddressOrder>>>;
+  value?: InputMaybe<Transactions_By_AddressInput>;
+};
+
+
+export type QueryTransactions_By_AddressFilterArgs = {
+  filter?: InputMaybe<Transactions_By_AddressFilterInput>;
+  options?: InputMaybe<QueryOptions>;
+  orderBy?: InputMaybe<Array<InputMaybe<Transactions_By_AddressOrder>>>;
 };
 
 
@@ -1212,6 +1650,351 @@ export type TimestampFilterInput = {
   lt?: InputMaybe<Scalars['Timestamp']>;
   lte?: InputMaybe<Scalars['Timestamp']>;
   notEq?: InputMaybe<Scalars['Timestamp']>;
+};
+
+/** The type used to represent results of a query for the table 'assets'. */
+export type Assets = {
+  __typename?: 'assets';
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@3f5d9940}.
+   */
+  _bigint_function?: Maybe<Scalars['BigInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
+   * This is a variable-precision decimal.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@15396e8}.
+   */
+  _decimal_function?: Maybe<Scalars['Decimal']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@793b9f16}. */
+  _double_function?: Maybe<Scalars['Float']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
+   * This is a 32-bit IEEE-754 floating point.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@46d33ff1}.
+   */
+  _float_function?: Maybe<Scalars['Float32']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@6f0d3636}. */
+  _int_function?: Maybe<Scalars['Int']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
+   * This is a 16-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@151739f2}.
+   */
+  _smallint_function?: Maybe<Scalars['SmallInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
+   * .This is an 8-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@8ee096e}.
+   */
+  _tinyint_function?: Maybe<Scalars['TinyInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
+   * This is an arbitrary-precision integer.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@3b3e8fcd}.
+   */
+  _varint_function?: Maybe<Scalars['Varint']>;
+  address?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  block_number?: Maybe<Scalars['BigInt']>;
+  is_contract?: Maybe<Scalars['Boolean']>;
+  log_index?: Maybe<Scalars['BigInt']>;
+  token_address?: Maybe<Scalars['String']>;
+  token_id?: Maybe<Scalars['String']>;
+  token_name?: Maybe<Scalars['String']>;
+  token_standard?: Maybe<Scalars['String']>;
+  transaction_hash?: Maybe<Scalars['String']>;
+};
+
+
+/** The type used to represent results of a query for the table 'assets'. */
+export type Assets_Bigint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'assets'. */
+export type Assets_Decimal_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'assets'. */
+export type Assets_Double_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'assets'. */
+export type Assets_Float_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'assets'. */
+export type Assets_Int_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'assets'. */
+export type Assets_Smallint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'assets'. */
+export type Assets_Tinyint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'assets'. */
+export type Assets_Varint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+/**
+ * The input type used for filtering with non-equality operators for the table 'assets'.
+ * Note that 'address', 'token_address', 'token_id', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+ */
+export type AssetsFilterInput = {
+  address?: InputMaybe<StringFilterInput>;
+  balance?: InputMaybe<StringFilterInput>;
+  block_number?: InputMaybe<BigIntFilterInput>;
+  is_contract?: InputMaybe<BooleanFilterInput>;
+  log_index?: InputMaybe<BigIntFilterInput>;
+  token_address?: InputMaybe<StringFilterInput>;
+  token_id?: InputMaybe<StringFilterInput>;
+  token_name?: InputMaybe<StringFilterInput>;
+  token_standard?: InputMaybe<StringFilterInput>;
+  transaction_hash?: InputMaybe<StringFilterInput>;
+};
+
+export type AssetsGroupByInput = {
+  address?: InputMaybe<Scalars['Boolean']>;
+  block_number?: InputMaybe<Scalars['Boolean']>;
+  log_index?: InputMaybe<Scalars['Boolean']>;
+  token_address?: InputMaybe<Scalars['Boolean']>;
+  token_id?: InputMaybe<Scalars['Boolean']>;
+  transaction_hash?: InputMaybe<Scalars['Boolean']>;
+};
+
+/**
+ * The input type for the table 'assets'.
+ * Note that 'address', 'token_address', 'token_id', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+ */
+export type AssetsInput = {
+  address?: InputMaybe<Scalars['String']>;
+  balance?: InputMaybe<Scalars['String']>;
+  block_number?: InputMaybe<Scalars['BigInt']>;
+  is_contract?: InputMaybe<Scalars['Boolean']>;
+  log_index?: InputMaybe<Scalars['BigInt']>;
+  token_address?: InputMaybe<Scalars['String']>;
+  token_id?: InputMaybe<Scalars['String']>;
+  token_name?: InputMaybe<Scalars['String']>;
+  token_standard?: InputMaybe<Scalars['String']>;
+  transaction_hash?: InputMaybe<Scalars['String']>;
+};
+
+/** The type used to represent results of a mutation for the table 'assets'. */
+export type AssetsMutationResult = {
+  __typename?: 'assetsMutationResult';
+  /** This field is relevant and fulfilled with data, only when used with the @async directive */
+  accepted?: Maybe<Scalars['Boolean']>;
+  applied?: Maybe<Scalars['Boolean']>;
+  value?: Maybe<Assets>;
+};
+
+/** The enum used to order a query result based on one or more fields for the table 'assets'. */
+export enum AssetsOrder {
+  AddressAsc = 'address_ASC',
+  AddressDesc = 'address_DESC',
+  BalanceAsc = 'balance_ASC',
+  BalanceDesc = 'balance_DESC',
+  BlockNumberAsc = 'block_number_ASC',
+  BlockNumberDesc = 'block_number_DESC',
+  IsContractAsc = 'is_contract_ASC',
+  IsContractDesc = 'is_contract_DESC',
+  LogIndexAsc = 'log_index_ASC',
+  LogIndexDesc = 'log_index_DESC',
+  TokenAddressAsc = 'token_address_ASC',
+  TokenAddressDesc = 'token_address_DESC',
+  TokenIdAsc = 'token_id_ASC',
+  TokenIdDesc = 'token_id_DESC',
+  TokenNameAsc = 'token_name_ASC',
+  TokenNameDesc = 'token_name_DESC',
+  TokenStandardAsc = 'token_standard_ASC',
+  TokenStandardDesc = 'token_standard_DESC',
+  TransactionHashAsc = 'transaction_hash_ASC',
+  TransactionHashDesc = 'transaction_hash_DESC'
+}
+
+export type AssetsResult = {
+  __typename?: 'assetsResult';
+  pageState?: Maybe<Scalars['String']>;
+  values?: Maybe<Array<Assets>>;
+};
+
+/** The type used to represent results of a query for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_Date = {
+  __typename?: 'block_numbers_by_date';
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@3f5d9940}.
+   */
+  _bigint_function?: Maybe<Scalars['BigInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
+   * This is a variable-precision decimal.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@15396e8}.
+   */
+  _decimal_function?: Maybe<Scalars['Decimal']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@793b9f16}. */
+  _double_function?: Maybe<Scalars['Float']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
+   * This is a 32-bit IEEE-754 floating point.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@46d33ff1}.
+   */
+  _float_function?: Maybe<Scalars['Float32']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@6f0d3636}. */
+  _int_function?: Maybe<Scalars['Int']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
+   * This is a 16-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@151739f2}.
+   */
+  _smallint_function?: Maybe<Scalars['SmallInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
+   * .This is an 8-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@8ee096e}.
+   */
+  _tinyint_function?: Maybe<Scalars['TinyInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
+   * This is an arbitrary-precision integer.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@3b3e8fcd}.
+   */
+  _varint_function?: Maybe<Scalars['Varint']>;
+  block_number?: Maybe<Scalars['BigInt']>;
+  block_timestamp?: Maybe<Scalars['Timestamp']>;
+  date?: Maybe<Scalars['Date']>;
+};
+
+
+/** The type used to represent results of a query for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_Date_Bigint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_Date_Decimal_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_Date_Double_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_Date_Float_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_Date_Int_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_Date_Smallint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_Date_Tinyint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_Date_Varint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+/**
+ * The input type used for filtering with non-equality operators for the table 'block_numbers_by_date'.
+ * Note that 'date' and 'block_number' are the fields that correspond to the table primary key.
+ */
+export type Block_Numbers_By_DateFilterInput = {
+  block_number?: InputMaybe<BigIntFilterInput>;
+  block_timestamp?: InputMaybe<TimestampFilterInput>;
+  date?: InputMaybe<DateFilterInput>;
+};
+
+export type Block_Numbers_By_DateGroupByInput = {
+  block_number?: InputMaybe<Scalars['Boolean']>;
+  date?: InputMaybe<Scalars['Boolean']>;
+};
+
+/**
+ * The input type for the table 'block_numbers_by_date'.
+ * Note that 'date' and 'block_number' are the fields that correspond to the table primary key.
+ */
+export type Block_Numbers_By_DateInput = {
+  block_number?: InputMaybe<Scalars['BigInt']>;
+  block_timestamp?: InputMaybe<Scalars['Timestamp']>;
+  date?: InputMaybe<Scalars['Date']>;
+};
+
+/** The type used to represent results of a mutation for the table 'block_numbers_by_date'. */
+export type Block_Numbers_By_DateMutationResult = {
+  __typename?: 'block_numbers_by_dateMutationResult';
+  /** This field is relevant and fulfilled with data, only when used with the @async directive */
+  accepted?: Maybe<Scalars['Boolean']>;
+  applied?: Maybe<Scalars['Boolean']>;
+  value?: Maybe<Block_Numbers_By_Date>;
+};
+
+/** The enum used to order a query result based on one or more fields for the table 'block_numbers_by_date'. */
+export enum Block_Numbers_By_DateOrder {
+  BlockNumberAsc = 'block_number_ASC',
+  BlockNumberDesc = 'block_number_DESC',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  DateAsc = 'date_ASC',
+  DateDesc = 'date_DESC'
+}
+
+export type Block_Numbers_By_DateResult = {
+  __typename?: 'block_numbers_by_dateResult';
+  pageState?: Maybe<Scalars['String']>;
+  values?: Maybe<Array<Block_Numbers_By_Date>>;
 };
 
 /** The type used to represent results of a query for the table 'contract_abis'. */
@@ -2441,6 +3224,216 @@ export type LogsResult = {
   values?: Maybe<Array<Logs>>;
 };
 
+/** The type used to represent results of a query for the table 'logs_by_date'. */
+export type Logs_By_Date = {
+  __typename?: 'logs_by_date';
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@3f5d9940}.
+   */
+  _bigint_function?: Maybe<Scalars['BigInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
+   * This is a variable-precision decimal.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@15396e8}.
+   */
+  _decimal_function?: Maybe<Scalars['Decimal']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@793b9f16}. */
+  _double_function?: Maybe<Scalars['Float']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
+   * This is a 32-bit IEEE-754 floating point.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@46d33ff1}.
+   */
+  _float_function?: Maybe<Scalars['Float32']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@6f0d3636}. */
+  _int_function?: Maybe<Scalars['Int']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
+   * This is a 16-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@151739f2}.
+   */
+  _smallint_function?: Maybe<Scalars['SmallInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
+   * .This is an 8-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@8ee096e}.
+   */
+  _tinyint_function?: Maybe<Scalars['TinyInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
+   * This is an arbitrary-precision integer.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@3b3e8fcd}.
+   */
+  _varint_function?: Maybe<Scalars['Varint']>;
+  address?: Maybe<Scalars['String']>;
+  block_hash?: Maybe<Scalars['String']>;
+  block_number?: Maybe<Scalars['BigInt']>;
+  block_timestamp?: Maybe<Scalars['Timestamp']>;
+  data?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Date']>;
+  decoded_data?: Maybe<Scalars['String']>;
+  log_index?: Maybe<Scalars['BigInt']>;
+  topic0?: Maybe<Scalars['String']>;
+  topic1?: Maybe<Scalars['String']>;
+  topic2?: Maybe<Scalars['String']>;
+  topic3?: Maybe<Scalars['String']>;
+  transaction_hash?: Maybe<Scalars['String']>;
+  transaction_index?: Maybe<Scalars['BigInt']>;
+};
+
+
+/** The type used to represent results of a query for the table 'logs_by_date'. */
+export type Logs_By_Date_Bigint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'logs_by_date'. */
+export type Logs_By_Date_Decimal_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'logs_by_date'. */
+export type Logs_By_Date_Double_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'logs_by_date'. */
+export type Logs_By_Date_Float_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'logs_by_date'. */
+export type Logs_By_Date_Int_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'logs_by_date'. */
+export type Logs_By_Date_Smallint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'logs_by_date'. */
+export type Logs_By_Date_Tinyint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'logs_by_date'. */
+export type Logs_By_Date_Varint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+/**
+ * The input type used for filtering with non-equality operators for the table 'logs_by_date'.
+ * Note that 'date', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+ */
+export type Logs_By_DateFilterInput = {
+  address?: InputMaybe<StringFilterInput>;
+  block_hash?: InputMaybe<StringFilterInput>;
+  block_number?: InputMaybe<BigIntFilterInput>;
+  block_timestamp?: InputMaybe<TimestampFilterInput>;
+  data?: InputMaybe<StringFilterInput>;
+  date?: InputMaybe<DateFilterInput>;
+  decoded_data?: InputMaybe<StringFilterInput>;
+  log_index?: InputMaybe<BigIntFilterInput>;
+  topic0?: InputMaybe<StringFilterInput>;
+  topic1?: InputMaybe<StringFilterInput>;
+  topic2?: InputMaybe<StringFilterInput>;
+  topic3?: InputMaybe<StringFilterInput>;
+  transaction_hash?: InputMaybe<StringFilterInput>;
+  transaction_index?: InputMaybe<BigIntFilterInput>;
+};
+
+export type Logs_By_DateGroupByInput = {
+  block_number?: InputMaybe<Scalars['Boolean']>;
+  date?: InputMaybe<Scalars['Boolean']>;
+  log_index?: InputMaybe<Scalars['Boolean']>;
+  transaction_hash?: InputMaybe<Scalars['Boolean']>;
+};
+
+/**
+ * The input type for the table 'logs_by_date'.
+ * Note that 'date', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+ */
+export type Logs_By_DateInput = {
+  address?: InputMaybe<Scalars['String']>;
+  block_hash?: InputMaybe<Scalars['String']>;
+  block_number?: InputMaybe<Scalars['BigInt']>;
+  block_timestamp?: InputMaybe<Scalars['Timestamp']>;
+  data?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Date']>;
+  decoded_data?: InputMaybe<Scalars['String']>;
+  log_index?: InputMaybe<Scalars['BigInt']>;
+  topic0?: InputMaybe<Scalars['String']>;
+  topic1?: InputMaybe<Scalars['String']>;
+  topic2?: InputMaybe<Scalars['String']>;
+  topic3?: InputMaybe<Scalars['String']>;
+  transaction_hash?: InputMaybe<Scalars['String']>;
+  transaction_index?: InputMaybe<Scalars['BigInt']>;
+};
+
+/** The type used to represent results of a mutation for the table 'logs_by_date'. */
+export type Logs_By_DateMutationResult = {
+  __typename?: 'logs_by_dateMutationResult';
+  /** This field is relevant and fulfilled with data, only when used with the @async directive */
+  accepted?: Maybe<Scalars['Boolean']>;
+  applied?: Maybe<Scalars['Boolean']>;
+  value?: Maybe<Logs_By_Date>;
+};
+
+/** The enum used to order a query result based on one or more fields for the table 'logs_by_date'. */
+export enum Logs_By_DateOrder {
+  AddressAsc = 'address_ASC',
+  AddressDesc = 'address_DESC',
+  BlockHashAsc = 'block_hash_ASC',
+  BlockHashDesc = 'block_hash_DESC',
+  BlockNumberAsc = 'block_number_ASC',
+  BlockNumberDesc = 'block_number_DESC',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  DataAsc = 'data_ASC',
+  DataDesc = 'data_DESC',
+  DateAsc = 'date_ASC',
+  DateDesc = 'date_DESC',
+  DecodedDataAsc = 'decoded_data_ASC',
+  DecodedDataDesc = 'decoded_data_DESC',
+  LogIndexAsc = 'log_index_ASC',
+  LogIndexDesc = 'log_index_DESC',
+  Topic0Asc = 'topic0_ASC',
+  Topic0Desc = 'topic0_DESC',
+  Topic1Asc = 'topic1_ASC',
+  Topic1Desc = 'topic1_DESC',
+  Topic2Asc = 'topic2_ASC',
+  Topic2Desc = 'topic2_DESC',
+  Topic3Asc = 'topic3_ASC',
+  Topic3Desc = 'topic3_DESC',
+  TransactionHashAsc = 'transaction_hash_ASC',
+  TransactionHashDesc = 'transaction_hash_DESC',
+  TransactionIndexAsc = 'transaction_index_ASC',
+  TransactionIndexDesc = 'transaction_index_DESC'
+}
+
+export type Logs_By_DateResult = {
+  __typename?: 'logs_by_dateResult';
+  pageState?: Maybe<Scalars['String']>;
+  values?: Maybe<Array<Logs_By_Date>>;
+};
+
 /** The type used to represent results of a query for the table 'nfts'. */
 export type Nfts = {
   __typename?: 'nfts';
@@ -3003,6 +3996,201 @@ export type Token_TransfersResult = {
   values?: Maybe<Array<Token_Transfers>>;
 };
 
+/** The type used to represent results of a query for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_Address = {
+  __typename?: 'token_transfers_by_token_address';
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@3f5d9940}.
+   */
+  _bigint_function?: Maybe<Scalars['BigInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
+   * This is a variable-precision decimal.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@15396e8}.
+   */
+  _decimal_function?: Maybe<Scalars['Decimal']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@793b9f16}. */
+  _double_function?: Maybe<Scalars['Float']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
+   * This is a 32-bit IEEE-754 floating point.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@46d33ff1}.
+   */
+  _float_function?: Maybe<Scalars['Float32']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@6f0d3636}. */
+  _int_function?: Maybe<Scalars['Int']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
+   * This is a 16-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@151739f2}.
+   */
+  _smallint_function?: Maybe<Scalars['SmallInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
+   * .This is an 8-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@8ee096e}.
+   */
+  _tinyint_function?: Maybe<Scalars['TinyInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
+   * This is an arbitrary-precision integer.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@3b3e8fcd}.
+   */
+  _varint_function?: Maybe<Scalars['Varint']>;
+  block_number?: Maybe<Scalars['BigInt']>;
+  block_timestamp?: Maybe<Scalars['Timestamp']>;
+  from_address?: Maybe<Scalars['String']>;
+  is_erc20?: Maybe<Scalars['Boolean']>;
+  is_erc721?: Maybe<Scalars['Boolean']>;
+  is_erc1155?: Maybe<Scalars['Boolean']>;
+  log_index?: Maybe<Scalars['BigInt']>;
+  to_address?: Maybe<Scalars['String']>;
+  token_address?: Maybe<Scalars['String']>;
+  transaction_hash?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Decimal']>;
+};
+
+
+/** The type used to represent results of a query for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_Address_Bigint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_Address_Decimal_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_Address_Double_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_Address_Float_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_Address_Int_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_Address_Smallint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_Address_Tinyint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_Address_Varint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+/**
+ * The input type used for filtering with non-equality operators for the table 'token_transfers_by_token_address'.
+ * Note that 'token_address', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+ */
+export type Token_Transfers_By_Token_AddressFilterInput = {
+  block_number?: InputMaybe<BigIntFilterInput>;
+  block_timestamp?: InputMaybe<TimestampFilterInput>;
+  from_address?: InputMaybe<StringFilterInput>;
+  is_erc20?: InputMaybe<BooleanFilterInput>;
+  is_erc721?: InputMaybe<BooleanFilterInput>;
+  is_erc1155?: InputMaybe<BooleanFilterInput>;
+  log_index?: InputMaybe<BigIntFilterInput>;
+  to_address?: InputMaybe<StringFilterInput>;
+  token_address?: InputMaybe<StringFilterInput>;
+  transaction_hash?: InputMaybe<StringFilterInput>;
+  value?: InputMaybe<DecimalFilterInput>;
+};
+
+export type Token_Transfers_By_Token_AddressGroupByInput = {
+  block_number?: InputMaybe<Scalars['Boolean']>;
+  log_index?: InputMaybe<Scalars['Boolean']>;
+  token_address?: InputMaybe<Scalars['Boolean']>;
+  transaction_hash?: InputMaybe<Scalars['Boolean']>;
+};
+
+/**
+ * The input type for the table 'token_transfers_by_token_address'.
+ * Note that 'token_address', 'block_number', 'transaction_hash' and 'log_index' are the fields that correspond to the table primary key.
+ */
+export type Token_Transfers_By_Token_AddressInput = {
+  block_number?: InputMaybe<Scalars['BigInt']>;
+  block_timestamp?: InputMaybe<Scalars['Timestamp']>;
+  from_address?: InputMaybe<Scalars['String']>;
+  is_erc20?: InputMaybe<Scalars['Boolean']>;
+  is_erc721?: InputMaybe<Scalars['Boolean']>;
+  is_erc1155?: InputMaybe<Scalars['Boolean']>;
+  log_index?: InputMaybe<Scalars['BigInt']>;
+  to_address?: InputMaybe<Scalars['String']>;
+  token_address?: InputMaybe<Scalars['String']>;
+  transaction_hash?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['Decimal']>;
+};
+
+/** The type used to represent results of a mutation for the table 'token_transfers_by_token_address'. */
+export type Token_Transfers_By_Token_AddressMutationResult = {
+  __typename?: 'token_transfers_by_token_addressMutationResult';
+  /** This field is relevant and fulfilled with data, only when used with the @async directive */
+  accepted?: Maybe<Scalars['Boolean']>;
+  applied?: Maybe<Scalars['Boolean']>;
+  value?: Maybe<Token_Transfers_By_Token_Address>;
+};
+
+/** The enum used to order a query result based on one or more fields for the table 'token_transfers_by_token_address'. */
+export enum Token_Transfers_By_Token_AddressOrder {
+  BlockNumberAsc = 'block_number_ASC',
+  BlockNumberDesc = 'block_number_DESC',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  FromAddressAsc = 'from_address_ASC',
+  FromAddressDesc = 'from_address_DESC',
+  IsErc20Asc = 'is_erc20_ASC',
+  IsErc20Desc = 'is_erc20_DESC',
+  IsErc721Asc = 'is_erc721_ASC',
+  IsErc721Desc = 'is_erc721_DESC',
+  IsErc1155Asc = 'is_erc1155_ASC',
+  IsErc1155Desc = 'is_erc1155_DESC',
+  LogIndexAsc = 'log_index_ASC',
+  LogIndexDesc = 'log_index_DESC',
+  ToAddressAsc = 'to_address_ASC',
+  ToAddressDesc = 'to_address_DESC',
+  TokenAddressAsc = 'token_address_ASC',
+  TokenAddressDesc = 'token_address_DESC',
+  TransactionHashAsc = 'transaction_hash_ASC',
+  TransactionHashDesc = 'transaction_hash_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC'
+}
+
+export type Token_Transfers_By_Token_AddressResult = {
+  __typename?: 'token_transfers_by_token_addressResult';
+  pageState?: Maybe<Scalars['String']>;
+  values?: Maybe<Array<Token_Transfers_By_Token_Address>>;
+};
+
 /** The type used to represent results of a query for the table 'tokens'. */
 export type Tokens = {
   __typename?: 'tokens';
@@ -3400,6 +4588,231 @@ export type TracesResult = {
   values?: Maybe<Array<Traces>>;
 };
 
+/** The type used to represent results of a query for the table 'traces_by_date'. */
+export type Traces_By_Date = {
+  __typename?: 'traces_by_date';
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@3f5d9940}.
+   */
+  _bigint_function?: Maybe<Scalars['BigInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
+   * This is a variable-precision decimal.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@15396e8}.
+   */
+  _decimal_function?: Maybe<Scalars['Decimal']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@793b9f16}. */
+  _double_function?: Maybe<Scalars['Float']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
+   * This is a 32-bit IEEE-754 floating point.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@46d33ff1}.
+   */
+  _float_function?: Maybe<Scalars['Float32']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@6f0d3636}. */
+  _int_function?: Maybe<Scalars['Int']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
+   * This is a 16-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@151739f2}.
+   */
+  _smallint_function?: Maybe<Scalars['SmallInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
+   * .This is an 8-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@8ee096e}.
+   */
+  _tinyint_function?: Maybe<Scalars['TinyInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
+   * This is an arbitrary-precision integer.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@3b3e8fcd}.
+   */
+  _varint_function?: Maybe<Scalars['Varint']>;
+  block_hash?: Maybe<Scalars['String']>;
+  block_number?: Maybe<Scalars['BigInt']>;
+  block_timestamp?: Maybe<Scalars['Timestamp']>;
+  call_type?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Date']>;
+  error?: Maybe<Scalars['String']>;
+  from_address?: Maybe<Scalars['String']>;
+  gas_limit?: Maybe<Scalars['BigInt']>;
+  gas_used?: Maybe<Scalars['BigInt']>;
+  input?: Maybe<Scalars['String']>;
+  internal_transaction_index?: Maybe<Scalars['BigInt']>;
+  output?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Decimal']>;
+  to_address?: Maybe<Scalars['String']>;
+  transaction_hash?: Maybe<Scalars['String']>;
+  type_trace_address?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Decimal']>;
+};
+
+
+/** The type used to represent results of a query for the table 'traces_by_date'. */
+export type Traces_By_Date_Bigint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'traces_by_date'. */
+export type Traces_By_Date_Decimal_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'traces_by_date'. */
+export type Traces_By_Date_Double_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'traces_by_date'. */
+export type Traces_By_Date_Float_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'traces_by_date'. */
+export type Traces_By_Date_Int_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'traces_by_date'. */
+export type Traces_By_Date_Smallint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'traces_by_date'. */
+export type Traces_By_Date_Tinyint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'traces_by_date'. */
+export type Traces_By_Date_Varint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+/**
+ * The input type used for filtering with non-equality operators for the table 'traces_by_date'.
+ * Note that 'date', 'block_number', 'transaction_hash' and 'internal_transaction_index' are the fields that correspond to the table primary key.
+ */
+export type Traces_By_DateFilterInput = {
+  block_hash?: InputMaybe<StringFilterInput>;
+  block_number?: InputMaybe<BigIntFilterInput>;
+  block_timestamp?: InputMaybe<TimestampFilterInput>;
+  call_type?: InputMaybe<StringFilterInput>;
+  date?: InputMaybe<DateFilterInput>;
+  error?: InputMaybe<StringFilterInput>;
+  from_address?: InputMaybe<StringFilterInput>;
+  gas_limit?: InputMaybe<BigIntFilterInput>;
+  gas_used?: InputMaybe<BigIntFilterInput>;
+  input?: InputMaybe<StringFilterInput>;
+  internal_transaction_index?: InputMaybe<BigIntFilterInput>;
+  output?: InputMaybe<StringFilterInput>;
+  status?: InputMaybe<DecimalFilterInput>;
+  to_address?: InputMaybe<StringFilterInput>;
+  transaction_hash?: InputMaybe<StringFilterInput>;
+  type_trace_address?: InputMaybe<StringFilterInput>;
+  value?: InputMaybe<DecimalFilterInput>;
+};
+
+export type Traces_By_DateGroupByInput = {
+  block_number?: InputMaybe<Scalars['Boolean']>;
+  date?: InputMaybe<Scalars['Boolean']>;
+  internal_transaction_index?: InputMaybe<Scalars['Boolean']>;
+  transaction_hash?: InputMaybe<Scalars['Boolean']>;
+};
+
+/**
+ * The input type for the table 'traces_by_date'.
+ * Note that 'date', 'block_number', 'transaction_hash' and 'internal_transaction_index' are the fields that correspond to the table primary key.
+ */
+export type Traces_By_DateInput = {
+  block_hash?: InputMaybe<Scalars['String']>;
+  block_number?: InputMaybe<Scalars['BigInt']>;
+  block_timestamp?: InputMaybe<Scalars['Timestamp']>;
+  call_type?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Date']>;
+  error?: InputMaybe<Scalars['String']>;
+  from_address?: InputMaybe<Scalars['String']>;
+  gas_limit?: InputMaybe<Scalars['BigInt']>;
+  gas_used?: InputMaybe<Scalars['BigInt']>;
+  input?: InputMaybe<Scalars['String']>;
+  internal_transaction_index?: InputMaybe<Scalars['BigInt']>;
+  output?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Decimal']>;
+  to_address?: InputMaybe<Scalars['String']>;
+  transaction_hash?: InputMaybe<Scalars['String']>;
+  type_trace_address?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['Decimal']>;
+};
+
+/** The type used to represent results of a mutation for the table 'traces_by_date'. */
+export type Traces_By_DateMutationResult = {
+  __typename?: 'traces_by_dateMutationResult';
+  /** This field is relevant and fulfilled with data, only when used with the @async directive */
+  accepted?: Maybe<Scalars['Boolean']>;
+  applied?: Maybe<Scalars['Boolean']>;
+  value?: Maybe<Traces_By_Date>;
+};
+
+/** The enum used to order a query result based on one or more fields for the table 'traces_by_date'. */
+export enum Traces_By_DateOrder {
+  BlockHashAsc = 'block_hash_ASC',
+  BlockHashDesc = 'block_hash_DESC',
+  BlockNumberAsc = 'block_number_ASC',
+  BlockNumberDesc = 'block_number_DESC',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  CallTypeAsc = 'call_type_ASC',
+  CallTypeDesc = 'call_type_DESC',
+  DateAsc = 'date_ASC',
+  DateDesc = 'date_DESC',
+  ErrorAsc = 'error_ASC',
+  ErrorDesc = 'error_DESC',
+  FromAddressAsc = 'from_address_ASC',
+  FromAddressDesc = 'from_address_DESC',
+  GasLimitAsc = 'gas_limit_ASC',
+  GasLimitDesc = 'gas_limit_DESC',
+  GasUsedAsc = 'gas_used_ASC',
+  GasUsedDesc = 'gas_used_DESC',
+  InputAsc = 'input_ASC',
+  InputDesc = 'input_DESC',
+  InternalTransactionIndexAsc = 'internal_transaction_index_ASC',
+  InternalTransactionIndexDesc = 'internal_transaction_index_DESC',
+  OutputAsc = 'output_ASC',
+  OutputDesc = 'output_DESC',
+  StatusAsc = 'status_ASC',
+  StatusDesc = 'status_DESC',
+  ToAddressAsc = 'to_address_ASC',
+  ToAddressDesc = 'to_address_DESC',
+  TransactionHashAsc = 'transaction_hash_ASC',
+  TransactionHashDesc = 'transaction_hash_DESC',
+  TypeTraceAddressAsc = 'type_trace_address_ASC',
+  TypeTraceAddressDesc = 'type_trace_address_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC'
+}
+
+export type Traces_By_DateResult = {
+  __typename?: 'traces_by_dateResult';
+  pageState?: Maybe<Scalars['String']>;
+  values?: Maybe<Array<Traces_By_Date>>;
+};
+
 /** The type used to represent results of a query for the table 'transactions'. */
 export type Transactions = {
   __typename?: 'transactions';
@@ -3662,6 +5075,271 @@ export type TransactionsResult = {
   __typename?: 'transactionsResult';
   pageState?: Maybe<Scalars['String']>;
   values?: Maybe<Array<Transactions>>;
+};
+
+/** The type used to represent results of a query for the table 'transactions_by_address'. */
+export type Transactions_By_Address = {
+  __typename?: 'transactions_by_address';
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@3f5d9940}.
+   */
+  _bigint_function?: Maybe<Scalars['BigInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
+   * This is a variable-precision decimal.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@15396e8}.
+   */
+  _decimal_function?: Maybe<Scalars['Decimal']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@793b9f16}. */
+  _double_function?: Maybe<Scalars['Float']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
+   * This is a 32-bit IEEE-754 floating point.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@46d33ff1}.
+   */
+  _float_function?: Maybe<Scalars['Float32']>;
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@6f0d3636}. */
+  _int_function?: Maybe<Scalars['Int']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
+   * This is a 16-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@151739f2}.
+   */
+  _smallint_function?: Maybe<Scalars['SmallInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
+   * .This is an 8-bit signed int.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@8ee096e}.
+   */
+  _tinyint_function?: Maybe<Scalars['TinyInt']>;
+  /**
+   * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
+   * This is an arbitrary-precision integer.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@3b3e8fcd}.
+   */
+  _varint_function?: Maybe<Scalars['Varint']>;
+  base_fee?: Maybe<Scalars['String']>;
+  block_hash?: Maybe<Scalars['String']>;
+  block_number?: Maybe<Scalars['BigInt']>;
+  block_timestamp?: Maybe<Scalars['String']>;
+  burnt_fee?: Maybe<Scalars['String']>;
+  from_address?: Maybe<Scalars['String']>;
+  gas?: Maybe<Scalars['BigInt']>;
+  gas_price?: Maybe<Scalars['String']>;
+  hash?: Maybe<Scalars['String']>;
+  input?: Maybe<Scalars['String']>;
+  max_fee?: Maybe<Scalars['String']>;
+  max_priority_fee?: Maybe<Scalars['String']>;
+  method?: Maybe<Scalars['String']>;
+  nonce?: Maybe<Scalars['BigInt']>;
+  receipt_contract_address?: Maybe<Scalars['String']>;
+  receipt_cumulative_gas_used?: Maybe<Scalars['BigInt']>;
+  receipt_gas_used?: Maybe<Scalars['BigInt']>;
+  receipt_root?: Maybe<Scalars['String']>;
+  receipt_status?: Maybe<Scalars['BigInt']>;
+  to_address?: Maybe<Scalars['String']>;
+  transaction_fees?: Maybe<Scalars['String']>;
+  transaction_index?: Maybe<Scalars['BigInt']>;
+  txn_savings?: Maybe<Scalars['String']>;
+  txn_type?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Decimal']>;
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_address'. */
+export type Transactions_By_Address_Bigint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_address'. */
+export type Transactions_By_Address_Decimal_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_address'. */
+export type Transactions_By_Address_Double_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_address'. */
+export type Transactions_By_Address_Float_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_address'. */
+export type Transactions_By_Address_Int_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_address'. */
+export type Transactions_By_Address_Smallint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_address'. */
+export type Transactions_By_Address_Tinyint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+
+/** The type used to represent results of a query for the table 'transactions_by_address'. */
+export type Transactions_By_Address_Varint_FunctionArgs = {
+  args: Array<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+/**
+ * The input type used for filtering with non-equality operators for the table 'transactions_by_address'.
+ * Note that 'from_address', 'block_number', 'hash' and 'transaction_index' are the fields that correspond to the table primary key.
+ */
+export type Transactions_By_AddressFilterInput = {
+  base_fee?: InputMaybe<StringFilterInput>;
+  block_hash?: InputMaybe<StringFilterInput>;
+  block_number?: InputMaybe<BigIntFilterInput>;
+  block_timestamp?: InputMaybe<StringFilterInput>;
+  burnt_fee?: InputMaybe<StringFilterInput>;
+  from_address?: InputMaybe<StringFilterInput>;
+  gas?: InputMaybe<BigIntFilterInput>;
+  gas_price?: InputMaybe<StringFilterInput>;
+  hash?: InputMaybe<StringFilterInput>;
+  input?: InputMaybe<StringFilterInput>;
+  max_fee?: InputMaybe<StringFilterInput>;
+  max_priority_fee?: InputMaybe<StringFilterInput>;
+  method?: InputMaybe<StringFilterInput>;
+  nonce?: InputMaybe<BigIntFilterInput>;
+  receipt_contract_address?: InputMaybe<StringFilterInput>;
+  receipt_cumulative_gas_used?: InputMaybe<BigIntFilterInput>;
+  receipt_gas_used?: InputMaybe<BigIntFilterInput>;
+  receipt_root?: InputMaybe<StringFilterInput>;
+  receipt_status?: InputMaybe<BigIntFilterInput>;
+  to_address?: InputMaybe<StringFilterInput>;
+  transaction_fees?: InputMaybe<StringFilterInput>;
+  transaction_index?: InputMaybe<BigIntFilterInput>;
+  txn_savings?: InputMaybe<StringFilterInput>;
+  txn_type?: InputMaybe<StringFilterInput>;
+  value?: InputMaybe<DecimalFilterInput>;
+};
+
+export type Transactions_By_AddressGroupByInput = {
+  block_number?: InputMaybe<Scalars['Boolean']>;
+  from_address?: InputMaybe<Scalars['Boolean']>;
+  hash?: InputMaybe<Scalars['Boolean']>;
+  transaction_index?: InputMaybe<Scalars['Boolean']>;
+};
+
+/**
+ * The input type for the table 'transactions_by_address'.
+ * Note that 'from_address', 'block_number', 'hash' and 'transaction_index' are the fields that correspond to the table primary key.
+ */
+export type Transactions_By_AddressInput = {
+  base_fee?: InputMaybe<Scalars['String']>;
+  block_hash?: InputMaybe<Scalars['String']>;
+  block_number?: InputMaybe<Scalars['BigInt']>;
+  block_timestamp?: InputMaybe<Scalars['String']>;
+  burnt_fee?: InputMaybe<Scalars['String']>;
+  from_address?: InputMaybe<Scalars['String']>;
+  gas?: InputMaybe<Scalars['BigInt']>;
+  gas_price?: InputMaybe<Scalars['String']>;
+  hash?: InputMaybe<Scalars['String']>;
+  input?: InputMaybe<Scalars['String']>;
+  max_fee?: InputMaybe<Scalars['String']>;
+  max_priority_fee?: InputMaybe<Scalars['String']>;
+  method?: InputMaybe<Scalars['String']>;
+  nonce?: InputMaybe<Scalars['BigInt']>;
+  receipt_contract_address?: InputMaybe<Scalars['String']>;
+  receipt_cumulative_gas_used?: InputMaybe<Scalars['BigInt']>;
+  receipt_gas_used?: InputMaybe<Scalars['BigInt']>;
+  receipt_root?: InputMaybe<Scalars['String']>;
+  receipt_status?: InputMaybe<Scalars['BigInt']>;
+  to_address?: InputMaybe<Scalars['String']>;
+  transaction_fees?: InputMaybe<Scalars['String']>;
+  transaction_index?: InputMaybe<Scalars['BigInt']>;
+  txn_savings?: InputMaybe<Scalars['String']>;
+  txn_type?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['Decimal']>;
+};
+
+/** The type used to represent results of a mutation for the table 'transactions_by_address'. */
+export type Transactions_By_AddressMutationResult = {
+  __typename?: 'transactions_by_addressMutationResult';
+  /** This field is relevant and fulfilled with data, only when used with the @async directive */
+  accepted?: Maybe<Scalars['Boolean']>;
+  applied?: Maybe<Scalars['Boolean']>;
+  value?: Maybe<Transactions_By_Address>;
+};
+
+/** The enum used to order a query result based on one or more fields for the table 'transactions_by_address'. */
+export enum Transactions_By_AddressOrder {
+  BaseFeeAsc = 'base_fee_ASC',
+  BaseFeeDesc = 'base_fee_DESC',
+  BlockHashAsc = 'block_hash_ASC',
+  BlockHashDesc = 'block_hash_DESC',
+  BlockNumberAsc = 'block_number_ASC',
+  BlockNumberDesc = 'block_number_DESC',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  BurntFeeAsc = 'burnt_fee_ASC',
+  BurntFeeDesc = 'burnt_fee_DESC',
+  FromAddressAsc = 'from_address_ASC',
+  FromAddressDesc = 'from_address_DESC',
+  GasAsc = 'gas_ASC',
+  GasDesc = 'gas_DESC',
+  GasPriceAsc = 'gas_price_ASC',
+  GasPriceDesc = 'gas_price_DESC',
+  HashAsc = 'hash_ASC',
+  HashDesc = 'hash_DESC',
+  InputAsc = 'input_ASC',
+  InputDesc = 'input_DESC',
+  MaxFeeAsc = 'max_fee_ASC',
+  MaxFeeDesc = 'max_fee_DESC',
+  MaxPriorityFeeAsc = 'max_priority_fee_ASC',
+  MaxPriorityFeeDesc = 'max_priority_fee_DESC',
+  MethodAsc = 'method_ASC',
+  MethodDesc = 'method_DESC',
+  NonceAsc = 'nonce_ASC',
+  NonceDesc = 'nonce_DESC',
+  ReceiptContractAddressAsc = 'receipt_contract_address_ASC',
+  ReceiptContractAddressDesc = 'receipt_contract_address_DESC',
+  ReceiptCumulativeGasUsedAsc = 'receipt_cumulative_gas_used_ASC',
+  ReceiptCumulativeGasUsedDesc = 'receipt_cumulative_gas_used_DESC',
+  ReceiptGasUsedAsc = 'receipt_gas_used_ASC',
+  ReceiptGasUsedDesc = 'receipt_gas_used_DESC',
+  ReceiptRootAsc = 'receipt_root_ASC',
+  ReceiptRootDesc = 'receipt_root_DESC',
+  ReceiptStatusAsc = 'receipt_status_ASC',
+  ReceiptStatusDesc = 'receipt_status_DESC',
+  ToAddressAsc = 'to_address_ASC',
+  ToAddressDesc = 'to_address_DESC',
+  TransactionFeesAsc = 'transaction_fees_ASC',
+  TransactionFeesDesc = 'transaction_fees_DESC',
+  TransactionIndexAsc = 'transaction_index_ASC',
+  TransactionIndexDesc = 'transaction_index_DESC',
+  TxnSavingsAsc = 'txn_savings_ASC',
+  TxnSavingsDesc = 'txn_savings_DESC',
+  TxnTypeAsc = 'txn_type_ASC',
+  TxnTypeDesc = 'txn_type_DESC',
+  ValueAsc = 'value_ASC',
+  ValueDesc = 'value_DESC'
+}
+
+export type Transactions_By_AddressResult = {
+  __typename?: 'transactions_by_addressResult';
+  pageState?: Maybe<Scalars['String']>;
+  values?: Maybe<Array<Transactions_By_Address>>;
 };
 
 /** The type used to represent results of a query for the table 'transactions_by_date'. */

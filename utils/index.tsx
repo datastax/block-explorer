@@ -465,7 +465,9 @@ const mapRawDataToGraphData = (
   dashboardAnalytics: Dashboard_AnalyticsQuery
 ) => {
   let count = 1;
-  return JSON.parse(
+
+  return dashboardAnalytics?.dashboard_analytics?.values?.[0]
+    ?.transactions_history_chart && JSON?.parse(
     dashboardAnalytics?.dashboard_analytics?.values?.[0]
       ?.transactions_history_chart || ''
   )
