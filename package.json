@@ -7,7 +7,7 @@
     "build": "yarn generate && next build",
     "start": "yarn generate && next start",
     "lint": "next lint",
-    "generate": "graphql-codegen --config codegen.yml",
+    "generate": "graphql-codegen --require dotenv/config --config codegen.ts dotenv_config_path=.env",
     "export": "next export",
     "postbuild": "next-sitemap",
     "format:fix": "prettier --write --ignore-path .gitignore ."
@@ -18,7 +18,7 @@
     "@emotion/react": "^11.9.0",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
-    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/cli": "^3.0.0",
     "@graphql-codegen/introspection": "^2.1.1",
     "@graphql-codegen/typescript": "^2.5.0",
     "@graphql-codegen/typescript-operations": "^2.4.1",
@@ -38,6 +38,7 @@
     "recharts": "^2.1.10"
   },
   "devDependencies": {
+    "@graphql-codegen/client-preset": "^2.0.0",
     "@types/compression": "^1.7.2",
     "@types/node": "17.0.35",
     "@types/react": "18.0.9",

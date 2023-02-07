@@ -13,55 +13,13 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /**
-   * Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.
-   */
   BigInt: any;
-  /**
-   * Represents a CQL `date` as a string.
-   * This is a date without a time-zone in the ISO-8601 calendar system.
-   * Example: "2020-10-21".
-   * A date can also be input as a 32-bit, positive numeric literal, which will be interpreted as a number of days, where the epoch is in the middle of the range (1970-01-01 = 2147483648).
-   */
   Date: any;
-  /**
-   * Represents a CQL `decimal` as a string.
-   * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"
-   */
   Decimal: any;
-  /**
-   * Represents a CQL `float` as a floating-point literal.
-   * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).
-   */
   Float32: any;
-  /**
-   * Represents a CQL `smallint` as an integer.
-   * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.
-   */
   SmallInt: any;
-  /**
-   * Represents a CQL `timestamp` as a string.
-   * This is an instantaneous point on the time-line.
-   * This type supports many different string representations (see https://docs.datastax.com/en/cql-oss/3.x/cql/cql_reference/timestamp_type_r.html). A timestamp can also be input as a numeric literal, which will be interpreted as a number of milliseconds since the epoch (1970-01-01 UTC at midnight).
-   * Examples: "2011-02-03 04:05+0000", 1296705900000
-   * String literals that do not include any time zone information will be interpreted using the server's default time zone.
-   */
   Timestamp: any;
-  /**
-   * Represents a CQL `tinyint` as an integer
-   * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.
-   */
   TinyInt: any;
-  /**
-   * Represents a CQL `varint` as an integer.
-   * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808
-   */
   Varint: any;
 };
 
@@ -1657,41 +1615,41 @@ export type Assets = {
   __typename?: 'assets';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   address?: Maybe<Scalars['String']>;
@@ -1849,41 +1807,41 @@ export type Block_Numbers_By_Date = {
   __typename?: 'block_numbers_by_date';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   block_number?: Maybe<Scalars['BigInt']>;
@@ -2002,41 +1960,41 @@ export type Contract_Abis = {
   __typename?: 'contract_abis';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   contract_address?: Maybe<Scalars['String']>;
@@ -2164,41 +2122,41 @@ export type Contracts = {
   __typename?: 'contracts';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   address?: Maybe<Scalars['String']>;
@@ -2347,41 +2305,41 @@ export type Dashboard_Analytics = {
   __typename?: 'dashboard_analytics';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   block_number?: Maybe<Scalars['BigInt']>;
@@ -2574,41 +2532,41 @@ export type Eth_Blocks = {
   __typename?: 'eth_blocks';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   base_fee_per_gas?: Maybe<Scalars['String']>;
@@ -2878,41 +2836,41 @@ export type Event_Signatures = {
   __typename?: 'event_signatures';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   event_hex?: Maybe<Scalars['String']>;
@@ -3030,41 +2988,41 @@ export type Logs = {
   __typename?: 'logs';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   address?: Maybe<Scalars['String']>;
@@ -3234,41 +3192,41 @@ export type Logs_By_Date = {
   __typename?: 'logs_by_date';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   address?: Maybe<Scalars['String']>;
@@ -3444,41 +3402,41 @@ export type Nfts = {
   __typename?: 'nfts';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   block_number?: Maybe<Scalars['BigInt']>;
@@ -3627,41 +3585,41 @@ export type Sorted_Nfts = {
   __typename?: 'sorted_nfts';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   block_number?: Maybe<Scalars['BigInt']>;
@@ -3817,41 +3775,41 @@ export type Token_Transfers = {
   __typename?: 'token_transfers';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   block_number?: Maybe<Scalars['BigInt']>;
@@ -3862,8 +3820,6 @@ export type Token_Transfers = {
   log_index?: Maybe<Scalars['BigInt']>;
   to_address?: Maybe<Scalars['String']>;
   token_address?: Maybe<Scalars['String']>;
-  token_id?: Maybe<Scalars['String']>;
-  token_transfer_value?: Maybe<Scalars['String']>;
   transaction_hash?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Decimal']>;
 };
@@ -3937,8 +3893,6 @@ export type Token_TransfersFilterInput = {
   log_index?: InputMaybe<BigIntFilterInput>;
   to_address?: InputMaybe<StringFilterInput>;
   token_address?: InputMaybe<StringFilterInput>;
-  token_id?: InputMaybe<StringFilterInput>;
-  token_transfer_value?: InputMaybe<StringFilterInput>;
   transaction_hash?: InputMaybe<StringFilterInput>;
   value?: InputMaybe<DecimalFilterInput>;
 };
@@ -3962,8 +3916,6 @@ export type Token_TransfersInput = {
   log_index?: InputMaybe<Scalars['BigInt']>;
   to_address?: InputMaybe<Scalars['String']>;
   token_address?: InputMaybe<Scalars['String']>;
-  token_id?: InputMaybe<Scalars['String']>;
-  token_transfer_value?: InputMaybe<Scalars['String']>;
   transaction_hash?: InputMaybe<Scalars['String']>;
   value?: InputMaybe<Scalars['Decimal']>;
 };
@@ -3995,10 +3947,6 @@ export enum Token_TransfersOrder {
   ToAddressDesc = 'to_address_DESC',
   TokenAddressAsc = 'token_address_ASC',
   TokenAddressDesc = 'token_address_DESC',
-  TokenIdAsc = 'token_id_ASC',
-  TokenIdDesc = 'token_id_DESC',
-  TokenTransferValueAsc = 'token_transfer_value_ASC',
-  TokenTransferValueDesc = 'token_transfer_value_DESC',
   TransactionHashAsc = 'transaction_hash_ASC',
   TransactionHashDesc = 'transaction_hash_DESC',
   ValueAsc = 'value_ASC',
@@ -4016,41 +3964,41 @@ export type Token_Transfers_By_Token_Address = {
   __typename?: 'token_transfers_by_token_address';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   block_number?: Maybe<Scalars['BigInt']>;
@@ -4221,41 +4169,41 @@ export type Tokens = {
   __typename?: 'tokens';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   address?: Maybe<Scalars['String']>;
@@ -4399,41 +4347,41 @@ export type Traces = {
   __typename?: 'traces';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   block_hash?: Maybe<Scalars['String']>;
@@ -4618,41 +4566,41 @@ export type Traces_By_Date = {
   __typename?: 'traces_by_date';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   block_hash?: Maybe<Scalars['String']>;
@@ -4843,41 +4791,41 @@ export type Transactions = {
   __typename?: 'transactions';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   base_fee?: Maybe<Scalars['String']>;
@@ -4899,13 +4847,10 @@ export type Transactions = {
   receipt_gas_used?: Maybe<Scalars['BigInt']>;
   receipt_root?: Maybe<Scalars['String']>;
   receipt_status?: Maybe<Scalars['BigInt']>;
-  timestamp?: Maybe<Scalars['Timestamp']>;
   to_address?: Maybe<Scalars['String']>;
   transaction_fees?: Maybe<Scalars['String']>;
   transaction_index?: Maybe<Scalars['BigInt']>;
-  transaction_value?: Maybe<Scalars['String']>;
   txn_savings?: Maybe<Scalars['String']>;
-  txn_type?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Decimal']>;
 };
 
@@ -4989,13 +4934,10 @@ export type TransactionsFilterInput = {
   receipt_gas_used?: InputMaybe<BigIntFilterInput>;
   receipt_root?: InputMaybe<StringFilterInput>;
   receipt_status?: InputMaybe<BigIntFilterInput>;
-  timestamp?: InputMaybe<TimestampFilterInput>;
   to_address?: InputMaybe<StringFilterInput>;
   transaction_fees?: InputMaybe<StringFilterInput>;
   transaction_index?: InputMaybe<BigIntFilterInput>;
-  transaction_value?: InputMaybe<StringFilterInput>;
   txn_savings?: InputMaybe<StringFilterInput>;
-  txn_type?: InputMaybe<StringFilterInput>;
   value?: InputMaybe<DecimalFilterInput>;
 };
 
@@ -5029,13 +4971,10 @@ export type TransactionsInput = {
   receipt_gas_used?: InputMaybe<Scalars['BigInt']>;
   receipt_root?: InputMaybe<Scalars['String']>;
   receipt_status?: InputMaybe<Scalars['BigInt']>;
-  timestamp?: InputMaybe<Scalars['Timestamp']>;
   to_address?: InputMaybe<Scalars['String']>;
   transaction_fees?: InputMaybe<Scalars['String']>;
   transaction_index?: InputMaybe<Scalars['BigInt']>;
-  transaction_value?: InputMaybe<Scalars['String']>;
   txn_savings?: InputMaybe<Scalars['String']>;
-  txn_type?: InputMaybe<Scalars['String']>;
   value?: InputMaybe<Scalars['Decimal']>;
 };
 
@@ -5088,20 +5027,14 @@ export enum TransactionsOrder {
   ReceiptRootDesc = 'receipt_root_DESC',
   ReceiptStatusAsc = 'receipt_status_ASC',
   ReceiptStatusDesc = 'receipt_status_DESC',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampDesc = 'timestamp_DESC',
   ToAddressAsc = 'to_address_ASC',
   ToAddressDesc = 'to_address_DESC',
   TransactionFeesAsc = 'transaction_fees_ASC',
   TransactionFeesDesc = 'transaction_fees_DESC',
   TransactionIndexAsc = 'transaction_index_ASC',
   TransactionIndexDesc = 'transaction_index_DESC',
-  TransactionValueAsc = 'transaction_value_ASC',
-  TransactionValueDesc = 'transaction_value_DESC',
   TxnSavingsAsc = 'txn_savings_ASC',
   TxnSavingsDesc = 'txn_savings_DESC',
-  TxnTypeAsc = 'txn_type_ASC',
-  TxnTypeDesc = 'txn_type_DESC',
   ValueAsc = 'value_ASC',
   ValueDesc = 'value_DESC'
 }
@@ -5117,41 +5050,41 @@ export type Transactions_By_Address = {
   __typename?: 'transactions_by_address';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   base_fee?: Maybe<Scalars['String']>;
@@ -5392,41 +5325,41 @@ export type Transactions_By_Date = {
   __typename?: 'transactions_by_date';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   base_fee?: Maybe<Scalars['String']>;
@@ -5671,41 +5604,41 @@ export type Transactions_By_Hash = {
   __typename?: 'transactions_by_hash';
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='BigInt', description='Represents a CQL `bigint` as an integer literal.
-   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@22bc54e2}.
+   * This is a 64-bit signed integer.', coercing=io.stargate.graphql.schema.scalars.BigIntCoercing@69a4c832}.
    */
   _bigint_function?: Maybe<Scalars['BigInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Decimal', description='Represents a CQL `decimal` as a string.
    * This is a variable-precision decimal.
-   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@580b9f4}.
+   * Examples: "1.5", "1e-3"', coercing=io.stargate.graphql.schema.scalars.StringCoercing$5@21f6fb56}.
    */
   _decimal_function?: Maybe<Scalars['Decimal']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@79dcfd38}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Float', description='Built-in Float', coercing=graphql.scalar.GraphqlFloatCoercing@2e329fe6}. */
   _double_function?: Maybe<Scalars['Float']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Float32', description='Represents a CQL `float` as a floating-point literal.
    * This is a 32-bit IEEE-754 floating point.
-   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@42432336}.
+   * If the value cannot be represented as a float, it will be converted. This conversion can loose precision, or range (resulting in +/-Infinity).', coercing=io.stargate.graphql.schema.scalars.FloatCoercing@422ff01d}.
    */
   _float_function?: Maybe<Scalars['Float32']>;
-  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@3ea25571}. */
+  /** Invocation of an aggregate function that returns GraphQLScalarType{name='Int', description='Built-in Int', coercing=graphql.scalar.GraphqlIntCoercing@2d5e8532}. */
   _int_function?: Maybe<Scalars['Int']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='SmallInt', description='Represents a CQL `smallint` as an integer.
    * This is a 16-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@21864d8}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$2@d055532}.
    */
   _smallint_function?: Maybe<Scalars['SmallInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='TinyInt', description='Represents a CQL `tinyint` as an integer
    * .This is an 8-bit signed int.
-   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@2d72276}.
+   * An error will be thrown if the value is out of bounds.', coercing=io.stargate.graphql.schema.scalars.IntCoercing$1@1b3f338f}.
    */
   _tinyint_function?: Maybe<Scalars['TinyInt']>;
   /**
    * Invocation of an aggregate function that returns GraphQLScalarType{name='Varint', description='Represents a CQL `varint` as an integer.
    * This is an arbitrary-precision integer.
-   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@4ea4061e}.
+   * Examples: 1, 9223372036854775808', coercing=io.stargate.graphql.schema.scalars.VarintCoercing@78d88d4f}.
    */
   _varint_function?: Maybe<Scalars['Varint']>;
   base_fee?: Maybe<Scalars['String']>;
