@@ -238,6 +238,43 @@ interface AxiosApiResponse extends AxiosResponse {
   error: ApolloError | undefined;
 }
 
+interface NftResponse {
+  contract_address: string;
+  token_id: string;
+  block_number: number;
+  metadata: string;
+  name: string;
+  owner_of: string;
+  symbol: string;
+  token_standard: string;
+  token_uri: string;
+}
+
+interface Meta {
+  name: string;
+  created_by: string;
+  external_url: string;
+  description: string;
+  'Terms of Sale': string;
+  attributes: Attribute[];
+  image_details: ImageDetails;
+  image: string;
+  image_url: string;
+}
+
+interface Attribute {
+  trait_type: string;
+  value: string;
+}
+
+interface ImageDetails {
+  bytes: number;
+  format: string;
+  sha256: string;
+  width: number;
+  height: number;
+}
+
 export type {
   Route,
   CustomTableProps,
@@ -261,6 +298,8 @@ export type {
   TabProps,
   LogsData,
   LogEvent,
+  NftResponse,
+  Meta,
   TokenGenerationPayload,
   InternalTransactionData,
   InternalTxnsTabData,

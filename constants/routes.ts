@@ -1,5 +1,9 @@
 const ROUTES = [
   {
+    name: 'NFTs',
+    link: '/nfts',
+  },
+  {
     name: 'Blocks',
     link: '/blocks',
   },

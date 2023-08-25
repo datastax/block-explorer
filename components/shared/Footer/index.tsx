@@ -1,4 +1,4 @@
-import { productPageUrl } from '@constants'
+import { productPageUrl } from '@constants';
 import { Stack } from '@mui/material';
 import colors from '@styles/ThemeProvider/colors';
 import { Wrapper, Container, StyledTypography } from './styles';
