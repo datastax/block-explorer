@@ -9,37 +9,31 @@ import { NftResponse, Meta } from '@types';
 const ContactCard = styled(Box)(() => ({
   border: `1px dashed #E8F0F8`,
   display: 'flex',
-  maxWidth: '250px',
-  margin: '20px auto',
+  maxWidth: '200px',
+  margin: '21px auto',
   borderRadius: '14px',
-}));
-
-const ContactCardContent = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  minHeight: '76px',
-  alignContent: 'center',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  backgroundColor: theme.palette.text.primary,
-  color: theme.palette.background.default,
-  borderRadius: '14px',
-  width: '100%',
-  textAlign: 'center',
 }));
 
 const InputLabel = styled('label')(({ theme }) => ({
   cursor: 'pointer',
-  display: 'inline-block',
-  color: theme.palette.background.default,
+  display: 'flex',
+  minHeight: '56px',
+  alignContent: 'center',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  backgroundColor: theme.palette.text.primary,
+  borderRadius: '14px',
+  width: '100%',
+  textAlign: 'center',
 }));
 
 const Input = styled('input')(() => ({
   cursor: 'pointer',
   width: '100%',
   fontWeight: 'bold',
-  textDecoration: 'underline',
+  // textDecoration: 'underline',
   color: 'white',
-  background: 'red',
+  // background: 'red',
 }));
 
 const Card = styled(Box)(() => ({
@@ -109,8 +103,7 @@ const NFTs = () => {
   };
 
   const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e?.target?.files) return;
-
+    if (!e?.target?.files || e.target.files.length === 0) return;
     const file: File = e.target.files[0];
     const picUrl = URL.createObjectURL(file);
     setSelectedImg(picUrl);
@@ -126,7 +119,6 @@ const NFTs = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       }
     );
-    console.log('res', res);
     if (res.data) {
       setlist(res.data['Vector Response']);
     }
@@ -137,20 +129,18 @@ const NFTs = () => {
     <Wrapper>
       <Title>Seacrh similar NFT by uploading the target image</Title>
       <ContactCard>
-        <ContactCardContent>
+        <InputLabel>
+          <Input
+            onChange={handleFileUpload}
+            hidden
+            accept="image/*"
+            type={'file'}
+            disabled={loading}
+          />
           <Typography color={'white'} fontSize="15px">
-            <InputLabel>
-              <Input
-                onChange={handleFileUpload}
-                hidden
-                accept="image/*"
-                type={'file'}
-                disabled={loading}
-              />
-              {loading ? 'Uploading...' : 'Upload Image'}
-            </InputLabel>
+            {loading ? 'Uploading...' : 'Upload Image'}
           </Typography>
-        </ContactCardContent>
+        </InputLabel>
       </ContactCard>
       {selectedImg && (
         <SelectedBox>
@@ -191,7 +181,10 @@ const NFTs = () => {
                       <img
                         src={sanitizeUrl(meta?.image)}
                         alt="nft"
-                        style={{ borderRadius: '10px' }}
+                        style={{
+                          borderTopRightRadius: '10px',
+                          borderTopLeftRadius: '10px',
+                        }}
                         width={'100%'}
                         height={'100%'}
                       />
@@ -201,12 +194,12 @@ const NFTs = () => {
                       {nft.name}
                     </NftName>
                     <NftName>
-                      <b>Contract Address: </b>
-                      {nft.contract_address}
-                    </NftName>
-                    <NftName>
                       <b>Token Id: </b>
                       {nft.token_id}
+                    </NftName>
+                    <NftName>
+                      <b>Contract Address: </b>
+                      {nft.contract_address}
                     </NftName>
                   </Card>
                 </Grid>
