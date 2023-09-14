@@ -19,8 +19,15 @@ const Search = () => {
   };
 
   const handleClick = () => {
+    const transactionsbyTextPage = {
+      pathname: '/transactionsbytext', // The target page
+      query: { search },
+    };
+
     if (search) {
-      if (isNumber(search)) router.push(`/block/${search}`);
+      if (filter === 3) {
+        router.push(transactionsbyTextPage);
+      } else if (isNumber(search)) router.push(`/block/${search}`);
       else router.push(`/transaction/${search}`);
     }
   };
@@ -48,9 +55,7 @@ const Search = () => {
               </MenuItem>
               <MenuItem value={1}>Txn Hash</MenuItem>
               <MenuItem value={2}>Block</MenuItem>
-              <MenuItem value={3}>Address</MenuItem>
-              <MenuItem value={4}>Token</MenuItem>
-              <MenuItem value={5}>Ens</MenuItem>
+              <MenuItem value={3}>Txn by Text</MenuItem>
             </CustomFilter>
           </FormControl>
         </Box>

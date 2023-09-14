@@ -101,13 +101,10 @@ const searchPlaceHolders = [
   'Search by Txn Hash or Block Number',
   'Search by Transaction Hash',
   'Search by Block Number',
-  'Search by Contract Hash',
-  'Search by Token Address',
-  'Search by ENS Domain',
+  'Search by Text',
 ];
 
-const productPageUrl =
-  'https://www.datastax.com/products/astra-block'
+const productPageUrl = 'https://www.datastax.com/products/astra-block';
 
 const colorColumnHeaderNames = ['Age', 'Txn Fee'];
 

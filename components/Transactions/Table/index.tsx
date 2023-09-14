@@ -32,6 +32,7 @@ interface TransactionsTableProps {
   loading: boolean;
   handlePagination: (paginationEvent: PAGINATION_EVENT) => void;
   isTransactions?: boolean;
+  hidePagination?: boolean;
 }
 
 const TransactionsTable = ({
@@ -44,6 +45,7 @@ const TransactionsTable = ({
   isTransactions,
 }: TransactionsTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
+  console.log('transactions :>> ', transactions);
 
   const lengthOfEachPage = isTransactions
     ? Number.MAX_VALUE

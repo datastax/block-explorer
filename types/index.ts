@@ -101,6 +101,9 @@ interface DropButtonProps {
 interface PagingProps {
   rtl?: boolean;
 }
+type TokenGenerationPayload = {
+  tokenExpiry: number;
+};
 interface TransactionDetailRowProps {
   objectKey: string;
   data: TransactionDetails;
@@ -228,10 +231,6 @@ type LogEvent = {
   indexed: boolean;
   name: string;
   type: string;
-};
-
-type TokenGenerationPayload = {
-  tokenExpiry: number;
 };
 
 interface AxiosApiResponse extends AxiosResponse {

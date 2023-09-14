@@ -1,14 +1,16 @@
 import { gql } from '@apollo/client';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import client from 'lib/graphql/apolloClient';
 import { Query } from 'lib/graphql/generated/generate';
+import { REST_END_POINTPOINT } from '@constants';
 import {
   GET_LATEST_ETH_BLOCK,
   GET_LATEST_BLOCKS_GROUP,
   GET_TRANSACTIONS_BY_DATE,
 } from 'lib/graphql/queries';
 import { AxiosApiResponse } from 'types';
-import { handleError } from 'utils';
+import { handleError, timeLapseInSeconds } from 'utils';
+import { createJWt } from './jwt';
 
 const GET = async (queryName: string) => {
   try {
@@ -150,6 +152,32 @@ const getTransactionsList = async (
   return list || [];
 };
 
+const TransactionByText = async (text: string) => {
+  try {
+    const EXPIRY_TIME = 3600;
+    const PAYLOAD = { tokenExpiry: timeLapseInSeconds(60) };
+    const generatedToken = createJWt(PAYLOAD, EXPIRY_TIME);
+    const data = {
+      text,
+    };
+
+    const config = {
+      method: 'post',
+      url: `${REST_END_POINTPOINT || ''}/transactions/handle_raw_text`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${generatedToken || ''}`,
+      },
+      data,
+    };
+
+    const response: AxiosResponse = await axios(config);
+    return response.data.data;
+  } catch (error) {
+    console.log('error :>> ', error);
+  }
+};
+
 export {
   GET,
   POST,
@@ -159,4 +187,5 @@ export {
   getLatestBlockGroup,
   getLatestEthBlockNumber,
   getTransactionsList,
+  TransactionByText,
 };
