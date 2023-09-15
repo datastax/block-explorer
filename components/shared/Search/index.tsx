@@ -27,6 +27,7 @@ const Search = () => {
     if (search) {
       if (filter === 3) {
         router.push(transactionsbyTextPage);
+        setSearch('');
       } else if (isNumber(search)) router.push(`/block/${search}`);
       else router.push(`/transaction/${search}`);
     }

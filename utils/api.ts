@@ -10,7 +10,7 @@ import {
 } from 'lib/graphql/queries';
 import { AxiosApiResponse } from 'types';
 import { handleError, timeLapseInSeconds } from 'utils';
-import { createJWt } from './jwt';
+import { createJWt, verifyJWT } from './jwt';
 
 const GET = async (queryName: string) => {
   try {
@@ -154,9 +154,21 @@ const getTransactionsList = async (
 
 const TransactionByText = async (text: string) => {
   try {
-    const EXPIRY_TIME = 3600;
+    const EXPIRY_TIME = 60;
     const PAYLOAD = { tokenExpiry: timeLapseInSeconds(60) };
-    const generatedToken = createJWt(PAYLOAD, EXPIRY_TIME);
+    let generatedToken = createJWt(PAYLOAD, EXPIRY_TIME);
+
+    // Verify if the token is expired
+    const decodedToken = verifyJWT(generatedToken);
+
+    if (
+      decodedToken &&
+      decodedToken.exp &&
+      decodedToken.exp < Date.now() / 1000
+    ) {
+      // Token is expired, create a new one
+      generatedToken = createJWt(PAYLOAD, EXPIRY_TIME);
+    }
     const data = {
       text,
     };
@@ -172,7 +184,8 @@ const TransactionByText = async (text: string) => {
     };
 
     const response: AxiosResponse = await axios(config);
-    return response.data.data;
+    console.log('Query Generated :>> ', response?.data?.data?.query);
+    return response?.data?.data?.transactions;
   } catch (error) {
     console.log('error :>> ', error);
   }
