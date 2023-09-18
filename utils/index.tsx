@@ -42,6 +42,27 @@ function numberWithCommas(value: number | string | null | undefined) {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+const getDifferenceV2 = (timestamp: string | undefined | null) => {
+  if (!timestamp) return 0;
+
+  // Parse the provided timestamp into a JavaScript Date object
+  const parsedTimestamp = new Date(timestamp);
+
+  if (isNaN(parsedTimestamp.getTime())) {
+    return 'Invalid Timestamp';
+  }
+
+  const currentDate = new Date();
+  const time = parsedTimestamp;
+
+  const delta = Math.abs(currentDate.getTime() - time.getTime());
+
+  const days = Math.floor(delta / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+  return `${days} Days, ${hours} Hours ago`;
+};
+
 const getDifference = (timestamp: number | undefined | null) => {
   if (!timestamp) return 0;
   const currentDate = new Date().getTime();
@@ -466,23 +487,26 @@ const mapRawDataToGraphData = (
 ) => {
   let count = 1;
 
-  return dashboardAnalytics?.dashboard_analytics?.values?.[0]
-    ?.transactions_history_chart && JSON?.parse(
+  return (
     dashboardAnalytics?.dashboard_analytics?.values?.[0]
-      ?.transactions_history_chart || ''
-  )
-    ?.map((node: string) => {
-      const date = new Date();
-      date.setDate(date.getDate() - count);
-      const day = date.getDate();
-      const month = date.toLocaleString('en-us', { month: 'long' });
-      count += 1;
-      return {
-        label: `${month} ${day}`,
-        value: node,
-      };
-    })
-    .reverse();
+      ?.transactions_history_chart &&
+    JSON?.parse(
+      dashboardAnalytics?.dashboard_analytics?.values?.[0]
+        ?.transactions_history_chart || ''
+    )
+      ?.map((node: string) => {
+        const date = new Date();
+        date.setDate(date.getDate() - count);
+        const day = date.getDate();
+        const month = date.toLocaleString('en-us', { month: 'long' });
+        count += 1;
+        return {
+          label: `${month} ${day}`,
+          value: node,
+        };
+      })
+      .reverse()
+  );
 };
 
 const combineTransactions = (
@@ -541,6 +565,7 @@ export {
   mapRawDataToGraphData,
   combineTransactions,
   getPassedSecondsToday,
+  getDifferenceV2,
 };
 export { default as createEmotionCache } from './createEmotionCache';
 export * from './api';

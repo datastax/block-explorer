@@ -35,7 +35,7 @@ const Transactions: NextPage = () => {
       <TransactionsTableV2
         titles={transactionTitles}
         transactions={{ transactions: { values: data } }}
-        loading={loading || !data?.length}
+        loading={loading}
       />
     </>
   );

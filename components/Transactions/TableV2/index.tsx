@@ -17,10 +17,11 @@ import {
 import { GetPaginatedEThTransactionsQuery } from 'lib/graphql/generated/generate';
 import { Exchange, Eye } from '@components/shared/Icons';
 import Chip from '@components/shared/Chip';
-import { formatAddress, getDifference, weiToEther } from 'utils';
+import { formatAddress, weiToEther, getDifferenceV2 } from 'utils';
 import router from 'next/router';
 import CustomSkeleton from '@components/shared/CustomSkeleton';
 import { Box } from '@mui/material';
+import NotFound from '@pages/404';
 
 interface TransactionsTableProps {
   titles: string[];
@@ -56,7 +57,7 @@ const TransactionsTableV2 = ({
     if (keys[index] === 'transaction_fees')
       return parseFloat(values[index]?.toString() || '').toFixed(8);
     else if (keys[index] === 'block_timestamp')
-      return `${getDifference(Number(values[index]))} ago`;
+      return `${getDifferenceV2(String(values[index]))}`;
     else if (keys[index] !== 'value')
       return formatAddress(values[index]?.toString());
     else
@@ -89,6 +90,8 @@ const TransactionsTableV2 = ({
       block_hash: data.block_hash || null,
     };
   }
+
+  if (!transactions?.transactions?.values && !loading) return <NotFound />;
 
   return (
     <BlockTableContainer>
